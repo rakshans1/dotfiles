@@ -9,9 +9,13 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-surround'
-Plugin 'ervandew/supertab'
+Plugin 'valloric/youcompleteme'
+Plugin 'airblade/vim-gitgutter'
+
+Plugin 'vim-syntastic/syntastic'
+Plugin 'raimondi/delimitmate'
+
 
 Plugin 'pangloss/vim-javascript'
 

@@ -1,3 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/home/rakshans1/Desktop/Vim Mastery'
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/rakshans1/Desktop/docstash/docstash/server/src/controllers'
+let g:netrw_dirhist_2='/home/rakshans1/Desktop/docstash/docstash/server/src'
+let g:netrw_dirhist_3='/home/rakshans1/Desktop/docstash/docstash/server/src/services'
+let g:netrw_dirhist_4='/home/rakshans1/Desktop/docstash/docstash/server/src/services/backends'
+let g:netrw_dirhist_5='/home/rakshans1/Desktop/docstash/docstash/server/src/services'
+let g:netrw_dirhist_6='/home/rakshans1/Desktop/docstash/docstash/server/src'
