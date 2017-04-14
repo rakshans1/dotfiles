@@ -58,6 +58,12 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
+export ANDROID_HOME=~/Android/Sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+export PATH=${PATH}:/usr/local/go/bin
+source /usr/share/autojump/autojump.sh
+synclient TapButton1=1 TapButton2=3 TapButton3=2
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

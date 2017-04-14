@@ -41,6 +41,8 @@ hi LineNr ctermbg=bg
 
 "vertical split border color 
 hi vertsplit ctermbg=bg ctermfg=bg 
+
+
 "----------Searching------"
 set hlsearch
 set incsearch
