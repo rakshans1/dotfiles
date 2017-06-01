@@ -284,7 +284,7 @@ install_zsh () {
         install_zsh
       fi
       if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install zsh
+        sudo apt-get -qq install zsh
         install_zsh
       fi
     # If the platform is OS X, tell the user to install zsh :)
@@ -297,7 +297,7 @@ install_zsh () {
 }
 
 main
-install_zsh
+#install_zsh
 
 ###############################################################################
 # Atom                                                                        #
@@ -315,6 +315,7 @@ install_zsh
 # Linux                                                      #
 ###############################################################################
 ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
+mkdir $HOME/.local/share/fonts
 ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
 
 

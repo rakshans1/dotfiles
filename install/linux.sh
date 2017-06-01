@@ -18,7 +18,7 @@ apt_packages=()
 deb_installed=()
 deb_sources=()
 
-installers_path="~/Desktop"
+installers_path="cache"
 
 # Ubuntu distro release name, eg. "xenial"
 release_name=$(lsb_release -c | awk '{print $2}')
@@ -45,6 +45,7 @@ apt_packages+=(
   curl
   gnome-tweak-tool
   git-all
+  autojump
   htop
   imagemagick
   vlc
@@ -61,6 +62,10 @@ deb_sources+=(https://atom.io/download/deb)
 
 # https://www.qbittorrent.org/download.php
 add_ppa ppa:qbittorrent-team/qbittorrent-stable
+apt_packages+=(papirus-icon-theme)
+
+# https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+add_ppa ppa:papirus/papirus
 apt_packages+=(qbittorrent)
 
 # https://www.ubuntuupdates.org/ppa/google_chrome
@@ -220,7 +225,3 @@ if (( ${#deb_installed_i[@]} > 0 )); then
     sudo dpkg -i "$installer_file"
   done
 fi
-
-
-
-

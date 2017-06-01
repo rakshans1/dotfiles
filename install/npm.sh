@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # This script configures my Node.js development setup.
@@ -10,4 +10,4 @@ packages=(
     nodemon
 )
 
-npm install -g "${packages[@]}
+npm install -g "${packages[@]}"

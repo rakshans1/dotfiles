@@ -8,7 +8,7 @@
 
 
 
-# $HOME/dotfiles/install/linux.sh
+$HOME/dotfiles/install/linux.sh
 
 
 ###############################################################################
@@ -17,7 +17,7 @@
 
 # Installing Node
 # https://github.com/nodesource/distributions#debinstall
-https://github.com/nodesource/distributions#debinstall
+curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 $HOME/dotfiles/install/npm.sh
@@ -27,4 +27,10 @@ $HOME/dotfiles/install/npm.sh
 # Symlinks to link dotfiles into ~/                                           #
 ###############################################################################
 
-./setup.sh
+$HOME/dotfiles/setup.sh
+
+###############################################################################
+# Gnome Extenstion                                          #
+###############################################################################
+
+$HOME/dotfiles/install/gnome.sh

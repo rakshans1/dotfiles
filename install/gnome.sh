@@ -26,11 +26,13 @@ gnomeshell-extension-manage --install --extension-id 771 --user
 gnomeshell-extension-manage --install --extension-id 905 --user
 
 # Sound Input & Output Device Chooser  
-gnomeshell-extension-manage --install --extension-id 906 --useev
+gnomeshell-extension-manage --install --extension-id 906 --user
 
 # system-monitor
 gnomeshell-extension-manage --install --extension-id 120 --user
 
+#Clipboard Indicator
+gnomeshell-extension-manage --install --extension-id 779 --user
 
 # Reload Gnome Shell
 # gnome-shell --replace &

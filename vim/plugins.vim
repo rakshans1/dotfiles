@@ -10,7 +10,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-surround'
-Plugin 'valloric/youcompleteme'
 Plugin 'airblade/vim-gitgutter'
 
 Plugin 'vim-syntastic/syntastic'
