@@ -39,34 +39,51 @@ function add_ppa() {
 
 
 apt_packages+=(
+  apt-transport-https
   build-essential
   checkinstall
   libssl-dev
   curl
-  gnome-tweak-tool
   git-all
   autojump
   htop
   imagemagick
   vlc
   vim
+  vsftpd
 )
 
 # https://support.gitkraken.com/how-to-install
-# deb_installed+=(/usr/bin/gitkraken)
-# deb_sources+=(https://release.gitkraken.com/linux/gitkraken-amd64.deb)
+deb_installed+=(gitkraken)
+deb_sources+=(https://release.gitkraken.com/linux/gitkraken-amd64.deb)
 
 # https://atom.io/
-deb_installed+=(Atom)
-deb_sources+=(https://atom.io/download/deb)
+# deb_installed+=(Atom)
+# deb_sources+=(https://atom.io/download/deb)
+
+# https://code.visualstudio.com/Download
+deb_installed+=(Code)
+deb_sources+=(https://code.visualstudio.com/docs/?dv=linux64_deb)
+
+
+
+# https://www.sublimetext.com/docs/3/linux_repositories.html#apt
+apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
+apt_source_files+=(sublime-text)
+apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
+apt_packages+=(sublime-text)
 
 # https://www.qbittorrent.org/download.php
-add_ppa ppa:qbittorrent-team/qbittorrent-stable
-apt_packages+=(papirus-icon-theme)
+# add_ppa ppa:qbittorrent-team/qbittorrent-stable
+# apt_packages+=(qbittorrent)
 
 # https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-add_ppa ppa:papirus/papirus
-apt_packages+=(qbittorrent)
+# add_ppa ppa:papirus/papirus
+# apt_packages+=(papirus-icon-theme)
+
+# https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
+# add_ppa ppa:webupd8team/java
+# apt_packages+=(oracle-java8-installer)
 
 # https://www.ubuntuupdates.org/ppa/google_chrome
 apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
@@ -74,6 +91,12 @@ apt_source_files+=(google-chrome)
 apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
 apt_packages+=(google-chrome-stable)
 
+
+# https://yarnpkg.com/en/docs/install
+# apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
+# apt_source_files+=(yarn)
+# apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
+# apt_packages+=(yarn)
 
 # https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
 # apt_keys+=(https://www.virtualbox.org/download/oracle_vbox_2016.asc)
@@ -101,7 +124,7 @@ apt_packages+=(google-chrome-stable)
 
 if (( ${#apt_keys[@]} > 0 )); then
 	for key in "${apt_keys[@]}"; do
-		wget -qO- $key | sudo apt-key add -
+		wget -qO - $key | sudo apt-key add -
 	done
 fi
 
@@ -192,7 +215,7 @@ sudo apt-get -qq update
 
 # Upgrade APT.
 e_header "Upgrading APT"
-sudo apt-get -qy upgrade
+# sudo apt-get -qy upgrade
 
 
 # Install APT packages.
@@ -204,7 +227,7 @@ if (( ${#apt_packages[@]} > 0 )); then
   for package in "${apt_packages[@]}"; do
     e_arrow "$package"
     [[ "$(type -t preinstall_$package)" == function ]] && preinstall_$package
-    sudo apt-get -qq install "$package" && \
+    sudo apt-get -qq install "$package" > /dev/null 2>&1 && \
     [[ "$(type -t postinstall_$package)" == function ]] && postinstall_$package
   done
 fi
@@ -225,3 +248,6 @@ if (( ${#deb_installed_i[@]} > 0 )); then
     sudo dpkg -i "$installer_file"
   done
 fi
+
+
+rm -rf "$installers_path"

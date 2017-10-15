@@ -1,26 +1,23 @@
 #!/bin/bash
+
 ###############################################################################
-# Linux                                                                    #
+# Linux                                                                       #
 ###############################################################################
-
-
-
-
-
 
 $HOME/dotfiles/install/linux.sh
+
+###############################################################################
+# Php                                                                        #
+###############################################################################
+
+$HOME/dotfiles/install/php.sh
 
 
 ###############################################################################
 # Node                                                                        #
 ###############################################################################
 
-# Installing Node
-# https://github.com/nodesource/distributions#debinstall
-curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-$HOME/dotfiles/install/npm.sh
+$HOME/dotfiles/install/node.sh
 
 
 ###############################################################################
@@ -30,7 +27,7 @@ $HOME/dotfiles/install/npm.sh
 $HOME/dotfiles/setup.sh
 
 ###############################################################################
-# Gnome Extenstion                                          #
+# Gnome Extenstion For Ubuntu Gnome                                           #
 ###############################################################################
 
-$HOME/dotfiles/install/gnome.sh
+# $HOME/dotfiles/install/gnome.sh

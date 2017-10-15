@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Ask for the administrator password upfront
+sudo -v
+
 sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage"
 sudo chmod +x /usr/local/bin/gnomeshell-extension-manage
 

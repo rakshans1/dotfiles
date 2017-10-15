@@ -1,7 +1,7 @@
 #!/bin/bash
 ############################
 
-# This symlinks all the dotfiles (and .atom/) to ~/
+# This symlinks all the dotfiles to ~/
 
 
 ############################
@@ -297,7 +297,7 @@ install_zsh () {
 }
 
 main
-#install_zsh
+install_zsh
 
 ###############################################################################
 # Atom                                                                        #
