@@ -267,8 +267,8 @@ install_zsh () {
   # Test to see if zshell is installed.  If it is:
   if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
     # Install Oh My Zsh if it isn't already present
-    if [[ ! -d $dir/oh-my-zsh/ ]]; then
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    if [[ ! -d ~/.oh-my-zsh ]]; then
+      cd ~ && git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
     fi
     # Set the default shell to zsh if it isn't currently set to zsh
     if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
@@ -325,9 +325,6 @@ ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
 ###############################################################################
 
 # Install Zsh settings
-ln -s ~/dotfiles/zsh/themes/cobalt2.zsh-theme $HOME/.oh-my-zsh/themes
-
-
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
