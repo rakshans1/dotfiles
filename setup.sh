@@ -317,6 +317,7 @@ install_zsh
 ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
 mkdir $HOME/.local/share/fonts
 ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
+ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
 
 
 

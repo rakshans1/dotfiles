@@ -51,6 +51,7 @@ apt_packages+=(
   vlc
   vim
   vsftpd
+  guake
 )
 
 # https://support.gitkraken.com/how-to-install
