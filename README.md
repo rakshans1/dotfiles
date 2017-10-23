@@ -1,5 +1,8 @@
 
 # My Dotfiles
+
+Include ZSH, oh-my-zsh and new ununtu project setup
+
 ![Shell ScreenShot](shell.png?raw=true "Shell")
 
 
