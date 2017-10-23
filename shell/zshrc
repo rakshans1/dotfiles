@@ -2,7 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=~/.oh-my-zsh
+export TERM="xterm-256color"
+
+export ZSH=~/.oh-my-zsh
 
 ZSH_CUSTOM=$HOME/dotfiles/zsh
 
@@ -148,6 +150,7 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 # export PATH=${PATH}:/usr/local/go/bin
 source /usr/share/autojump/autojump.sh
+source $HOME/.nvm/nvm.sh
 # synclient TapButton1=1 TapButton2=3 TapButton3=2
 
 # You may need to manually set your language environment
@@ -181,6 +184,6 @@ source /usr/share/autojump/autojump.sh
 stty stop undef
 stty start undef
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
