@@ -1,7 +1,7 @@
 
 # My Dotfiles
 
-Include ZSH, oh-my-zsh and new ubuntu project setup
+Include ZSH, oh-my-zsh and new ubuntu new system setup
 
 ![Shell ScreenShot](shell.png?raw=true "Shell")
 
