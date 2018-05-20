@@ -52,6 +52,7 @@ apt_packages+=(
   vim
   vsftpd
   guake
+  fonts-firacode
 )
 
 # https://support.gitkraken.com/how-to-install
