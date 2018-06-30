@@ -8,9 +8,12 @@ Include ZSH, oh-my-zsh and new ubuntu new system setup
 
 
 ## Installation
-`cd ~ && git clone https://github.com/rakshans1/dotfiles.git`
+```
+cd ~ && git clone https://github.com/rakshans1/dotfiles.git
+git submodule update
+```
 
-To install my dotfiles as *your* 
+To install my dotfiles as *your*
 
 ```
 cd ~/dotfiles

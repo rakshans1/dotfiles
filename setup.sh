@@ -170,6 +170,7 @@ declare -a FILES_TO_SYMLINK=(
   # 'shell/bash_prompt'
   # 'shell/bashrc'
   'shell/zshrc'
+  'shell/vimrc'
   # 'shell/ackrc'
   # 'shell/curlrc'
   # 'shell/gemrc'
@@ -300,18 +301,6 @@ main
 install_zsh
 
 ###############################################################################
-# Atom                                                                        #
-###############################################################################
-
-# Copy over Atom configs
-#cp -r atom/packages.list $HOME/.atom
-
-# Install community packages
-#apm list --installed --bare - get a list of installed packages
-#apm install --packages-file $HOME/.atom/packages.list
-
-
-###############################################################################
 # Linux                                                      #
 ###############################################################################
 ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
@@ -319,6 +308,12 @@ mkdir $HOME/.local/share/fonts
 ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
 ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
 
+
+
+###############################################################################
+# Vim                                                                         #
+###############################################################################
+ln -s ~/dotfiles/vim $HOME/.vim
 
 
 ###############################################################################
@@ -341,4 +336,4 @@ ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
 # defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Reload zsh settings
-source ~/.zshrc
+# source ~/.zshrc
