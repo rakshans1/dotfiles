@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Installs Homebrew and some of the common dependencies needed/desired for software development
+# Installs some of the common dependencies needed/desired for software development
 
 # Ask for the administrator password upfront
 sudo -v
 
-# Make sure we’re using the latest Homebrew
 # sudo apt-get update
 
 # sudo apt-get -y upgrade
@@ -55,25 +54,18 @@ apt_packages+=(
   fonts-firacode
 )
 
-# https://support.gitkraken.com/how-to-install
-deb_installed+=(gitkraken)
-deb_sources+=(https://release.gitkraken.com/linux/gitkraken-amd64.deb)
-
-# https://atom.io/
-# deb_installed+=(Atom)
-# deb_sources+=(https://atom.io/download/deb)
 
 # https://code.visualstudio.com/Download
-deb_installed+=(Code)
-deb_sources+=(https://code.visualstudio.com/docs/?dv=linux64_deb)
+# deb_installed+=(Code)
+# deb_sources+=(https://code.visualstudio.com/docs/?dv=linux64_deb)
 
 
 
 # https://www.sublimetext.com/docs/3/linux_repositories.html#apt
-apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
-apt_source_files+=(sublime-text)
-apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
-apt_packages+=(sublime-text)
+# apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
+# apt_source_files+=(sublime-text)
+# apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
+# apt_packages+=(sublime-text)
 
 # https://www.qbittorrent.org/download.php
 # add_ppa ppa:qbittorrent-team/qbittorrent-stable
@@ -105,15 +97,6 @@ apt_packages+=(google-chrome-stable)
 # apt_source_files+=(virtualbox)
 # apt_source_texts+=("deb http://download.virtualbox.org/virtualbox/debian $release_name contrib")
 # apt_packages+=(virtualbox-5.1)
-
-# https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
-# apt_keys+=(https://www.virtualbox.org/download/oracle_vbox_2016.asc)
-# apt_source_files+=(virtualbox)
-# apt_source_texts+=("deb http://download.virtualbox.org/virtualbox/debian $release_name contrib")
-# apt_packages+=(virtualbox-5.1)
-
-
-
 
 
 ####################

@@ -41,8 +41,6 @@ set guioptions-=R
 " hi vertsplit ctermbg=bg ctermfg=bg
 
 " Set cursor block in normal mode
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
 
 
 
@@ -70,10 +68,10 @@ autocmd InsertLeave * call ToggleRelativeOn()
 set splitbelow
 set splitright
 
-nmap <C-J> <C-W><C-J>
-nmap <C-K> <C-W><C-K>
-nmap <C-H> <C-W><C-H>
-nmap <C-L> <C-W><C-L>
+nmap <C-J> <C-W><C-J> " Move to bottom window
+nmap <C-K> <C-W><C-K> " Move to top window
+nmap <C-H> <C-W><C-H> " Move to left window
+nmap <C-L> <C-W><C-L> " Move to right window
 
 "----------Mapping------"
 

@@ -314,6 +314,7 @@ ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
 # Vim                                                                         #
 ###############################################################################
 ln -s ~/dotfiles/vim $HOME/.vim
+vim +PluginInstall +qall
 
 
 ###############################################################################
