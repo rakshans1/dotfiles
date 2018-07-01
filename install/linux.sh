@@ -43,7 +43,7 @@ apt_packages+=(
   checkinstall
   libssl-dev
   curl
-  git-all
+  git
   autojump
   htop
   imagemagick
@@ -56,12 +56,11 @@ apt_packages+=(
 
 
 # https://code.visualstudio.com/Download
-# deb_installed+=(Code)
-# deb_sources+=(https://code.visualstudio.com/docs/?dv=linux64_deb)
+apt_keys+=(https://packages.microsoft.com/keys/microsoft.asc)
+apt_source_files+=(code)
+apt_source_texts+=("deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main")
+apt_packages+=(code)
 
-
-
-# https://www.sublimetext.com/docs/3/linux_repositories.html#apt
 # apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
 # apt_source_files+=(sublime-text)
 # apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
@@ -80,10 +79,10 @@ apt_packages+=(
 # apt_packages+=(oracle-java8-installer)
 
 # https://www.ubuntuupdates.org/ppa/google_chrome
-apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
-apt_source_files+=(google-chrome)
-apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
-apt_packages+=(google-chrome-stable)
+#apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
+#apt_source_files+=(google-chrome)
+#apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
+#apt_packages+=(google-chrome-stable)
 
 
 # https://yarnpkg.com/en/docs/install
@@ -195,7 +194,7 @@ fi
 
 # Update APT.
 e_header "Updating APT"
-sudo apt-get -qq update
+#sudo apt-get -qq update
 
 
 # Upgrade APT.
