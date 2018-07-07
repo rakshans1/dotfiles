@@ -305,17 +305,16 @@ install_zsh
 ###############################################################################
 ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
 mkdir $HOME/.local/share/fonts
-ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
-ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
+#ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
+#ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
+cd ~/.local/share/fonts && curl -fLo "FuraCode.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete.otf
 
-
+cd ~/.local/share/fonts && curl -fLo "FuraCodeMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.otf
 
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
-ln -s ~/dotfiles/vim $HOME/.vim
-vim +PluginInstall +qall
-
+$HOME/dotfiles/install/vim.sh
 
 ###############################################################################
 # Zsh                                                                         #

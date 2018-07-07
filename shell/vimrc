@@ -4,6 +4,7 @@ so ~/.vim/plugins.vim
 
 syntax enable
 
+set encoding=UTF-8
 set backspace=indent,eol,start             "Make backspace behave like every other editor.
 let mapleader = ' '                        "Default Leader is \, but a comma is mush better
 set noswapfile

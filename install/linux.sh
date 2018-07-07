@@ -49,6 +49,7 @@ apt_packages+=(
   imagemagick
   vlc
   vim
+  vim-nox
   vsftpd
   guake
   fonts-firacode
