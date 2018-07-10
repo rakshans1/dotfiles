@@ -39,7 +39,7 @@ source $ZSH_CUSTOM/plugins/zshhighlight.sh
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # COMPLETION_WAITING_DOTS="true"
@@ -68,22 +68,45 @@ source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
+export EDITOR="/usr/bin/vim"
+export ANDROID_HOME=${HOME}/Android/Sdk
+export GRADLE_HOME="/usr/share/gradle"
 
-# export MANPATH="/usr/local/man:$MANPATH"
-export ANDROID_HOME=~/Android/Sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/tools/bin
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-# export PATH=${PATH}:/usr/local/go/bin
+# If directory exists they will be added to the path env variable
+declare -a dir_path
+dir_path=(
+  "$HOME/dotfiles/bin"
+  "$ANDROID_HOME/tools"
+  "$ANDROID_HOME/tools/bin"
+  "$ANDROID_HOME/emulator"
+  "$ANDROID_HOME/platform-tools"
+  "$GRADLE_HOME/bin"
+)
+
+for dir in ${(k)dir_path[@]}
+do
+  if [ -d ${dir} ]; then
+    PATH="$PATH:${dir}"
+  fi
+done
+
+unset dir_path
+
+export PATH
+
 source /usr/share/autojump/autojump.sh
 source $HOME/.nvm/nvm.sh
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 
-# synclient TapButton1=1 TapButton2=3 TapButton3=2
+# Load the shell dotfiles
+for file in $HOME/dotfiles/shell/{shell_aliases,shell_functions}; do
+  [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -112,7 +135,3 @@ export LANG=en_US.UTF-8
 
 stty stop undef
 stty start undef
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

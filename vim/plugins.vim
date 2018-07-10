@@ -15,7 +15,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'ryanoasis/vim-devicons'
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'raimondi/delimitmate'
-" Plugin 'pangloss/vim-javascript'
+Plugin 'pangloss/vim-javascript'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
