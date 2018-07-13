@@ -1,11 +1,11 @@
-"Install Java"
+#"Install Java"
 
 echo "Installing Java"
 sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get -qq update > /dev/null 2>&1
 sudo apt-get -qq install oracle-java8-installer > /dev/null 2>&1
 
-"Install Android"
+#"Install Android"
 
 wget https://dl.google.com/dl/android/studio/ide-zips/3.1.3.0/android-studio-ide-173.4819257-linux.zip
 sudo unzip android-studio-ide-173.4819257-linux.zip -d /opt
