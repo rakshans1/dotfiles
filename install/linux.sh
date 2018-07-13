@@ -80,10 +80,10 @@ apt_packages+=(code)
 # apt_packages+=(oracle-java8-installer)
 
 # https://www.ubuntuupdates.org/ppa/google_chrome
-#apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
-#apt_source_files+=(google-chrome)
-#apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
-#apt_packages+=(google-chrome-stable)
+apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
+apt_source_files+=(google-chrome)
+apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
+apt_packages+=(google-chrome-stable)
 
 
 # https://yarnpkg.com/en/docs/install
