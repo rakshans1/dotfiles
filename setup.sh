@@ -161,6 +161,7 @@ declare -a FILES_TO_SYMLINK=(
   # 'shell/bashrc'
   'shell/zshrc'
   'shell/vimrc'
+  'shell/tmux.conf'
   # 'shell/ackrc'
   # 'shell/curlrc'
   # 'shell/gemrc'
@@ -262,16 +263,26 @@ install_zsh
 ###############################################################################
 ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
 mkdir $HOME/.local/share/fonts
-#ln -s ~/dotfiles/linux/Inconsolata_powerline.otf $HOME/.local/share/fonts
-#ln -s ~/dotfiles/linux/inconsolata_nerd.otf $HOME/.local/share/fonts
+
 cd ~/.local/share/fonts && curl -fLo "FuraCode.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete.otf
 
 cd ~/.local/share/fonts && curl -fLo "FuraCodeMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.otf
 
+cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf
+
+cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
+
+
+
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
-$HOME/dotfiles/install/vim.sh
+#$HOME/dotfiles/install/vim.sh
+
+###############################################################################
+# Tmux                                                                         #
+###############################################################################
+ln -fs ~/dotfiles/tmux $HOME/.tmux
 
 ###############################################################################
 # Zsh                                                                         #

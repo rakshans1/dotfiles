@@ -27,8 +27,9 @@ nnoremap <C-x> :q!<cr>
 
 set t_Co=256
 let base16colorspace=256
-colorscheme spacegray
-"set background=dark
+so ~/.vim/nord.vim
+colorscheme nord 
+set background=dark
 
 set guioptions-=l
 set guioptions-=L
@@ -36,14 +37,11 @@ set guioptions-=r
 set guioptions-=R
 
 "Make linenumber side bar sam ecolor as background color
-" hi LineNr ctermbg=bg
+"hi LineNr ctermbg=236
+
 
 "vertical split border color
-" hi vertsplit ctermbg=bg ctermfg=bg
-
-" Set cursor block in normal mode
-
-
+hi vertsplit ctermbg=000 ctermfg=000
 
 "----------Searching------"
 set hlsearch
@@ -115,7 +113,7 @@ let NERDTreeHijackNetrw = 0
 let g:airline#extensions#tabline#enable = 1
 set laststatus=2
 let g:airline_powerline_fonts = 1
-
+let g:airline_theme='nord'
 
 "/
 "/ Syntastic

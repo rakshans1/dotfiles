@@ -16,6 +16,7 @@ Plugin 'ryanoasis/vim-devicons'
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
+Plugin 'arcticicestudio/nord-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

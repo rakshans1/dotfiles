@@ -10,3 +10,6 @@
 [submodule "vim/bundle/Vundle.vim"]
 	path = vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "tmux/themes/nord-tmux"]
+	path = tmux/themes/nord-tmux
+	url = https://github.com/arcticicestudio/nord-tmux.git
