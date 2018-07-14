@@ -113,10 +113,11 @@ let NERDTreeHijackNetrw = 0
 "/
 "/ Airline
 "/
+colorscheme nord 
 let g:airline#extensions#tabline#enable = 1
 set laststatus=2
 let g:airline_powerline_fonts = 1
-let g:airline_theme='nord'
+let g:airline_theme='base16_grayscale'
 
 "/
 "/ Syntastic
