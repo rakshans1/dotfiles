@@ -16,6 +16,7 @@ Plugin 'ryanoasis/vim-devicons'
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'arcticicestudio/nord-vim'
 
 call vundle#end()            " required

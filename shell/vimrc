@@ -22,6 +22,9 @@ set softtabstop=2
 set shiftwidth=2
 nnoremap <C-x> :q!<cr>
 
+set ignorecase                            " If search string contains only lowercase letters search is case insensitive.
+set smartcase                             " If search string contains capital letters search is case sensative
+
 
 "----------Visuals------"
 
