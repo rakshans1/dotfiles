@@ -10,6 +10,7 @@ Include ZSH, oh-my-zsh and new ubuntu new system setup
 ## Installation
 ```
 cd ~ && git clone https://github.com/rakshans1/dotfiles.git
+git submodule init
 git submodule update
 ```
 

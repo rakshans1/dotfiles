@@ -6,6 +6,7 @@
 
 # Shortcuts
 alias v="vim"
+alias t="tmux"
 alias x+="chmod +x"
 alias hosts="sudo $EDITOR /etc/hosts"
 
