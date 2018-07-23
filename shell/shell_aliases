@@ -8,7 +8,7 @@
 alias v="vim"
 alias t="tmux"
 alias x+="chmod +x"
-alias hosts="sudo $EDITOR /etc/hosts"
+alias hosts="sudo vim /etc/hosts"
 
 
 # IP addresses
@@ -27,5 +27,5 @@ alias clean_node_modules="find . -name "nodemodules" -type d -prune -exec rm -rf
 alias fs="ls -sh"
 
 # zshrc config
-alias zshrc="${EDITOR} ~/.zshrc"
+alias zshrc="vim ~/.zshrc"
 alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"

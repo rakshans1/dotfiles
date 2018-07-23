@@ -68,7 +68,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 # User configuration
-export EDITOR="/usr/bin/vim"
+# export EDITOR="/usr/bin/vim"
 export ANDROID_HOME=${HOME}/Android/Sdk
 export GRADLE_HOME="/usr/share/gradle"
 
