@@ -30,7 +30,6 @@ set smartcase                             " If search string contains capital le
 
 set t_Co=256
 let base16colorspace=256
-so ~/.vim/nord.vim
 colorscheme nord 
 set background=dark
 

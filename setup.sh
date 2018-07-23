@@ -272,12 +272,16 @@ cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis
 
 cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
 
+###############################################################################
+# Caps to Esc                                                                 #
+###############################################################################
+setxkbmap -option caps:escape
 
 
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
-#$HOME/dotfiles/install/vim.sh
+$HOME/dotfiles/install/vim.sh
 
 ###############################################################################
 # Tmux                                                                         #
