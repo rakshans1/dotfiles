@@ -9,6 +9,9 @@ alias v="vim"
 alias t="tmux"
 alias x+="chmod +x"
 alias hosts="sudo vim /etc/hosts"
+alias update="sudo apt-get update"
+alias upgrade="sudo apt-get upgrade"
+alias add="sudo apt-get install"
 
 
 # IP addresses

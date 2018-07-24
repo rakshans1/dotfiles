@@ -53,6 +53,7 @@ apt_packages+=(
   vsftpd
   guake
   xsel
+  tmux
 )
 
 
