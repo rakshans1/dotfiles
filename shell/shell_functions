@@ -23,7 +23,7 @@ function list() {
 # Start an HTTP server from a directory, optionally specifying the port
 function serve() {
   local port="${1:-8080}"
-  http-server . -p ${port}
+  http-server . -g -o  -p ${port}
 }
 
 # Kill application on particular port

@@ -4,6 +4,7 @@ so ~/.vim/plugins.vim
 
 syntax enable
 
+set mouse=a
 set encoding=UTF-8
 set backspace=indent,eol,start             "Make backspace behave like every other editor.
 let mapleader = ' '                        "Default Leader is \, but a comma is mush better
@@ -24,7 +25,6 @@ nnoremap <C-x> :q!<cr>
 
 set ignorecase                            " If search string contains only lowercase letters search is case insensitive.
 set smartcase                             " If search string contains capital letters search is case sensative
-
 
 "----------Visuals------"
 
@@ -142,6 +142,14 @@ let g:airline_theme='base16_grayscale'
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
 " let g:ycm_server_python_interpreter = '/usr/bin/python'
+
+"/
+"/ ale
+"/
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+let g:ale_fix_on_save = 1
 
 
 "-------Auto-Commands------"

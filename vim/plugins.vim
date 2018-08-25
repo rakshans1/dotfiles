@@ -15,10 +15,12 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ryanoasis/vim-devicons'
 " Plugin 'vim-syntastic/syntastic'
+Plugin 'w0rp/ale'
 " Plugin 'raimondi/delimitmate'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'arcticicestudio/nord-vim'
+Plugin 'editorconfig/editorconfig-vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required

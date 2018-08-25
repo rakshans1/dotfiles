@@ -12,6 +12,7 @@ alias hosts="sudo vim /etc/hosts"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
 alias add="sudo apt-get install"
+alias npmlist="npm list -g --depth 0"
 
 
 # IP addresses

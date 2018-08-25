@@ -52,7 +52,7 @@ apt_packages+=(
   vim-nox
   vsftpd
   guake
-  xsel
+  xclip
   tmux
 )
 
