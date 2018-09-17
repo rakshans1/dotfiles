@@ -14,10 +14,12 @@ alias upgrade="sudo apt-get upgrade"
 alias add="sudo apt-get install"
 alias npmlist="npm list -g --depth 0"
 
+#Git Alias
+alias gb='git pull --rebase --autostash'
 
 # IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
+alias pip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias myip="ip a | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
 
 
 # Download file and save it with filename of remote file
