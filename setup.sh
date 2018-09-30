@@ -169,8 +169,8 @@ declare -a FILES_TO_SYMLINK=(
   # 'shell/screenrc'
 
   # 'git/gitattributes'
-  # 'git/gitconfig'
-  # 'git/gitignore'
+  'git/gitconfig'
+  'git/gitignore'
 
 )
 
@@ -282,11 +282,6 @@ setxkbmap -option caps:escape
 # Vim                                                                         #
 ###############################################################################
 $HOME/dotfiles/install/vim.sh
-
-###############################################################################
-# Tmux                                                                         #
-###############################################################################
-ln -fs ~/dotfiles/tmux $HOME/.tmux
 
 ###############################################################################
 # Zsh                                                                         #

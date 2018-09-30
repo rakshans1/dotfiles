@@ -100,6 +100,10 @@ apt_packages+=(google-chrome-stable)
 # apt_packages+=(virtualbox-5.1)
 
 
+# https://github.com/sharkdp/bat
+deb_installed+=(Bat)
+deb_sources+=(https://github.com/sharkdp/bat/releases/download/v0.7.1/bat_0.7.1_amd64.deb)
+
 ####################
 # ACTUALLY DO THINGS
 ####################

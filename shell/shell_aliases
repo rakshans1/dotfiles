@@ -8,14 +8,12 @@
 alias v="vim"
 alias t="tmux"
 alias x+="chmod +x"
+alias cat="bat"
 alias hosts="sudo vim /etc/hosts"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
 alias add="sudo apt-get install"
 alias npmlist="npm list -g --depth 0"
-
-#Git Alias
-alias gb='git pull --rebase --autostash'
 
 # IP addresses
 alias pip="dig +short myip.opendns.com @resolver1.opendns.com"
