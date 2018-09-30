@@ -18,6 +18,7 @@ packages=(
     diff-so-fancy
     tldr
     fkill-cli
+    gitmoji-cli
 )
 
 npm install -g "${packages[@]}"
