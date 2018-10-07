@@ -54,6 +54,7 @@ apt_packages+=(
   guake
   xclip
   tmux
+  transmission
 )
 
 
@@ -67,6 +68,10 @@ apt_packages+=(code)
 # apt_source_files+=(sublime-text)
 # apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
 # apt_packages+=(sublime-text)
+
+# https://github.com/oguzhaninan/Stacer
+add_ppa ppa:oguzhaninan/stacer
+apt_packages+=(stacer)
 
 # https://www.qbittorrent.org/download.php
 # add_ppa ppa:qbittorrent-team/qbittorrent-stable
