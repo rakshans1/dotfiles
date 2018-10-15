@@ -118,3 +118,8 @@ function tm() {
   tmux new -A -s "$SESSION_NAME"
 }
 
+# Change Wallpaper
+function change_wallpaper() {
+   wget -O /tmp/wallpaper.jpg https://unsplash.it/1920/1080/?random
+   gsettings set org.gnome.desktop.background picture-uri file:///tmp/wallpaper.jpg
+}
