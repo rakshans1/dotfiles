@@ -120,6 +120,6 @@ function tm() {
 
 # Change Wallpaper
 function change_wallpaper() {
-   wget -O /tmp/wallpaper.jpg https://unsplash.it/1920/1080/?random
-   gsettings set org.gnome.desktop.background picture-uri file:///tmp/wallpaper.jpg
+   wget -O ~/Pictures/wallpaper.jpg https://unsplash.it/1920/1080/?random
+   gsettings set org.gnome.desktop.background picture-uri file:///home/rakshans1/Pictures/wallpaper.jpg
 }
