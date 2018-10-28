@@ -122,4 +122,9 @@ function tm() {
 function change_wallpaper() {
    wget -O ~/Pictures/wallpaper.jpg https://unsplash.it/1920/1080/?random
    gsettings set org.gnome.desktop.background picture-uri file:///home/rakshans1/Pictures/wallpaper.jpg
+}   
+
+# Remove old kernels and clean /boot dir
+function purge_kernels() {
+  echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -n '/'`uname -r`'/q;p') $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -n '/'"$(uname -r | sed "s/\([0-9.-]*\)-\([^0-9]\+\)/\1/")"'/q;p') | xargs sudo apt-get -y purge
 }
