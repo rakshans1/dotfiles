@@ -61,7 +61,7 @@ source $ZSH_CUSTOM/plugins/zshhighlight.sh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras zsh-syntax-highlighting zsh-autosuggestions docker)
+plugins=(git git-extras zsh-syntax-highlighting zsh-autosuggestions docker yarn npm)
 
 # source $ohmyzsh/oh-my-zsh.sh
 source $ZSH/oh-my-zsh.sh
@@ -76,6 +76,7 @@ export GRADLE_HOME="/usr/share/gradle"
 declare -a dir_path
 dir_path=(
   "$HOME/dotfiles/bin"
+  "$HOME/.local/bin"
   "$ANDROID_HOME/tools"
   "$ANDROID_HOME/tools/bin"
   "$ANDROID_HOME/emulator"

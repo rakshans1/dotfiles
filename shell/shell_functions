@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create a new directory and enter it
-function mdc() {
+function mkd() {
   mkdir -p "$@" && cd "$@"
 }
 
