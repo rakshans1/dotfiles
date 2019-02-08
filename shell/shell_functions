@@ -33,7 +33,7 @@ function killport() {
 
 # qfind - used to quickly find files that contain a string in a directory
 function qfind () {
-  find . -exec grep -l -s $1 {} \;
+  grep -Ril $1;
   return 0
 }
 

@@ -99,7 +99,7 @@ source /usr/share/autojump/autojump.sh
 source $HOME/.nvm/nvm.sh
 
 # Load the shell dotfiles
-for file in $HOME/dotfiles/shell/{shell_aliases,shell_functions}; do
+for file in $HOME/dotfiles/shell/{shell_aliases,shell_functions,temp_aliases}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
