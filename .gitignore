@@ -1,4 +1,5 @@
 .idea
 cache
-shell/temp_aliases
+shell/work/
 vim/bundle
+vim/.netrwhist
