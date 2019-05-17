@@ -120,10 +120,8 @@ function tm() {
 
 # Change Wallpaper
 function change_wallpaper() {
-   wget -O ~/Pictures/wallpaper.jpg https://unsplash.it/1920/1080/?random
-   wget -O ~/Pictures/lock-wallpaper.jpg https://unsplash.it/1920/1080/?random
-   gsettings set org.gnome.desktop.background picture-uri file:///home/rakshans1/Pictures/wallpaper.jpg
-}   
+  splash --day
+}
 
 # Remove old kernels and clean /boot dir
 function purge_kernels() {

@@ -19,6 +19,7 @@ packages=(
     tldr
     fkill-cli
     gitmoji-cli
+    splash-cli
 )
 
 npm install -g "${packages[@]}"
