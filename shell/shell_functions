@@ -120,7 +120,7 @@ function tm() {
 
 # Change Wallpaper
 function change_wallpaper() {
-  splash --day
+  splash
 }
 
 # Remove old kernels and clean /boot dir
