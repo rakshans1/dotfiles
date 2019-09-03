@@ -2,11 +2,11 @@
 
 
 packages=(
-   
+
 )
 
 cpackages=(
-    vscode
+    code
     sublime-text
     webstorm
     intellij-idea-community

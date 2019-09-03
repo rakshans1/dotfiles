@@ -59,10 +59,10 @@ apt_packages+=(
 
 
 # https://code.visualstudio.com/Download
-apt_keys+=(https://packages.microsoft.com/keys/microsoft.asc)
-apt_source_files+=(code)
-apt_source_texts+=("deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main")
-apt_packages+=(code)
+# apt_keys+=(https://packages.microsoft.com/keys/microsoft.asc)
+# apt_source_files+=(code)
+# apt_source_texts+=("deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main")
+# apt_packages+=(code)
 
 # apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
 # apt_source_files+=(sublime-text)
