@@ -272,6 +272,11 @@ cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis
 
 cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
 
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 ###############################################################################
 # Caps to Esc                                                                 #
 ###############################################################################
@@ -290,7 +295,7 @@ $HOME/dotfiles/install/vim.sh
 # Install Zsh settings
 
 ###############################################################################
-# Terminal  
+# Terminal
 ###############################################################################
 
 # Reload zsh settings

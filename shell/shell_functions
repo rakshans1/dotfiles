@@ -127,3 +127,14 @@ function change_wallpaper() {
 function purge_kernels() {
   echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -n '/'`uname -r`'/q;p') $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -n '/'"$(uname -r | sed "s/\([0-9.-]*\)-\([^0-9]\+\)/\1/")"'/q;p') | xargs sudo apt-get -y purge
 }
+
+# Preview files
+function p() {
+  fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
+                echo {} is a binary file ||
+                (bat --style=numbers --color=always {} ||
+                highlight -O ansi -l {} ||
+                coderay {} ||
+                rougify {} ||
+                cat {}) 2> /dev/null | head -500'
+}
