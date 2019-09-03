@@ -16,6 +16,3 @@
 [submodule "shell/work"]
 	path = shell/work
 	url = git@github.com:rakshans1/dotfiles-work.git
-[submodule "zsh/plugins/git-open"]
-	path = zsh/plugins/git-open
-	url = https://github.com/paulirish/git-open.git
