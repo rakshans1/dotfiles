@@ -2,16 +2,20 @@
 
 
 packages=(
-
+    vlc
+    postman
 )
 
 cpackages=(
     code
     sublime-text
-    webstorm
-    intellij-idea-community
 )
 
-sudo snap install "${packages[@]}" --classic
-sudo snap install "${cpackages[@]}" --classic
+sudo snap install "${packages[@]}"
+
+for package in "${cpackages[@]}"
+do
+   :
+  sudo snap install "${package}" --classic
+done
 

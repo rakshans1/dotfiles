@@ -151,7 +151,6 @@ echo "done"
 #
 
 declare -a FILES_TO_SYMLINK=(
-
   # 'shell/shell_aliases'
   # 'shell/shell_config'
   # 'shell/shell_exports'
@@ -171,7 +170,6 @@ declare -a FILES_TO_SYMLINK=(
   # 'git/gitattributes'
   'git/gitconfig'
   'git/gitignore'
-
 )
 
 
@@ -282,7 +280,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 ###############################################################################
 setxkbmap -option caps:escape
 
-
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
@@ -299,4 +296,4 @@ $HOME/dotfiles/install/vim.sh
 ###############################################################################
 
 # Reload zsh settings
-# source ~/.zshrc
+source ~/.zshrc

@@ -45,9 +45,7 @@ apt_packages+=(
   curl
   git
   autojump
-  htop
   imagemagick
-  vlc
   vim
   vim-nox
   vsftpd
@@ -57,25 +55,14 @@ apt_packages+=(
   transmission
 )
 
-
-# https://code.visualstudio.com/Download
-# apt_keys+=(https://packages.microsoft.com/keys/microsoft.asc)
-# apt_source_files+=(code)
-# apt_source_texts+=("deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main")
-# apt_packages+=(code)
-
-# apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
-# apt_source_files+=(sublime-text)
-# apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
-# apt_packages+=(sublime-text)
+apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
+apt_source_files+=(sublime-text)
+apt_source_texts+=("deb https://download.sublimetext.com/ apt/stable/")
+apt_packages+=(sublime-text)
 
 # https://github.com/oguzhaninan/Stacer
 add_ppa ppa:oguzhaninan/stacer
 apt_packages+=(stacer)
-
-# https://www.qbittorrent.org/download.php
-# add_ppa ppa:qbittorrent-team/qbittorrent-stable
-# apt_packages+=(qbittorrent)
 
 # https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 # add_ppa ppa:papirus/papirus
@@ -93,10 +80,10 @@ apt_packages+=(google-chrome-stable)
 
 
 # https://yarnpkg.com/en/docs/install
-# apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
-# apt_source_files+=(yarn)
-# apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
-# apt_packages+=(yarn)
+apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
+apt_source_files+=(yarn)
+apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
+apt_packages+=(yarn)
 
 # https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
 # apt_keys+=(https://www.virtualbox.org/download/oracle_vbox_2016.asc)
@@ -124,7 +111,7 @@ deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.3.0/fd_7.3.0_am
 
 if (( ${#apt_keys[@]} > 0 )); then
 	for key in "${apt_keys[@]}"; do
-		wget -qO - $key | sudo apt-key add -
+		wget -qO - $key | sudo apt-key add - > /dev/null 2>&1
 	done
 fi
 
@@ -200,7 +187,7 @@ if (( ${#source_i[@]} > 0 )); then
     source_text=${apt_source_texts[i]}
     if [[ "$source_text" =~ ppa: ]]; then
       e_arrow "$source_text"
-      sudo add-apt-repository -y $source_text
+      sudo add-apt-repository -y $source_text > /dev/null 2>&1
     else
       echo "$source_file"
       sudo sh -c "echo '$source_text' > /etc/apt/sources.list.d/$source_file.list"
@@ -215,7 +202,7 @@ sudo apt-get -qq update
 
 # Upgrade APT.
 e_header "Upgrading APT"
-# sudo apt-get -qy upgrade
+sudo apt-get -qq -y upgrade
 
 
 # Install APT packages.
@@ -244,8 +231,8 @@ if (( ${#deb_installed_i[@]} > 0 )); then
     deb="${deb_sources[i]}"
     [[ "$(type -t "$deb")" == function ]] && deb="$($deb)"
     installer_file="$installers_path/$(echo "$deb" | sed 's#.*/##')"
-    wget -O "$installer_file" "$deb"
-    sudo dpkg -i "$installer_file"
+    wget -q  -O "$installer_file" "$deb"
+    sudo dpkg -i "$installer_file" > /dev/null 2>&1
   done
 fi
 

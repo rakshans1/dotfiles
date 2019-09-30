@@ -1,14 +1,10 @@
 #!/bin/bash
 
-
-cd ~/
-git clone https://github.com/creationix/nvm.git .nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 cd ~/.nvm
-git checkout v0.33.11
 . ./nvm.sh
 nvm install node
 nvm use node
-
 
 packages=(
     http-server
@@ -17,7 +13,6 @@ packages=(
     typescript
     diff-so-fancy
     tldr
-    fkill-cli
     gitmoji-cli
     splash-cli
 )
