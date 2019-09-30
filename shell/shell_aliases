@@ -12,7 +12,7 @@ alias cat="bat"
 alias hosts="sudo vim /etc/hosts"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
-alias add="sudo apt-get install"
+alias add="sudo apt-get install -y"
 alias npmlist="npm list -g --depth 0"
 
 # Git alias

@@ -2,7 +2,7 @@
 
 # Ask for the administrator password upfront
 sudo -v
-apt-get -qq -y install gnome-tweak-tool
+apt-get -qq -y install gnome-tweak-tool gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
 
 sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage"
 sudo chmod +x /usr/local/bin/gnomeshell-extension-manage
