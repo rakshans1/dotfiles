@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Edit dotfiles
 function dotfiles() {
@@ -149,12 +149,49 @@ function p() {
                 cat {}) 2> /dev/null | head -500'
 }
 
+function fzf-preview() {
+  fzf --height 50% --border --ansi --multi --tac --preview-window right:70% \
+    --preview "$@"
+}
+
+# Git search recent branch
+function git-branch() {
+  git branch --sort=committerdate --color=always |
+ fzf-preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+
+function git-diff() {
+    git ls-files -d -m -o --exclude-standard | fzf-preview 'git diff --color=always {}'
+}
+
 # Git checkout with fuzzy search
 function gco() {
   if [ -z "$1" ]
   then
-    git checkout $(git branch | fzf-tmux -d 15)
+    git checkout $(git-branch)
   else
-    git checkout $1
+    git checkout $@
+  fi
+}
+
+# Git add with fuzzy search
+function ga() {
+  if [ -z "$1" ]
+  then
+    git add $(git-diff)
+  else
+    git add $@
+  fi
+}
+
+# Git diff with fuzzy search
+function gd() {
+  if [ -z "$1" ]
+  then
+    git-diff
+  else
+    git diff $@
   fi
 }

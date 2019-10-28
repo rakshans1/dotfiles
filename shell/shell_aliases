@@ -17,6 +17,8 @@ alias npmlist="npm list -g --depth 0"
 
 # Git alias
 unalias gco
+unalias ga
+unalias gd
 alias gemoji="gitmoji -c"
 
 # IP addresses
