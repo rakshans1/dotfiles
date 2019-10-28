@@ -99,10 +99,11 @@ export PATH
 
 source /usr/share/autojump/autojump.sh
 source $HOME/.nvm/nvm.sh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# fzf config
+export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Auto change node version with .nvmrc
 autoload -U add-zsh-hook

@@ -16,6 +16,7 @@ alias add="sudo apt-get install -y"
 alias npmlist="npm list -g --depth 0"
 
 # Git alias
+unalias gco
 alias gemoji="gitmoji -c"
 
 # IP addresses

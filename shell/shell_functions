@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# Edit dotfiles
+function dotfiles() {
+  if tmux has-session -t dotfiles 2> /dev/null; then
+    tmux attach -t dotfiles
+    exit
+  fi
+
+  cd ~/dotfiles && tm
+}
+
 # Create a new directory and enter it
 function mkd() {
   mkdir -p "$@" && cd "$@"
@@ -137,4 +147,14 @@ function p() {
                 coderay {} ||
                 rougify {} ||
                 cat {}) 2> /dev/null | head -500'
+}
+
+# Git checkout with fuzzy search
+function gco() {
+  if [ -z "$1" ]
+  then
+    git checkout $(git branch | fzf-tmux -d 15)
+  else
+    git checkout $1
+  fi
 }
