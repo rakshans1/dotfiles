@@ -150,7 +150,7 @@ function p() {
 }
 
 function fzf-preview() {
-  fzf --height 50% --border --ansi --multi --tac --preview-window right:70% \
+  fzf --border --ansi --multi --tac --preview-window right:70% \
     --preview "$@"
 }
 

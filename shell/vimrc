@@ -75,6 +75,12 @@ autocmd InsertLeave * call ToggleRelativeOn()
 "inoremap <C-tab>   <Esc>:tabnext<CR>i
 "inoremap <C-t>     <Esc>:tabnew<CR>
 "nmap <C-w> :tabclose<CR>
+
+"----------Buffer------"
+" Switch between opened files in buffer with ctrl-j and crtl-k
+nnoremap <C-j> :bprev<CR>
+nnoremap <C-k> :bnext<CR>
+
 "----------Split Mapping------"
 set splitbelow
 set splitright
@@ -108,6 +114,7 @@ imap <c-s> <esc>:w<cr>a
 let g:ctrlp_custom_ignore = 'node_modules\|git'
 let g:ctrlp_match_window = 'top,order:ttb,min:1,max30,results:30'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_working_path_mode = 'ra'
 
 "search files in buffer
 nmap <c-R> :CtrlPBufTag<cr>
