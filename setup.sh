@@ -182,8 +182,6 @@ for i in ${FILES_TO_SYMLINK[@]}; do
   mv ~/.${i##*/} ~/dotfiles_old/
 done
 
-
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
@@ -217,6 +215,24 @@ main() {
 
   unset FILES_TO_SYMLINK
 
+  echo -e "\\n\\ninstalling to ~/.config"
+  echo "=============================="
+  if [ ! -d "$HOME/.config" ]; then
+      echo "Creating ~/.config"
+      mkdir -p "$HOME/.config"
+  fi
+
+  config_files=$(find ~/dotfiles/config -maxdepth 1)
+  for config in $config_files; do
+      target="$HOME/.config/$( basename "$config" )"
+      echo $target
+      if [ -e "$target" ]; then
+          echo "~${target#$HOME} already exists... Skipping."
+      else
+          echo "Creating symlink for $config"
+          ln -s "$config" "$target"
+      fi
+  done
 }
 
 
@@ -254,25 +270,30 @@ install_zsh () {
 }
 
 main
-install_zsh
+#install_zsh
 
 ###############################################################################
 # Linux                                                      #
 ###############################################################################
-ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
-mkdir $HOME/.local/share/fonts
+#ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
+#mkdir $HOME/.local/share/fonts
+#
+#cd ~/.local/share/fonts && curl -fLo "FuraCode.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete.otf
+#
+#cd ~/.local/share/fonts && curl -fLo "FuraCodeMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.otf
+#
+#cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf
+#
+#cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
+#
 
-cd ~/.local/share/fonts && curl -fLo "FuraCode.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete.otf
-
-cd ~/.local/share/fonts && curl -fLo "FuraCodeMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.otf
-
-cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf
-
-cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
+if [ ! -d ~/.fzf ]; then
+  print_info "Installing fzf"
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install
+fi
 
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
 ###############################################################################
 # Caps to Esc                                                                 #
 ###############################################################################
@@ -294,4 +315,4 @@ $HOME/dotfiles/install/vim.sh
 ###############################################################################
 
 # Reload zsh settings
-source ~/.zshrc
+#source ~/.zshrc

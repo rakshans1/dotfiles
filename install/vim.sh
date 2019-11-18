@@ -1,9 +1,17 @@
-ln -fs ~/dotfiles/vim $HOME/.vim
-vim +PluginInstall +qall
+#!/usr/bin/env bash
 
-sudo apt-get -y install cmake
-cd ~/.vim/bundle/YouCompleteMe
-git submodule update --init --recursive
-python3 install.py --js-completer
+echo -e "\\n\\nCreating vim symlinks"
+VIMFILES=( "$HOME/.vim:~/dotfiles/config/nvim"
+        "$HOME/.vimrc:~/dotfiles/config/nvim/init.vim" )
 
-
+for file in "${VIMFILES[@]}"; do
+    KEY=${file%%:*}
+    VALUE=${file#*:}
+    if [ -e "${KEY}" ]; then
+        echo "${KEY} already exists... skipping."
+    else
+        echo "Creating symlink for $KEY"
+        echo $VALUE
+        ln -s "${VALUE}" "${KEY}"
+    fi
+done
