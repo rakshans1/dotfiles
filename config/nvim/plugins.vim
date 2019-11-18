@@ -2,6 +2,7 @@ call functions#PlugLoad()
 call plug#begin('~/.config/nvim/plugged')
 
 " colorscheme
+Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 
 " autocomplete
