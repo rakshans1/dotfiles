@@ -20,22 +20,22 @@ set t_Co=256
 set number                                 "Let's activate line number
 set wrap " turn on line wrapping
 colorscheme iceberg
-
+set laststatus=2 " show the status line all the time
+set hidden " current buffer can be put into background
+set nobackup
+set nowritebackup
+set cmdheight=1
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
 "Toggle relative numbering, and set to absolute on loss of focus or insert
 "mode
-set rnu
-function! ToggleNumberOn()
-  set nu!
-  set rnu
-endfunction
-function! ToggleRelativeOn()
-  set rnu!
-  set nu
-endfunction
-autocmd FocusLost * call ToggleRelativeOn()
-autocmd FocusGained * call ToggleRelativeOn()
-autocmd InsertEnter * call ToggleRelativeOn()
-autocmd InsertLeave * call ToggleRelativeOn()
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 "----------Tabs------"
 " CTRL-Tab is next tab
@@ -58,3 +58,19 @@ set ignorecase                            " If search string contains only lower
 set smartcase                             " If search string contains capital letters search is case sensative
 set hlsearch
 set incsearch
+
+"----------Split Mapping------"
+set splitbelow
+set splitright
+
+nmap <C-j> <C-W><C-J> " Move to bottom window
+nmap <C-k> <C-W><C-K> " Move to top window
+nmap <C-h> <C-W><C-H> " Move to left window
+nmap <C-l> <C-W><C-L> " Move to right window
+
+nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
+
+"Make ctrl+s work
+nmap <c-s> :w<cr>
+imap <c-s> <esc>:w<cr>a

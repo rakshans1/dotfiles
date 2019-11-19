@@ -1,0 +1,11 @@
+{
+    "suggest.enablePreview": true,
+    "codeLens.enable": true,
+    "suggest.maxPreviewWidth": 100,
+    "diagnostic.checkCurrentLine": true,
+    "diagnostic.maxWindowHeight": 20,
+    "diagnostic.errorSign": "✖",
+    "diagnostic.warningSign": "⚠",
+    "diagnostic.infoSign": "●",
+    "diagnostic.hintSign": "○"
+}

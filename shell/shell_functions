@@ -158,8 +158,8 @@ function fzf-preview() {
 function git-branch() {
   git branch -a --sort=committerdate --color=always |
  fzf-preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
+  sed 's/.* //' | cut -d' ' -f1 |
+  sed 's#remotes/[^/]*/##'
 }
 
 function git-diff() {
