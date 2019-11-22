@@ -5,39 +5,42 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 
+" File search
+Plug '~/.fzf/'
+Plug 'junegunn/fzf.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdcommenter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
 " Plug 'vim-syntastic/syntastic'
-" Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 " Plug 'raimondi/delimitmate'
 
 " syntax
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'moll/vim-node', { 'for': 'javascript' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-" show hex/rgb colors in bg
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'norcalli/nvim-colorizer.lua' " show hex/rgb colors in bg
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'editorconfig/editorconfig-vim'
 
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
-
-Plug 'Quramy/tsuquyomi'
 
 call plug#end()

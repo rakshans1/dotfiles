@@ -8,7 +8,7 @@ if tmux has-session -t dotfiles 2> /dev/null; then
 fi
 
 tmux new-session -d -s dotfiles -n editor
-tmux send-keys -t dotfiles:editor "vim " Enter
+tmux send-keys -t dotfiles:editor "v " Enter
 tmux split-window -t dotfiles:editor -v
 tmux send-keys -t dotfiles:editor "gst" Enter
 tmux split-window -t dotfiles:editor -h

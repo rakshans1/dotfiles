@@ -1,11 +1,22 @@
 {
     "suggest.enablePreview": true,
-    "codeLens.enable": true,
+    "codeLens.enable": false,
     "suggest.maxPreviewWidth": 100,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.maxWindowHeight": 20,
     "diagnostic.errorSign": "✖",
     "diagnostic.warningSign": "⚠",
     "diagnostic.infoSign": "●",
-    "diagnostic.hintSign": "○"
+    "diagnostic.hintSign": "○",
+    "languageserver": {
+      "golang": {
+        "command": "gopls",
+        "rootPatterns": ["go.mod", ".vim/", ".git/"],
+        "filetypes": ["go"],
+        "initializationOptions": {
+          "usePlaceholders": true,
+          "completeUnimported": true
+        }
+      }
+  }
 }

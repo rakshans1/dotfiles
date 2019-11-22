@@ -37,6 +37,9 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
+" Automatically import missing packages 
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 

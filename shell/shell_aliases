@@ -5,7 +5,8 @@
 # For a full list of active aliases, run `alias`.
 
 # Shortcuts
-alias v="vim"
+alias v="nvim"
+alias vim="nvim"
 alias t="tmux"
 alias x+="chmod +x"
 alias cat="bat"

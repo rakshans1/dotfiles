@@ -8,6 +8,9 @@ set autoread                               "Reload files changed outside vim
 set noerrorbells visualbell t_vb= 	       "No bells!
 set tm=500
 nnoremap <C-x> :q!<cr>
+set termguicolors
+" Enable loading {ftdetect,ftplugin,indent}/*.vim files.
+filetype plugin indent on
 
 "----------Tab control------"
 set tabstop=4
@@ -28,6 +31,11 @@ set cmdheight=1
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+nmap <leader>z <Plug>Zoom
+" switch cursor to line when in insert mode, and block when not
+let &t_SI = "\e[5 q" " insert mode vertical line
+let &t_EI = "\e[1 q" " command mode block
+
 "Toggle relative numbering, and set to absolute on loss of focus or insert
 "mode
 set number relativenumber
@@ -36,6 +44,13 @@ augroup numbertoggle
   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
+
+"----------Behaviour------"
+set clipboard+=unnamedplus
+" jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 
 "----------Tabs------"
 " CTRL-Tab is next tab
@@ -58,6 +73,8 @@ set ignorecase                            " If search string contains only lower
 set smartcase                             " If search string contains capital letters search is case sensative
 set hlsearch
 set incsearch
+" clear highlighted search
+noremap <leader>c :set hlsearch! hlsearch?<cr>
 
 "----------Split Mapping------"
 set splitbelow
@@ -74,3 +91,9 @@ nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
 "Make ctrl+s work
 nmap <c-s> :w<cr>
 imap <c-s> <esc>:w<cr>a
+
+
+"----------Mapping------"
+" keep visual selection when indenting/outdenting
+vmap < <gv
+vmap > >gv
