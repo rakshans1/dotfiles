@@ -58,3 +58,5 @@ nnoremap <C-p> :Files<CR>
 map <leader>r :FZFMru<CR>
 " Search tags
 map <leader>t :Tags<CR>
+" Folder Search
+map <leader>p :Rg<CR>
