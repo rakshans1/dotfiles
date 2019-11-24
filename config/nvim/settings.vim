@@ -80,8 +80,8 @@ noremap <leader>c :set hlsearch! hlsearch?<cr>
 set splitbelow
 set splitright
 
-nmap <C-j> <C-W><C-J> " Move to bottom window
-nmap <C-k> <C-W><C-K> " Move to top window
+" nmap <C-j> <C-W><C-J> " Move to bottom window
+" nmap <C-k> <C-W><C-K> " Move to top window
 nmap <C-h> <C-W><C-H> " Move to left window
 nmap <C-l> <C-W><C-L> " Move to right window
 

@@ -8,7 +8,6 @@ Plug 'arcticicestudio/nord-vim'
 " File search
 Plug '~/.fzf/'
 Plug 'junegunn/fzf.vim'
-Plug 'ctrlpvim/ctrlp.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -43,4 +42,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 
+
+
+Plug 'wakatime/vim-wakatime'
 call plug#end()
