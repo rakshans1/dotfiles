@@ -5,6 +5,10 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
 
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-peekaboo'
+
 " File search
 Plug '~/.fzf/'
 Plug 'junegunn/fzf.vim'
