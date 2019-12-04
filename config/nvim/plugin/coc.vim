@@ -1,5 +1,6 @@
  let g:coc_global_extensions = [
         \ 'coc-css',
+        \ 'coc-html',
         \ 'coc-json',
         \ 'coc-tsserver',
         \ 'coc-git',
@@ -10,6 +11,7 @@
         \ 'coc-vimlsp',
         \ 'coc-emmet',
         \ 'coc-prettier',
+        \ 'coc-phpls',
         \ 'coc-ultisnips'
         \ ]
  " Use tab for trigger completion with characters ahead and navigate.
@@ -24,6 +26,8 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Enter to confirm autocomplete sugestion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
  " coc-prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 nmap <leader>f :CocCommand prettier.formatFile<cr>
