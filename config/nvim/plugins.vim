@@ -29,7 +29,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
-" Plug 'vim-syntastic/syntastic'
 Plug 'dense-analysis/ale'
 " Plug 'raimondi/delimitmate'
 
