@@ -1,6 +1,6 @@
 {
     "suggest.enablePreview": true,
-    "codeLens.enable": false,
+    "codeLens.enable": true,
     "suggest.maxPreviewWidth": 100,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.maxWindowHeight": 20,
@@ -26,5 +26,10 @@
                 "storagePath": "/tmp/intelephense"
             }
         }
-  }
+  },
+  "snippets.extends": {
+    "cpp": ["c"],
+    "javascriptreact": ["javascript"],
+    "typescript": ["javascript"]
+  } 
 }

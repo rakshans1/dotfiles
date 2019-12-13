@@ -15,6 +15,7 @@ Plug 'junegunn/fzf.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim'
 
 " Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }

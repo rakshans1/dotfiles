@@ -12,13 +12,16 @@
         \ 'coc-emmet',
         \ 'coc-prettier',
         \ 'coc-phpls',
-        \ 'coc-ultisnips'
+        \ 'coc-ultisnips',
+        \ 'coc-snippets'
         \ ]
  " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ coc#refresh()
+
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
