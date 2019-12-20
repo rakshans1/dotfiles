@@ -131,6 +131,7 @@ function tm() {
 # Change Wallpaper
 function change_wallpaper() {
   splash
+  gsettings set org.gnome.desktop.background picture-options stretched
 }
 
 # Remove old kernels and clean /boot dir

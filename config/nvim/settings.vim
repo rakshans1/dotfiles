@@ -5,6 +5,7 @@ let mapleader = ' '                        "Default Leader is \, but a space is 
 set noswapfile
 set ruler                                  "show cursor position all the time
 set autoread                               "Reload files changed outside vim
+set autoindent                             " Indent according to previous line.
 set noerrorbells visualbell t_vb= 	       "No bells!
 set tm=500
 nnoremap <C-x> :q!<cr>
@@ -24,7 +25,7 @@ set number                                 "Let's activate line number
 set wrap " turn on line wrapping
 colorscheme iceberg
 set laststatus=2 " show the status line all the time
-set hidden " current buffer can be put into background
+set hidden " Switch between buffers without having to save first.
 set nobackup
 set nowritebackup
 set cmdheight=1

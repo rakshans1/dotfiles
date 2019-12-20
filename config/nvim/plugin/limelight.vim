@@ -1,2 +1,1 @@
-nmap <Leader>l <Plug>(Limelight!!)
-xmap <Leader>l <Plug>(Limelight!!)
+nmap <Leader>l :Limelight!!<CR>
