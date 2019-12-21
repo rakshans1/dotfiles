@@ -1,4 +1,5 @@
  let g:coc_global_extensions = [
+        \ 'coc-yank',
         \ 'coc-css',
         \ 'coc-html',
         \ 'coc-json',
@@ -77,3 +78,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" Get yanked list
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>

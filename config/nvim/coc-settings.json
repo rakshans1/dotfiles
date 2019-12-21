@@ -27,6 +27,9 @@
             }
         }
   },
+  "eslint.autoFixOnSave": true,
+  "eslint.run": "onSave",
+  "prettier.eslintIntegration": true,
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],

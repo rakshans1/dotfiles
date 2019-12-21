@@ -29,7 +29,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'  Replaced with coc-eslint
 " Plug 'raimondi/delimitmate'
 
 " syntax
