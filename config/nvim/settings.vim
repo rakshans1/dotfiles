@@ -4,7 +4,6 @@ set backspace=indent,eol,start             "Make backspace behave like every oth
 let mapleader = ' '                        "Default Leader is \, but a space is much better
 set noswapfile
 set ruler                                  "show cursor position all the time
-set autoread                               "Reload files changed outside vim
 set autoindent                             " Indent according to previous line.
 set noerrorbells visualbell t_vb= 	       "No bells!
 set tm=500
@@ -53,6 +52,12 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+"Reload files changed outside vim
+set autoread                               
+augroup autoRead
+    autocmd!
+    autocmd CursorHold * silent! checktime
+augroup END
 "----------Tabs------"
 " CTRL-Tab is next tab
 "nnoremap <C-S-tab> :tabprevious<CR>
