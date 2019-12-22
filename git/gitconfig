@@ -13,10 +13,6 @@
     undo = reset --soft HEAD~1                   # Undo last commit (affects HEAD only)
     reset = reset --hard HEAD~1                  # Remove last commit (from HEAD, Index and Working Dir)
 
-[pager]
-    # Insanely beautiful diffs ==> npm install -g diff-so-fancy
-    diff = diff-so-fancy | less --tabs=4 -RFX
-    show = diff-so-fancy | less --tabs=4 -RFX
 [diff]
 	tool = meld
 

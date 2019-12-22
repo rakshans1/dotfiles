@@ -66,23 +66,30 @@ endif
 
 "----------Buffer------"
 " Switch between opened files in buffer with ctrl-j and crtl-k
-nnoremap <C-j> :bprev<CR>
-nnoremap <C-k> :bnext<CR>
+" nnoremap <C-j> :bprev<CR>
+" nnoremap <C-k> :bnext<CR>
 
 "----------Searching------"
 set ignorecase                            " If search string contains only lowercase letters search is case insensitive.
 set smartcase                             " If search string contains capital letters search is case sensative
 set hlsearch
 set incsearch
+" Live preview substitute command
+if has("nvim")
+    set inccommand=nosplit
+endif
 " clear highlighted search
 noremap <leader>c :set hlsearch! hlsearch?<cr>
+" Find and replace in current file
+nnoremap <Leader>h :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
+xnoremap <Leader>h "sy:%s/<C-r>s//<Left>
 
 "----------Split Mapping------"
 set splitbelow
 set splitright
 
-" nmap <C-j> <C-W><C-J> " Move to bottom window
-" nmap <C-k> <C-W><C-K> " Move to top window
+nmap <C-j> <C-W><C-J> " Move to bottom window
+nmap <C-k> <C-W><C-K> " Move to top window
 nmap <C-h> <C-W><C-H> " Move to left window
 nmap <C-l> <C-W><C-L> " Move to right window
 

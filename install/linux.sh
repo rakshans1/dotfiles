@@ -94,11 +94,11 @@ apt_packages+=(yarn)
 
 # https://github.com/sharkdp/bat
 deb_installed+=(Bat)
-deb_sources+=(https://github.com/sharkdp/bat/releases/download/v0.11.0/bat_0.11.0_amd64.deb)
+deb_sources+=(https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb)
 
 # https://github.com/sharkdp/fd
 deb_installed+=(fd)
-deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.3.0/fd_7.3.0_amd64.deb)
+deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb)
 
 
 ####################

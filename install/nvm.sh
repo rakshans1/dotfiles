@@ -11,7 +11,6 @@ packages=(
     nodemon
     gulp
     typescript
-    diff-so-fancy
     tldr
     gitmoji-cli
     splash-cli
