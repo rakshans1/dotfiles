@@ -26,6 +26,8 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb' " :Gbrowse for gihub
+Plug 'shumphrey/fugitive-gitlab.vim' " :Gbrowse for gitlab
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
