@@ -151,27 +151,14 @@ echo "done"
 #
 
 declare -a FILES_TO_SYMLINK=(
-  # 'shell/shell_aliases'
-  # 'shell/shell_config'
-  # 'shell/shell_exports'
-  # 'shell/shell_functions'
-  # 'shell/bash_profile'
-  # 'shell/bash_prompt'
-  # 'shell/bashrc'
   'shell/zshrc'
-  'shell/vimrc'
   'shell/tmux.conf'
-  # 'shell/ackrc'
-  # 'shell/curlrc'
-  # 'shell/gemrc'
-  # 'shell/inputrc'
-  # 'shell/screenrc'
 
-  # 'git/gitattributes'
   'git/gitconfig'
   'git/gitignore'
-)
 
+  'rc/javascript/eslintrc'
+)
 
 
 # FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
@@ -222,7 +209,7 @@ main() {
       mkdir -p "$HOME/.config"
   fi
 
-  config_files=$(find ~/dotfiles/config -maxdepth 1)
+  config_files=$(ls -d ~/dotfiles/config/*)
   for config in $config_files; do
       target="$HOME/.config/$( basename "$config" )"
       echo $target
@@ -270,7 +257,7 @@ install_zsh () {
 }
 
 main
-#install_zsh
+install_zsh
 
 ###############################################################################
 # Linux                                                      #

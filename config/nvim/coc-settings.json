@@ -29,6 +29,7 @@
   },
   "eslint.autoFixOnSave": true,
   "eslint.run": "onSave",
+  "eslint.quiet": true,
   "prettier.eslintIntegration": true,
   "snippets.extends": {
     "cpp": ["c"],
