@@ -42,7 +42,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'norcalli/nvim-colorizer.lua' " show hex/rgb colors in bg
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript' }
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'editorconfig/editorconfig-vim'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }

@@ -8,7 +8,9 @@ set autoindent                             " Indent according to previous line.
 set noerrorbells visualbell t_vb= 	       "No bells!
 set tm=500
 nnoremap <C-x> :q!<cr>
-set termguicolors
+if (has("termguicolors"))
+  set termguicolors
+endif
 " Enable loading {ftdetect,ftplugin,indent}/*.vim files.
 filetype plugin indent on
 
@@ -27,7 +29,7 @@ set laststatus=2 " show the status line all the time
 set hidden " Switch between buffers without having to save first.
 set nobackup
 set nowritebackup
-set cmdheight=1
+set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes

@@ -60,8 +60,6 @@ nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 " Recent Files
 map <leader>r :FZFMru<CR>
-" Search tags
-map <leader>t :Tags<CR>
 " Folder Search
 map <leader>p :Rg<CR>
 
