@@ -47,12 +47,12 @@ apt_packages+=(
   autojump
   imagemagick
   vim
-  vim-nox
   vsftpd
   guake
   xclip
   tmux
   transmission
+  dconf-editor
 )
 
 apt_keys+=(https://download.sublimetext.com/sublimehq-pub.gpg )
@@ -65,8 +65,8 @@ add_ppa ppa:oguzhaninan/stacer
 apt_packages+=(stacer)
 
 # https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-# add_ppa ppa:papirus/papirus
-# apt_packages+=(papirus-icon-theme)
+add_ppa ppa:papirus/papirus
+apt_packages+=(papirus-icon-theme)
 
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
 # add_ppa ppa:webupd8team/java
@@ -93,13 +93,17 @@ apt_packages+=(yarn)
 
 
 # https://github.com/sharkdp/bat
-deb_installed+=(Bat)
+deb_installed+=(bat)
 deb_sources+=(https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb)
 
 # https://github.com/sharkdp/fd
 deb_installed+=(fd)
 deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb)
 
+
+# https://github.com/BurntSushi/ripgrep
+deb_installed+=(rg)
+deb_sources+=(https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb)
 
 ####################
 # ACTUALLY DO THINGS

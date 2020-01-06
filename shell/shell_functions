@@ -130,7 +130,7 @@ function tm() {
 
 # Change Wallpaper
 function change_wallpaper() {
-  splash
+  splash --collection 9307415
   gsettings set org.gnome.desktop.background picture-options stretched
 }
 
