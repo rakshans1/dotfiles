@@ -60,6 +60,7 @@ augroup autoRead
     autocmd!
     autocmd CursorHold * silent! checktime
 augroup END
+
 "----------Tabs------"
 " CTRL-Tab is next tab
 "nnoremap <C-S-tab> :tabprevious<CR>
@@ -72,9 +73,9 @@ augroup END
 "nmap <C-w> :tabclose<CR>
 
 "----------Buffer------"
-" Switch between opened files in buffer with ctrl-j and crtl-k
-" nnoremap <C-j> :bprev<CR>
-" nnoremap <C-k> :bnext<CR>
+" Switch between buffer
+nnoremap [b :bprev<CR>
+nnoremap ]b :bnext<CR>
 
 "----------Searching------"
 set ignorecase                            " If search string contains only lowercase letters search is case insensitive.
@@ -112,3 +113,16 @@ imap <c-s> <esc>:w<cr>a
 " keep visual selection when indenting/outdenting
 vmap < <gv
 vmap > >gv
+
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+
+" Moving lines
+xnoremap <silent> <C-j> :move'>+<cr>gv
+xnoremap <silent> <C-k> :move-2<cr>gv
+
+" Open file in sublime
+command! Subl :call system('nohup "subl" '.expand('%:p').'> /dev/null 2>&1 < /dev/null &')<cr>

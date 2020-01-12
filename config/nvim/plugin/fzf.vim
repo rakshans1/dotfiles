@@ -53,7 +53,7 @@ endfunction
 command! Tags call s:tags()
 
 " Ctrlp for file search
-nnoremap <C-p> :Files<CR>
+nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 " Find files in current directory of file currently edited
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 " Navigate between buffers

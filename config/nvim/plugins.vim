@@ -8,10 +8,16 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-slash'
 
 " File search
 Plug '~/.fzf/'
 Plug 'junegunn/fzf.vim'
+
+" Edit
+Plug 'tpope/vim-repeat'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'AndrewRadev/splitjoin.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
