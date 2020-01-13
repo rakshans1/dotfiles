@@ -9,6 +9,7 @@ packages=(
 cpackages=(
     code
     sublime-text
+    sublime-merge
 )
 
 sudo snap install "${packages[@]}"

@@ -1,6 +1,6 @@
 {
     "suggest.enablePreview": true,
-    "codeLens.enable": true,
+    "codeLens.enable": false,
     "suggest.maxPreviewWidth": 100,
     "diagnostic.checkCurrentLine": true,
     "diagnostic.maxWindowHeight": 20,
@@ -28,7 +28,7 @@
         }
   },
   "eslint.autoFixOnSave": true,
-  "eslint.run": "onSave",
+  "eslint.run": "onType",
   "eslint.quiet": true,
   "prettier.eslintIntegration": true,
   "snippets.extends": {
