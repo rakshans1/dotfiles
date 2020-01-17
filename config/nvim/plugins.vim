@@ -8,7 +8,6 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/vim-slash'
 
 " File search
 Plug '~/.fzf/'
