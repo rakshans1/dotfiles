@@ -23,6 +23,13 @@ augroup FzfStateLine
   autocmd TermClose \v[0-9]+;#FZF$ call s:fzf_buf_out()
 augroup END
 
+function! s:fzf_statusline()
+  highlight fzf1 ctermfg=255 ctermbg=255
+  setlocal statusline=%#fzf1#\  
+endfunction
+
+autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
