@@ -1,4 +1,5 @@
 let g:fzf_layout = { 'up': '~40%' }
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 function s:fzf_buf_in() abort
   echo
@@ -21,13 +22,6 @@ augroup FzfStateLine
   autocmd BufLeave \v[0-9]+;#FZF$ call s:fzf_buf_out()
   autocmd TermClose \v[0-9]+;#FZF$ call s:fzf_buf_out()
 augroup END
-
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
 
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -91,10 +85,11 @@ function! RipgrepFzf(query, fullscreen)
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, 'right:50%:hidden', '?'), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+
 " Find and replace in directory
 function! Substitute(query, fullscreen)
   call RipgrepFzf(a:query, a:fullscreen)
