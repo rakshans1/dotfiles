@@ -4,6 +4,8 @@ call plug#begin('~/.config/nvim/plugged')
 " colorscheme
 Plug 'cocopon/iceberg.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'logico-dev/typewriter'
+Plug 'sainnhe/edge'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -17,6 +19,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'metakirby5/codi.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

@@ -1,5 +1,27 @@
 let g:fzf_layout = { 'up': '~40%' }
 
+function s:fzf_buf_in() abort
+  echo
+  set laststatus=0
+  set noruler
+  set nonumber
+  set norelativenumber
+  set signcolumn=no
+endfunction
+
+function s:fzf_buf_out() abort
+  set laststatus=2
+  set ruler
+endfunction
+
+augroup FzfStateLine
+  autocmd!
+  autocmd FileType fzf call s:fzf_buf_in()
+  autocmd BufEnter \v[0-9]+;#FZF$ call s:fzf_buf_in()
+  autocmd BufLeave \v[0-9]+;#FZF$ call s:fzf_buf_out()
+  autocmd TermClose \v[0-9]+;#FZF$ call s:fzf_buf_out()
+augroup END
+
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
