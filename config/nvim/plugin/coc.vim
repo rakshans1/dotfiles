@@ -62,7 +62,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gh <Plug>(coc-doHover)
+nmap <silent> gh :call CocAction('doHover')<cr>
 
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
