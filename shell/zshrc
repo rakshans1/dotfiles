@@ -72,6 +72,9 @@ export ANDROID_HOME=${HOME}/Android/Sdk
 export GRADLE_HOME="/usr/share/gradle"
 export GOPATH=${HOME}/projects/go
 
+export GOPATH=${HOME}/projects/go
+export CARGO_HOME=$HOME/.cargo
+
 # If directory exists they will be added to the path env variable
 declare -a dir_path
 dir_path=(
@@ -79,6 +82,7 @@ dir_path=(
   "$HOME/.local/bin"
   "/usr/local/go/bin"
   "$GOPATH/bin"
+  "$CARGO_HOME/bin"
   "$ANDROID_HOME/tools"
   "$ANDROID_HOME/tools/bin"
   "$ANDROID_HOME/emulator"

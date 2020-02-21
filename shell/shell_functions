@@ -210,3 +210,8 @@ function gll() {
         git show $hashes
     fi
 }
+
+# copy file content to clipboard
+function copy() {
+  cat $1 | xclip -sel clipboard
+}
