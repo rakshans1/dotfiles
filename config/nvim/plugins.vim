@@ -39,6 +39,7 @@ Plug 'shumphrey/fugitive-gitlab.vim' " :Gbrowse for gitlab
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'easymotion/vim-easymotion'
+Plug 'jiangmiao/auto-pairs'
 " Plug 'dense-analysis/ale'  Replaced with coc-eslint
 " Plug 'raimondi/delimitmate'
 

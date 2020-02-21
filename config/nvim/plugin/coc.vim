@@ -7,7 +7,6 @@
         \ 'coc-git',
         \ 'coc-eslint',
         \ 'coc-tslint-plugin',
-        \ 'coc-pairs',
         \ 'coc-sh',
         \ 'coc-vimlsp',
         \ 'coc-emmet',
