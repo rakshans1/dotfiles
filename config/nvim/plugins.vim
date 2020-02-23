@@ -20,6 +20,7 @@ Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'metakirby5/codi.vim'
+Plug 'wellle/targets.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
