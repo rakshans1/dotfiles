@@ -158,6 +158,8 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitignore'
 
   'rc/javascript/eslintrc'
+
+  'shell/tmux'
 )
 
 
