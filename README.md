@@ -25,6 +25,10 @@ or to setup new machine
 ./setup-new-machine.sh
 ```
 
+##### Update Submodules 
+```sh
+git submodule foreach git pull origin master
+```
 
 ##### Git symbols
 | Git Icons | Explanation |
