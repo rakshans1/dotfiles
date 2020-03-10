@@ -96,8 +96,16 @@ deb_installed+=(fd)
 deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb)
 
 
+# https://github.com/sharkdp/pastel
+deb_installed+=(pastel)
+deb_sources+=(https://github.com/sharkdp/pastel/releases/download/v0.7.1/pastel_0.7.1_i386.deb)
+
+# https://github.com/sharkdp/vivid
+deb_installed+=(vivid)
+deb_sources+=(https://github.com/sharkdp/vivid/releases/download/v0.5.0/vivid_0.5.0_amd64.deb)
+
 # https://github.com/BurntSushi/ripgrep
-deb_installed+=(rg)
+deb_installed+=(ripgrep)
 deb_sources+=(https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb)
 
 ####################
@@ -170,6 +178,17 @@ function setdiff() {
   done
   [[ "$1" ]] && echo "${setdiff_out[@]}"
 }
+
+function contains() {
+    local array=$1
+    local seeking="$2"
+    for v in ${!array}; do
+        if [ "$v" == "$seeking" ]; then
+            return 0;
+        fi
+    done
+   return 1;
+}
 ###############################################################################
 #                                                                     #
 ###############################################################################
@@ -208,6 +227,7 @@ sudo apt-get -qq -y upgrade
 installed_apt_packages="$(dpkg --get-selections | grep -v deinstall | awk 'BEGIN{FS="[\t:]"}{print $1}' | uniq)"
 apt_packages=($(setdiff "${apt_packages[*]}" "$installed_apt_packages"))
 
+
 if (( ${#apt_packages[@]} > 0 )); then
   e_header "Installing APT packages (${#apt_packages[@]})"
   for package in "${apt_packages[@]}"; do
@@ -220,14 +240,19 @@ fi
 
 # Install debs via dpkg
 function __temp() { [[ ! -e "$1" ]]; }
+deb_installed_filter=($(setdiff "${deb_installed[*]}" "$installed_apt_packages"))
 deb_installed_i=($(array_filter_i deb_installed __temp))
 
 if (( ${#deb_installed_i[@]} > 0 )); then
   mkdir -p "$installers_path"
-  e_header "Installing debs (${#deb_installed_i[@]})"
+  e_header "Installing debs (${#deb_installed_filter[@]})"
   for i in "${deb_installed_i[@]}"; do
+    if ! contains deb_installed_filter ${deb_installed[i]}; then
+      continue
+    fi
     e_arrow "${deb_installed[i]}"
     deb="${deb_sources[i]}"
+    continue
     [[ "$(type -t "$deb")" == function ]] && deb="$($deb)"
     installer_file="$installers_path/$(echo "$deb" | sed 's#.*/##')"
     wget -q  -O "$installer_file" "$deb"
