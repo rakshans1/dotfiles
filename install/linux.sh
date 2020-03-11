@@ -98,7 +98,7 @@ deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_am
 
 # https://github.com/sharkdp/pastel
 deb_installed+=(pastel)
-deb_sources+=(https://github.com/sharkdp/pastel/releases/download/v0.7.1/pastel_0.7.1_i386.deb)
+deb_sources+=(https://github.com/sharkdp/pastel/releases/download/v0.7.1/pastel_0.7.1_amd64.deb)
 
 # https://github.com/sharkdp/vivid
 deb_installed+=(vivid)
