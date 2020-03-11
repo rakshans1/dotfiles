@@ -252,7 +252,6 @@ if (( ${#deb_installed_i[@]} > 0 )); then
     fi
     e_arrow "${deb_installed[i]}"
     deb="${deb_sources[i]}"
-    continue
     [[ "$(type -t "$deb")" == function ]] && deb="$($deb)"
     installer_file="$installers_path/$(echo "$deb" | sed 's#.*/##')"
     wget -q  -O "$installer_file" "$deb"
