@@ -109,6 +109,9 @@ export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
+
 export LS_COLORS="$(vivid generate ayu)"
 
 # Auto change node version with .nvmrc

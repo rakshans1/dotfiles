@@ -84,18 +84,18 @@ nnoremap <silent> <Leader>b :Buffers<CR>
 " Recent Files
 map <leader>r :FZFMru<CR>
 " Folder Search
-map <leader>p :Rg<CR>
+map <leader>p :RG<CR>
 
 " Advanced Rg integration to restart search if query changes
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --hidden --smart-case %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec, 'right:50%:hidden', '?'), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang Rg call RipgrepFzf(<q-args>, <bang>0)
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " Find and replace in directory
 function! Substitute(query, fullscreen)

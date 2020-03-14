@@ -1,0 +1,8 @@
+--max-columns=150
+--max-columns-preview
+
+# Include exclude files
+--glob
+!*.lock
+
+--smart-case
