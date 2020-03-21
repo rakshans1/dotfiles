@@ -22,6 +22,8 @@ set shiftwidth=2
 
 "----------Visuals------"
 set t_Co=256
+set foldmethod=syntax  " Foldmethod 
+set nofoldenable
 set number                                 "Let's activate line number
 set wrap " turn on line wrapping
 colorscheme iceberg

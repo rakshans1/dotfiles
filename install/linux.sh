@@ -106,7 +106,7 @@ deb_sources+=(https://github.com/sharkdp/vivid/releases/download/v0.5.0/vivid_0.
 
 # https://github.com/BurntSushi/ripgrep
 deb_installed+=(ripgrep)
-deb_sources+=(https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb)
+deb_sources+=(https://github.com/BurntSushi/ripgrep/releases/download/12.0.0/ripgrep_12.0.0_amd64.deb)
 
 ####################
 # ACTUALLY DO THINGS
