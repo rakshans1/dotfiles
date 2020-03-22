@@ -8,6 +8,7 @@ sudo -v
 # sudo apt-get update
 
 # sudo apt-get -y upgrade
+sudo apt-get -qq install jq > /dev/null 2>&1
 
 
 apt_keys=()
@@ -89,24 +90,29 @@ apt_packages+=(yarn)
 
 # https://github.com/sharkdp/bat
 deb_installed+=(bat)
-deb_sources+=(https://github.com/sharkdp/bat/releases/download/v0.12.1/bat_0.12.1_amd64.deb)
+batversion="$(curl -s "https://api.github.com/repos/sharkdp/bat/releases/latest" | jq -r .tag_name | sed 's/v//')" 
+deb_sources+=('https://github.com/sharkdp/bat/releases/latest/download/bat_'$batversion'_amd64.deb')
 
 # https://github.com/sharkdp/fd
 deb_installed+=(fd)
-deb_sources+=(https://github.com/sharkdp/fd/releases/download/v7.4.0/fd_7.4.0_amd64.deb)
+fdversion="$(curl -s "https://api.github.com/repos/sharkdp/fd/releases/latest" | jq -r .tag_name | sed 's/v//')" 
+deb_sources+=('https://github.com/sharkdp/fd/releases/latest/download/fd_'$fdversion'_amd64.deb')
 
 
 # https://github.com/sharkdp/pastel
 deb_installed+=(pastel)
-deb_sources+=(https://github.com/sharkdp/pastel/releases/download/v0.7.1/pastel_0.7.1_amd64.deb)
+pastelversion="$(curl -s "https://api.github.com/repos/sharkdp/pastel/releases/latest" | jq -r .tag_name | sed 's/v//')" 
+deb_sources+=('https://github.com/sharkdp/pastel/releases/latest/download/pastel_'$pastelversion'_amd64.deb')
 
 # https://github.com/sharkdp/vivid
 deb_installed+=(vivid)
-deb_sources+=(https://github.com/sharkdp/vivid/releases/download/v0.5.0/vivid_0.5.0_amd64.deb)
+vividversion="$(curl -s "https://api.github.com/repos/sharkdp/vivid/releases/latest" | jq -r .tag_name | sed 's/v//')" 
+deb_sources+=('https://github.com/sharkdp/vivid/releases/latest/download/vivid_'$vividversion'_amd64.deb')
 
 # https://github.com/BurntSushi/ripgrep
 deb_installed+=(ripgrep)
-deb_sources+=(https://github.com/BurntSushi/ripgrep/releases/download/12.0.0/ripgrep_12.0.0_amd64.deb)
+rgversion="$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | jq -r .tag_name)"
+deb_sources+=('https://github.com/BurntSushi/ripgrep/releases/download/'$rgversion'/ripgrep_'$rgversion'_amd64.deb')
 
 ####################
 # ACTUALLY DO THINGS
@@ -180,9 +186,10 @@ function setdiff() {
 }
 
 function contains() {
-    local array=$1
-    local seeking="$2"
-    for v in ${!array}; do
+    local seeking=$1
+    shift
+    local array=$@
+    for v in ${array[@]}; do
         if [ "$v" == "$seeking" ]; then
             return 0;
         fi
@@ -247,7 +254,7 @@ if (( ${#deb_installed_i[@]} > 0 )); then
   mkdir -p "$installers_path"
   e_header "Installing debs (${#deb_installed_filter[@]})"
   for i in "${deb_installed_i[@]}"; do
-    if ! contains deb_installed_filter ${deb_installed[i]}; then
+    if ! contains ${deb_installed[i]} ${deb_installed_filter[@]}; then
       continue
     fi
     e_arrow "${deb_installed[i]}"

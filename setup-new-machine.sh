@@ -38,3 +38,4 @@ $HOME/dotfiles/setup.sh
 ###############################################################################
 
 $HOME/dotfiles/install/gnome.sh
+$HOME/dotfiles/install/ubuntu.sh

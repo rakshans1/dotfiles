@@ -266,16 +266,18 @@ install_zsh
 # Linux                                                      #
 ###############################################################################
 #ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
-#mkdir $HOME/.local/share/fonts
-#
-#cd ~/.local/share/fonts && curl -fLo "FuraCode.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete.otf
-#
-#cd ~/.local/share/fonts && curl -fLo "FuraCodeMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraCode/Regular/complete/Fura%20Code%20Regular%20Nerd%20Font%20Complete%20Mono.otf
-#
-#cd ~/.local/share/fonts && curl -fLo "FuraMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete.otf
-#
-#cd ~/.local/share/fonts && curl -fLo "FuraMonoMono.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Mono.otf
-#
+
+if [ ! -d ~/.local/share/fonts ]; then
+  mkdir $HOME/.local/share/fonts
+fi
+
+if [ ! -d ~/.local/share/fonts/FiraCode ]; then
+  echo "Installing Fonts"
+  cd /tmp
+  wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+  unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode
+fi
+
 
 if [ ! -d ~/.fzf ]; then
   print_info "Installing fzf"

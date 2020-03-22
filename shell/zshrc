@@ -114,6 +114,8 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
 export LS_COLORS="$(vivid generate ayu)"
 
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # Auto change node version with .nvmrc
 autoload -U add-zsh-hook
 load-nvmrc() {

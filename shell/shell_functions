@@ -164,7 +164,7 @@ function git-branch() {
 }
 
 function git-diff() {
-    git ls-files -d -m -o --exclude-standard | fzf-preview 'git diff --color=always {}'
+    git ls-files -d -m -o --exclude-standard | fzf-preview 'git ls-files --error-unmatch {} > /dev/null 2>&1 && git diff --color=always {} || cat {}'
 }
 
 # Git checkout with fuzzy search
@@ -214,4 +214,13 @@ function gll() {
 # copy file content to clipboard
 function copy() {
   cat $1 | xclip -sel clipboard
+}
+
+# Install deb file
+function deb() {
+  sudo -v
+  TEMP_DEB='/tmp/'$(basename $1)
+  wget -q --show-progress -O "$TEMP_DEB" $1
+  sudo dpkg -i "$TEMP_DEB"
+  rm -f "$TEMP_DEB"
 }
