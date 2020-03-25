@@ -20,3 +20,4 @@ do
   sudo snap install "${package}" --classic
 done
 
+sudo snap install nvim --beta --classic

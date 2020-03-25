@@ -104,7 +104,7 @@ function tm() {
   fi
 
   # Check for .tmux file (poor man's Tmuxinator).
-  if [ -x .tmux ]; then
+  if [ -f .tmux ] && [ -x .tmux ]; then
     # Prompt the first time we see a given .tmux file before running it.
     local DIGEST="$(openssl sha512 .tmux)"
     if ! grep -q "$DIGEST" ~/..tmux.digests 2> /dev/null; then
@@ -123,9 +123,12 @@ function tm() {
     fi
   fi
 
-  # Attach to existing session, or create one, based on current directory.
-  SESSION_NAME=$(basename "$(pwd)")
-  tmux new -A -s "$SESSION_NAME"
+  # Open fuzzy search to zump to exiting sessions or create new on noop
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || tmux new -A -s "$(basename "$(pwd)")"
 }
 
 # Change Wallpaper
@@ -216,6 +219,16 @@ function copy() {
   cat $1 | xclip -sel clipboard
 }
 
+# Man fuzzy search
+function man() {
+  if [ $# -eq 0 ]
+  then
+    /usr/bin/man -k . | fzf --prompt='Man> ' | awk '{print $1}' | xargs -r /usr/bin/man
+  else
+    /usr/bin/man $@
+  fi
+}
+
 # Install deb file
 function deb() {
   sudo -v
@@ -223,4 +236,50 @@ function deb() {
   wget -q --show-progress -O "$TEMP_DEB" $1
   sudo dpkg -i "$TEMP_DEB"
   rm -f "$TEMP_DEB"
+}
+
+# Select a docker container to start and exec to
+function da() {
+  local cid
+  cid=$(docker ps | sed 1d | fzf -1 -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker exec -it "$cid" /bin/bash
+}
+
+# Select a running docker container to stop
+function ds() {
+  local cid
+  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+  [ -n "$cid" ] && docker stop "$cid"
+}
+
+# Autojump with fuzzy search
+function j() {
+    if [[ "$#" -ne 0 ]]; then
+        cd $(autojump $@)
+        return
+    fi
+    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" 
+}
+
+# c - browse chrome history
+function c() {
+  local cols sep google_history open
+  cols=$(( COLUMNS / 3 ))
+  sep='{::}'
+
+  if [ "$(uname)" = "Darwin" ]; then
+    google_history="$HOME/Library/Application Support/Google/Chrome/Default/History"
+    open=open
+  else
+    google_history="$HOME/.config/google-chrome/Default/History"
+    open=xdg-open
+  fi
+  cp -f "$google_history" /tmp/h
+  sqlite3 -separator $sep /tmp/h \
+    "select substr(title, 1, $cols), url
+     from urls order by last_visit_time desc" |
+  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
+  fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
 }
