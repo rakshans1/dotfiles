@@ -114,6 +114,12 @@ deb_installed+=(ripgrep)
 rgversion="$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | jq -r .tag_name)"
 deb_sources+=('https://github.com/BurntSushi/ripgrep/releases/download/'$rgversion'/ripgrep_'$rgversion'_amd64.deb')
 
+# https://github.com/dandavison/delta
+deb_installed+=(delta)
+deltaversion="$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | jq -r .tag_name)"
+deb_sources+=('https://github.com/dandavison/delta/releases/download/'$deltaversion'/git-delta_'$deltaversion'_amd64.deb')
+
+
 ####################
 # ACTUALLY DO THINGS
 ####################
@@ -227,7 +233,7 @@ sudo apt-get -qq update
 
 # Upgrade APT.
 e_header "Upgrading APT"
-sudo apt-get -qq -y upgrade
+sudo apt-get -qq -y upgrade > /dev/null 2>&1
 
 
 # Install APT packages.
