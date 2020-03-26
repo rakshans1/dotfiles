@@ -16,12 +16,6 @@ alias upgrade="sudo apt-get upgrade"
 alias npmlist="npm list -g --depth 0"
 alias open="xdg-open"
 
-# Git alias
-unalias gco
-unalias ga
-unalias gd
-alias gemoji="gitmoji -c"
-
 # IP addresses
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias myip="ip a | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
