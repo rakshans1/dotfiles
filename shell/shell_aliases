@@ -13,7 +13,6 @@ alias cat="bat"
 alias hosts="sudo nvim /etc/hosts"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
-alias add="sudo apt-get install -y"
 alias npmlist="npm list -g --depth 0"
 alias open="xdg-open"
 

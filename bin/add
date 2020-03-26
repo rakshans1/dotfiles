@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+install() {
+  local pkgs count
+  mapfile -t pkgs
+  (( ${#pkgs} > 0 )) || exit
+  count="${#pkgs[@]} package"
+  (( ${#pkgs[@]} > 1 )) && count+='s'
+  printf "installing %s: %s\n" "$count" "${pkgs[*]}"
+  $1 "${pkgs[@]}" < /dev/tty
+}
+
+
+if [ -z "$1" ]
+  then
+  fzf --multi --ansi --preview='apt-cache show {1}' \
+      --query="$1" \
+    < <(apt-cache search '.*' | sort |
+      sed -u -r "s|^([^ ]+)|${c_green}\1${c_reset}|") |
+    cut -d' ' -f1 |
+    install "sudo apt-get install -y "
+
+else
+  sudo apt-get install -y $@
+fi
