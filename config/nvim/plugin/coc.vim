@@ -13,7 +13,8 @@
         \ 'coc-prettier',
         \ 'coc-phpls',
         \ 'coc-ultisnips',
-        \ 'coc-snippets'
+        \ 'coc-snippets',
+        \ 'coc-yaml'
         \ ]
  " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>

@@ -10,6 +10,7 @@ Plug 'sainnhe/edge'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-easy-align'
 
 " File search
 Plug '~/.fzf/'
@@ -20,7 +21,7 @@ Plug 'tpope/vim-repeat'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'metakirby5/codi.vim'
-Plug 'wellle/targets.vim'
+" Plug 'wellle/targets.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -60,6 +61,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'ekalinin/Dockerfile.vim', { 'for': 'Dockerfile' }
 
 
+Plug 'tpope/vim-dadbod'
+
+Plug 'janko/vim-test'
 
 Plug 'wakatime/vim-wakatime'
 call plug#end()

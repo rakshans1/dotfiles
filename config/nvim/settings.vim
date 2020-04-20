@@ -8,6 +8,14 @@ set autoindent                             " Indent according to previous line.
 set noerrorbells visualbell t_vb= 	       "No bells!
 set tm=500
 nnoremap <C-x> :q!<cr>
+set complete-=i
+set smarttab
+set nrformats-=octal
+
+if !has('nvim') && &ttimeoutlen == -1
+  set ttimeout
+  set ttimeoutlen=100
+endif
 
 " Enable true color
 if exists('+termguicolors')
@@ -39,6 +47,7 @@ set nowritebackup
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
+set wildmenu
 set signcolumn=yes
 nmap <leader>z <Plug>Zoom
 " switch cursor to line when in insert mode, and block when not
@@ -96,7 +105,7 @@ endif
 " clear highlighted search
 noremap <leader>c :set hlsearch! hlsearch?<cr>
 " Find and replace in current file
-nnoremap <Leader>h :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s//<Left>
+nnoremap <Leader>h :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s/<C-r>s/<Left>
 xnoremap <Leader>h "sy:%s/<C-r>s//<Left>
 
 "----------Split Mapping------"
