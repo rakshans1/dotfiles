@@ -25,3 +25,6 @@
 [submodule "zsh/plugins/forgit"]
 	path = zsh/plugins/forgit
 	url = https://github.com/wfxr/forgit
+[submodule "zsh/plugins/zsh-completions"]
+	path = zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git

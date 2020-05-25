@@ -63,6 +63,11 @@ augroup numbertoggle
   autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
+" Highlight yank area
+if exists('##TextYankPost')
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank('Substitute',300)
+endif
+
 "----------Behaviour------"
 set clipboard+=unnamedplus
 " jump to the last position when reopening a file

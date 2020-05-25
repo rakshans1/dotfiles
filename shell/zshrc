@@ -120,7 +120,7 @@ export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
 export LS_COLORS="$(vivid generate ayu)"
 
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANPAGER='sh -c "col -bx | bat --language=man --style=grid --color=always --decorations=always --theme='"'Monokai Extended Light'"'"'
 
 # Auto change node version with .nvmrc
 autoload -U add-zsh-hook

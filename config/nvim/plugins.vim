@@ -25,6 +25,7 @@ Plug 'metakirby5/codi.vim'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lsp'
 Plug 'mattn/emmet-vim'
 
 " Plug 'tpope/vim-vinegar'

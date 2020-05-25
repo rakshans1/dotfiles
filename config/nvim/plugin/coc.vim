@@ -1,14 +1,12 @@
+if !has_key(plugs, "coc.nvim")
+   finish
+endif
+
  let g:coc_global_extensions = [
-        \ 'coc-yank',
-        \ 'coc-css',
-        \ 'coc-html',
-        \ 'coc-json',
         \ 'coc-tsserver',
         \ 'coc-git',
         \ 'coc-eslint',
         \ 'coc-tslint-plugin',
-        \ 'coc-sh',
-        \ 'coc-vimlsp',
         \ 'coc-emmet',
         \ 'coc-prettier',
         \ 'coc-phpls',
