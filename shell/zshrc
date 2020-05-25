@@ -60,7 +60,7 @@ source $ZSH_CUSTOM/plugins/zshhighlight.sh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras git-open zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose)
+plugins=(git git-extras git-open zsh-completions zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose)
 
 # source $ohmyzsh/oh-my-zsh.sh
 source $ZSH/oh-my-zsh.sh
@@ -74,6 +74,7 @@ export GOPATH=${HOME}/projects/go
 
 export GOPATH=${HOME}/projects/go
 export CARGO_HOME=$HOME/.cargo
+export DENO_HOME=$HOME/.deno
 
 # If directory exists they will be added to the path env variable
 declare -a dir_path
@@ -83,6 +84,7 @@ dir_path=(
   "/usr/local/go/bin"
   "$GOPATH/bin"
   "$CARGO_HOME/bin"
+  "$DENO_HOME/bin"
   "$ANDROID_HOME/tools"
   "$ANDROID_HOME/tools/bin"
   "$ANDROID_HOME/emulator"

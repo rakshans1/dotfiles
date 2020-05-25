@@ -1,2 +1,2 @@
-set norelativenumber
-set nonumber
+setlocal norelativenumber
+setlocal nonumber
