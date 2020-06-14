@@ -29,6 +29,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lsp'
 Plug 'mattn/emmet-vim'
+Plug 'liuchengxu/vista.vim'
 
 " Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -56,7 +57,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'norcalli/nvim-colorizer.lua' " show hex/rgb colors in bg
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript' }
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'editorconfig/editorconfig-vim'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }

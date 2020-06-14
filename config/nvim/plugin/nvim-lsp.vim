@@ -32,4 +32,4 @@ function! s:ConfigureLSP()
 endfunction
 
 
-autocmd FileType docker,sh,vim,scss,css,json,html,vim  call s:ConfigureLSP()
+autocmd FileType docker,sh,vim,scss,css,json,html call s:ConfigureLSP()
