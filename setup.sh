@@ -128,18 +128,11 @@ DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
 
 
 dir=~/dotfiles                        # dotfiles directory
-dir_backup=~/dotfiles_old             # old dotfiles backup directory
-
 
 # Get current dir (so run this script from anywhere)
 
 export DOTFILES_DIR
 DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Create dotfiles_old in homedir
-echo -n "Creating $dir_backup for backup of any existing dotfiles in ~..."
-mkdir -p $dir_backup
-echo "done"
 
 # Change to the dotfiles directory
 echo -n "Changing to the $dir directory..."
@@ -163,14 +156,6 @@ declare -a FILES_TO_SYMLINK=(
   'shell/tmux'
 )
 
-
-# FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
-# Move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-
-for i in ${FILES_TO_SYMLINK[@]}; do
-  echo "Moving any existing dotfiles from ~ to $dir_backup"
-  mv ~/.${i##*/} ~/dotfiles_old/
-done
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

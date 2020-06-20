@@ -13,9 +13,7 @@ sudo apt-get install -y nodejs
 
 packages=(
     http-server
-    webpack
     nodemon
-    gulp
 )
 
 npm install -g "${packages[@]}"
