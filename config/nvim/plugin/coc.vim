@@ -42,7 +42,7 @@ endfunction
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
  " coc-prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-nmap <leader>f :CocCommand prettier.formatFile<cr>
+nmap <leader>f :Format<cr>
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
