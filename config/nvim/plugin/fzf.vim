@@ -88,7 +88,7 @@ map <leader>p :RG<CR>
 
 " Advanced Rg integration to restart search if query changes
 function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --hidden --smart-case %s || true'
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --hidden --smart-case --fixed-strings %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
   let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
