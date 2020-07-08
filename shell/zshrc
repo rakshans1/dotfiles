@@ -60,14 +60,16 @@ source $ZSH_CUSTOM/plugins/zshhighlight.sh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git git-extras git-open zsh-completions zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose)
+plugins=(git git-extras git-open zsh-completions zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose vi-mode)
 
 # source $ohmyzsh/oh-my-zsh.sh
 source $ZSH/oh-my-zsh.sh
 
+# vim binding 
+bindkey -v
+
 
 # User configuration
-# export EDITOR="/usr/bin/vim"
 export ANDROID_HOME=${HOME}/Android/Sdk
 export GRADLE_HOME="/usr/share/gradle"
 export GOPATH=${HOME}/projects/go
@@ -165,6 +167,8 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 export EDITOR='v'
+
+export KEYTIMEOUT=1
 
 stty stop undef
 stty start undef

@@ -9,7 +9,6 @@ endif
         \ 'coc-tslint-plugin',
         \ 'coc-emmet',
         \ 'coc-prettier',
-        \ 'coc-phpls',
         \ 'coc-ultisnips',
         \ 'coc-snippets',
         \ 'coc-yaml'
