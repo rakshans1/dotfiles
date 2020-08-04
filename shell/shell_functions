@@ -38,7 +38,7 @@ function serve() {
 
 # Kill application on particular port
 function killport() {
-  kill $(lsof -t -i:${1})
+  kill -9 $(lsof -t -i:${1})
 }
 
 # qfind - used to quickly find files that contain a string in a directory

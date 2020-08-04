@@ -6,14 +6,13 @@ if !has_key(plugs, "nvim-lsp")
    finish
 endif
 
-lua << END
-  require'nvim_lsp'.vimls.setup{}
-  require'nvim_lsp'.dockerls.setup{}
-  require'nvim_lsp'.bashls.setup{}
-  require'nvim_lsp'.cssls.setup{}
-  require'nvim_lsp'.html.setup{}
-  require'nvim_lsp'.jsonls.setup{}
-END
+" lua << END
+  " require'nvim_lsp'.vimls.setup{}
+  " require'nvim_lsp'.dockerls.setup{}
+  " require'nvim_lsp'.cssls.setup{}
+  " require'nvim_lsp'.html.setup{}
+  " require'nvim_lsp'.jsonls.setup{}
+" END
 
 function! s:ConfigureLSP()
   " Remap keys for gotos
@@ -32,4 +31,4 @@ function! s:ConfigureLSP()
 endfunction
 
 
-autocmd FileType docker,sh,vim,scss,css,json,html call s:ConfigureLSP()
+" autocmd FileType docker,vim,scss,css,json,html call s:ConfigureLSP()

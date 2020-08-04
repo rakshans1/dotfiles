@@ -4,6 +4,7 @@ let g:vista_echo_cursor = 0
 let g:vista_blink = [0,0]
 let g:vista_top_level_blink = [0,0]
 let g:vista_keep_fzf_colors = 1
+let g:airline#extensions#vista#enabled = 0
 
 let g:vista_executive_for = {
   \ 'docker': 'nvim_lsp',

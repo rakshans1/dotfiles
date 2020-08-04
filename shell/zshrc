@@ -92,6 +92,7 @@ dir_path=(
   "$ANDROID_HOME/emulator"
   "$ANDROID_HOME/platform-tools"
   "$GRADLE_HOME/bin"
+  "$HOME/.garden/bin"
 )
 
 for dir in ${(k)dir_path[@]}

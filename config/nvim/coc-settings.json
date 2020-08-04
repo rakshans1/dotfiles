@@ -43,15 +43,6 @@
       "filetypes": ["dockerfile"],
       "args": ["--stdio"]
     },
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true,
-        "completeUnimported": true
-      }
-    },
     "intelephense": {
       "command": "intelephense",
       "args": ["--stdio"],
@@ -69,5 +60,8 @@
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
+  },
+  "go.goplsOptions": {
+    "completeUnimported": true
   }
 }
