@@ -12,7 +12,6 @@ endif
         \ 'coc-ultisnips',
         \ 'coc-snippets',
         \ 'coc-yaml',
-        \ 'coc-go',
         \ 'coc-json'
         \ ]
  " Use tab for trigger completion with characters ahead and navigate.

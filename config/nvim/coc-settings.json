@@ -50,6 +50,15 @@
       "initializationOptions": {
         "storagePath": "/tmp/intelephense"
       }
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true,
+        "completeUnimported": true
+      }
     }
   },
   "eslint.autoFixOnSave": true,
@@ -60,8 +69,5 @@
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
-  },
-  "go.goplsOptions": {
-    "completeUnimported": true
   }
 }

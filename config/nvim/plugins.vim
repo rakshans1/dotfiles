@@ -27,9 +27,12 @@ Plug 'plasticboy/vim-markdown'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lsp'
 Plug 'mattn/emmet-vim'
 Plug 'liuchengxu/vista.vim'
+
+" debugger
+" Plug 'puremourning/vimspector'
 
 " Plug 'tpope/vim-vinegar'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
