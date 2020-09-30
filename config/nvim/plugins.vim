@@ -27,9 +27,14 @@ Plug 'plasticboy/vim-markdown'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neovim/nvim-lsp'
+Plug 'neovim/nvim-lspconfig'
 Plug 'mattn/emmet-vim'
 Plug 'liuchengxu/vista.vim'
+
+" telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/telescope.nvim'
 
 " debugger
 " Plug 'puremourning/vimspector'
@@ -62,6 +67,7 @@ Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript' }
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 Plug 'editorconfig/editorconfig-vim'
+Plug 'nvim-treesitter/nvim-treesitter'
 
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 

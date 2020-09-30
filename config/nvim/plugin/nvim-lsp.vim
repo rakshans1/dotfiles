@@ -2,17 +2,18 @@ if !has('nvim')
   finish
 endif
 
-if !has_key(plugs, "nvim-lsp")
+if !has_key(plugs, "nvim-lspconfig")
    finish
 endif
 
-" lua << END
-  " require'nvim_lsp'.vimls.setup{}
-  " require'nvim_lsp'.dockerls.setup{}
-  " require'nvim_lsp'.cssls.setup{}
-  " require'nvim_lsp'.html.setup{}
-  " require'nvim_lsp'.jsonls.setup{}
-" END
+lua <<EOF
+  -- require'nvim_lsp'.vimls.setup{}
+  require'nvim_lsp'.dockerls.setup{}
+  require'nvim_lsp'.cssls.setup{}
+  -- require'nvim_lsp'.html.setup{}
+  -- require'nvim_lsp'.jsonls.setup{}
+  -- require'nvim_lsp'.gopls.setup{}
+EOF
 
 function! s:ConfigureLSP()
   " Remap keys for gotos
@@ -23,11 +24,11 @@ function! s:ConfigureLSP()
 
 
   " Find symbol of current document
-  nnoremap <silent> <space>o    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+  " nnoremap <silent> <space>o    <cmd>lua vim.lsp.buf.document_symbol()<CR>
   " Search workspace symbols
-  nnoremap <silent> <space>t   <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+  " nnoremap <silent> <space>t   <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
-  setlocal omnifunc=v:lua.vim.lsp.omnifunc
+  " setlocal omnifunc=v:lua.vim.lsp.omnifunc
 endfunction
 
 

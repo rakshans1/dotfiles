@@ -41,12 +41,6 @@ function killport() {
   kill -9 $(lsof -t -i:${1})
 }
 
-# qfind - used to quickly find files that contain a string in a directory
-function qfind () {
-  grep -Ril $1;
-  return 0
-}
-
 # Extract archives - use: extract <file>
 # Based on http://dotfiles.org/~pseup/.bashrc
 function extract() {
@@ -244,4 +238,12 @@ function c() {
      from urls order by last_visit_time desc" |
   awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
   fzf --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
+}
+
+# Cat
+function cat() {
+  case $1 in
+    *.md) glow -p $@;;
+    *) bat $@;;
+  esac
 }

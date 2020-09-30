@@ -54,13 +54,14 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Automatically import missing packages 
-autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+autocmd BufWritePre *.go :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gD :call CocAction('jumpDefinition', 'vsplit')<cr>
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -69,7 +70,9 @@ nmap <silent> gh :call CocAction('doHover')<cr>
 " Find symbol of current document
 " nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>t  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>t  :<C-u>CocList -I symbols<cr>
+" Show Problems in workspace
+nnoremap <silent> <leader>m  :<C-u>CocList diagnostics<cr>
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -119,6 +122,3 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
-" Get yanked list
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>

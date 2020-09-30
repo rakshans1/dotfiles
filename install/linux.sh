@@ -119,6 +119,16 @@ deb_installed+=(delta)
 deltaversion="$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | jq -r .tag_name)"
 deb_sources+=('https://github.com/dandavison/delta/releases/download/'$deltaversion'/git-delta_'$deltaversion'_amd64.deb')
 
+# https://github.com/muesli/duf
+deb_installed+=(duf)
+dufversion="$(curl -s "https://api.github.com/repos/muesli/duf/releases/latest" | jq -r .tag_name | sed 's/v//')"
+deb_sources+=('https://github.com/muesli/duf/releases/latest/download/duf_'$dufversion'_linux_amd64.deb')
+
+# https://github.com/charmbracelet/glow
+deb_installed+=(glow)
+glowversion="$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | jq -r .tag_name | sed 's/v//')"
+deb_sources+=('https://github.com/charmbracelet/glow/releases/latest/download/duf_'$glowversion'_linux_amd64.deb')
+
 
 ####################
 # ACTUALLY DO THINGS

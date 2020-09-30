@@ -11,6 +11,7 @@ nnoremap <C-x> :q!<cr>
 set complete-=i
 set smarttab
 set nrformats-=octal
+set cc=120
 
 if !has('nvim') && &ttimeoutlen == -1
   set ttimeout
@@ -110,8 +111,8 @@ endif
 " clear highlighted search
 noremap <leader>c :set hlsearch! hlsearch?<cr>
 " Find and replace in current file
-nnoremap <Leader>h :let @s='\<'.expand('<cword>').'\>'<CR>:%s/<C-r>s/<C-r>s/<Left>
-xnoremap <Leader>h "sy:%s/<C-r>s//<Left>
+nnoremap <leader>h :let @s=expand('<cword>')<CR>:%s/\<<C-r>s\>/<C-r>s/<Left>
+xnoremap <leader>h "sy:%s/<C-r>s//<Left>
 
 "----------Split Mapping------"
 set splitbelow
