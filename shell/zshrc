@@ -4,6 +4,8 @@ export ZSH=~/.oh-my-zsh
 
 ZSH_CUSTOM=$HOME/dotfiles/zsh
 
+ZSH_DISABLE_COMPFIX=true
+
 source $ZSH_CUSTOM/themes/powerlevel.sh
 
 source $ZSH_CUSTOM/plugins/zshhighlight.sh
@@ -51,7 +53,12 @@ unset dir_path
 
 export PATH
 
-source /usr/share/autojump/autojump.sh
+if [ "$(uname 2> /dev/null)" = "Linux" ]; then
+  source /usr/share/autojump/autojump.sh
+fi
+if [ "$(uname 2> /dev/null)" = "Darwin" ]; then
+  source /usr/local/share/autojump/autojump.zsh
+fi
 source $HOME/.nvm/nvm.sh
 
 # fzf config

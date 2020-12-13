@@ -244,52 +244,61 @@ install_zsh () {
   fi
 }
 
+setup_linux () {
+  ###############################################################################
+  # Linux                                                      #
+  ###############################################################################
+  #ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
+
+  if [ ! -d ~/.local/share/fonts ]; then
+    mkdir $HOME/.local/share/fonts
+  fi
+
+  if [ ! -d ~/.local/share/fonts/FiraCode ]; then
+    echo "Installing Fonts"
+    cd /tmp
+    wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+    unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode
+  fi
+
+  ###############################################################################
+  # Caps to Esc                                                                 #
+  ###############################################################################
+  setxkbmap -option caps:escape
+}
+
+setup_mac () {
+  brew install zsh
+  brew tap homebrew/cask-fonts
+  brew install --cask font-fira-code
+}
+
+
+
+setup () {
+  if [ ! -d ~/.fzf ]; then
+    print_info "Installing fzf"
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
+  fi
+  platform=$(uname);
+  if [[ $platform == 'Linux' ]]; then
+    setup_linux
+  elif [[ $platform == 'Darwin' ]]; then
+    setup_mac
+  fi
+}
+
+
 main
 install_zsh
-
-###############################################################################
-# Linux                                                      #
-###############################################################################
-#ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
-
-if [ ! -d ~/.local/share/fonts ]; then
-  mkdir $HOME/.local/share/fonts
-fi
-
-if [ ! -d ~/.local/share/fonts/FiraCode ]; then
-  echo "Installing Fonts"
-  cd /tmp
-  wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
-  unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode
-fi
-
-
-if [ ! -d ~/.fzf ]; then
-  print_info "Installing fzf"
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-  ~/.fzf/install
-fi
-
-
-###############################################################################
-# Caps to Esc                                                                 #
-###############################################################################
-setxkbmap -option caps:escape
+setup
 
 ###############################################################################
 # Vim                                                                         #
 ###############################################################################
 $HOME/dotfiles/install/vim.sh
 
-###############################################################################
-# Zsh                                                                         #
-###############################################################################
-
-# Install Zsh settings
-
-###############################################################################
-# Terminal
-###############################################################################
-
 # Reload zsh settings
 #source ~/.zshrc
+
