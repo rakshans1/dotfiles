@@ -7,12 +7,13 @@ if !has_key(plugs, "nvim-lspconfig")
 endif
 
 lua <<EOF
-  -- require'nvim_lsp'.vimls.setup{}
-  require'nvim_lsp'.dockerls.setup{}
-  require'nvim_lsp'.cssls.setup{}
-  -- require'nvim_lsp'.html.setup{}
-  -- require'nvim_lsp'.jsonls.setup{}
-  require'nvim_lsp'.gopls.setup{}
+  local lspconfig = require'lspconfig'
+  -- lspconfig.vimls.setup{}
+  lspconfig.dockerls.setup{}
+  lspconfig.cssls.setup{}
+  -- lspconfig.html.setup{}
+  -- lspconfig.jsonls.setup{}
+  -- lspconfig.gopls.setup{}
 EOF
 
 function! s:ConfigureLSP()

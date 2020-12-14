@@ -16,8 +16,9 @@ packages=(
     nodemon
     typescript
     tldr
-    gitmoji-cli
     splash-cli
+    dockerfile-language-server-nodejs
+    vscode-css-languageserver-bin
 )
 
 npm install -g "${packages[@]}"
