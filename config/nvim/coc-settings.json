@@ -69,5 +69,8 @@
     "cpp": ["c"],
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
   }
 }

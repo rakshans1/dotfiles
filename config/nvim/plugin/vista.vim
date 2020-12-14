@@ -1,3 +1,7 @@
+if !has_key(plugs, "coc.nvim")
+   finish
+endif
+
 let g:vista_sidebar_width = 50
 let g:vista_default_executive = 'coc'
 let g:vista_echo_cursor = 0
@@ -7,6 +11,7 @@ let g:vista_keep_fzf_colors = 1
 let g:airline#extensions#vista#enabled = 0
 
 let g:vista_executive_for = {
+  \ 'go': 'nvim_lsp',
   \ 'docker': 'nvim_lsp',
   \ 'sh': 'nvim_lsp',
   \ 'vim': 'nvim_lsp',

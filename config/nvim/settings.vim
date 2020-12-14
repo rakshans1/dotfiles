@@ -123,8 +123,8 @@ nmap <C-k> <C-W><C-K> " Move to top window
 nmap <C-h> <C-W><C-H> " Move to left window
 nmap <C-l> <C-W><C-L> " Move to right window
 
-nnoremap <silent> + :exe "vertical resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> - :exe "vertical resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> + :exe "vertical resize +5"<CR>
+nnoremap <silent> - :exe "vertical resize -5"<CR>
 
 "Make ctrl+s work
 nmap <c-s> :w<cr>

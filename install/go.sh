@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.14"
+VERSION="1.15.2"
 
 OS="$(uname -s)"
 ARCH="$(uname -m)"
@@ -44,4 +44,5 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Extracting File..."
-tar -C /usr/local -xzf "$TEMP_DIRECTORY/go.tar.gz"
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf "$TEMP_DIRECTORY/go.tar.gz"

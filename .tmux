@@ -12,6 +12,5 @@ tmux send-keys -t dotfiles:editor "v " Enter
 tmux split-window -t dotfiles:editor -v
 tmux send-keys -t dotfiles:editor "gst" Enter
 tmux split-window -t dotfiles:editor -h
-tmux send-keys -t dotfiles:editor "nyan" Enter
 tmux resize-pane -t dotfiles:1.2 -D 5
 tmux attach -t dotfiles:editor.top
