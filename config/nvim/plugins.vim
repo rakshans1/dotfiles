@@ -66,6 +66,8 @@ Plug 'norcalli/nvim-colorizer.lua' " show hex/rgb colors in bg
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript' }
 " Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
+Plug 'rescript-lang/vim-rescript'
+Plug 'reasonml-editor/vim-reason-plus'
 Plug 'editorconfig/editorconfig-vim'
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 

@@ -24,6 +24,7 @@ export GOPATH=${HOME}/projects/go
 export GOPATH=${HOME}/projects/go
 export CARGO_HOME=$HOME/.cargo
 export DENO_HOME=$HOME/.deno
+export PYENV_HOME=$HOME/.pyenv
 
 # If directory exists they will be added to the path env variable
 declare -a dir_path
@@ -40,7 +41,10 @@ dir_path=(
   "$ANDROID_HOME/platform-tools"
   "$GRADLE_HOME/bin"
   "$HOME/.garden/bin"
+  "$PYENV_HOME/bin"
 )
+
+[ -f ~/.asdf/asdf.sh ] && source ~/.asdf/asdf.sh
 
 for dir in ${(k)dir_path[@]}
 do

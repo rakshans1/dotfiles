@@ -59,6 +59,17 @@
         "usePlaceholders": true,
         "completeUnimported": true
       }
+    },
+    "rescript": {
+      "enable": true,
+      "module": "~/.config/nvim/plugged/vim-rescript/rescript-vscode/extension/server/out/server.js",
+      "args": ["--node-ipc"],
+      "filetypes": ["rescript"],
+      "rootPatterns": ["bsconfig.json"]
+    },
+    "reason": {
+      "command": "reason-language-server",
+      "filetypes": ["reason"]
     }
   },
   "eslint.autoFixOnSave": true,

@@ -36,7 +36,7 @@ PACKAGE_NAME="go$VERSION.$PLATFORM.tar.gz"
 TEMP_DIRECTORY=$(mktemp -d)
 
 echo "Downloading $PACKAGE_NAME ..."
-wget https://storage.googleapis.com/golang/$PACKAGE_NAME -O "$TEMP_DIRECTORY/go.tar.gz"
+wget -q --show-progress https://storage.googleapis.com/golang/$PACKAGE_NAME -O "$TEMP_DIRECTORY/go.tar.gz"
 
 if [ $? -ne 0 ]; then
     echo "Download failed! Exiting."
@@ -45,4 +45,5 @@ fi
 
 echo "Extracting File..."
 sudo rm -rf /usr/local/go
+sudo mkdir /usr/local/go
 sudo tar -C /usr/local -xzf "$TEMP_DIRECTORY/go.tar.gz"

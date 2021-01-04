@@ -19,3 +19,6 @@
 
 [merge]
   tool = meld
+
+[pull]
+	rebase = true
