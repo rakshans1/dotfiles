@@ -25,6 +25,7 @@ casks=(
   dbeaver-community
   postman
   vlc
+  mark-text
 )
 
 brew install --cask "${casks[@]}"
