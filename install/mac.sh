@@ -11,6 +11,7 @@ packages=(
   neovim
   wget
   git-delta
+  glow
 )
 
 brew install "${packages[@]}"

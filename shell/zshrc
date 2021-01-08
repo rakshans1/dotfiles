@@ -64,6 +64,7 @@ if [ "$(uname 2> /dev/null)" = "Darwin" ]; then
   source /usr/local/share/autojump/autojump.zsh
 fi
 source $HOME/.nvm/nvm.sh
+eval "$(pyenv init -)"
 
 # fzf config
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'
@@ -135,3 +136,5 @@ bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
 bindkey "^h" backward-kill-word
 bindkey "^J" end-of-line
+
+export PATH="$HOME/.poetry/bin:$PATH"
