@@ -57,12 +57,12 @@ apt_packages+=(
 )
 
 # https://github.com/oguzhaninan/Stacer
-add_ppa ppa:oguzhaninan/stacer
-apt_packages+=(stacer)
+# add_ppa ppa:oguzhaninan/stacer
+# apt_packages+=(stacer)
 
 # https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-add_ppa ppa:papirus/papirus
-apt_packages+=(papirus-icon-theme)
+# add_ppa ppa:papirus/papirus
+# apt_packages+=(papirus-icon-theme)
 
 # https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
 # add_ppa ppa:webupd8team/java
