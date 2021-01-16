@@ -64,7 +64,9 @@ if [ "$(uname 2> /dev/null)" = "Darwin" ]; then
   source /usr/local/share/autojump/autojump.zsh
 fi
 source $HOME/.nvm/nvm.sh
-eval "$(pyenv init -)"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 # fzf config
 export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'

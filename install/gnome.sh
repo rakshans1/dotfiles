@@ -24,9 +24,12 @@ gnomeshell-extension-manage --install --extension-id 1401 --user
 
 # caffeine
 gnomeshell-extension-manage --install --extension-id 517 --user
+gsettings --schemadir ~/.local/share/gnome-shell/extensions/caffeine@patapon.info/schemas set org.gnome.shell.extensions.caffeine restore-state true
+gsettings --schemadir ~/.local/share/gnome-shell/extensions/caffeine@patapon.info/schemas set org.gnome.shell.extensions.caffeine show-notifications false
 
 # system-monitor
 gnomeshell-extension-manage --install --extension-id 120 --user
+gsettings --schemadir ~/.local/share/gnome-shell/extensions/system-monitor@paradoxxx.zero.gmail.com/schemas/ set org.gnome.shell.extensions.system-monitor show-tooltip false
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/system-monitor@paradoxxx.zero.gmail.com/schemas/ set org.gnome.shell.extensions.system-monitor cpu-show-text false
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/system-monitor@paradoxxx.zero.gmail.com/schemas/ set org.gnome.shell.extensions.system-monitor icon-display false
 gsettings --schemadir ~/.local/share/gnome-shell/extensions/system-monitor@paradoxxx.zero.gmail.com/schemas/ set org.gnome.shell.extensions.system-monitor fan-show-menu false
