@@ -88,7 +88,7 @@ endfunction
 command! Tags call s:tags()
 
 " Ctrlp for file search
-nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+" nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 " Find files in current directory of file currently edited
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 " Navigate between buffers
@@ -96,7 +96,7 @@ nnoremap <silent> <Leader>b :Buffers<CR>
 " Recent Files
 map <leader>r :FZFMru<CR>
 " Folder Search
-map <leader>p :RG<CR>
+" map <leader>p :RG<CR>
 
 " Advanced Rg integration to restart search if query changes
 function! RipgrepFzf(query, fullscreen)
