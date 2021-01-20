@@ -5,7 +5,7 @@ gsettings set org.gnome.desktop.interface font-name 'FiraCOde NF 11'
 gsettings set org.gnome.desktop.interface document-font-name 'FiraCOde NF 11'
 gsettings set org.gnome.desktop.interface monospace-font-name 'FiraCode Nerd Font Mono 11'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
-gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
+gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 
 # Workspace 
 
