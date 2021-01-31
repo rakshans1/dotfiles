@@ -17,7 +17,7 @@ BASE_URL=https://chromedriver.storage.googleapis.com
 VERSION=$(curl -sL "$BASE_URL/LATEST_RELEASE")
 TEMP_DIRECTORY=$(mktemp -d)
 
-echo "Downloading $PACKAGE_NAME ..."
+echo "Downloading $VERSION ..."
 wget -q --show-progress "$BASE_URL/$VERSION/chromedriver_$PLATFORM.zip" -O  "$TEMP_DIRECTORY/chromedriver.zip"
 
 if [ $? -ne 0 ]; then

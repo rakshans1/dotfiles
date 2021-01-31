@@ -3,9 +3,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 " colorscheme
 Plug 'cocopon/iceberg.vim'
-Plug 'arcticicestudio/nord-vim'
 Plug 'logico/typewriter-vim'
-Plug 'sainnhe/edge'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
