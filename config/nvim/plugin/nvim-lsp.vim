@@ -33,7 +33,7 @@ function! s:ConfigureLSP()
 endfunction
 
 
-autocmd FileType docker,vim,scss,css,json,html,go call s:ConfigureLSP()
+autocmd FileType lua,docker,vim,scss,css,json,html,go call s:ConfigureLSP()
 
 
 lua <<EOF

@@ -25,7 +25,7 @@ Plug 'plasticboy/vim-markdown'
 
 " autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 Plug 'mattn/emmet-vim'
 Plug 'liuchengxu/vista.vim'
 
