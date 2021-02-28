@@ -2,6 +2,8 @@ lua << EOF
   require('settings')
   require('modules.appearance')
   require('modules.mappings')
+  require('plugins.coc')
+  require('modules.lsp')
 EOF
 
 " Enable loading {ftdetect,ftplugin,indent}/*.vim files.

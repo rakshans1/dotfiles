@@ -27,6 +27,9 @@ noremap('<leader>c',':set hlsearch! hlsearch?<cr>')
 nnoremap('<leader>h', ":let @s=expand('<cword>')<CR>:%s/<C-r>s/<C-r>s/<Left>")
 xnoremap('<leader>h', '"sy:%s/<C-r>s//<Left>')
 
+-- yank till end
+nnoremap("Y", "y$")
+
 
 -- ----------Split Mapping------
 nmap('<C-j>','<C-W><C-J>') -- Move to bottom window

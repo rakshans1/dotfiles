@@ -47,7 +47,7 @@ local options = {
 
 	-- visual
 	foldmethod = "syntax",
-	foldenable = true,
+	foldenable = false,
     showmode = false,
 	number = true,
     relativenumber = true,

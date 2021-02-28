@@ -2,20 +2,6 @@ if !has_key(plugs, "coc.nvim")
    finish
 endif
 
- let g:coc_global_extensions = [
-        \ 'coc-tsserver',
-        \ 'coc-git',
-        \ 'coc-eslint',
-        \ 'coc-tslint-plugin',
-        \ 'coc-emmet',
-        \ 'coc-prettier',
-        \ 'coc-ultisnips',
-        \ 'coc-snippets',
-        \ 'coc-yaml',
-        \ 'coc-json',
-        \ 'coc-angular',
-        \ 'coc-pyright'
-        \ ]
  " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -92,7 +78,6 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
-nmap <leader>ar  <Plug>(coc-rename)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -108,19 +93,3 @@ endfunc
 
 " Use <TAB> for select selections ranges
 xmap <silent> <TAB> <Plug>(coc-range-select)
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction

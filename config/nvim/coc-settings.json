@@ -83,5 +83,6 @@
   },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
-  }
+  },
+  "python.formatting.provider": "black"
 }
