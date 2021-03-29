@@ -1,17 +1,25 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
   execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
   execute 'packadd packer.nvim'
 end
 
-vim.cmd[[packadd packer.nvim]]
+function _G.plugin_loaded(plugin_name)
+  local p = _G.packer_plugins
+  return p ~= nil and p[plugin_name] ~= nil and p[plugin_name].loaded
+end
 
-return require('packer').startup(function()
-    use {'wbthomason/packer.nvim', opt = true}
+vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
+require('packer').init({display = {auto_clean = false}})
+
+return require('packer').startup(function(use)
+    use 'wbthomason/packer.nvim'
+
+	use 'mhinz/vim-startify'
 
 	-- colorscheme
 	use 'cocopon/iceberg.vim'
@@ -54,6 +62,8 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	-- use 'tpope/vim-vinegar'
 	use {'scrooloose/nerdtree', cmd =  {'NERDTreeToggle', 'NERDTreeFind'} }
 	use 'scrooloose/nerdcommenter'
+	use 'kyazdani42/nvim-tree.lua'
+	use 'kyazdani42/nvim-web-devicons'
 	use 'Xuyuanp/nerdtree-git-plugin'
 	use 'ryanoasis/vim-devicons'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -70,7 +80,7 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	-- syntax
 	use {'pangloss/vim-javascript', ft = 'javascript' }
 	use {'maxmellon/vim-jsx-pretty', ft = 'javascript' }
-	use {'moll/vim-node', ft = 'javascript' }	
+	use {'moll/vim-node', ft = 'javascript' }
 	use {'hail2u/vim-css3-syntax', ft = 'css' }
 	use 'norcalli/nvim-colorizer.lua' -- show hex/rgb colors in bg
 	use {'leafgarland/typescript-vim', ft = 'typescript' }
@@ -91,4 +101,7 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	use 'janko/vim-test'
 
 	use 'wakatime/vim-wakatime'
+
+	use 'softoika/ngswitcher.vim'
 end)
+

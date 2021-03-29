@@ -55,7 +55,7 @@ command! FZFMru call fzf#run({
 function! s:all_files()
   return extend(
   \ filter(copy(v:oldfiles),
-  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \        "v:val !~ 'fugitive:\\|NERD_tree\\|NvimTree\\|^/tmp/\\|.git/'"),
   \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
@@ -88,7 +88,7 @@ endfunction
 command! Tags call s:tags()
 
 " Ctrlp for file search
-nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <C-p> (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 " Find files in current directory of file currently edited
 nnoremap <silent> <Leader>. :Files <C-r>=expand("%:h")<CR>/<CR>
 " Navigate between buffers

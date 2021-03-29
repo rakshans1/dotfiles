@@ -1,2 +1,5 @@
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
+nmap hs <Plug>(GitGutterStageHunk)
+nmap hu <Plug>(GitGutterUndoHunk)
+nmap hp <Plug>(GitGutterPreviewHunk)

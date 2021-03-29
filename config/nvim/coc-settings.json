@@ -81,6 +81,7 @@
     "javascriptreact": ["javascript"],
     "typescript": ["javascript"]
   },
+  "angular.experimental-ivy": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },

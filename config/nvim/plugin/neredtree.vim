@@ -1,3 +1,7 @@
+if !v:lua.plugin_loaded("nerdtree")
+  finish
+endif
+
 let NERDTreeDirArrowExpandable = "\u00a0" " make arrows invisible
 let NERDTreeDirArrowCollapsible = "\u00a0" " make arrows invisible
 

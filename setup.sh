@@ -150,7 +150,6 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitconfig'
   'git/gitignore'
 
-  'rc/javascript/eslintrc'
   'rc/ripgreprc'
 
   'shell/tmux'

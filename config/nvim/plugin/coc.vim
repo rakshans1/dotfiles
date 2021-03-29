@@ -1,5 +1,5 @@
-if !has_key(plugs, "coc.nvim")
-   finish
+if !v:lua.plugin_loaded("coc.nvim")
+  finish
 endif
 
  " Use tab for trigger completion with characters ahead and navigate.

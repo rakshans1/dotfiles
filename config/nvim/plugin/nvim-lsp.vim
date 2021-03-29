@@ -2,8 +2,8 @@ if !has('nvim')
   finish
 endif
 
-if !has_key(plugs, "nvim-lspconfig")
-   finish
+if !v:lua.plugin_loaded("nvim-lspconfig")
+  finish
 endif
 
 lua <<EOF

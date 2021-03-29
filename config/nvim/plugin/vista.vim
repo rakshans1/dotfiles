@@ -1,5 +1,5 @@
-if !has_key(plugs, "coc.nvim")
-   finish
+if !v:lua.plugin_loaded("coc.nvim")
+  finish
 endif
 
 let g:vista_sidebar_width = 50

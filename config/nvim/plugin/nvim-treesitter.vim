@@ -2,8 +2,8 @@ if !has('nvim')
   finish
 endif
 
-if !has_key(plugs, "nvim-treesitter")
-   finish
+if !v:lua.plugin_loaded("nvim-treesitter")
+  finish
 endif
 
 lua <<EOF
