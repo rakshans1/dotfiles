@@ -75,7 +75,7 @@
   "eslint.autoFixOnSave": true,
   "eslint.run": "onType",
   "eslint.quiet": true,
-  "prettier.eslintIntegration": true,
+  "prettier.eslintIntegration": false,
   "snippets.extends": {
     "cpp": ["c"],
     "javascriptreact": ["javascript"],

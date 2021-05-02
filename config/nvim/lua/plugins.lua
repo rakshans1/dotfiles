@@ -1,5 +1,6 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
+local util = require("packer.util")
 
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
@@ -8,15 +9,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute 'packadd packer.nvim'
 end
 
-function _G.plugin_loaded(plugin_name)
-  local p = _G.packer_plugins
-  return p ~= nil and p[plugin_name] ~= nil and p[plugin_name].loaded
-end
-
 vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
 require('packer').init({display = {auto_clean = false}})
 
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
 	use 'mhinz/vim-startify'
@@ -35,7 +31,7 @@ return require('packer').startup(function(use)
 	use 'junegunn/vim-easy-align'
 
 	-- File search
-use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
+    use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	use 'junegunn/fzf.vim'
 
 	-- Edit
@@ -68,7 +64,7 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	use 'ryanoasis/vim-devicons'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-	-- use 'vim-airline/vim-airline'
+	use 'vim-airline/vim-airline'
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-rhubarb' -- :Gbrowse for github
 	use 'shumphrey/fugitive-gitlab.vim' -- :Gbrowse for gitlab
@@ -78,18 +74,20 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	use 'jiangmiao/auto-pairs'
 
 	-- syntax
-	use {'pangloss/vim-javascript', ft = 'javascript' }
-	use {'maxmellon/vim-jsx-pretty', ft = 'javascript' }
+	-- use {'pangloss/vim-javascript', ft = 'javascript' }
+	-- use {'maxmellon/vim-jsx-pretty', ft = 'javascript' }
 	use {'moll/vim-node', ft = 'javascript' }
 	use {'hail2u/vim-css3-syntax', ft = 'css' }
 	use 'norcalli/nvim-colorizer.lua' -- show hex/rgb colors in bg
-	use {'leafgarland/typescript-vim', ft = 'typescript' }
-	use {'ianks/vim-tsx', ft =  'typescript' }
+	-- use {'leafgarland/typescript-vim', ft = 'typescript' }
+	-- use {'ianks/vim-tsx', ft =  'typescript' }
 	-- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 	use 'rescript-lang/vim-rescript'
 	use 'reasonml-editor/vim-reason-plus'
 	use 'editorconfig/editorconfig-vim'
-	use { 'nvim-treesitter/nvim-treesitter' }
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+    use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+    use { 'nvim-treesitter/playground' }
 
 	use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
 
@@ -105,3 +103,13 @@ use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
 	use 'softoika/ngswitcher.vim'
 end)
 
+local compile_path = util.join_paths(
+  vim.fn.stdpath("config"), "plugin", "packer_compiled.vim"
+)
+
+vim.cmd("source " .. compile_path)
+
+function _G.plugin_loaded(plugin_name)
+  local p = _G.packer_plugins
+  return p ~= nil and p[plugin_name] ~= nil and p[plugin_name].loaded
+end

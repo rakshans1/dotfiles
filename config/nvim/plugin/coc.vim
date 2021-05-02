@@ -1,7 +1,3 @@
-if !v:lua.plugin_loaded("coc.nvim")
-  finish
-endif
-
  " Use tab for trigger completion with characters ahead and navigate.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -68,10 +64,10 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap gu :CocCommand git.chunkUndo<cr>
 
 " Create mappings for function text object, requires document symbols feature of languageserver.
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap if <Plug>(coc-funcobj-i)
+" omap af <Plug>(coc-funcobj-a)
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)

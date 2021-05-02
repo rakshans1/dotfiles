@@ -6,6 +6,7 @@ lua << EOF
   require('plugins.coc')
   require('plugins.nvimtree')
   require('plugins.startify')
+  require('plugins.nvim-treesitter')
   require('modules.lsp')
 EOF
 

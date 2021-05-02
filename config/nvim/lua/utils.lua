@@ -1,8 +1,8 @@
-local fn = vim.fn
+local api = vim.api
 local utils = {}
 
 function utils.nmap_options(key, action, options)
-  fn.nvim_set_keymap('n', key, action, options)
+  api.nvim_set_keymap('n', key, action, options)
 end
 
 function utils.nmap(key, action)
@@ -10,19 +10,19 @@ function utils.nmap(key, action)
 end
 
 function utils.imap(key, action)
-  fn.nvim_set_keymap('i', key, action, {})
+  api.nvim_set_keymap('i', key, action, {})
 end
 
 function utils.vmap(key, action)
-  fn.nvim_set_keymap('v', key, action, {})
+  api.nvim_set_keymap('v', key, action, {})
 end
 
 function utils.inoremap(key, action)
-  fn.nvim_set_keymap('i', key, action, { noremap = true })
+  api.nvim_set_keymap('i', key, action, { noremap = true })
 end
 
 function utils.xnoremap(key, action)
-  fn.nvim_set_keymap('x', key, action, { noremap = true })
+  api.nvim_set_keymap('x', key, action, { noremap = true })
 end
 
 function utils.nnoremap(key, action)
@@ -34,11 +34,11 @@ function utils.noremap(key, action)
 end
 
 function utils.xmap(key, action)
-  fn.nvim_set_keymap('x', key, action, {})
+  api.nvim_set_keymap('x', key, action, {})
 end
 
 function utils.xnoremap(key, action)
-  fn.nvim_set_keymap('x', key, action, { noremap = true })
+  api.nvim_set_keymap('x', key, action, { noremap = true })
 end
 
 function utils.isOneOf(list, x)
