@@ -247,3 +247,8 @@ function cat() {
     *) bat $@;;
   esac
 }
+
+# curlheader
+function curlheader() {
+  curl -sIXGET $1
+}

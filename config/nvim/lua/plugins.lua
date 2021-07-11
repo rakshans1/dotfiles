@@ -68,6 +68,7 @@ require('packer').startup(function(use)
 	use 'tpope/vim-fugitive'
 	use 'tpope/vim-rhubarb' -- :Gbrowse for github
 	use 'shumphrey/fugitive-gitlab.vim' -- :Gbrowse for gitlab
+    use 'sindrets/diffview.nvim'
 	use 'tpope/vim-surround'
 	use 'airblade/vim-gitgutter'
 	use 'easymotion/vim-easymotion'
@@ -104,7 +105,7 @@ require('packer').startup(function(use)
 end)
 
 local compile_path = util.join_paths(
-  vim.fn.stdpath("config"), "plugin", "packer_compiled.vim"
+  vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"
 )
 
 vim.cmd("source " .. compile_path)

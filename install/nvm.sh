@@ -12,6 +12,7 @@ if ! [  -f "~/.nvm/nvm.sh" ]; then
 fi
 
 packages=(
+    zx
     http-server
     nodemon
     typescript
