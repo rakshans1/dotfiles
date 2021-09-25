@@ -10,7 +10,7 @@ source $ZSH_CUSTOM/themes/powerlevel.sh
 
 source $ZSH_CUSTOM/plugins/zshhighlight.sh
 
-plugins=(vi-mode git git-extras git-open zsh-completions zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose)
+plugins=(vi-mode git git-extras git-open zsh-completions zsh-syntax-highlighting zsh-autosuggestions forgit docker docker-compose yarn)
 
 source $ZSH/oh-my-zsh.sh
 

@@ -19,3 +19,10 @@ endsnippet
 snippet imd "import destructure" b
 import { $1 } from '$2';
 endsnippet
+
+snippet it "jest test" b
+import { $1 } from '$2';
+it('$1', () => {
+$2
+})
+endsnippet

@@ -98,6 +98,7 @@ require('packer').startup(function(use)
 	use 'tpope/vim-dadbod'
 
 	use 'janko/vim-test'
+	use 'preservim/vimux'
 
 	use 'wakatime/vim-wakatime'
 

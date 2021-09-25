@@ -15,7 +15,8 @@ local coc = {
     'coc-yaml',
     'coc-json',
     'coc-angular',
-    'coc-pyright'
+    'coc-pyright',
+    'coc-tailwindcss',
   }
 }
 

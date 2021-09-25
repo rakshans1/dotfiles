@@ -12,6 +12,7 @@ packages=(
   wget
   git-delta
   glow
+  watch
 )
 
 brew install "${packages[@]}"
