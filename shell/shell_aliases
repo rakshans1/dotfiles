@@ -13,6 +13,8 @@ alias hosts="sudo nvim /etc/hosts"
 alias update="sudo apt-get update"
 alias upgrade="sudo apt-get upgrade"
 alias npmlist="npm list -g --depth 0"
+alias htop="btm"
+alias top="btm"
 
 case $( uname -s ) in
   Darwin)   ;;

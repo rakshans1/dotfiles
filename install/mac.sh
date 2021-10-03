@@ -13,6 +13,7 @@ packages=(
   git-delta
   glow
   watch
+  bottom
 )
 
 brew install "${packages[@]}"

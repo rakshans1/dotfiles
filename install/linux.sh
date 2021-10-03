@@ -54,6 +54,8 @@ apt_packages+=(
   tmux
   transmission
   dconf-editor
+  htop
+  exa
 )
 
 # https://github.com/oguzhaninan/Stacer
@@ -127,8 +129,12 @@ deb_sources+=('https://github.com/muesli/duf/releases/latest/download/duf_'$dufv
 # https://github.com/charmbracelet/glow
 deb_installed+=(glow)
 glowversion="$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | jq -r .tag_name | sed 's/v//')"
-deb_sources+=('https://github.com/charmbracelet/glow/releases/latest/download/duf_'$glowversion'_linux_amd64.deb')
+deb_sources+=('https://github.com/charmbracelet/glow/releases/latest/download/glow_'$glowversion'_linux_amd64.deb')
 
+deb_installed+=(bottom)
+bottomversion="$(curl -s "https://api.github.com/repos/ClementTsang/bottom/releases/latest" | jq -r .tag_name | sed 's/v//')"
+deb_sources+=('https://github.com/ClementTsang/bottom/releases/latest/download/bottom_'$bottomversion'_amd64.deb')
+echo ${deb_sources[*]}
 
 ####################
 # ACTUALLY DO THINGS

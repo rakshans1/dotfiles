@@ -1,0 +1,3 @@
+[flags]
+color = "nord"
+mem_as_value = true
