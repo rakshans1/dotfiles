@@ -2,7 +2,7 @@ local M = {}
 
 M.config = function()
   rvim.builtin.dap = {
-    active = false,
+    active = true,
     on_config_done = nil,
     breakpoint = {
       text = "",
@@ -50,10 +50,6 @@ M.setup = function()
     s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
     q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
   }
-
-  if rvim.builtin.dap.on_config_done then
-    rvim.builtin.dap.on_config_done(dap)
-  end
 end
 
 return M

@@ -49,11 +49,11 @@ function M.config()
       -- buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
       mappings = {
         i = {
-          ["<C-n>"] = actions.move_selection_next,
-          ["<C-p>"] = actions.move_selection_previous,
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
           ["<C-c>"] = actions.close,
-          ["<C-j>"] = actions.cycle_history_next,
-          ["<C-k>"] = actions.cycle_history_prev,
+          ["<C-n>"] = actions.cycle_history_next,
+          ["<C-p>"] = actions.cycle_history_prev,
           ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
           ["<CR>"] = actions.select_default + actions.center,
           -- To disable a keymap, put [map] = false
@@ -77,10 +77,12 @@ function M.config()
       },
     },
     extensions = {
-      fzy_native = {
-        override_generic_sorter = false,
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
         override_file_sorter = true,
-      },
+        case_mode = "smart_case"
+      }
     },
   })
 end
@@ -107,15 +109,9 @@ end
 
 function M.setup()
   local telescope = require "telescope"
-
   telescope.setup(rvim.builtin.telescope)
-  if rvim.builtin.project.active then
-    -- telescope.load_extension "projects"
-  end
-
-  if rvim.builtin.telescope.on_config_done then
-    rvim.builtin.telescope.on_config_done(telescope)
-  end
+  telescope.load_extension('fzf')
+  telescope.load_extension('gh')
 end
 
 return M

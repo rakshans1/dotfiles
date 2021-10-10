@@ -3,10 +3,10 @@ local Log = require "core.log"
 
 M.config = function()
   rvim.builtin["terminal"] = {
+    active = true,
     on_config_done = nil,
     -- size can be a number or function which is passed the current terminal
     size = 20,
-    -- open_mapping = [[<c-\>]],
     open_mapping = [[<c-t>]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
@@ -51,10 +51,6 @@ M.setup = function()
     require("core.terminal").add_exec(exec[1], exec[2], exec[3])
   end
   terminal.setup(rvim.builtin.terminal)
-
-  if rvim.builtin.terminal.on_config_done then
-    rvim.builtin.terminal.on_config_done(terminal)
-  end
 end
 
 M.add_exec = function(exec, keymap, name)

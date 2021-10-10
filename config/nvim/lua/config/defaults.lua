@@ -31,7 +31,31 @@ rvim = {
   plugins = {
     -- use config.lua for this not put here
   },
-
   autocommands = {},
-  lang = {},
+  lang = {
+    typescript = {
+      formatters = {{
+        exe = "prettier"
+      }},
+      linters = {{
+        exe = "eslint_d"
+      }}
+    },
+    javascript = {
+      formatters = {{
+        exe = "prettier"
+      }},
+      linters = {{
+        exe = "eslint_d"
+      }}
+    },
+    javascriptreact = {
+      formatters = {{
+        exe = "prettier"
+      }},
+      linters = {{
+        exe = "eslint_d"
+      }}
+    },
+  },
 }

@@ -2,6 +2,10 @@ return {
   { "wbthomason/packer.nvim" },
   -- Theme
   {"cocopon/iceberg.vim"},
+  {
+    "folke/lsp-colors.nvim",
+    event = "BufRead",
+  },
 
 	-- Registers
 	{ "junegunn/vim-peekaboo"},
@@ -12,11 +16,41 @@ return {
 	{ "plasticboy/vim-markdown"},
 
 
-  { "tpope/vim-fugitive"},
-  { "tpope/vim-rhubarb"},
-  { "shumphrey/fugitive-gitlab.vim"},
+  { "tpope/vim-fugitive",
+      cmd = {
+          "G",
+          "Git",
+          "Gdiffsplit",
+          "Gread",
+          "Gwrite",
+          "Ggrep",
+          "GMove",
+          "GDelete",
+          "GBrowse",
+          "GRemove",
+          "GRename",
+          "Glgrep",
+          "Gedit"
+        },
+        ft = {"fugitive"}
+  },
+  {
+		"ethanholz/nvim-lastplace",
+		event = "BufRead",
+		config = function()
+			require("nvim-lastplace").setup({
+				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+				lastplace_ignore_filetype = {
+					"gitcommit", "gitrebase", "svn", "hgcommit",
+				},
+				lastplace_open_folds = true,
+			})
+		end,
+	},
   { "sindrets/diffview.nvim"},
-  { "tpope/vim-surround"},
+  { "tpope/vim-surround",
+    keys = {"c", "d", "y"}
+  },
 
   { "norcalli/nvim-colorizer.lua"},
   { "editorconfig/editorconfig-vim"},
@@ -31,6 +65,10 @@ return {
   {
     "williamboman/nvim-lsp-installer",
   },
+  {
+    "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+  },
 
   { "nvim-lua/popup.nvim" },
   { "nvim-lua/plenary.nvim" },
@@ -42,6 +80,33 @@ return {
     end,
     disable = not rvim.builtin.telescope.active,
   },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = 'make'
+  },
+  { "nvim-telescope/telescope-github.nvim" },
+  {
+    "ruifm/gitlinker.nvim",
+    event = "BufRead",
+    config = function()
+    require("gitlinker").setup {
+          opts = {
+              add_current_line_on_normal_mode = true,
+              action_callback = require("gitlinker.actions").copy_to_clipboard,
+              print_url = false,
+              mappings = "<leader>gy",
+          },
+        }
+    end,
+    requires = "nvim-lua/plenary.nvim",
+  },
+  {
+    "pwntester/octo.nvim",
+    config = function()
+      require('octo').setup()
+    end
+  },
+
   -- Install nvim-cmp, and buffer source as a dependency
   {
     "hrsh7th/nvim-cmp",
@@ -89,13 +154,21 @@ return {
       require("core.treesitter").setup()
     end,
   },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "BufRead",
+  },
 
   -- NvimTree
   {
     "kyazdani42/nvim-tree.lua",
-    -- event = "BufWinOpen",
-    -- cmd = "NvimTreeToggle",
-    -- commit = "fd7f60e242205ea9efc9649101c81a07d5f458bb",
     config = function()
       require("core.nvimtree").setup()
     end,
@@ -132,23 +205,12 @@ return {
     disable = not rvim.builtin.comment.active,
   },
 
-  -- project.nvim
-  {
-    "ahmedkhalf/project.nvim",
-    config = function()
-      require("core.project").setup()
-    end,
-    disable = not rvim.builtin.project.active,
-  },
-
   -- Icons
   { "kyazdani42/nvim-web-devicons" },
 
   -- Status Line and Bufferline
   {
-    -- "hoob3rt/lualine.nvim",
     "shadmansaleh/lualine.nvim",
-    -- "Lunarvim/lualine.nvim",
     config = function()
       require("core.lualine").setup()
     end,

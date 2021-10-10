@@ -10,7 +10,7 @@ M.defaults = {
     endif
   endfunction
   ]],
-  -- :rvimInfo
+  [[ command! RvimInfo lua require('core.info').toggle_popup(vim.bo.filetype) ]],
   [[ command! RvimCacheReset lua require('utils.hooks').reset_cache() ]],
 }
 

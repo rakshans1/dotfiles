@@ -103,6 +103,8 @@ function M.config()
       ["<C-Down>"] = ":resize +2<CR>",
       ["<C-Left>"] = ":vertical resize -2<CR>",
       ["<C-Right>"] = ":vertical resize +2<CR>",
+      ["+"] = ":vertical resize +5<CR>",
+      ["-"] = ":vertical resize -5<CR>",
 
       -- Tab switch buffer
       ["<S-l>"] = ":BufferNext<CR>",

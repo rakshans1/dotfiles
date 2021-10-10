@@ -68,7 +68,7 @@ M.config = function()
       ["w"] = { "<cmd>w!<CR>", "Save" },
       ["q"] = { "<cmd>q!<CR>", "Quit" },
       ["/"] = { "<cmd>CommentToggle<CR>", "Comment" },
-      ["c"] = { "<cmd>BufferClose!<CR>", "Close Buffer" },
+      ["c"] = { ":set hlsearch! hlsearch?<CR>", "Close Buffer" },
       ["f"] = { "<cmd>Telescope find_files<CR>", "Find File" },
       ["o"] = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbol" },
       ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
@@ -105,14 +105,15 @@ M.config = function()
         S = { "<cmd>PackerStatus<cr>", "Status" },
         u = { "<cmd>PackerUpdate<cr>", "Update" },
       },
-
-      -- " Available Debug Adapters:
-      -- "   https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/
-      -- " Adapter configuration and installation instructions:
-      -- "   https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
-      -- " Debug Adapter protocol:
-      -- "   https://microsoft.github.io/debug-adapter-protocol/
-      -- " Debugging
+      t = {
+        name = "Diagnostics",
+        t = { "<cmd>TroubleToggle<cr>", "trouble" },
+        w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+        d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+        q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+        l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+        r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+      },
       g = {
         name = "Git",
         j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
@@ -177,27 +178,10 @@ M.config = function()
         },
       },
       L = {
-        name = "+LunarVim",
-        c = {
-          "<cmd>edit" .. get_config_dir() .. "/config.lua<cr>",
-          "Edit config.lua",
-        },
-        f = {
-          "<cmd>lua require('core.telescope').find_lunarvim_files()<cr>",
-          "Find LunarVim files",
-        },
-        g = {
-          "<cmd>lua require('core.telescope').grep_lunarvim_files()<cr>",
-          "Grep LunarVim files",
-        },
-        k = { "<cmd>lua require('keymappings').print()<cr>", "View LunarVim's default keymappings" },
+        name = "+NeoVim",
         i = {
           "<cmd>lua require('core.info').toggle_popup(vim.bo.filetype)<cr>",
-          "Toggle LunarVim Info",
-        },
-        I = {
-          "<cmd>lua require('core.telescope').view_lunarvim_changelog()<cr>",
-          "View LunarVim's changelog",
+          "Toggle NeoVim Info",
         },
         l = {
           name = "+logs",
@@ -220,7 +204,6 @@ M.config = function()
           P = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "Open the Packer logfile" },
         },
         r = { "<cmd>lua require('utils').reload_lv_config()<cr>", "Reload configurations" },
-        u = { "<cmd>rvimUpdate<cr>", "Update LunarVim" },
       },
       ["p"] = { "<cmd>Telescope live_grep<cr>", "Text" },
       s = {
@@ -239,6 +222,12 @@ M.config = function()
           "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
           "Colorscheme with Preview",
         },
+        g = {
+          name = "+Git",
+          p = { "<cmd>Telescope gh pull_request<cr>", "Pull Requests" },
+          i = { "<cmd>Telescope gh issues<cr>", "Issues" },
+          r = { "<cmd>Telescope gh run<cr>", "Run" },
+        }
       },
       T = {
         name = "Treesitter",

@@ -11,7 +11,6 @@ local builtins = {
   "core.telescope",
   "core.treesitter",
   "core.nvimtree",
-  "core.project",
   "core.bufferline",
   "core.autopairs",
   "core.comment",
