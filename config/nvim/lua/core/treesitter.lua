@@ -30,8 +30,16 @@ M.config = function()
       },
       -- move = textobj_move_keymaps,
       select = {
-        enable = false,
-        -- keymaps = textobj_sel_keymaps,
+        enable = true,
+        lookahead = true,
+        keymaps = {
+          ["ab"] = "@block.outer",
+          ["ib"] = "@block.inner",
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
+      },
       },
     },
     textsubjects = {
