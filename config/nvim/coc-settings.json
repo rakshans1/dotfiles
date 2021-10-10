@@ -1,9 +1,7 @@
 {
   "suggest.enablePreview": true,
   "codeLens.enable": false,
-  "suggest.maxPreviewWidth": 100,
   "diagnostic.checkCurrentLine": true,
-  "diagnostic.maxWindowHeight": 20,
   "diagnostic.errorSign": " ",
   "diagnostic.warningSign": "",
   "diagnostic.infoSign": "",
@@ -75,6 +73,7 @@
   "eslint.autoFixOnSave": true,
   "eslint.run": "onType",
   "eslint.quiet": true,
+  "eslint.packageManager":"yarn",
   "prettier.eslintIntegration": false,
   "snippets.extends": {
     "cpp": ["c"],
