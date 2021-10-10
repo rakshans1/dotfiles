@@ -2,73 +2,15 @@ local M = {}
 local components = require "core.lualine.components"
 
 local styles = {
-  rvim = nil,
   default = nil,
-  none = nil,
-}
-
-styles.none = {
-  style = "none",
-  options = {
-    icons_enabled = true,
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
-    disabled_filetypes = {},
-  },
-  sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {},
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {},
-    lualine_z = {},
-  },
-  tabline = {},
-  extensions = {},
 }
 
 styles.default = {
-  style = "default",
+  style = "rvim",
   options = {
     icons_enabled = true,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
-    disabled_filetypes = {},
-  },
-  sections = {
-    lualine_a = { "mode" },
-    lualine_b = { "branch" },
-    lualine_c = { "filename" },
-    lualine_x = { "encoding", "fileformat", "filetype" },
-    lualine_y = { "progress" },
-    lualine_z = { "location" },
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = { "filename" },
-    lualine_x = { "location" },
-    lualine_y = {},
-    lualine_z = {},
-  },
-  tabline = {},
-  extensions = {},
-}
-
-styles.rvim = {
-  style = "rvim",
-  options = {
-    icons_enabled = true,
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
     disabled_filetypes = { "dashboard", "NvimTree", "Outline" },
   },
   sections = {
@@ -81,7 +23,6 @@ styles.rvim = {
     },
     lualine_c = {
       components.diff,
-      components.python_env,
     },
     lualine_x = {
       components.diagnostics,
@@ -104,7 +45,16 @@ styles.rvim = {
     lualine_y = {},
     lualine_z = {},
   },
-  tabline = {},
+  tabline = {
+    lualine_a = {
+      components.filenameTab
+    },
+    lualine_b = nil,
+    lualine_c = nil,
+    lualine_x = nil,
+    lualine_y = nil,
+    lualine_z = {'tabs'}
+  },
   extensions = { "nvim-tree" },
 }
 

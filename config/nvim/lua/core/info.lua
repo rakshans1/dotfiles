@@ -22,7 +22,7 @@ local function get_formatter_suggestion_msg(ft)
   if not vim.tbl_isempty(supported_formatters) then
     vim.list_extend(section, {
       "* Configured formatter needs to be installed and executable.",
-      fmt("* Enable installed formatter(s) with following config in %s", config.path),
+      fmt("* Enable installed formatter(s) with following config"),
       "",
       fmt("  rvim.lang.%s.formatters = { { exe = '%s' } }", ft, table.concat(supported_formatters, "│")),
     })
@@ -44,7 +44,7 @@ local function get_linter_suggestion_msg(ft)
   if not vim.tbl_isempty(supported_linters) then
     vim.list_extend(section, {
       "* Configured linter needs to be installed and executable.",
-      fmt("* Enable installed linter(s) with following config in %s", config.path),
+      fmt("* Enable installed linter(s) with following config"),
       "",
       fmt("  rvim.lang.%s.linters = { { exe = '%s' } }", ft, table.concat(supported_linters, "│")),
     })

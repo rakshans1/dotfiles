@@ -217,15 +217,6 @@ return {
     disable = not rvim.builtin.lualine.active,
   },
 
-  {
-    "romgrk/barbar.nvim",
-    config = function()
-      require("core.bufferline").setup()
-    end,
-    event = "BufWinEnter",
-    disable = not rvim.builtin.bufferline.active,
-  },
-
   -- Debugging
   {
     "mfussenegger/nvim-dap",

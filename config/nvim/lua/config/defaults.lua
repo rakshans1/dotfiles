@@ -35,7 +35,7 @@ rvim = {
   lang = {
     typescript = {
       formatters = {{
-        exe = "prettier"
+        exe = "prettierd"
       }},
       linters = {{
         exe = "eslint_d"
@@ -43,7 +43,7 @@ rvim = {
     },
     javascript = {
       formatters = {{
-        exe = "prettier"
+        exe = "prettierd"
       }},
       linters = {{
         exe = "eslint_d"
@@ -51,7 +51,7 @@ rvim = {
     },
     javascriptreact = {
       formatters = {{
-        exe = "prettier"
+        exe = "prettierd"
       }},
       linters = {{
         exe = "eslint_d"

@@ -32,6 +32,13 @@ return {
     color = {},
     cond = nil,
   },
+  filenameTab = {
+    "filename",
+    path = 1,
+    color = { fg = "#3e445e", bg = "#0f1117"},
+    cond = nil,
+    seperator = { left = '', right = ''}
+  },
   diff = {
     "diff",
     source = diff_source,
@@ -43,25 +50,6 @@ return {
     },
     color = {},
     cond = nil,
-  },
-  python_env = {
-    function()
-      local utils = require "core.lualine.utils"
-      if vim.bo.filetype == "python" then
-        local venv = os.getenv "CONDA_DEFAULT_ENV"
-        if venv then
-          return string.format("  (%s)", utils.env_cleanup(venv))
-        end
-        venv = os.getenv "VIRTUAL_ENV"
-        if venv then
-          return string.format("  (%s)", utils.env_cleanup(venv))
-        end
-        return ""
-      end
-      return ""
-    end,
-    color = { fg = colors.green },
-    cond = conditions.hide_in_width,
   },
   diagnostics = {
     "diagnostics",
