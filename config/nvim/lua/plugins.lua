@@ -1,117 +1,257 @@
-local execute = vim.api.nvim_command
-local fn = vim.fn
-local util = require("packer.util")
-
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-
-if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-  execute 'packadd packer.nvim'
-end
-
-vim.cmd 'autocmd BufWritePost plugins.lua PackerCompile' -- Auto compile when there are changes in plugins.lua
-require('packer').init({display = {auto_clean = false}})
-
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-
-	use 'mhinz/vim-startify'
-
-	-- colorscheme
-	use 'cocopon/iceberg.vim'
-	use 'logico/typewriter-vim'
-
-	use 'junegunn/goyo.vim'
-	use 'junegunn/limelight.vim'
+return {
+  { "wbthomason/packer.nvim" },
+  -- Theme
+  {"cocopon/iceberg.vim"},
+  {
+    "folke/lsp-colors.nvim",
+    event = "BufRead",
+  },
 
 	-- Registers
-	use 'junegunn/vim-peekaboo'
-
-	-- Prettification
-	use 'junegunn/vim-easy-align'
-
-	-- File search
-    use { 'junegunn/fzf', run = function() vim.fn['fzf#install']() end }
-	use 'junegunn/fzf.vim'
+	{ "junegunn/vim-peekaboo"},
 
 	-- Edit
-	use 'tpope/vim-repeat'
-	use {'mbbill/undotree', cmd = 'UndotreeToggle'}
-	use 'AndrewRadev/splitjoin.vim'
-	use 'metakirby5/codi.vim'
-	-- use 'wellle/targets.vim'
-	use 'godlygeek/tabular'
-	use 'plasticboy/vim-markdown'
-
-	-- autocomplete
-	use {'neoclide/coc.nvim', branch = 'release'}
-	use 'neovim/nvim-lspconfig'
-	use 'mattn/emmet-vim'
-	use {'liuchengxu/vista.vim', cmd = 'Vista'}
-
-	-- Search
-	use {'nvim-lua/telescope.nvim', requires = {'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim'}}
-
-	-- debugger
-	-- use 'puremourning/vimspector'
-
-	-- use 'tpope/vim-vinegar'
-	use {'scrooloose/nerdtree', cmd =  {'NERDTreeToggle', 'NERDTreeFind'} }
-	use 'scrooloose/nerdcommenter'
-	use 'kyazdani42/nvim-tree.lua'
-	use 'kyazdani42/nvim-web-devicons'
-	use 'Xuyuanp/nerdtree-git-plugin'
-	use 'ryanoasis/vim-devicons'
-	use 'tiagofumo/vim-nerdtree-syntax-highlight'
-
-	use 'vim-airline/vim-airline'
-	use 'tpope/vim-fugitive'
-	use 'tpope/vim-rhubarb' -- :Gbrowse for github
-	use 'shumphrey/fugitive-gitlab.vim' -- :Gbrowse for gitlab
-    use 'sindrets/diffview.nvim'
-	use 'tpope/vim-surround'
-	use 'airblade/vim-gitgutter'
-	use 'easymotion/vim-easymotion'
-	use 'jiangmiao/auto-pairs'
-
-	-- syntax
-	-- use {'pangloss/vim-javascript', ft = 'javascript' }
-	-- use {'maxmellon/vim-jsx-pretty', ft = 'javascript' }
-	use {'moll/vim-node', ft = 'javascript' }
-	use {'hail2u/vim-css3-syntax', ft = 'css' }
-	use 'norcalli/nvim-colorizer.lua' -- show hex/rgb colors in bg
-	-- use {'leafgarland/typescript-vim', ft = 'typescript' }
-	-- use {'ianks/vim-tsx', ft =  'typescript' }
-	-- use 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
-	use 'rescript-lang/vim-rescript'
-	use 'reasonml-editor/vim-reason-plus'
-	use 'editorconfig/editorconfig-vim'
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use { 'nvim-treesitter/nvim-treesitter-textobjects' }
-    use { 'nvim-treesitter/playground' }
-
-	use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', cmd = 'MarkdownPreview'}
-
-	use {'ekalinin/Dockerfile.vim', ft = 'Dockerfile' }
+	{ "tpope/vim-repeat"},
+	{ "mbbill/undotree", cmd = "UndotreeToggle"},
+	{ "plasticboy/vim-markdown"},
 
 
-	use 'tpope/vim-dadbod'
+  { "tpope/vim-fugitive",
+      cmd = {
+          "G",
+          "Git",
+          "Gdiffsplit",
+          "Gread",
+          "Gwrite",
+          "Ggrep",
+          "GMove",
+          "GDelete",
+          "GBrowse",
+          "GRemove",
+          "GRename",
+          "Glgrep",
+          "Gedit"
+        },
+        ft = {"fugitive"}
+  },
+  {
+		"ethanholz/nvim-lastplace",
+		event = "BufRead",
+		config = function()
+			require("nvim-lastplace").setup({
+				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+				lastplace_ignore_filetype = {
+					"gitcommit", "gitrebase", "svn", "hgcommit",
+				},
+				lastplace_open_folds = true,
+			})
+		end,
+	},
+  { "sindrets/diffview.nvim"},
+  { "tpope/vim-surround",
+    keys = {"c", "d", "y"}
+  },
 
-	use 'janko/vim-test'
-	use 'preservim/vimux'
+  { "norcalli/nvim-colorizer.lua"},
+  { "editorconfig/editorconfig-vim"},
+  { "iamcco/markdown-preview.nvim", run = "cd app && yarn install", cmd = "MarkdownPreview"},
+  { "wakatime/vim-wakatime"},
+  { "softoika/ngswitcher.vim"},
+  -- Packer can manage itself as an optional plugin
+  { "neovim/nvim-lspconfig" },
+  { "tamago324/nlsp-settings.nvim" },
+  { "jose-elias-alvarez/null-ls.nvim" },
+  { "antoinemadec/FixCursorHold.nvim" }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+  {
+    "williamboman/nvim-lsp-installer",
+  },
+  {
+    "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+  },
 
-	use 'wakatime/vim-wakatime'
+  { "nvim-lua/popup.nvim" },
+  { "nvim-lua/plenary.nvim" },
+  -- Telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    config = function()
+      require("core.telescope").setup()
+    end,
+    disable = not rvim.builtin.telescope.active,
+  },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = 'make'
+  },
+  { "nvim-telescope/telescope-github.nvim" },
+  {
+    "ruifm/gitlinker.nvim",
+    event = "BufRead",
+    config = function()
+    require("gitlinker").setup {
+          opts = {
+              add_current_line_on_normal_mode = true,
+              action_callback = require("gitlinker.actions").copy_to_clipboard,
+              print_url = false,
+              mappings = "<leader>gy",
+          },
+        }
+    end,
+    requires = "nvim-lua/plenary.nvim",
+  },
+  {
+    "pwntester/octo.nvim",
+    config = function()
+      require('octo').setup()
+    end
+  },
 
-	use 'softoika/ngswitcher.vim'
-end)
+  -- Install nvim-cmp, and buffer source as a dependency
+  {
+    "hrsh7th/nvim-cmp",
+    config = function()
+      require("core.cmp").setup()
+    end,
+    requires = {
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-nvim-lua",
+    },
+    run = function()
+      -- cmp's config requires cmp to be installed to run the first time
+      if not rvim.builtin.cmp then
+        require("core.cmp").config()
+      end
+    end,
+  },
+  {
+    "rafamadriz/friendly-snippets",
+    -- event = "InsertCharPre",
+    -- disable = not rvim.builtin.compe.active,
+  },
 
-local compile_path = util.join_paths(
-  vim.fn.stdpath("config"), "plugin", "packer_compiled.lua"
-)
+  -- Autopairs
+  {
+    "windwp/nvim-autopairs",
+    -- event = "InsertEnter",
+    after = "nvim-cmp",
+    config = function()
+      require("core.autopairs").setup()
+    end,
+    disable = not rvim.builtin.autopairs.active,
+  },
 
-vim.cmd("source " .. compile_path)
+  -- Treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "0.5-compat",
+    -- run = ":TSUpdate",
+    config = function()
+      require("core.treesitter").setup()
+    end,
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "BufRead",
+  },
 
-function _G.plugin_loaded(plugin_name)
-  local p = _G.packer_plugins
-  return p ~= nil and p[plugin_name] ~= nil and p[plugin_name].loaded
-end
+  -- NvimTree
+  {
+    "kyazdani42/nvim-tree.lua",
+    config = function()
+      require("core.nvimtree").setup()
+    end,
+    disable = not rvim.builtin.nvimtree.active,
+  },
+
+  {
+    "lewis6991/gitsigns.nvim",
+
+    config = function()
+      require("core.gitsigns").setup()
+    end,
+    event = "BufRead",
+    disable = not rvim.builtin.gitsigns.active,
+  },
+
+  -- Whichkey
+  {
+    "folke/which-key.nvim",
+    config = function()
+      require("core.which-key").setup()
+    end,
+    event = "BufWinEnter",
+    disable = not rvim.builtin.which_key.active,
+  },
+
+  -- Comments
+  {
+    "terrortylor/nvim-comment",
+    event = "BufRead",
+    config = function()
+      require("core.comment").setup()
+    end,
+    disable = not rvim.builtin.comment.active,
+  },
+
+  -- Icons
+  { "kyazdani42/nvim-web-devicons" },
+
+  -- Status Line and Bufferline
+  {
+    "shadmansaleh/lualine.nvim",
+    config = function()
+      require("core.lualine").setup()
+    end,
+    disable = not rvim.builtin.lualine.active,
+  },
+
+  -- Debugging
+  {
+    "mfussenegger/nvim-dap",
+    -- event = "BufWinEnter",
+    config = function()
+      require("core.dap").setup()
+    end,
+    disable = not rvim.builtin.dap.active,
+  },
+
+  -- Debugger management
+  {
+    "Pocco81/DAPInstall.nvim",
+    -- event = "BufWinEnter",
+    -- event = "BufRead",
+    disable = not rvim.builtin.dap.active,
+  },
+
+  -- Dashboard
+  {
+    "ChristianChiarulli/dashboard-nvim",
+    event = "BufWinEnter",
+    config = function()
+      require("core.dashboard").setup()
+    end,
+    disable = not rvim.builtin.dashboard.active,
+  },
+
+  -- Terminal
+  {
+    "akinsho/toggleterm.nvim",
+    event = "BufWinEnter",
+    config = function()
+      require("core.terminal").setup()
+    end,
+    disable = not rvim.builtin.terminal.active,
+  },
+}
