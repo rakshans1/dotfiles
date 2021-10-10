@@ -74,10 +74,6 @@ rvim.autocommands = {
   _auto_read = {
     { "CursorHold", "*", "silent! checktime" },
   },
-  _packer_compile = {
-    -- will run PackerCompile after writing plugins.lua
-    { "BufWritePost", "plugins.lua", "PackerCompile" },
-  },
   _general_lsp = {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
   },
