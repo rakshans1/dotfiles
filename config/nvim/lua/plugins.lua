@@ -165,6 +165,7 @@ return {
     "JoosepAlviste/nvim-ts-context-commentstring",
     event = "BufRead",
   },
+  { "nvim-treesitter/nvim-treesitter-textobjects" },
 
   -- NvimTree
   {
