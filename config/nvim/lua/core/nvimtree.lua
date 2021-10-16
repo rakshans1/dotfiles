@@ -1,5 +1,4 @@
 local M = {}
-local Log = require "core.log"
 
 function M.config()
   rvim.builtin.nvimtree = {
@@ -8,13 +7,21 @@ function M.config()
     setup = {
       disable_netrw = true,
       hijack_netrw = true,
-      open_on_setup = 0,
-      auto_close = 1,
-      open_on_tab = 0,
+      open_on_setup = false,
+      auto_close = true,
+      open_on_tab = false,
       update_focused_file = {
-        enable = 1,
+        enable = true,
       },
-      lsp_diagnostics = 1,
+      diagnostics = {
+        enable = true,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
+        },
+      },
       view = {
         width = 30,
         side = "left",
@@ -25,18 +32,18 @@ function M.config()
       },
     },
     show_icons = {
-      git = 1,
-      folders = 1,
-      files = 1,
-      folder_arrows = 1,
+      git = true,
+      folders = true,
+      files = true,
+      folder_arrows = true,
       tree_width = 30,
     },
     ignore = { ".git", "node_modules", ".cache" },
-    quit_on_open = 0,
-    hide_dotfiles = 1,
-    git_hl = 1,
+    quit_on_open = false,
+    hide_dotfiles = true,
+    git_hl = true,
     root_folder_modifier = ":~",
-    allow_resize = 1,
+    allow_resize = true,
     ignore_ft_on_setup  = {"dashboard"},
     auto_ignore_ft = { "dashboard" },
     icons = {

@@ -82,7 +82,8 @@ return {
   },
   {
     "nvim-telescope/telescope-fzf-native.nvim",
-    run = 'make'
+    run = 'make',
+    disable = not rvim.builtin.telescope.active,
   },
   { "nvim-telescope/telescope-github.nvim" },
   {
@@ -138,7 +139,6 @@ return {
   {
     "windwp/nvim-autopairs",
     -- event = "InsertEnter",
-    after = "nvim-cmp",
     config = function()
       require("core.autopairs").setup()
     end,
@@ -198,7 +198,7 @@ return {
 
   -- Comments
   {
-    "terrortylor/nvim-comment",
+    "numToStr/Comment.nvim",
     event = "BufRead",
     config = function()
       require("core.comment").setup()
