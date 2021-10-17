@@ -120,7 +120,7 @@ function M.config()
       ["<C-q>"] = ":call QuickFixToggle()<CR>",
       ["<C-n>"] = ":NvimTreeToggle<CR>",
       ["<C-p>"] = "<cmd>Telescope find_files<CR>",
-      ["<C-_>"] = ":CommentToggle<CR>",
+      ["<C-_>"] = "<cmd>lua require('Comment').toggle()<CR>",
     },
 
     ---@usage change or add keymappings for terminal mode
@@ -137,7 +137,7 @@ function M.config()
       -- Better indenting
       ["<"] = "<gv",
       [">"] = ">gv",
-      ["<C-_>"] = ":CommentToggle<CR>",
+      ["<C-_>"] = "<ESC><CMD>lua ___comment_gc(vim.fn.visualmode())<CR>",
 
       -- ["p"] = '"0p',
       -- ["P"] = '"0P',

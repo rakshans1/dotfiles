@@ -1,6 +1,7 @@
 local M = {}
 
 function M.config()
+  local actions = require "telescope.actions"
   -- Define this minimal config so that it's available if telescope is not yet available.
   rvim.builtin.telescope = {
     ---@usage disable telescope completely [not recommeded]
@@ -50,6 +51,22 @@ function M.config()
           only_sort_text = true,
         },
       },
+    mappings = {
+      i = {
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-c>"] = actions.close,
+        ["<C-n>"] = actions.cycle_history_next,
+        ["<C-p>"] = actions.cycle_history_prev,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        ["<CR>"] = actions.select_default + actions.center,
+      },
+      n = {
+        ["<C-n>"] = actions.move_selection_next,
+        ["<C-p>"] = actions.move_selection_previous,
+        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+      },
+    },
     },
     extensions = {
       fzf = {
@@ -87,7 +104,6 @@ end
 function M.setup()
   local previewers = require "telescope.previewers"
   local sorters = require "telescope.sorters"
-  local actions = require "telescope.actions"
 
   rvim.builtin.telescope = vim.tbl_extend("keep", {
     file_previewer = previewers.vim_buffer_cat.new,
@@ -96,23 +112,6 @@ function M.setup()
     file_sorter = sorters.get_fuzzy_file,
     generic_sorter = sorters.get_generic_fuzzy_sorter,
     ---@usage Mappings are fully customizable. Many familiar mapping patterns are setup as defaults.
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-c>"] = actions.close,
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<CR>"] = actions.select_default + actions.center,
-      },
-      n = {
-
-        ["<C-n>"] = actions.move_selection_next,
-        ["<C-p>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-      },
-    },
   }, rvim.builtin.telescope)
 
   local telescope = require "telescope"
