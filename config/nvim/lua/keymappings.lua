@@ -91,7 +91,7 @@ function M.config()
     normal_mode = {
       ["<C-s>"] = ":w<cr>",
       ["<C-x>"] = ":q!<CR>",
-      ["<leader>z"] = "<Plug>Zoom",
+      ["<leader>z"] = ":tabnew %<CR>",
       -- Better window movement
       ["<C-h>"] = "<C-w>h",
       ["<C-j>"] = "<C-w>j",

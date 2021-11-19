@@ -255,4 +255,9 @@ return {
     end,
     disable = not rvim.builtin.terminal.active,
   },
+
+  {
+    "vuki656/package-info.nvim",
+    requires = "MunifTanjim/nui.nvim",
+  },
 }

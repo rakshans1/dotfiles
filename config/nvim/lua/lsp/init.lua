@@ -117,6 +117,10 @@ function M.common_on_attach(client, bufnr)
     rvim.lsp.on_attach_callback(client, bufnr)
     Log:debug "Called lsp.on_attach_callback"
   end
+  if client.name == "tsserver" or client.name == "jsonls" then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
   add_lsp_buffer_keybindings(bufnr)
