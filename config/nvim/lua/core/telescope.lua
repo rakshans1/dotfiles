@@ -9,6 +9,11 @@ function M.config()
     on_config_done = nil,
   }
 
+  local ok, actions = pcall(require, "telescope.actions")
+  if not ok then
+    return
+  end
+
   rvim.builtin.telescope = vim.tbl_extend("force", rvim.builtin.telescope, {
     defaults = {
       prompt_prefix = " ",
