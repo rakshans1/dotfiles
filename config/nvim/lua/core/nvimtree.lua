@@ -116,8 +116,8 @@ function M.setup()
       { key = "h", cb = tree_cb "close_node" },
       { key = "v", cb = tree_cb "vsplit" },
       { key = "C", cb = tree_cb "cd" },
-      { key = "gtf", cb = "<cmd>lua require'rvim.core.nvimtree'.start_telescope('find_files')<cr>" },
-      { key = "gtg", cb = "<cmd>lua require'rvim.core.nvimtree'.start_telescope('live_grep')<cr>" },
+      { key = "gtf", cb = "<cmd>lua require'core.nvimtree'.start_telescope('find_files')<cr>" },
+      { key = "gtg", cb = "<cmd>lua require'core.nvimtree'.start_telescope('live_grep')<cr>" },
     }
   end
 
@@ -129,7 +129,7 @@ function M.setup()
     open()
   end
 
-  vim.cmd "au WinClosed * lua require('rvim.core.nvimtree').on_close()"
+  vim.cmd "au WinClosed * lua require('core.nvimtree').on_close()"
 
   if rvim.builtin.nvimtree.on_config_done then
     rvim.builtin.nvimtree.on_config_done(nvim_tree_config)

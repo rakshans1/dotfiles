@@ -93,13 +93,13 @@ function plugin_loader.load(configurations)
   end
 
   -- Colorscheme must get called after plugins are loaded or it will break new installs.
-  -- vim.g.colors_name = rvim.colorscheme
-  -- vim.cmd("colorscheme " .. rvim.colorscheme)
+  vim.g.colors_name = rvim.colorscheme
+  vim.cmd("colorscheme " .. rvim.colorscheme)
 end
 
 function plugin_loader.get_core_plugins()
   local list = {}
-  local plugins = require "rvim.plugins"
+  local plugins = require "plugins"
   for _, item in pairs(plugins) do
     table.insert(list, item[1]:match "/(%S*)")
   end

@@ -36,7 +36,7 @@ local commit = {
 }
 
 return {
-  { "wbthomason/packer.nvim"},
+  { "wbthomason/packer.nvim", commit = commit.packer},
   { "neovim/nvim-lspconfig", commit = commit.nvim_lspconfig },
   { "tamago324/nlsp-settings.nvim", commit = commit.nlsp_settings },
   {
@@ -177,10 +177,6 @@ return {
       require("nvim-ts-autotag").setup()
     end,
   },
-  {
-    "JoosepAlviste/nvim-ts-context-commentstring",
-    event = "BufRead",
-  },
   { "nvim-treesitter/nvim-treesitter-textobjects" },
 
   -- NvimTree
@@ -214,7 +210,7 @@ return {
       require("core.which-key").setup()
     end,
     event = "BufWinEnter",
-    disable = not rvim.builtin.which_key.active,
+    disable = false,
   },
 
   -- Comments

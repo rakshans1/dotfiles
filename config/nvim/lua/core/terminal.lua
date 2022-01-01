@@ -5,6 +5,7 @@ local Log = require "core.log"
 M.config = function()
   rvim.builtin["terminal"] = {
     on_config_done = nil,
+    active = true,
     -- size can be a number or function which is passed the current terminal
     size = 20,
     -- open_mapping = [[<c-\>]],
@@ -91,7 +92,7 @@ M.add_exec = function(opts)
   end
 
   local exec_func = string.format(
-    "<cmd>lua require('rvim.core.terminal')._exec_toggle({ cmd = '%s', count = %d, direction = '%s'})<CR>",
+    "<cmd>lua require('core.terminal')._exec_toggle({ cmd = '%s', count = %d, direction = '%s'})<CR>",
     opts.cmd,
     opts.count,
     opts.direction

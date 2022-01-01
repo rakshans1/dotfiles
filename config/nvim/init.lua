@@ -3,7 +3,7 @@ require("bootstrap"):init()
 require("config"):load()
 
 local plugins = require "plugins"
-require("plugin-loader"):load { plugins, rvim.plugins }
+require("plugin-loader").load { plugins, rvim.plugins }
 
 vim.o.background = "dark"
 vim.o.termguicolors = true
