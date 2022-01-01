@@ -1,17 +1,21 @@
-local home_dir = vim.loop.os_homedir()
-local utils = require "utils"
-
-rvim = {
+return {
   leader = "space",
   colorscheme = "iceberg",
   line_wrap_cursor_movement = true,
   transparent_window = false,
-  format_on_save = true,
-  -- vsnip_dir = utils.join_paths(home_dir, ".config", "snippets"),
-  -- database = { save_location = utils.join_paths(home_dir, ".config", "rvim_db"), auto_execute = 1 },
+  format_on_save = {
+    pattern = "*",
+    timeout = 1000,
+  },
   keys = {},
 
   builtin = {},
+
+  plugins = {
+    -- use config.lua for this not put here
+  },
+
+  autocommands = {},
 
   log = {
     ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
@@ -28,10 +32,6 @@ rvim = {
       },
     },
   },
-  plugins = {
-    -- use config.lua for this not put here
-  },
-  autocommands = {},
   lang = {
     typescript = {
       formatters = {{

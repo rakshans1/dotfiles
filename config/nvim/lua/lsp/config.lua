@@ -4,18 +4,32 @@ return {
     signs = {
       active = true,
       values = {
-        { name = "LspDiagnosticsSignError", text = "" },
-        { name = "LspDiagnosticsSignWarning", text = "" },
-        { name = "LspDiagnosticsSignHint", text = "" },
-        { name = "LspDiagnosticsSignInformation", text = "" },
+        { name = "DiagnosticSignError", text = "" },
+        { name = "DiagnosticSignWarn", text = "" },
+        { name = "DiagnosticSignHint", text = "" },
+        { name = "DiagnosticSignInfo", text = "" },
       },
     },
     virtual_text = true,
     update_in_insert = false,
     underline = true,
     severity_sort = true,
+    float = {
+      focusable = false,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+      format = function(d)
+        local t = vim.deepcopy(d)
+        if d.code then
+          t.message = string.format("%s [%s]", t.message, t.code):gsub("1. ", "")
+        end
+        return t.message
+      end,
+    },
   },
-  override = {},
   document_highlight = true,
   code_lens_refresh = true,
   popup_border = "single",
@@ -30,9 +44,9 @@ return {
       ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
       ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
       ["gs"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
-      ["gp"] = { "<cmd>lua require'lsp.peek'.Peek('definition')<CR>", "Peek definition" },
+      ["gp"] = { "<cmd>lua require'lvim.lsp.peek'.Peek('definition')<CR>", "Peek definition" },
       ["gl"] = {
-        "<cmd>lua require'lsp.handlers'.show_line_diagnostics()<CR>",
+        "<cmd>lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>",
         "Show line diagnostics",
       },
     },
@@ -41,5 +55,22 @@ return {
   },
   null_ls = {
     setup = {},
+    config = {},
+  },
+  override = {
+    "angularls",
+    "ccls",
+    "cssmodules_ls",
+    "csharp_ls",
+    "denols",
+    "emmet_ls",
+    "eslint",
+    "eslintls",
+    "graphql",
+    "pylsp",
+    "quick_lint_js",
+    "rome",
+    "stylelint_lsp",
+    "tailwindcss",
   },
 }

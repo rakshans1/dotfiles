@@ -1,3 +1,4 @@
+
 local M = {}
 local Log = require "core.log"
 local utils = require "utils"
@@ -86,19 +87,17 @@ function M.common_capabilities()
 end
 
 local function select_default_formater(client)
-  local client_formatting = client.resolved_capabilities.document_formatting
-    or client.resolved_capabilities.document_range_formatting
-  if client.name == "null-ls" or not client_formatting then
+  if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
     return
   end
   Log:debug("Checking for formatter overriding for " .. client.name)
+  local formatters = require "lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
-    if rvim.lang[filetype] and #vim.tbl_keys(rvim.lang[filetype].formatters) > 0 then
+    if #vim.tbl_keys(formatters.list_registered_providers(filetype)) > 0 then
       Log:debug("Formatter overriding detected. Disabling formatting capabilities for " .. client.name)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
-      return
     end
   end
 end
@@ -116,10 +115,6 @@ function M.common_on_attach(client, bufnr)
   if rvim.lsp.on_attach_callback then
     rvim.lsp.on_attach_callback(client, bufnr)
     Log:debug "Called lsp.on_attach_callback"
-  end
-  if client.name == "tsserver" or client.name == "jsonls" then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
   end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
@@ -143,10 +138,10 @@ function M.get_common_opts()
 end
 
 local LSP_DEPRECATED_SIGN_MAP = {
-  ["LspDiagnosticsSignError"] = "DiagnosticSignError",
-  ["LspDiagnosticsSignWarning"] = "DiagnosticSignWarn",
-  ["LspDiagnosticsSignHint"] = "DiagnosticSignHint",
-  ["LspDiagnosticsSignInformation"] = "DiagnosticSignInfo",
+  ["DiagnosticSignError"] = "LspDiagnosticsSignError",
+  ["DiagnosticSignWarn"] = "LspDiagnosticsSignWarning",
+  ["DiagnosticSignHint"] = "LspDiagnosticsSignHint",
+  ["DiagnosticSignInfo"] = "LspDiagnosticsSignInformation",
 }
 
 function M.setup()
@@ -157,11 +152,11 @@ function M.setup()
     return
   end
 
-  local is_neovim_nightly = vim.fn.has "nvim-0.5.1" > 0
+  local is_neovim_5 = vim.fn.has "nvim-0.6" ~= 1
 
   for _, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
     local lsp_sign_name = LSP_DEPRECATED_SIGN_MAP[sign.name]
-    if is_neovim_nightly and lsp_sign_name then
+    if is_neovim_5 and lsp_sign_name then
       vim.fn.sign_define(lsp_sign_name, { texthl = lsp_sign_name, text = sign.text, numhl = lsp_sign_name })
     end
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
@@ -177,7 +172,8 @@ function M.setup()
 
   require("lsp.null-ls").setup()
 
-  require("utils").toggle_autoformat()
+  require("core.autocmds").configure_format_on_save()
 end
 
 return M
+

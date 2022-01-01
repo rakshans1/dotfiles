@@ -50,12 +50,9 @@ function M:init()
 
   vim.fn.mkdir(vim.fn.stdpath "cache", "p")
 
-  local config = require "config"
-  config:init {
-    path = join_paths(self.config_dir, "config.lua"),
-  }
+  require("config"):init()
 
-  require("plugin-loader"):init {
+  require("plugin-loader").init {
     package_root = self.pack_dir,
     install_path = self.packer_install_dir,
   }

@@ -62,10 +62,12 @@ M.config = function()
     -- NOTE: Prefer using : over <cmd> as the latter avoids going back in normal-mode.
     -- see https://neovim.io/doc/user/map.html#:map-cmd
     vmappings = {
+      ["/"] = { "<ESC><CMD>lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
     },
     mappings = {
       ["w"] = { "<cmd>w!<CR>", "Save" },
       ["q"] = { "<cmd>q!<CR>", "Quit" },
+      ["/"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" },
       ["c"] = { ":set hlsearch! hlsearch?<CR>", "Close Buffer" },
       ["f"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
       ["o"] = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbol" },
@@ -98,7 +100,7 @@ M.config = function()
         name = "Packer",
         c = { "<cmd>PackerCompile<cr>", "Compile" },
         i = { "<cmd>PackerInstall<cr>", "Install" },
-        r = { "<cmd>lua require('utils').reload_lv_config()<cr>", "Reload" },
+        r = { "<cmd>lua require('lvim.plugin-loader').recompile()<cr>", "Re-compile" },
         s = { "<cmd>PackerSync<cr>", "Sync" },
         S = { "<cmd>PackerStatus<cr>", "Status" },
         u = { "<cmd>PackerUpdate<cr>", "Update" },
@@ -153,11 +155,11 @@ M.config = function()
         i = { "<cmd>LspInfo<cr>", "Info" },
         I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
         j = {
-          "<cmd>lua vim.lsp.diagnostic.goto_next({popup_opts = {border = rvim.lsp.popup_border}})<cr>",
+          "<cmd>lua vim.diagnostic.goto_next()<cr>",
           "Next Diagnostic",
         },
         k = {
-          "<cmd>lua vim.lsp.diagnostic.goto_prev({popup_opts = {border = rvim.lsp.popup_border}})<cr>",
+          "<cmd>lua vim.diagnostic.goto_prev()<cr>",
           "Prev Diagnostic",
         },
         l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
@@ -167,7 +169,7 @@ M.config = function()
           t = { "<cmd>lua require('lsp.peek').Peek('typeDefinition')<cr>", "Type Definition" },
           i = { "<cmd>lua require('lsp.peek').Peek('implementation')<cr>", "Implementation" },
         },
-        q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
+        q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
         s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
         S = {
@@ -208,7 +210,7 @@ M.config = function()
         name = "Search",
         b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
         c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        f = { require("core.telescope").find_project_files, "Find File" },
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
         M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },

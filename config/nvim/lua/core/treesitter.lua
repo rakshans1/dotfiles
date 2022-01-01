@@ -17,7 +17,16 @@ M.config = function()
     },
     context_commentstring = {
       enable = true,
-      config = { css = "// %s" },
+      config = {
+        -- Languages that have a single comment style
+        typescript = "// %s",
+        css = "/* %s */",
+        scss = "/* %s */",
+        html = "<!-- %s -->",
+        svelte = "<!-- %s -->",
+        vue = "<!-- %s -->",
+        json = "",
+      },
     },
     -- indent = {enable = true, disable = {"python", "html", "javascript"}},
     -- TODO seems to be broken
@@ -30,16 +39,8 @@ M.config = function()
       },
       -- move = textobj_move_keymaps,
       select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ["ab"] = "@block.outer",
-          ["ib"] = "@block.inner",
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-      },
+        enable = false,
+        -- keymaps = textobj_sel_keymaps,
       },
     },
     textsubjects = {
@@ -73,13 +74,21 @@ M.config = function()
 end
 
 M.setup = function()
-  local status_ok, treesitter_configs = pcall(require, "nvim-treesitter.configs")
-  if not status_ok then
-    Log:get_default().error "Failed to load nvim-treesitter.configs"
+  -- avoid running in headless mode since it's harder to detect failures
+  if #vim.api.nvim_list_uis() == 0 then
+    Log:debug "headless mode detected, skipping running setup for treesitter"
     return
   end
 
-  treesitter_configs.setup(rvim.builtin.treesitter)
+  local status_ok, treesitter_configs = pcall(require, "nvim-treesitter.configs")
+  if not status_ok then
+    Log:error "Failed to load nvim-treesitter.configs"
+    return
+  end
+
+  local opts = vim.deepcopy(rvim.builtin.treesitter)
+
+  treesitter_configs.setup(opts)
 
   if rvim.builtin.treesitter.on_config_done then
     rvim.builtin.treesitter.on_config_done(treesitter_configs)

@@ -1,11 +1,13 @@
 local plugin_loader = {}
 
+local in_headless = #vim.api.nvim_list_uis() == 0
+
 local utils = require "utils"
 local Log = require "core.log"
-
 -- we need to reuse this outside of init()
 local compile_path = get_config_dir() .. "/plugin/packer_compiled.lua"
-function plugin_loader:init(opts)
+
+function plugin_loader.init(opts)
   opts = opts or {}
 
   local install_path = opts.install_path or vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
@@ -16,15 +18,24 @@ function plugin_loader:init(opts)
     vim.cmd "packadd packer.nvim"
   end
 
-  local packer_ok, packer = pcall(require, "packer")
-  if not packer_ok then
-    return
+  local log_level = in_headless and "debug" or "warn"
+  if rvim.log and rvim.log.level then
+    log_level = rvim.log.level
   end
 
+  local _, packer = pcall(require, "packer")
   packer.init {
     package_root = package_root,
     compile_path = compile_path,
-    git = { clone_timeout = 300 },
+    log = { level = log_level },
+    git = {
+      clone_timeout = 300,
+      subcommands = {
+        -- this is more efficient than what Packer is using
+        fetch = "fetch --no-tags --no-recurse-submodules --update-shallow --progress",
+      },
+    },
+    max_jobs = 50,
     display = {
       open_fn = function()
         return require("packer.util").float { border = "rounded" }
@@ -32,32 +43,80 @@ function plugin_loader:init(opts)
     },
   }
 
-  self.packer = packer
-  return self
+  vim.cmd [[autocmd User PackerComplete lua require('utils.hooks').run_on_packer_complete()]]
 end
 
-function plugin_loader:cache_clear()
+-- packer expects a space separated list
+local function pcall_packer_command(cmd, kwargs)
+  local status_ok, msg = pcall(function()
+    require("packer")[cmd](unpack(kwargs or {}))
+  end)
+  if not status_ok then
+    Log:warn(cmd .. " failed with: " .. vim.inspect(msg))
+    Log:trace(vim.inspect(vim.fn.eval "v:errmsg"))
+  end
+end
+
+function plugin_loader.cache_clear()
   if vim.fn.delete(compile_path) == 0 then
     Log:debug "deleted packer_compiled.lua"
   end
 end
 
-function plugin_loader:cache_reset()
-  self.cache_clear()
-  require("packer").compile()
+function plugin_loader.recompile()
+  plugin_loader.cache_clear()
+  pcall_packer_command "compile"
   if utils.is_file(compile_path) then
     Log:debug "generated packer_compiled.lua"
   end
 end
 
-function plugin_loader:load(configurations)
-  return self.packer.startup(function(use)
-    for _, plugins in ipairs(configurations) do
-      for _, plugin in ipairs(plugins) do
-        use(plugin)
+function plugin_loader.load(configurations)
+  Log:debug "loading plugins configuration"
+  local packer_available, packer = pcall(require, "packer")
+  if not packer_available then
+    Log:warn "skipping loading plugins until Packer is installed"
+    return
+  end
+  local status_ok, _ = xpcall(function()
+    packer.startup(function(use)
+      for _, plugins in ipairs(configurations) do
+        for _, plugin in ipairs(plugins) do
+          use(plugin)
+        end
       end
-    end
-  end)
+    end)
+  end, debug.traceback)
+  if not status_ok then
+    Log:warn "problems detected while loading plugins' configurations"
+    Log:trace(debug.traceback())
+  end
+
+  -- Colorscheme must get called after plugins are loaded or it will break new installs.
+  -- vim.g.colors_name = rvim.colorscheme
+  -- vim.cmd("colorscheme " .. rvim.colorscheme)
+end
+
+function plugin_loader.get_core_plugins()
+  local list = {}
+  local plugins = require "rvim.plugins"
+  for _, item in pairs(plugins) do
+    table.insert(list, item[1]:match "/(%S*)")
+  end
+  return list
+end
+
+function plugin_loader.sync_core_plugins()
+  local core_plugins = plugin_loader.get_core_plugins()
+  Log:trace(string.format("Syncing core plugins: [%q]", table.concat(core_plugins, ", ")))
+  pcall_packer_command("sync", core_plugins)
+end
+
+function plugin_loader.ensure_installed()
+  plugin_loader.cache_clear()
+  local all_plugins = _G.packer_plugins or plugin_loader.get_core_plugins()
+  Log:trace(string.format("Syncing core plugins: [%q]", table.concat(all_plugins, ", ")))
+  pcall_packer_command("install", all_plugins)
 end
 
 return plugin_loader

@@ -1,13 +1,9 @@
 require("bootstrap"):init()
 
-local config = require "config"
-config:load()
+require("config"):load()
 
 local plugins = require "plugins"
 require("plugin-loader"):load { plugins, rvim.plugins }
-
-vim.g.colors_name = rvim.colorscheme
-vim.cmd("colorscheme " .. rvim.colorscheme)
 
 vim.o.background = "dark"
 vim.o.termguicolors = true
@@ -23,7 +19,5 @@ end
 
 local commands = require "core.commands"
 commands.load(commands.defaults)
-
-require("keymappings").setup()
 
 require("lsp").setup()
