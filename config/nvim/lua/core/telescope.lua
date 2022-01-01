@@ -122,9 +122,9 @@ function M.setup()
   local telescope = require "telescope"
   telescope.setup(rvim.builtin.telescope)
 
-  if rvim.builtin.telescope.extensions and rvim.builtin.telescope.extensions.fzf then
-    require("telescope").load_extension "fzf"
-  end
+  -- if rvim.builtin.telescope.extensions and rvim.builtin.telescope.extensions.fzf then
+  --   require("telescope").load_extension "fzf"
+  -- end
 end
 
 -- Smartly opens either git_files or find_files, depending on whether the working directory is

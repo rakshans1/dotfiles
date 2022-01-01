@@ -94,7 +94,6 @@ function M.config()
       },
     },
   }
-  rvim.builtin.which_key.mappings["<C-n>"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
 end
 
 function M.setup()
@@ -114,7 +113,8 @@ function M.setup()
     rvim.builtin.nvimtree.setup.view.mappings.list = {
       { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
       { key = "h", cb = tree_cb "close_node" },
-      { key = "v", cb = tree_cb "vsplit" },
+      { key = "s", cb = tree_cb "vsplit" },
+    { key = "t", cb = tree_cb("tabnew")},
       { key = "C", cb = tree_cb "cd" },
       { key = "gtf", cb = "<cmd>lua require'core.nvimtree'.start_telescope('find_files')<cr>" },
       { key = "gtg", cb = "<cmd>lua require'core.nvimtree'.start_telescope('live_grep')<cr>" },

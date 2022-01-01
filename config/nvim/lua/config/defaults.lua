@@ -19,7 +19,7 @@ return {
 
   log = {
     ---@usage can be { "trace", "debug", "info", "warn", "error", "fatal" },
-    level = "trace",
+    level = "warn",
     viewer = {
       ---@usage this will fallback on "less +F" if not found
       cmd = "lnav",
@@ -32,38 +32,5 @@ return {
       },
     },
   },
-  lang = {
-    typescript = {
-      formatters = {{
-        exe = "prettierd"
-      }},
-      linters = {{
-        exe = "eslint_d"
-      }}
-    },
-    javascript = {
-      formatters = {{
-        exe = "prettierd"
-      }},
-      linters = {{
-        exe = "eslint_d"
-      }}
-    },
-    javascriptreact = {
-      formatters = {{
-        exe = "prettierd"
-      }},
-      linters = {{
-        exe = "eslint_d"
-      }}
-    },
-    typescriptreact = {
-      formatters = {{
-        exe = "prettierd"
-      }},
-      linters = {{
-        exe = "eslint_d"
-      }}
-    },
-  },
+  lang = {},
 }

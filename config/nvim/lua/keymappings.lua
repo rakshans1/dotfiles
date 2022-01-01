@@ -77,7 +77,8 @@ local defaults = {
     ["[q"] = ":cprev<CR>",
     ["<C-q>"] = ":call QuickFixToggle()<CR>",
     ["<C-p>"] = "<cmd>Telescope find_files<CR>",
-    ["<C-_>"] = "<cmd>lua require('Comment').toggle()<CR>",
+    ["<C-n>"] = ":NvimTreeToggle<CR>",
+    ["<C-_>"] = "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>",
   },
 
   ---@usage change or add keymappings for terminal mode
@@ -94,7 +95,7 @@ local defaults = {
     -- Better indenting
     ["<"] = "<gv",
     [">"] = ">gv",
-    ["<C-_>"] = "<ESC><CMD>lua ___comment_gc(vim.fn.visualmode())<CR>",
+    ["<C-_>"] = "<ESC><CMD>lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>",
 
     -- ["p"] = '"0p',
     -- ["P"] = '"0P',

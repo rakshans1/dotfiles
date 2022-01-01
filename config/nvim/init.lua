@@ -21,3 +21,23 @@ local commands = require "core.commands"
 commands.load(commands.defaults)
 
 require("lsp").setup()
+
+-- set a formatter, this will override the language server formatting capabilities (if it exists)
+local formatters = require "lsp.null-ls.formatters"
+formatters.setup {
+  {
+    exe = "prettierd",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  },
+}
+
+-- set additional linters
+local linters = require "lsp.null-ls.linters"
+linters.setup {
+  {
+    exe = "eslint_d",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "javascriptreact", "typescriptreact", "typescript" },
+  },
+}
