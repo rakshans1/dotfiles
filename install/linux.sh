@@ -76,10 +76,10 @@ apt_packages+=(google-chrome-stable)
 
 
 # https://yarnpkg.com/en/docs/install
-apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
-apt_source_files+=(yarn)
-apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
-apt_packages+=(yarn)
+#apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
+#apt_source_files+=(yarn)
+#apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
+#apt_packages+=(yarn)
 
 # https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
 # apt_keys+=(https://www.virtualbox.org/download/oracle_vbox_2016.asc)
@@ -128,6 +128,11 @@ deb_sources+=('https://github.com/muesli/duf/releases/latest/download/duf_'$dufv
 deb_installed+=(glow)
 glowversion="$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | jq -r .tag_name | sed 's/v//')"
 deb_sources+=('https://github.com/charmbracelet/glow/releases/latest/download/duf_'$glowversion'_linux_amd64.deb')
+
+# https://github.com/ClementTsang/bottom
+deb_installed+=(bottom)
+bottomversion="$(curl -s "https://api.github.com/repos/ClementTsang/bottom/releases/latest" | jq -r .tag_name)"
+deb_sources+=('https://github.com/ClementTsang/bottom/releases/latest/download/bottom_'$bottomversion'_amd64.deb')
 
 
 ####################

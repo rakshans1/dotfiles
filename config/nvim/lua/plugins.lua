@@ -211,7 +211,7 @@ return {
 
   -- Status Line and Bufferline
   {
-    "shadmansaleh/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     config = function()
       require("core.lualine").setup()
     end,

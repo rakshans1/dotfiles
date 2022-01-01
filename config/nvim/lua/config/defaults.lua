@@ -57,5 +57,13 @@ rvim = {
         exe = "eslint_d"
       }}
     },
+    typescriptreact = {
+      formatters = {{
+        exe = "prettierd"
+      }},
+      linters = {{
+        exe = "eslint_d"
+      }}
+    },
   },
 }

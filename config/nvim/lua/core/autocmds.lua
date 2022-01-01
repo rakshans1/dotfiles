@@ -77,11 +77,6 @@ rvim.autocommands = {
   _general_lsp = {
     { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
   },
-
-  _fterm_lazygit = {
-    -- will cause esc key to exit lazy git
-    {"TermEnter", "*", "call LazyGitNativation()"}
-  },
   _mode_switching = {
     -- will switch between absolute and relative line numbers depending on mode
     {'BufEnter,FocusGained,InsertLeave', '*', 'set number relativenumber'},

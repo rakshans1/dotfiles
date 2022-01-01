@@ -37,15 +37,6 @@ function M.setup()
           return
         end
 
-        local sign_names = {
-          "DiagnosticSignError",
-          "DiagnosticSignWarn",
-          "DiagnosticSignInfo",
-          "DiagnosticSignHint",
-        }
-        for i, sign in ipairs(rvim.lsp.diagnostics.signs.values) do
-          vim.fn.sign_define(sign_names[i], { texthl = sign_names[i], text = sign.text, numhl = "" })
-        end
         vim_diag.show(namespace, bufnr, diagnostics, config)
       else
         vim.lsp.diagnostic.save(diagnostics, bufnr, ctx.client_id)
