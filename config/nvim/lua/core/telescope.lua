@@ -1,7 +1,6 @@
 local M = {}
 
 function M.config()
-  local actions = require "telescope.actions"
   -- Define this minimal config so that it's available if telescope is not yet available.
   rvim.builtin.telescope = {
     ---@usage disable telescope completely [not recommeded]
