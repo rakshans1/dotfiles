@@ -27,7 +27,7 @@ end
 
 M.params_injecter = function(_, entry)
   -- FIXME: this is currently getting ignored or is not passed correctly
-  for key, value in pairs(lvim.builtin.notify.opts) do
+  for key, value in pairs(rvim.builtin.notify.opts) do
     entry[key] = value
   end
   return entry

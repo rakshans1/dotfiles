@@ -1,7 +1,7 @@
 local M = {}
-local utils = require "utils"
+local join_paths = require("utils").join_paths
 
-M.load_options = function()
+M.load_default_options = function()
   local default_options = {
     backup = false,
     clipboard = "unnamedplus",
@@ -28,7 +28,7 @@ M.load_options = function()
     termguicolors = true,
     timeoutlen = 500,
     title = true,
-    undodir = utils.join_paths(get_cache_dir(), "undo"),
+    undodir = join_paths(get_cache_dir(), "undo"),
     undofile = true,
     updatetime = 300,
     writebackup = false,
@@ -50,17 +50,27 @@ M.load_options = function()
   ---  SETTINGS  ---
 
   vim.opt.shortmess:append "c"
+  vim.opt.whichwrap:append "<,>,[,],h,l"
 
   for k, v in pairs(default_options) do
     vim.opt[k] = v
   end
 end
 
-M.load_commands = function()
-  local cmd = vim.cmd
-  if rvim.line_wrap_cursor_movement then
-    cmd "set whichwrap+=<,>,[,],h,l"
+M.load_headless_options = function()
+  vim.opt.shortmess = "" -- try to prevent echom from cutting messages off or prompting
+  vim.opt.more = false -- don't pause listing when screen is filled
+  vim.opt.cmdheight = 9999 -- helps avoiding |hit-enter| prompts.
+  vim.opt.columns = 9999 -- set the widest screen possible
+  vim.opt.swapfile = false -- don't use a swap file
+end
+
+M.load_options = function()
+  if #vim.api.nvim_list_uis() == 0 then
+    M.load_headless_options()
+    return
   end
+  M.load_default_options()
 end
 
 return M

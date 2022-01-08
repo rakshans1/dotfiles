@@ -1,7 +1,6 @@
 return {
   leader = "space",
   colorscheme = "iceberg",
-  line_wrap_cursor_movement = true,
   transparent_window = false,
   format_on_save = {
     pattern = "*",

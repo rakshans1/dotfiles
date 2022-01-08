@@ -44,9 +44,9 @@ return {
       ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
       ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
       ["gs"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
-      ["gp"] = { "<cmd>lua require'lvim.lsp.peek'.Peek('definition')<CR>", "Peek definition" },
+      ["gp"] = { "<cmd>lua require'lsp.peek'.Peek('definition')<CR>", "Peek definition" },
       ["gl"] = {
-        "<cmd>lua require'lvim.lsp.handlers'.show_line_diagnostics()<CR>",
+        "<cmd>lua require'lsp.handlers'.show_line_diagnostics()<CR>",
         "Show line diagnostics",
       },
     },

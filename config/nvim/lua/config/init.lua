@@ -55,16 +55,15 @@ function M:load(config_path)
 
   require("keymappings").load(rvim.keys)
 
-  local settings = require "config.settings"
-  settings.load_commands()
+  if rvim.transparent_window then
+    autocmds.enable_transparent_mode()
+  end
 end
 
 --- Override the configuration with a user provided one
 -- @param config_path The path to the configuration overrides
 function M:reload()
-  package.loaded["utils.hooks"] = nil
-  local _, hooks = pcall(require, "utils.hooks")
-  hooks.run_pre_reload()
+  require_clean("utils.hooks").run_pre_reload()
 
   M:init()
   M:load()
@@ -75,7 +74,7 @@ function M:reload()
   local plugin_loader = require "plugin-loader"
 
   plugin_loader.load { plugins, rvim.plugins }
-  hooks.run_post_reload()
+  require_clean("utils.hooks").run_post_reload()
 end
 
 return M
