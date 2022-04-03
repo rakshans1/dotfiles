@@ -69,6 +69,14 @@ function M.apply_defaults(config, default_config)
   return new_config
 end
 
+---Get supported servers per filetype
+---@param filetype string
+---@return table list of names of supported servers
+function M.get_supported_servers_per_filetype(filetype)
+  local filetype_server_map = require "nvim-lsp-installer._generated.filetype_map"
+  return filetype_server_map[filetype]
+end
+
 --- Checks whether a given path exists and is a file.
 --@param path (string) path to check
 --@returns (bool)

@@ -43,7 +43,9 @@ function plugin_loader.init(opts)
     },
   }
 
-  vim.cmd [[autocmd User PackerComplete lua require('utils.hooks').run_on_packer_complete()]]
+  if not in_headless then
+    vim.cmd [[autocmd User PackerComplete lua require('rvim.utils.hooks').run_on_packer_complete()]]
+  end
 end
 
 -- packer expects a space separated list
