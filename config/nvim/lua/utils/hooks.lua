@@ -20,8 +20,8 @@ end
 function M.run_post_reload()
   Log:debug "Starting post-reload hook"
 
-  M.reset_cache()
   require("plugin-loader").ensure_installed()
+  M.reset_cache()
 end
 
 ---Reset any startup cache files used by Packer and Impatient

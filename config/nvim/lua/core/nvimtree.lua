@@ -55,6 +55,9 @@ function M.config()
           custom_only = false,
           list = {},
         },
+        number = false,
+        relativenumber = false,
+        singcolumn = "yes",
       },
       filters = {
         dotfiles = false,
