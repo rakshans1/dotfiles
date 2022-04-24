@@ -50,6 +50,7 @@ M.load_default_options = function()
   ---  SETTINGS  ---
 
   vim.opt.shortmess:append "c"
+  vim.opt.shortmess:append "I"
   vim.opt.whichwrap:append "<,>,[,],h,l"
 
   for k, v in pairs(default_options) do

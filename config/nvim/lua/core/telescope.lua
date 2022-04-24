@@ -26,7 +26,15 @@ function M.config()
         width = 0.95,
         prompt_position = "bottom",
         preview_cutoff = 120,
-        horizontal = { mirror = false },
+        horizontal = {
+          preview_width = function(_, cols, _)
+            if cols < 120 then
+              return math.floor(cols * 0.5)
+            end
+            return math.floor(cols * 0.6)
+          end,
+          mirror = false,
+        },
         vertical = { mirror = false },
       },
       vimgrep_arguments = {
@@ -92,11 +100,7 @@ function M.code_actions()
       width = 80,
       height = 12,
     },
-    borderchars = {
-      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
-      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
-      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-    },
+    borderchars = rvim.builtin.telescope.defaults.borderchars,
     border = {},
     previewer = false,
     shorten_path = false,

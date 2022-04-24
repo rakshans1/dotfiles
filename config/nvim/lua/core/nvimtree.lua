@@ -9,10 +9,17 @@ function M.config()
       disable_netrw = true,
       hijack_netrw = true,
       open_on_setup = false,
+      ignore_buffer_on_setup = false,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
         "alpha",
+      },
+      auto_reload_on_write = true,
+      hijack_unnamed_buffer_when_opening = false,
+      hijack_directories = {
+        enable = true,
+        auto_open = true,
       },
       update_to_buf_dir = {
         enable = false,
