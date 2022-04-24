@@ -1,13 +1,17 @@
 local M = {}
 
 function M.config()
-  local actions = require "telescope.actions"
   -- Define this minimal config so that it's available if telescope is not yet available.
   rvim.builtin.telescope = {
     ---@usage disable telescope completely [not recommeded]
     active = true,
     on_config_done = nil,
   }
+  
+  local ok, actions = pcall(require, "telescope.actions")
+  if not ok then
+    return
+  end
 
   rvim.builtin.telescope = vim.tbl_extend("force", rvim.builtin.telescope, {
     defaults = {
@@ -22,7 +26,15 @@ function M.config()
         width = 0.95,
         prompt_position = "bottom",
         preview_cutoff = 120,
-        horizontal = { mirror = false },
+        horizontal = {
+          preview_width = function(_, cols, _)
+            if cols < 120 then
+              return math.floor(cols * 0.5)
+            end
+            return math.floor(cols * 0.6)
+          end,
+          mirror = false,
+        },
         vertical = { mirror = false },
       },
       vimgrep_arguments = {
@@ -34,6 +46,7 @@ function M.config()
         "--column",
         "--smart-case",
         "--hidden",
+        "--glob=!.git/",
       },
       file_ignore_patterns = {},
       path_display = { shorten = 5 },
@@ -59,7 +72,7 @@ function M.config()
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<CR>"] = actions.select_default + actions.center,
+        ["<CR>"] = actions.select_default,
       },
       n = {
         ["<C-n>"] = actions.move_selection_next,
@@ -87,11 +100,7 @@ function M.code_actions()
       width = 80,
       height = 12,
     },
-    borderchars = {
-      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
-      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
-      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-    },
+    borderchars = rvim.builtin.telescope.defaults.borderchars,
     border = {},
     previewer = false,
     shorten_path = false,
@@ -117,8 +126,19 @@ function M.setup()
   local telescope = require "telescope"
   telescope.setup(rvim.builtin.telescope)
 
-  if rvim.builtin.telescope.extensions and rvim.builtin.telescope.extensions.fzf then
-    require("telescope").load_extension "fzf"
+  -- if rvim.builtin.telescope.extensions and rvim.builtin.telescope.extensions.fzf then
+  --   require("telescope").load_extension "fzf"
+  -- end
+end
+
+-- Smartly opens either git_files or find_files, depending on whether the working directory is
+-- contained in a Git repo.
+function M.find_project_files()
+  local _, builtin = pcall(require, "telescope.builtin")
+  local ok = pcall(builtin.git_files)
+
+  if not ok then
+    builtin.find_files()
   end
 end
 

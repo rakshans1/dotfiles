@@ -1,4 +1,5 @@
 local M = {}
+local Log = require "core.log"
 
 function M.config()
   rvim.builtin.nvimtree = {
@@ -8,11 +9,26 @@ function M.config()
       disable_netrw = true,
       hijack_netrw = true,
       open_on_setup = false,
+      ignore_buffer_on_setup = false,
+      ignore_ft_on_setup = {
+        "startify",
+        "dashboard",
+        "alpha",
+      },
+      auto_reload_on_write = true,
+      hijack_unnamed_buffer_when_opening = false,
+      hijack_directories = {
+        enable = true,
+        auto_open = true,
+      },
+      update_to_buf_dir = {
+        enable = false,
+        auto_open = true,
+      },
       auto_close = true,
       open_on_tab = false,
-      update_focused_file = {
-        enable = true,
-      },
+      hijack_cursor = false,
+      update_cwd = false,
       diagnostics = {
         enable = true,
         icons = {
@@ -22,30 +38,64 @@ function M.config()
           error = "",
         },
       },
+      update_focused_file = {
+        enable = true,
+        update_cwd = true,
+        ignore_list = {},
+      },
+      system_open = {
+        cmd = nil,
+        args = {},
+      },
+      git = {
+        enable = true,
+        ignore = false,
+        timeout = 200,
+      },
       view = {
         width = 30,
+        height = 30,
+        hide_root_folder = false,
         side = "left",
         auto_resize = false,
         mappings = {
           custom_only = false,
+          list = {},
+        },
+        number = false,
+        relativenumber = false,
+        singcolumn = "yes",
+      },
+      filters = {
+        dotfiles = false,
+        custom = { "node_modules", "\\.cache" },
+      },
+      actions = {
+        change_dir = {
+          global = false,
+        },
+        open_file = {
+          resize_window = true,
+          quit_on_open = false,
+        },
+        window_picker = {
+          enable = false,
+          chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+          exclude = {},
         },
       },
     },
     show_icons = {
-      git = true,
-      folders = true,
-      files = true,
-      folder_arrows = true,
+      git = 1,
+      folders = 1,
+      files = 1,
+      folder_arrows = 1,
       tree_width = 30,
     },
-    ignore = { ".git", "node_modules", ".cache" },
-    quit_on_open = false,
-    hide_dotfiles = true,
-    git_hl = true,
-    root_folder_modifier = ":~",
-    allow_resize = true,
-    ignore_ft_on_setup  = {"dashboard"},
-    auto_ignore_ft = { "dashboard" },
+    quit_on_open = 0,
+    git_hl = 1,
+    disable_window_picker = 0,
+    root_folder_modifier = ":t",
     icons = {
       default = "",
       symlink = "",
@@ -70,39 +120,53 @@ function M.config()
 end
 
 function M.setup()
-  local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+  local status_ok, nvim_tree = pcall(require, "nvim-tree")
+  if not status_ok then
+    Log:error "Failed to load nvim-tree"
+    return
+  end
 
-  rvim.builtin.nvimtree.setup.view.mappings.list = {
-    { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-    { key = "h", cb = tree_cb "close_node" },
-    { key = "s", cb = tree_cb "vsplit" },
-    { key = "t", cb = tree_cb("tabnew")},
+  for opt, val in pairs(rvim.builtin.nvimtree) do
+    vim.g["nvim_tree_" .. opt] = val
+  end
+
+  local function telescope_find_files(_)
+    require("core.nvimtree").start_telescope "find_files"
+  end
+  local function telescope_live_grep(_)
+    require("core.nvimtree").start_telescope "live_grep"
+  end
+
+  -- Add useful keymaps
+  if #rvim.builtin.nvimtree.setup.view.mappings.list == 0 then
+    rvim.builtin.nvimtree.setup.view.mappings.list = {
+      { key = { "l", "<CR>", "o" }, action = "edit" },
+      { key = "h", action = "close_node" },
+      { key = "s", action = "vsplit" },
+      { key = "t", action = "tabnew" },
+      { key = "C", action =  "cd" },
+      { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
+      { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
     }
+  end
 
-  rvim.builtin.which_key.mappings["<C-n>"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" }
+  nvim_tree.setup(rvim.builtin.nvimtree.setup)
+
+  if rvim.builtin.nvimtree.on_config_done then
+    rvim.builtin.nvimtree.on_config_done(nvim_tree)
+  end
 
   require("nvim-tree").setup(rvim.builtin.nvimtree.setup)
 end
 
-function M.on_open()
-  if package.loaded["bufferline.state"] and rvim.builtin.nvimtree.setup.view.side == "left" then
-    require("bufferline.state").set_offset(rvim.builtin.nvimtree.setup.view.width + 1, "")
-  end
-end
-
-function M.on_close()
-  local buf = tonumber(vim.fn.expand "<abuf>")
-  local ft = vim.api.nvim_buf_get_option(buf, "filetype")
-  if ft == "NvimTree" and package.loaded["bufferline.state"] then
-    require("bufferline.state").set_offset(0)
-  end
-end
-
-function M.change_tree_dir(dir)
-  local lib_status_ok, lib = pcall(require, "nvim-tree.lib")
-  if lib_status_ok then
-    lib.change_dir(dir)
-  end
+function M.start_telescope(telescope_mode)
+  local node = require("nvim-tree.lib").get_node_at_cursor()
+  local abspath = node.link_to or node.absolute_path
+  local is_folder = node.open ~= nil
+  local basedir = is_folder and abspath or vim.fn.fnamemodify(abspath, ":h")
+  require("telescope.builtin")[telescope_mode] {
+    cwd = basedir,
+  }
 end
 
 return M

@@ -1,24 +1,13 @@
 local M = {}
 local Log = require "core.log"
 local utils = require "utils"
+local autocmds = require "core.autocmds"
 
 local function lsp_highlight_document(client)
   if rvim.lsp.document_highlight == false then
     return -- we don't need further
   end
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec(
-      [[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]],
-      false
-    )
-  end
+  autocmds.enable_lsp_document_highlight(client.id)
 end
 
 local function lsp_code_lens_refresh(client)
@@ -27,16 +16,7 @@ local function lsp_code_lens_refresh(client)
   end
 
   if client.resolved_capabilities.code_lens then
-    vim.api.nvim_exec(
-      [[
-      augroup lsp_code_lens_refresh
-        autocmd! * <buffer>
-        autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
-        autocmd InsertLeave <buffer> lua vim.lsp.codelens.display()
-      augroup END
-    ]],
-      false
-    )
+    autocmds.enable_code_lens_refresh()
   end
 end
 
@@ -86,20 +66,27 @@ function M.common_capabilities()
 end
 
 local function select_default_formater(client)
-  local client_formatting = client.resolved_capabilities.document_formatting
-    or client.resolved_capabilities.document_range_formatting
-  if client.name == "null-ls" or not client_formatting then
+  if client.name == "null-ls" or not client.resolved_capabilities.document_formatting then
     return
   end
   Log:debug("Checking for formatter overriding for " .. client.name)
+  local formatters = require "lsp.null-ls.formatters"
   local client_filetypes = client.config.filetypes or {}
   for _, filetype in ipairs(client_filetypes) do
-    if rvim.lang[filetype] and #vim.tbl_keys(rvim.lang[filetype].formatters) > 0 then
+    if #vim.tbl_keys(formatters.list_registered(filetype)) > 0 then
       Log:debug("Formatter overriding detected. Disabling formatting capabilities for " .. client.name)
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
-      return
     end
+  end
+end
+
+function M.common_on_exit(_, _)
+  if rvim.lsp.document_highlight then
+    autocmds.disable_lsp_document_highlight()
+  end
+  if rvim.lsp.code_lens_refresh then
+    autocmds.disable_code_lens_refresh()
   end
 end
 
@@ -116,10 +103,6 @@ function M.common_on_attach(client, bufnr)
   if rvim.lsp.on_attach_callback then
     rvim.lsp.on_attach_callback(client, bufnr)
     Log:debug "Called lsp.on_attach_callback"
-  end
-  if client.name == "tsserver" or client.name == "jsonls" then
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
   end
   lsp_highlight_document(client)
   lsp_code_lens_refresh(client)
@@ -138,6 +121,7 @@ function M.get_common_opts()
   return {
     on_attach = M.common_on_attach,
     on_init = M.common_on_init,
+    on_exit = M.common_on_exit,
     capabilities = M.common_capabilities(),
   }
 end
@@ -160,11 +144,20 @@ function M.setup()
     require("lsp.templates").generate_templates()
   end
 
-  bootstrap_nlsp { config_home = utils.join_paths(get_config_dir(), "lsp-settings") }
+  bootstrap_nlsp {
+    config_home = utils.join_paths(get_config_dir(), "lsp-settings"),
+    append_default_schemas = true,
+  }
+
+  require("nvim-lsp-installer").settings {
+    -- use the default nvim_data_dir, since the server binaries are independent
+    install_root_dir = utils.join_paths(vim.call("stdpath", "data"), "lsp_servers"),
+  }
 
   require("lsp.null-ls").setup()
 
-  require("utils").toggle_autoformat()
+  autocmds.configure_format_on_save()
 end
 
 return M
+

@@ -1,13 +1,9 @@
 require("bootstrap"):init()
 
-local config = require "config"
-config:load()
+require("config"):load()
 
 local plugins = require "plugins"
-require("plugin-loader"):load { plugins, rvim.plugins }
-
-vim.g.colors_name = rvim.colorscheme
-vim.cmd("colorscheme " .. rvim.colorscheme)
+require("plugin-loader").load { plugins, rvim.plugins }
 
 vim.o.background = "dark"
 vim.o.termguicolors = true
@@ -24,6 +20,24 @@ end
 local commands = require "core.commands"
 commands.load(commands.defaults)
 
-require("keymappings").setup()
-
 require("lsp").setup()
+
+-- set a formatter, this will override the language server formatting capabilities (if it exists)
+local formatters = require "lsp.null-ls.formatters"
+formatters.setup {
+  {
+    exe = "prettierd",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  },
+}
+
+-- set additional linters
+local linters = require "lsp.null-ls.linters"
+linters.setup {
+  {
+    exe = "eslint_d",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "javascriptreact", "typescriptreact", "typescript" },
+  },
+}

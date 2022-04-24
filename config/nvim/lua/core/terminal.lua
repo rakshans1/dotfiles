@@ -1,12 +1,14 @@
+
 local M = {}
 local Log = require "core.log"
 
 M.config = function()
   rvim.builtin["terminal"] = {
-    active = true,
     on_config_done = nil,
+    active = true,
     -- size can be a number or function which is passed the current terminal
     size = 20,
+    -- open_mapping = [[<c-\>]],
     open_mapping = [[<c-t>]],
     hide_numbers = true, -- hide the number column in toggleterm buffers
     shade_filetypes = {},
@@ -40,49 +42,67 @@ M.config = function()
     -- rvim.builtin.terminal.execs = {{}} to overwrite
     -- rvim.builtin.terminal.execs[#rvim.builtin.terminal.execs+1] = {"gdb", "tg", "GNU Debugger"}
     execs = {
-      { "lazygit", "gg", "LazyGit" },
+      -- TODO: this should probably be removed since it's hard to hit <leader>gg within the timeoutlen
+      { "lazygit", "<leader>gg", "LazyGit", "float" },
+      { "lazygit", "<c-\\>", "LazyGit", "float" },
     },
   }
 end
 
 M.setup = function()
   local terminal = require "toggleterm"
-  for _, exec in pairs(rvim.builtin.terminal.execs) do
-    require("core.terminal").add_exec(exec[1], exec[2], exec[3])
-  end
   terminal.setup(rvim.builtin.terminal)
-end
 
-M.add_exec = function(exec, keymap, name)
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>" .. keymap,
-    "<cmd>lua require('core.terminal')._exec_toggle('" .. exec .. "')<CR>",
-    { noremap = true, silent = true }
-  )
-  rvim.builtin.which_key.mappings[keymap] = name
-end
 
-M._split = function(inputstr, sep)
-  if sep == nil then
-    sep = "%s"
+  for i, exec in pairs(rvim.builtin.terminal.execs) do
+    local opts = {
+      cmd = exec[1],
+      keymap = exec[2],
+      label = exec[3],
+      -- NOTE: unable to consistently bind id/count <= 9, see #2146
+      count = i + 100,
+      direction = exec[4] or rvim.builtin.terminal.direction,
+      size = rvim.builtin.terminal.size,
+    }
+
+    M.add_exec(opts)
   end
-  local t = {}
-  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-    table.insert(t, str)
+
+  if rvim.builtin.terminal.on_config_done then
+    rvim.builtin.terminal.on_config_done(terminal)
   end
-  return t
 end
 
-M._exec_toggle = function(exec)
-  local binary = M._split(exec)[1]
+M.add_exec = function(opts)
+  local binary = opts.cmd:match "(%S+)"
   if vim.fn.executable(binary) ~= 1 then
-    Log:error("Unable to run executable " .. binary .. ". Please make sure it is installed properly.")
+    Log:debug("Skipping configuring executable " .. binary .. ". Please make sure it is installed properly.")
     return
   end
+
+  local exec_func = string.format(
+    "<cmd>lua require('core.terminal')._exec_toggle({ cmd = '%s', count = %d, direction = '%s'})<CR>",
+    opts.cmd,
+    opts.count,
+    opts.direction
+  )
+
+  require("keymappings").load {
+    normal_mode = { [opts.keymap] = exec_func },
+    term_mode = { [opts.keymap] = exec_func },
+  }
+
+  local wk_status_ok, wk = pcall(require, "which-key")
+  if not wk_status_ok then
+    return
+  end
+  wk.register({ [opts.keymap] = { opts.label } }, { mode = "n" })
+end
+
+M._exec_toggle = function(opts)
   local Terminal = require("toggleterm.terminal").Terminal
-  local exec_term = Terminal:new { cmd = exec, hidden = true }
-  exec_term:toggle()
+  local term = Terminal:new { cmd = opts.cmd, count = opts.count, direction = opts.direction }
+  term:toggle(rvim.builtin.terminal.size, opts.direction)
 end
 
 ---Toggles a log viewer according to log.viewer.layout_config

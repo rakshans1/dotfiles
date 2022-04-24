@@ -1,54 +1,64 @@
 local M = {
-  banner = {},
+  banner = {
+    "",
+  },
 }
 
 local fmt = string.format
 local text = require "interface.text"
+local lsp_utils = require "lsp.utils"
 
 local function str_list(list)
-  return fmt("[ %s ]", table.concat(list, ", "))
+  return #list == 1 and list[1] or fmt("[%s]", table.concat(list, ", "))
 end
 
-local function get_formatter_suggestion_msg(ft)
-  local config = require "config"
+local function make_formatters_info(ft)
   local null_formatters = require "lsp.null-ls.formatters"
-  local supported_formatters = null_formatters.list_available(ft)
-  local section = {
-    " HINT ",
-    "",
-    fmt("* List of supported formatters: %s", str_list(supported_formatters)),
-  }
+  local registered_formatters = null_formatters.list_registered(ft)
+  local supported_formatters = null_formatters.list_supported(ft)
 
-  if not vim.tbl_isempty(supported_formatters) then
-    vim.list_extend(section, {
-      "* Configured formatter needs to be installed and executable.",
-      fmt("* Enable installed formatter(s) with following config"),
-      "",
-      fmt("  rvim.lang.%s.formatters = { { exe = '%s' } }", ft, table.concat(supported_formatters, "│")),
-    })
-  end
+  local section = {
+    "Formatters info",
+    fmt(
+      "* Active: %s%s",
+      table.concat(registered_formatters, "  , "),
+      vim.tbl_count(registered_formatters) > 0 and "  " or ""
+    ),
+    fmt("* Supported: %s", str_list(supported_formatters)),
+  }
 
   return section
 end
 
-local function get_linter_suggestion_msg(ft)
-  local config = require "config"
-  local null_linters = require "lsp.null-ls.linters"
-  local supported_linters = null_linters.list_available(ft)
+local function make_code_actions_info(ft)
+  local null_actions = require "lsp.null-ls.code_actions"
+  local registered_actions = null_actions.list_registered(ft)
   local section = {
-    " HINT ",
-    "",
-    fmt("* List of supported linters: %s", str_list(supported_linters)),
+    "Code actions info",
+    fmt(
+      "* Active: %s%s",
+      table.concat(registered_actions, "  , "),
+      vim.tbl_count(registered_actions) > 0 and "  " or ""
+    ),
+    fmt("* Supported: %s", str_list(supported_actions)),
   }
 
-  if not vim.tbl_isempty(supported_linters) then
-    vim.list_extend(section, {
-      "* Configured linter needs to be installed and executable.",
-      fmt("* Enable installed linter(s) with following config"),
-      "",
-      fmt("  rvim.lang.%s.linters = { { exe = '%s' } }", ft, table.concat(supported_linters, "│")),
-    })
-  end
+  return section
+end
+
+local function make_linters_info(ft)
+  local null_linters = require "lsp.null-ls.linters"
+  local supported_linters = null_linters.list_supported(ft)
+  local registered_linters = null_linters.list_registered(ft)
+  local section = {
+    "Linters info",
+    fmt(
+      "* Active: %s%s",
+      table.concat(registered_linters, "  , "),
+      vim.tbl_count(registered_linters) > 0 and "  " or ""
+    ),
+    fmt("* Supported: %s", str_list(supported_linters)),
+  }
 
   return section
 end
@@ -60,17 +70,23 @@ local function tbl_set_highlight(terms, highlight_group)
 end
 
 local function make_client_info(client)
-  local client_enabled_caps = require("lsp.utils").get_ls_capabilities(client.id)
+  if client.name == "null-ls" then
+    return
+  end
+  local client_enabled_caps = lsp_utils.get_client_capabilities(client.id)
   local name = client.name
   local id = client.id
-  local document_formatting = client.resolved_capabilities.document_formatting
+  local filetypes = lsp_utils.get_supported_filetypes(name)
+  local attached_buffers_list = str_list(vim.lsp.get_buffers_by_client_id(client.id))
   local client_info = {
-    fmt("* Name:                 %s", name),
-    fmt("* Id:                   %s", tostring(id)),
-    fmt("* Supports formatting:  %s", tostring(document_formatting)),
+    fmt("* name:                      %s", name),
+    fmt("* id:                        %s", tostring(id)),
+    fmt("* supported filetype(s):     %s", str_list(filetypes)),
+    fmt("* attached buffers:          %s", tostring(attached_buffers_list)),
+    fmt("* root_dir pattern:          %s", tostring(attached_buffers_list)),
   }
   if not vim.tbl_isempty(client_enabled_caps) then
-    local caps_text = "* Capabilities list:    "
+    local caps_text = "* capabilities:              "
     local caps_text_len = caps_text:len()
     local enabled_caps = text.format_table(client_enabled_caps, 3, " | ")
     enabled_caps = text.shift_right(enabled_caps, caps_text_len)
@@ -81,42 +97,72 @@ local function make_client_info(client)
   return client_info
 end
 
-function M.toggle_popup(ft)
-  local lsp_utils = require "lsp.utils"
-  local clients = lsp_utils.get_active_client_by_ft(ft)
-  local client_names = {}
+local function make_auto_lsp_info(ft)
+  local skipped_filetypes = rvim.lsp.automatic_configuration.skipped_filetypes
+  local skipped_servers = rvim.lsp.automatic_configuration.skipped_servers
+  local info_lines = { "Automatic LSP info" }
 
+  if vim.tbl_contains(skipped_filetypes, ft) then
+    vim.list_extend(info_lines, { "* Status: disabled for " .. ft })
+    return info_lines
+  end
+
+  local available = lsp_utils.get_supported_servers_per_filetype(ft)
+  local skipped = vim.tbl_filter(function(name)
+    return vim.tbl_contains(available, name)
+  end, skipped_servers)
+
+  if #skipped == 0 then
+    return { "" }
+  end
+
+  vim.list_extend(info_lines, { fmt("* Skipped servers: %s", str_list(skipped)) })
+
+  return info_lines
+end
+
+function M.toggle_popup(ft)
+  local clients = vim.lsp.get_active_clients()
+  local client_names = {}
+  local bufnr = vim.api.nvim_get_current_buf()
+  local ts_active_buffers = vim.tbl_keys(vim.treesitter.highlighter.active)
+  local is_treesitter_active = function()
+    local status = "inactive"
+    if vim.tbl_contains(ts_active_buffers, bufnr) then
+      status = "active"
+    end
+    return status
+  end
   local header = {
-    fmt("Detected filetype:      %s", ft),
-    fmt("Treesitter active:      %s", tostring(next(vim.treesitter.highlighter.active) ~= nil)),
+    fmt("Detected filetype:           %s", ft),
+    fmt("Current buffer number:       [%s]", bufnr),
+  }
+
+  local ts_info = {
+    "Treesitter info",
+    fmt("* current buffer:            %s", is_treesitter_active()),
+    fmt("* list:                      [%s]", table.concat(ts_active_buffers, ", ")),
   }
 
   local lsp_info = {
-    "Language Server Protocol (LSP) info",
-    fmt "* Associated server(s):",
+    "Active client(s)",
   }
 
   for _, client in pairs(clients) do
-    vim.list_extend(lsp_info, make_client_info(client))
+    local client_info = make_client_info(client)
+    if client_info then
+      vim.list_extend(lsp_info, client_info)
+    end
     table.insert(client_names, client.name)
   end
 
-  local null_formatters = require "lsp.null-ls.formatters"
-  local null_linters = require "lsp.null-ls.linters"
-  local registered_formatters = null_formatters.list_supported_names(ft)
-  local registered_linters = null_linters.list_supported_names(ft)
-  local registered_providers = {}
-  vim.list_extend(registered_providers, registered_formatters)
-  vim.list_extend(registered_providers, registered_linters)
-  local registered_count = vim.tbl_count(registered_providers)
-  local null_ls_info = {
-    "Formatters and linters",
-    fmt(
-      "* Configured providers: %s%s",
-      table.concat(registered_providers, "  , "),
-      registered_count > 0 and "  " or ""
-    ),
-  }
+  local auto_lsp_info = make_auto_lsp_info(ft)
+
+  local formatters_info = make_formatters_info(ft)
+
+  local linters_info = make_linters_info(ft)
+
+  local code_actions_info = make_code_actions_info(ft)
 
   local content_provider = function(popup)
     local content = {}
@@ -129,13 +175,13 @@ function M.toggle_popup(ft)
       { "" },
       lsp_info,
       { "" },
-      null_ls_info,
+      auto_lsp_info,
       { "" },
+      formatters_info,
       { "" },
-      get_formatter_suggestion_msg(ft),
+      linters_info,
       { "" },
-      { "" },
-      get_linter_suggestion_msg(ft),
+      code_actions_info,
     } do
       vim.list_extend(content, section)
     end
@@ -146,14 +192,21 @@ function M.toggle_popup(ft)
   local function set_syntax_hl()
     vim.cmd [[highlight rvimInfoIdentifier gui=bold]]
     vim.cmd [[highlight link rvimInfoHeader Type]]
-    vim.cmd [[let m=matchadd("rvimInfoHeader", "Language Server Protocol (LSP) info")]]
-    vim.cmd [[let m=matchadd("rvimInfoHeader", "Formatters and linters")]]
-    vim.cmd('let m=matchadd("rvimInfoIdentifier", " ' .. ft .. '$")')
-    vim.cmd 'let m=matchadd("string", "true")'
-    vim.cmd 'let m=matchadd("error", "false")'
-    tbl_set_highlight(registered_providers, "rvimInfoIdentifier")
-    -- tbl_set_highlight(require("lsp.null-ls.formatters").list_available(ft), "rvimInfoIdentifier")
-    -- tbl_set_highlight(require("lsp.null-ls.linters").list_available(ft), "rvimInfoIdentifier")
+    vim.fn.matchadd("rvimInfoHeader", "Buffer info")
+    vim.fn.matchadd("rvimInfoHeader", "Active client(s)")
+    vim.fn.matchadd("rvimInfoHeader", fmt("Overridden %s server(s)", ft))
+    vim.fn.matchadd("rvimInfoHeader", "Formatters info")
+    vim.fn.matchadd("rvimInfoHeader", "Linters info")
+    vim.fn.matchadd("rvimInfoHeader", "Code actions info")
+    vim.fn.matchadd("rvimInfoHeader", "Automatic LSP info")
+    vim.fn.matchadd("string", "true")
+    vim.fn.matchadd("string", "active")
+    vim.fn.matchadd("string", "")
+    vim.fn.matchadd("boolean", "inactive")
+    vim.fn.matchadd("error", "false")
+    tbl_set_highlight(require("lsp.null-ls.formatters").list_registered(ft), "rvimInfoIdentifier")
+    tbl_set_highlight(require("lsp.null-ls.linters").list_registered(ft), "rvimInfoIdentifier")
+    tbl_set_highlight(require("lsp.null-ls.code_actions").list_registered(ft), "rvimInfoIdentifier")
   end
 
   local Popup = require("interface.popup"):new {

@@ -1,7 +1,6 @@
 local M = {}
 
 local builtins = {
-  "keymappings",
   "core.which-key",
   "core.gitsigns",
   "core.cmp",
@@ -13,8 +12,10 @@ local builtins = {
   "core.nvimtree",
   "core.autopairs",
   "core.comment",
+  "core.notify",
   "core.lualine",
   "core.colorizer",
+  "core.bufferline",
 }
 
 function M.config(config)

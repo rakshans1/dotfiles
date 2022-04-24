@@ -11,6 +11,16 @@ function _G.join_paths(...)
   return result
 end
 
+---Require a module in protected mode without relying on its cached value
+---@param module string
+---@return any
+function _G.require_clean(module)
+  package.loaded[module] = nil
+  _G[module] = nil
+  local _, requested = pcall(require, module)
+  return requested
+end
+
 ---Get the full path to runtime dir
 ---@return string
 function _G.get_runtime_dir()
@@ -50,12 +60,9 @@ function M:init()
 
   vim.fn.mkdir(vim.fn.stdpath "cache", "p")
 
-  local config = require "config"
-  config:init {
-    path = join_paths(self.config_dir, "config.lua"),
-  }
+  require("config"):init()
 
-  require("plugin-loader"):init {
+  require("plugin-loader").init {
     package_root = self.pack_dir,
     install_path = self.packer_install_dir,
   }

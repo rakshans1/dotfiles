@@ -42,18 +42,17 @@ return {
   diff = {
     "diff",
     source = diff_source,
-    symbols = { added = "  ", modified = "柳", removed = " " },
+    symbols = { added = "  ", modified = " ", removed = " " },
     diff_color = {
       added = { fg = colors.green },
       modified = { fg = colors.yellow },
       removed = { fg = colors.red },
     },
-    color = {},
     cond = nil,
   },
   diagnostics = {
     "diagnostics",
-    sources = { "nvim_lsp" },
+    sources = { "nvim_diagnostic" },
     symbols = { error = " ", warn = " ", info = " ", hint = " " },
     color = {},
     cond = conditions.hide_in_width,
@@ -62,7 +61,7 @@ return {
     function()
       local b = vim.api.nvim_get_current_buf()
       if next(vim.treesitter.highlighter.active[b]) then
-        return "  "
+        return ""
       end
       return ""
     end,
@@ -92,17 +91,16 @@ return {
 
       -- add formatter
       local formatters = require "lsp.null-ls.formatters"
-      local supported_formatters = formatters.list_supported_names(buf_ft)
+      local supported_formatters = formatters.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_formatters)
 
       -- add linter
       local linters = require "lsp.null-ls.linters"
-      local supported_linters = linters.list_supported_names(buf_ft)
+      local supported_linters = linters.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_linters)
 
       return table.concat(buf_client_names, ", ")
     end,
-    icon = " ",
     color = { gui = "bold" },
     cond = conditions.hide_in_width,
   },
@@ -125,7 +123,7 @@ return {
     color = {},
     cond = conditions.hide_in_width,
   },
-  filetype = { "filetype", cond = conditions.hide_in_width, color = {} },
+  filetype = { "filetype", cond = conditions.hide_in_width },
   scrollbar = {
     function()
       local current_line = vim.fn.line "."
