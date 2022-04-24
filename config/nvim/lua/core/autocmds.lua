@@ -72,6 +72,8 @@ function M.load_augroups()
       -- will switch between absolute and relative line numbers depending on mode
       {'BufEnter,FocusGained,InsertLeave', '*', 'set number relativenumber'},
       {'BufLeave,FocusLost,InsertEnter', '*', 'set number norelativenumber'},
+      {'BufEnter,FocusGained,InsertLeave', 'NvimTree', 'set nonumber norelativenumber'},
+      {'BufLeave,FocusLost,InsertEnter', 'NvimTree', 'set nonumber norelativenumber'},
     },
     custom_groups = {},
   }
