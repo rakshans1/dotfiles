@@ -10,6 +10,7 @@ M.defaults = {
     endif
   endfunction
   ]],
+  [[ command! BufferKill lua require('core.bufferline').buf_kill('bd') ]],
   [[ command! RvimInfo lua require('core.info').toggle_popup(vim.bo.filetype) ]],
   [[ command! RvimCacheReset lua require('utils.hooks').reset_cache() ]],
 }

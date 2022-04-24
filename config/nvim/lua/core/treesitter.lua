@@ -4,7 +4,17 @@ local Log = require "core.log"
 M.config = function()
   rvim.builtin.treesitter = {
     on_config_done = nil,
-    ensure_installed = {}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = {
+      "bash",
+      "c",
+      "javascript",
+      "json",
+      "lua",
+      "python",
+      "typescript",
+      "tsx",
+      "css"
+    }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = {},
     matchup = {
       enable = false, -- mandatory, false will disable the whole extension

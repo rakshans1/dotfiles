@@ -1,3 +1,21 @@
+local skipped_servers = {
+  "angularls",
+  "ccls",
+  "cssmodules_ls",
+  "denols",
+  "emmet_ls",
+  "eslint",
+  "eslintls",
+  "grammarly",
+  "graphql",
+  "pylsp",
+  "quick_lint_js",
+  "stylelint_lsp",
+  "tailwindcss",
+}
+
+local skipped_filetypes = { "markdown", "rst", "plaintext" }
+
 return {
   templates_dir = join_paths(get_runtime_dir(), "site", "after", "ftplugin"),
   diagnostics = {
@@ -41,6 +59,12 @@ return {
   on_attach_callback = nil,
   on_init_callback = nil,
   automatic_servers_installation = true,
+  automatic_configuration = {
+    ---@usage list of servers that the automatic installer will skip
+    skipped_servers = skipped_servers,
+    ---@usage list of filetypes that the automatic installer will skip
+    skipped_filetypes = skipped_filetypes,
+  },
   buffer_mappings = {
     normal_mode = {
       ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show hover" },
@@ -62,20 +86,7 @@ return {
     setup = {},
     config = {},
   },
-  override = {
-    "angularls",
-    "ccls",
-    "cssmodules_ls",
-    "denols",
-    "emmet_ls",
-    "eslint",
-    "eslintls",
-    "grammarly",
-    "graphql",
-    "pylsp",
-    "quick_lint_js",
-    "stylelint_lsp",
-    "tailwindcss",
-  },
+  ---@deprecated use automatic_configuration.skipped_servers instead
+  override = {},
 }
 
