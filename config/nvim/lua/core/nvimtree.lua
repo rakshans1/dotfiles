@@ -70,6 +70,20 @@ function M.config()
         dotfiles = false,
         custom = { "node_modules", ".cache" },
       },
+      actions = {
+        change_dir = {
+          global = false,
+        },
+        open_file = {
+          resize_window = true,
+          quit_on_open = false,
+        },
+        window_picker = {
+          enable = false,
+          chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+          exclude = {},
+        },
+      },
     },
     show_icons = {
       git = 1,
