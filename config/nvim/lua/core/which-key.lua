@@ -108,8 +108,8 @@ M.config = function()
       t = {
         name = "Diagnostics",
         t = { "<cmd>TroubleToggle<cr>", "trouble" },
-        w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
-        d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+        w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "workspace" },
+        d = { "<cmd>TroubleToggle document_diagnostics<cr>", "document" },
         q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
         l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
         r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
@@ -176,6 +176,7 @@ M.config = function()
           "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
           "Workspace Symbols",
         },
+        e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix"}
       },
       L = {
         name = "+NeoVim",

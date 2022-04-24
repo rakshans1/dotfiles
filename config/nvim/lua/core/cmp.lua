@@ -171,6 +171,7 @@ M.config = function()
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
+      max_width = 0,
       kind_icons = {
         Class = " ",
         Color = " ",
@@ -216,6 +217,10 @@ M.config = function()
       },
       duplicates_default = 0,
       format = function(entry, vim_item)
+        local max_width = rvim.builtin.cmp.formatting.max_width
+        if max_width ~= 0 and #vim_item.abbr > max_width then
+          vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. "…"
+        end
         vim_item.kind = rvim.builtin.cmp.formatting.kind_icons[vim_item.kind]
         vim_item.menu = rvim.builtin.cmp.formatting.source_names[entry.source.name]
         vim_item.dup = rvim.builtin.cmp.formatting.duplicates[entry.source.name]
@@ -228,8 +233,9 @@ M.config = function()
         require("luasnip").lsp_expand(args.body)
       end,
     },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
     },
     sources = {
       { name = "nvim_lsp" },
@@ -243,7 +249,7 @@ M.config = function()
       { name = "treesitter" },
       { name = "crates" },
     },
-    mapping = {
+    mapping =  {
       ["<C-k>"] = cmp.mapping.select_prev_item(),
       ["<C-j>"] = cmp.mapping.select_next_item(),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),

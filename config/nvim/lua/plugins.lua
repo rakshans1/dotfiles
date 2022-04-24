@@ -246,6 +246,7 @@ local core_plugins =  {
     config = function()
       require("core.bufferline").setup()
     end,
+    branch = "main",
     event = "BufWinEnter",
   },
 
@@ -281,6 +282,7 @@ local core_plugins =  {
   {
     "akinsho/toggleterm.nvim",
     event = "BufWinEnter",
+    branch = "main",
     config = function()
       require("core.terminal").setup()
     end,

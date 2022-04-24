@@ -68,7 +68,7 @@ function M.config()
       },
       filters = {
         dotfiles = false,
-        custom = { "node_modules", ".cache" },
+        custom = { "node_modules", "\\.cache" },
       },
       actions = {
         change_dir = {
@@ -120,9 +120,9 @@ function M.config()
 end
 
 function M.setup()
-  local status_ok, nvim_tree_config = pcall(require, "nvim-tree.config")
+  local status_ok, nvim_tree = pcall(require, "nvim-tree")
   if not status_ok then
-    Log:error "Failed to load nvim-tree.config"
+    Log:error "Failed to load nvim-tree"
     return
   end
 
@@ -130,22 +130,30 @@ function M.setup()
     vim.g["nvim_tree_" .. opt] = val
   end
 
+  local function telescope_find_files(_)
+    require("core.nvimtree").start_telescope "find_files"
+  end
+  local function telescope_live_grep(_)
+    require("core.nvimtree").start_telescope "live_grep"
+  end
+
   -- Add useful keymaps
-  local tree_cb = nvim_tree_config.nvim_tree_callback
   if #rvim.builtin.nvimtree.setup.view.mappings.list == 0 then
     rvim.builtin.nvimtree.setup.view.mappings.list = {
-      { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-      { key = "h", cb = tree_cb "close_node" },
-      { key = "s", cb = tree_cb "vsplit" },
-    { key = "t", cb = tree_cb("tabnew")},
-      { key = "C", cb = tree_cb "cd" },
-      { key = "gtf", cb = "<cmd>lua require'core.nvimtree'.start_telescope('find_files')<cr>" },
-      { key = "gtg", cb = "<cmd>lua require'core.nvimtree'.start_telescope('live_grep')<cr>" },
+      { key = { "l", "<CR>", "o" }, action = "edit" },
+      { key = "h", action = "close_node" },
+      { key = "s", action = "vsplit" },
+      { key = "t", action = "tabnew" },
+      { key = "C", action =  "cd" },
+      { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
+      { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
     }
   end
 
+  nvim_tree.setup(rvim.builtin.nvimtree.setup)
+
   if rvim.builtin.nvimtree.on_config_done then
-    rvim.builtin.nvimtree.on_config_done(nvim_tree_config)
+    rvim.builtin.nvimtree.on_config_done(nvim_tree)
   end
 
   require("nvim-tree").setup(rvim.builtin.nvimtree.setup)

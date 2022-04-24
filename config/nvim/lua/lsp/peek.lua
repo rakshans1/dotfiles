@@ -29,11 +29,23 @@ local function create_floating_file(location, opts)
   local contents = vim.api.nvim_buf_get_lines(
     bufnr,
     range.start.line,
-    math.min(range["end"].line + 1 + (opts.context or 10), range.start.line + (opts.max_height or 15)), -- Don't let the window be more that 15 lines long(height)
+    math.min(
+      range["end"].line + 1 + (opts.context or rvim.lsp.peek.max_height),
+      range.start.line + (opts.max_height or rvim.lsp.peek.max_height)
+    ),
     false
   )
+  if next(contents) == nil then
+    vim.notify("peek: Unable to get contents of the file!", vim.log.levels.WARN)
+    return
+  end
   local width, height = vim.lsp.util._make_floating_popup_size(contents, opts)
-  opts = vim.lsp.util.make_floating_popup_options(width, height, opts)
+  local if_nil = vim.F.if_nil
+  opts = vim.lsp.util.make_floating_popup_options(
+    if_nil(width, rvim.lsp.peek.max_width),
+    if_nil(height, rvim.lsp.peek.max_height),
+    opts
+  )
   -- Don't make it minimal as it is meant to be fully featured
   opts["style"] = nil
 
@@ -60,7 +72,7 @@ local function preview_location_callback(result)
 
   local opts = {
     border = "rounded",
-    context = 10,
+    context = rvim.lsp.peek.context,
   }
 
   if vim.tbl_islist(result) then
@@ -81,7 +93,7 @@ function M.open_file()
   local filepath = vim.fn.expand "%:."
 
   if not filepath then
-    print "peek: Unable to open the file!"
+    vim.notify("peek: Unable to open the file!", vim.log.levels.ERROR)
     return
   end
 
@@ -114,7 +126,7 @@ function M.Peek(what)
   if vim.tbl_contains(vim.api.nvim_list_wins(), M.floating_win) then
     local success_1, _ = pcall(vim.api.nvim_set_current_win, M.floating_win)
     if not success_1 then
-      print "peek: You cannot edit the current file in a preview!"
+      vim.notify("peek: You cannot edit the current file in a preview!", vim.log.levels.ERROR)
       return
     end
 
@@ -134,8 +146,9 @@ function M.Peek(what)
     local preview_callback = preview_location_callback_new_signature
     local success, _ = pcall(vim.lsp.buf_request, 0, "textDocument/" .. what, params, preview_callback)
     if not success then
-      print(
-        'peek: Error calling LSP method "textDocument/' .. what .. '". The current language lsp might not support it.'
+      vim.notify(
+        'peek: Error calling LSP method "textDocument/' .. what .. '". The current language lsp might not support it.',
+        vim.log.levels.ERROR
       )
     end
   end

@@ -77,9 +77,6 @@ end
 
 function M.update()
   local style = M.get_style(rvim.builtin.lualine.style)
-  if rvim.builtin.lualine.options.theme == nil then
-    rvim.builtin.lualine.options.theme = rvim.colorscheme
-  end
 
   rvim.builtin.lualine = vim.tbl_deep_extend("keep", rvim.builtin.lualine, style)
 end

@@ -2,11 +2,11 @@ local opts = {
   settings = {
     Lua = {
       diagnostics = {
-        globals = { "vim", "rvim" },
+        globals = { "vim", "rvim", "packer_plugins" },
       },
       workspace = {
         library = {
-          [require("utils").join_paths(get_runtime_dir(), "rvim", "lua")] = true,
+          [require("utils").join_paths(get_runtime_dir(), "lua")] = true,
         },
         maxPreload = 100000,
         preloadFileSize = 10000,
