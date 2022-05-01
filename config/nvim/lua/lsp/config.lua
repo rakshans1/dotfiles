@@ -74,7 +74,7 @@ return {
     normal_mode = {
       ["K"] = { "<cmd>lua vim.lsp.buf.hover()<CR>", "Show hover" },
       ["gd"] = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
-      ["gD"] = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Goto declaration" },
+      ["gD"] = { "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", "Goto declaration" },
       ["gr"] = { "<cmd>lua vim.lsp.buf.references()<CR>", "Goto references" },
       ["gI"] = { "<cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
       ["gs"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "show signature help" },
