@@ -252,3 +252,7 @@ function cat() {
 function curlheader() {
   curl -sIXGET $1
 }
+
+function audioloop() {
+  arecord -r 192000 -f s16_le --buffer-time=1 - | aplay --buffer-time=1 -
+}
