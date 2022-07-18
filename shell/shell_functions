@@ -253,6 +253,17 @@ function curlheader() {
   curl -sIXGET $1
 }
 
+function curlpreflight() {
+  curl -H "Origin: $1" \
+  -H "Access-Control-Request-Method: GET" \
+  -X OPTIONS -sI \
+  $2
+}
+
+function curlsize() {
+  curlheader $1 | grep -i Content-Length | grep -o '[0-9]\+' | numfmt --to=iec-i --suffix=B --padding=7
+}
+
 function audioloop() {
   arecord -r 192000 -f s16_le --buffer-time=1 - | aplay --buffer-time=1 -
 }
