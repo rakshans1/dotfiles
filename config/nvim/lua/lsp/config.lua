@@ -12,6 +12,7 @@ local skipped_servers = {
   "quick_lint_js",
   "stylelint_lsp",
   "tailwindcss",
+  "elixir-ls"
 }
 
 local skipped_filetypes = { "markdown", "rst", "plaintext" }

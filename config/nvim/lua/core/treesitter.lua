@@ -13,7 +13,8 @@ M.config = function()
       "python",
       "typescript",
       "tsx",
-      "css"
+      "css",
+      "elixir"
     }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = {},
     matchup = {
