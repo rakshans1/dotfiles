@@ -61,7 +61,7 @@ function M.common_on_attach(client, bufnr)
     rvim.lsp.on_attach_callback(client, bufnr)
     Log:debug "Called lsp.on_attach_callback"
   end
-  local lu = require "rvim.lsp.utils"
+  local lu = require "lsp.utils"
   if rvim.lsp.document_highlight then
     lu.setup_document_highlight(client, bufnr)
   end
