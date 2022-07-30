@@ -1,3 +1,5 @@
+local Log = require "core.log"
+
 local core_plugins =  {
   { "wbthomason/packer.nvim"},
   { "neovim/nvim-lspconfig"},
@@ -65,7 +67,7 @@ local core_plugins =  {
     "hrsh7th/cmp-path",
   },
   {
-    "folke/lua-dev.nvim",
+    "max397574/lua-dev.nvim",
     module = "lua-dev",
   },
 
@@ -146,7 +148,7 @@ local core_plugins =  {
 
   -- Whichkey
   {
-    "folke/which-key.nvim",
+    "max397574/which-key.nvim",
     config = function()
       require("core.which-key").setup()
     end,
@@ -299,9 +301,20 @@ local core_plugins =  {
   },
 }
 
-for _, entry in ipairs(core_plugins) do
-  if not os.getenv "RVIM_DEV_MODE" then
-    entry["lock"] = true
+local default_snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
+local content = vim.fn.readfile(default_snapshot_path)
+local default_sha1 = vim.fn.json_decode(content)
+
+local get_default_sha1 = function(spec)
+  util = require("packer.util")
+  local short_name, _ = util.get_plugin_short_name(spec)
+  return default_sha1[short_name] and default_sha1[short_name].commit
+end
+
+for _, spec in ipairs(core_plugins) do
+  if not vim.env.RVIM_DEV_MODE then
+    -- Manually lock the commit hash since Packer's snapshots are unreliable in headless mode
+    spec["commit"] = get_default_sha1(spec)
   end
 end
 

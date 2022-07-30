@@ -44,7 +44,6 @@ M.config = function()
     execs = {
       -- TODO: this should probably be removed since it's hard to hit <leader>gg within the timeoutlen
       { "lazygit", "<leader>gg", "LazyGit", "float" },
-      { "lazygit", "<c-\\>", "LazyGit", "float" },
     },
   }
 end
@@ -80,23 +79,9 @@ M.add_exec = function(opts)
     return
   end
 
-  local exec_func = string.format(
-    "<cmd>lua require('core.terminal')._exec_toggle({ cmd = '%s', count = %d, direction = '%s'})<CR>",
-    opts.cmd,
-    opts.count,
-    opts.direction
-  )
-
-  require("keymappings").load {
-    normal_mode = { [opts.keymap] = exec_func },
-    term_mode = { [opts.keymap] = exec_func },
-  }
-
-  local wk_status_ok, wk = pcall(require, "which-key")
-  if not wk_status_ok then
-    return
-  end
-  wk.register({ [opts.keymap] = { opts.label } }, { mode = "n" })
+  vim.keymap.set({ "n", "t" }, opts.keymap, function()
+    M._exec_toggle { cmd = opts.cmd, count = opts.count, direction = opts.direction }
+  end, { desc = opts.label, noremap = true, silent = true })
 end
 
 M._exec_toggle = function(opts)

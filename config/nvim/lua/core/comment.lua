@@ -29,6 +29,7 @@ function M.config()
       ---extended mapping
       ---Includes `g>`, `g<`, `g>[count]{motion}` and `g<[count]{motion}`
       extra = false,
+      extended = false,
     },
 
     ---LHS of line and block comment toggle mapping in NORMAL/VISUAL mode

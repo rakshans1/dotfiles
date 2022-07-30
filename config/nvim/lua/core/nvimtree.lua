@@ -27,7 +27,6 @@ function M.config()
         enable = false,
         auto_open = true,
       },
-      auto_close = true,
       open_on_tab = false,
       hijack_cursor = false,
       update_cwd = false,
@@ -67,7 +66,6 @@ function M.config()
         },
         number = false,
         relativenumber = false,
-        singcolumn = "yes",
       },
       renderer = {
         indent_markers = {
@@ -79,8 +77,36 @@ function M.config()
           },
         },
         icons = {
-          webdev_colors = true
+          webdev_colors = true,
+          show = {
+            git = true,
+            folder = true,
+            file = true,
+            folder_arrow = true
+          },
+          glyphs = {
+            default = "",
+            symlink = "",
+            git = {
+              unstaged = "",
+              staged = "S",
+              unmerged = "",
+              renamed = "➜",
+              deleted = "",
+              untracked = "U",
+              ignored = "◌",
+            },
+            folder = {
+              default = "",
+              open = "",
+              empty = "",
+              empty_open = "",
+              symlink = "",
+            },
+          },
         },
+        highlight_git = true,
+        root_folder_modifier = ":t",
       },
       filters = {
         dotfiles = false,
@@ -108,11 +134,6 @@ function M.config()
         },
         open_file = {
           quit_on_open = false,
-        },
-        window_picker = {
-          enable = false,
-          chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-          exclude = {},
           resize_window = false,
           window_picker = {
             enable = true,
@@ -121,41 +142,12 @@ function M.config()
               filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
               buftype = { "nofile", "terminal", "help" },
             },
-          },
+          }
         },
       },
     },
-    show_icons = {
-      git = 1,
-      folders = 1,
-      files = 1,
-      folder_arrows = 1,
-      tree_width = 30,
-    },
     quit_on_open = 0,
-    git_hl = 1,
     disable_window_picker = 0,
-    root_folder_modifier = ":t",
-    icons = {
-      default = "",
-      symlink = "",
-      git = {
-        unstaged = "",
-        staged = "S",
-        unmerged = "",
-        renamed = "➜",
-        deleted = "",
-        untracked = "U",
-        ignored = "◌",
-      },
-      folder = {
-        default = "",
-        open = "",
-        empty = "",
-        empty_open = "",
-        symlink = "",
-      },
-    },
   }
 end
 
@@ -166,9 +158,12 @@ function M.setup()
     return
   end
 
-  for opt, val in pairs(rvim.builtin.nvimtree) do
-    vim.g["nvim_tree_" .. opt] = val
+  if rvim.builtin.nvimtree._setup_called then
+    Log:debug "ignoring repeated setup call for nvim-tree"
+    return
   end
+
+  rvim.builtin.nvimtree._setup_called = true
 
   local function telescope_find_files(_)
     require("core.nvimtree").start_telescope "find_files"
@@ -195,8 +190,6 @@ function M.setup()
   if rvim.builtin.nvimtree.on_config_done then
     rvim.builtin.nvimtree.on_config_done(nvim_tree)
   end
-
-  require("nvim-tree").setup(rvim.builtin.nvimtree.setup)
 end
 
 function M.start_telescope(telescope_mode)

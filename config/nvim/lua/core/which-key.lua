@@ -80,7 +80,7 @@ M.config = function()
     },
     mappings = {
       ["w"] = { "<cmd>w!<CR>", "Save" },
-      ["q"] = { "<cmd>q!<CR>", "Quit" },
+      ["q"] = { "<cmd>lua require('utils.functions').smart_quit()<CR>", "Quit" },
       ["/"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" },
       ["c"] = { ":set hlsearch! hlsearch?<CR>", "Clear highlight" },
       ["f"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },

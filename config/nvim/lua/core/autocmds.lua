@@ -99,7 +99,7 @@ function M.enable_format_on_save()
     group = "lsp_format_on_save",
     pattern = opts.pattern,
     callback = function()
-      vim.lsp.buf.format { timeout_ms = opts.timeout, filter = opts.filter }
+      require("lsp.utils").format { timeout_ms = opts.timeout, filter = opts.filter }
     end,
   })
   Log:debug "enabled format-on-save"
@@ -119,11 +119,11 @@ function M.configure_format_on_save()
 end
 
 function M.toggle_format_on_save()
-  local status, _ = pcall(vim.api.nvim_get_autocmds, {
+  local status, autocmds = pcall(vim.api.nvim_get_autocmds, {
     group = "lsp_format_on_save",
     event = "BufWritePre",
   })
-  if not status then
+  if not status or #autocmds == 0 then
     M.enable_format_on_save()
   else
     M.disable_format_on_save()
