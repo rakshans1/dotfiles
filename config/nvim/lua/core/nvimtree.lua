@@ -9,6 +9,8 @@ function M.config()
       disable_netrw = true,
       hijack_netrw = true,
       open_on_setup = false,
+      open_on_setup_file = false,
+      sort_by = "name",
       ignore_buffer_on_setup = false,
       ignore_ft_on_setup = {
         "startify",
@@ -31,6 +33,7 @@ function M.config()
       update_cwd = false,
       diagnostics = {
         enable = true,
+        show_on_dirs = false,
         icons = {
           hint = "",
           info = "",
@@ -57,7 +60,7 @@ function M.config()
         height = 30,
         hide_root_folder = false,
         side = "left",
-        auto_resize = false,
+        preserve_window_proportions = false,
         mappings = {
           custom_only = false,
           list = {},
@@ -66,22 +69,59 @@ function M.config()
         relativenumber = false,
         singcolumn = "yes",
       },
+      renderer = {
+        indent_markers = {
+          enable = false,
+          icons = {
+            corner = "└ ",
+            edge = "│ ",
+            none = "  ",
+          },
+        },
+        icons = {
+          webdev_colors = true
+        },
+      },
       filters = {
         dotfiles = false,
         custom = { "node_modules", "\\.cache" },
+        exclude = {},
+      },
+      log = {
+        enable = false,
+        truncate = false,
+        types = {
+          all = false,
+          config = false,
+          copy_paste = false,
+          diagnostics = false,
+          git = false,
+          profile = false,
+        },
       },
       actions = {
+        use_system_clipboard = true,
         change_dir = {
+          enable = true,
           global = false,
+          restrict_above_cwd = false,
         },
         open_file = {
-          resize_window = true,
           quit_on_open = false,
         },
         window_picker = {
           enable = false,
           chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
           exclude = {},
+          resize_window = false,
+          window_picker = {
+            enable = true,
+            chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+            exclude = {
+              filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+              buftype = { "nofile", "terminal", "help" },
+            },
+          },
         },
       },
     },

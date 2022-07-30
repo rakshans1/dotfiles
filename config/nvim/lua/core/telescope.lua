@@ -7,7 +7,7 @@ function M.config()
     active = true,
     on_config_done = nil,
   }
-  
+
   local ok, actions = pcall(require, "telescope.actions")
   if not ok then
     return
@@ -90,24 +90,6 @@ function M.config()
       }
     },
   })
-end
-
-function M.code_actions()
-  local opts = {
-    winblend = 15,
-    layout_config = {
-      prompt_position = "top",
-      width = 80,
-      height = 12,
-    },
-    borderchars = rvim.builtin.telescope.defaults.borderchars,
-    border = {},
-    previewer = false,
-    shorten_path = false,
-  }
-  local builtin = require "telescope.builtin"
-  local themes = require "telescope.themes"
-  builtin.lsp_code_actions(themes.get_dropdown(opts))
 end
 
 function M.setup()

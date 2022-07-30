@@ -63,7 +63,7 @@ end
 
 function M.register_sources(configs, method)
   local null_ls = require "null-ls"
-  local is_registered = require("null-ls.sources").is_registered
+  local is_registered = null_ls.is_registered
 
   local sources, registered_names = {}, {}
 

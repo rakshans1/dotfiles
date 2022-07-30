@@ -66,6 +66,7 @@ end
 local function tbl_set_highlight(terms, highlight_group)
   for _, v in pairs(terms) do
     vim.cmd('let m=matchadd("' .. highlight_group .. '", "' .. v .. "[ ,│']\")")
+    vim.cmd('let m=matchadd("' .. highlight_group .. '", ", ' .. v .. '")')
   end
 end
 
