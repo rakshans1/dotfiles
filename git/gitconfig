@@ -1,6 +1,6 @@
 [core]
   editor = "nvim"
-  pager = delta --theme="Nord" --24-bit-color="always" --file-color="#84a0c6" --hunk-color="#84a0c6" --plus-style="syntax #45493e" --plus-emph-style="syntax #2C3025" --minus-style="normal #53343b" --minus-emph-style="normal #200108"
+  pager = delta --syntax-theme="Nord" --24-bit-color="always" --file-style="#84a0c6" --hunk-header-style="#84a0c6" --plus-style="syntax #45493e" --plus-emph-style="syntax #2C3025" --minus-style="normal #53343b" --minus-emph-style="normal #200108"
 [user]
 	email = shetty.raxx555@gmail.com
 	name = Rakshan Shetty
