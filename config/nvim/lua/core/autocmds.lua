@@ -53,7 +53,7 @@ function M.load_augroups()
     },
     _markdown = {
       { "FileType", "markdown", "setlocal wrap" },
-      { "FileType", "markdown", "setlocal spell" },
+      { "FileType", "markdown", "setlocal spell nofoldenable" },
     },
     _buffer_bindings = {
       { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
