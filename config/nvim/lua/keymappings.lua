@@ -66,7 +66,7 @@ local defaults = {
 
     -- Tab switch buffer
     ["<S-l>"] = ":BufferLineCycleNext<CR>",
-    ["<S-h>"] = ":BufferLineCycleNext<CR>",
+    ["<S-h>"] = ":BufferLineCyclePrev<CR>",
 
     -- Move current line / block with Alt-j/k a la vscode.
     ["<A-j>"] = ":m .+1<CR>==",

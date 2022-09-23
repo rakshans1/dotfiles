@@ -105,6 +105,10 @@ M.config = function()
           "<cmd>BufferLineSortByDirectory<cr>",
           "Sort by directory",
         },
+        R = {
+          "<cmd>BufferLineSortByRelativeDirectory<cr>",
+          "Sort by relative directory",
+        },
         L = {
           "<cmd>BufferLineSortByExtension<cr>",
           "Sort by language",
