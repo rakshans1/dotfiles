@@ -5,8 +5,8 @@
 # For a full list of active aliases, run `alias`.
 
 # Shortcuts
-alias v="nvim"
-alias vim="nvim"
+alias v="~/Downloads/nvim"
+alias vim="~/Downloads/nvim"
 alias t="tmux"
 alias x+="chmod +x"
 alias hosts="sudo nvim /etc/hosts"

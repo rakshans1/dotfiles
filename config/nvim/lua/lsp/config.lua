@@ -12,7 +12,8 @@ local skipped_servers = {
   "quick_lint_js",
   "stylelint_lsp",
   "tailwindcss",
-  "elixir-ls"
+  "elixir-ls",
+  "rust_analyzer"
 }
 
 local skipped_filetypes = { "markdown", "rst", "plaintext" }
@@ -75,10 +76,9 @@ return {
     normal_mode = {
       ["K"] = { "vim.lsp.buf.hover", "Show hover" },
       ["gd"] = { "vim.lsp.bug.definition", "Goto Definition" },
-      ["gD"] = { "<cmd>vsplit | vim.lsp.buf.definition", "Goto declaration" },
+      ["gD"] = { "<cmd>vsplit | vim.lsp.buf.definition<CR>", "Goto declaration" },
       ["gr"] = { vim.lsp.buf.references, "Goto references" },
-      ["gI"] = { vim.lsp.buf.implementation, "Goto Implementation" },
-      ["gs"] = { vim.lsp.buf.signature_help, "show signature help" },
+      ["gi"] = { vim.lsp.buf.implementation, "Goto Implementation" },
       ["gp"] = {
         function()
           require("lvim.lsp.peek").Peek "definition"
@@ -93,6 +93,15 @@ return {
         end,
         "Show line diagnostics",
       },
+      ["<C-k>"] = {
+        vim.lsp.buf.signature_help, "Show signature help"
+      },
+      ["<space>rn"] = {
+        vim.lsp.buf.rename, "Rename"
+      },
+      ["<space>ca"] = {
+        vim.lsp.buf.code_action, "Code action"
+      }
     },
     insert_mode = {},
     visual_mode = {},

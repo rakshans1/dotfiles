@@ -108,6 +108,7 @@ function M.setup()
 
   bootstrap_nlsp {
     config_home = utils.join_paths(get_config_dir(), "lsp-settings"),
+    local_settings_dir = ".vim/lsp-settings",
     append_default_schemas = true,
   }
 
