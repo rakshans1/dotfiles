@@ -81,31 +81,6 @@ function M.get_all_supported_filetypes()
   return vim.tbl_keys(filetype_server_map or {})
 end
 
-function M.conditional_document_highlight(client, bufnr)
-  local status_ok, highlight_supported = pcall(function()
-    return client.supports_method "textDocument/documentHighlight"
-  end)
-  if not status_ok or not highlight_supported then
-    return
-  end
-  local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
-    group = "lsp_document_highlight",
-  })
-  if not augroup_exist then
-    vim.api.nvim_create_augroup("lsp_document_highlight", {})
-  end
-  vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-    group = "lsp_document_highlight",
-    buffer = bufnr,
-    callback = vim.lsp.buf.document_highlight,
-  })
-  vim.api.nvim_create_autocmd("CursorMoved", {
-    group = "lsp_document_highlight",
-    buffer = bufnr,
-    callback = vim.lsp.buf.clear_references,
-  })
-end
-
 function M.setup_document_highlight(client, bufnr)
   local status_ok, highlight_supported = pcall(function()
     return client.supports_method "textDocument/documentHighlight"
@@ -113,19 +88,27 @@ function M.setup_document_highlight(client, bufnr)
   if not status_ok or not highlight_supported then
     return
   end
-  local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
-    group = "lsp_document_highlight",
+  local group = "lsp_document_highlight"
+  local hl_events = { "CursorHold", "CursorHoldI" }
+
+  local ok, hl_autocmds = pcall(vim.api.nvim_get_autocmds, {
+    group = group,
+    buffer = bufnr,
+    event = hl_events,
   })
-  if not augroup_exist then
-    vim.api.nvim_create_augroup("lsp_document_highlight", {})
+
+  if ok and #hl_autocmds > 0 then
+    return
   end
-  vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-    group = "lsp_document_highlight",
+
+  vim.api.nvim_create_augroup(group, { clear = false })
+  vim.api.nvim_create_autocmd(hl_events, {
+    group = group,
     buffer = bufnr,
     callback = vim.lsp.buf.document_highlight,
   })
   vim.api.nvim_create_autocmd("CursorMoved", {
-    group = "lsp_document_highlight",
+    group = group,
     buffer = bufnr,
     callback = vim.lsp.buf.clear_references,
   })
@@ -138,14 +121,20 @@ function M.setup_codelens_refresh(client, bufnr)
   if not status_ok or not codelens_supported then
     return
   end
-  local augroup_exist, _ = pcall(vim.api.nvim_get_autocmds, {
-    group = "lsp_code_lens_refresh",
+  local group = "lsp_code_lens_refresh"
+  local cl_events = { "BufEnter", "InsertLeave" }
+  local ok, cl_autocmds = pcall(vim.api.nvim_get_autocmds, {
+    group = group,
+    buffer = bufnr,
+    event = cl_events,
   })
-  if not augroup_exist then
-    vim.api.nvim_create_augroup("lsp_code_lens_refresh", {})
+
+  if ok and #cl_autocmds > 0 then
+    return
   end
-  vim.api.nvim_create_autocmd({"BufEnter", "InsertLeave"}, {
-    group = "lsp_code_lens_refresh",
+  vim.api.nvim_create_augroup(group, { clear = false })
+  vim.api.nvim_create_autocmd(cl_events, {
+    group = group,
     buffer = bufnr,
     callback = vim.lsp.codelens.refresh,
   })
@@ -154,7 +143,7 @@ end
 ---filter passed to vim.lsp.buf.format
 ---always selects null-ls if it's available and caches the value per buffer
 ---@param client table client attached to a buffer
----@return table chosen clients
+---@return boolean if client matches
 function M.format_filter(client)
   local filetype = vim.bo.filetype
   local n = require "null-ls"
@@ -182,6 +171,8 @@ function M.format(opts)
   end
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
+
+  ---@type table|nil
   local clients = vim.lsp.get_active_clients {
     id = opts.id,
     bufnr = bufnr,

@@ -1,9 +1,9 @@
 local Log = require "core.log"
 
-local core_plugins =  {
-  { "wbthomason/packer.nvim"},
-  { "neovim/nvim-lspconfig"},
-  { "tamago324/nlsp-settings.nvim"},
+local core_plugins = {
+  { "wbthomason/packer.nvim" },
+  { "neovim/nvim-lspconfig" },
+  { "tamago324/nlsp-settings.nvim" },
   {
     "jose-elias-alvarez/null-ls.nvim",
   },
@@ -84,7 +84,7 @@ local core_plugins =  {
     "hrsh7th/cmp-path",
   },
   {
-    "max397574/lua-dev.nvim",
+    "foke/lua-dev.nvim",
     module = "lua-dev",
   },
 
@@ -115,14 +115,14 @@ local core_plugins =  {
     "ruifm/gitlinker.nvim",
     event = "BufRead",
     config = function()
-    require("gitlinker").setup {
-          opts = {
-              add_current_line_on_normal_mode = true,
-              action_callback = require("gitlinker.actions").copy_to_clipboard,
-              print_url = false,
-              mappings = "<leader>gy",
-          },
-        }
+      require("gitlinker").setup {
+        opts = {
+          add_current_line_on_normal_mode = true,
+          action_callback = require("gitlinker.actions").copy_to_clipboard,
+          print_url = false,
+          mappings = "<leader>gy",
+        },
+      }
     end,
     requires = "nvim-lua/plenary.nvim",
   },
@@ -146,14 +146,11 @@ local core_plugins =  {
   -- NvimTree
   {
     "kyazdani42/nvim-tree.lua",
-    -- event = "BufWinOpen",
-    -- cmd = "NvimTreeToggle",
     config = function()
       require("core.nvimtree").setup()
     end,
     disable = not rvim.builtin.nvimtree.active,
   },
-
   {
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -165,7 +162,7 @@ local core_plugins =  {
 
   -- Whichkey
   {
-    "max397574/which-key.nvim",
+    "folke/which-key.nvim",
     config = function()
       require("core.which-key").setup()
     end,
@@ -183,7 +180,7 @@ local core_plugins =  {
     disable = not rvim.builtin.comment.active,
   },
 
-   -- Icons
+  -- Icons
   { "kyazdani42/nvim-web-devicons", },
 
   -- Status Line and Bufferline
@@ -198,65 +195,73 @@ local core_plugins =  {
   },
 
   -- Theme
-  {"cocopon/iceberg.vim"},
+  { "cocopon/iceberg.vim" },
   {
     "folke/lsp-colors.nvim",
     event = "BufRead",
   },
 
-    -- Registers
-    { "junegunn/vim-peekaboo"},
+  -- Registers
+  { "junegunn/vim-peekaboo" },
 
-    -- Edit
-    { "tpope/vim-repeat"},
-    { "mbbill/undotree", cmd = "UndotreeToggle"},
-    { "plasticboy/vim-markdown"},
+  -- Edit
+  { "tpope/vim-repeat" },
+  { "mbbill/undotree", cmd = "UndotreeToggle" },
+  { "plasticboy/vim-markdown" },
 
 
   { "tpope/vim-fugitive",
-      cmd = {
-          "G",
-          "Git",
-          "Gdiffsplit",
-          "Gread",
-          "Gwrite",
-          "Ggrep",
-          "GMove",
-          "GDelete",
-          "GBrowse",
-          "GRemove",
-          "GRename",
-          "Glgrep",
-          "Gedit"
-        },
-        ft = {"fugitive"}
+    cmd = {
+      "G",
+      "Git",
+      "Gdiffsplit",
+      "Gread",
+      "Gwrite",
+      "Ggrep",
+      "GMove",
+      "GDelete",
+      "GBrowse",
+      "GRemove",
+      "GRename",
+      "Glgrep",
+      "Gedit"
+    },
+    ft = { "fugitive" }
   },
   {
-        "ethanholz/nvim-lastplace",
-        event = "BufRead",
-        config = function()
-            require("nvim-lastplace").setup({
-                lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-                lastplace_ignore_filetype = {
-                    "gitcommit", "gitrebase", "svn", "hgcommit",
-                },
-                lastplace_open_folds = true,
-            })
-        end,
-    },
-  { "sindrets/diffview.nvim"},
+    "ethanholz/nvim-lastplace",
+    event = "BufRead",
+    config = function()
+      require("nvim-lastplace").setup({
+        lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+        lastplace_ignore_filetype = {
+          "gitcommit", "gitrebase", "svn", "hgcommit",
+        },
+        lastplace_open_folds = true,
+      })
+    end,
+  },
+  { "sindrets/diffview.nvim" },
   { "tpope/vim-surround",
-    keys = {"c", "d", "y"}
+    keys = { "c", "d", "y" }
   },
 
-  { "norcalli/nvim-colorizer.lua"},
-  { "editorconfig/editorconfig-vim"},
-  { "iamcco/markdown-preview.nvim", run = "cd app && yarn install", cmd = "MarkdownPreview"},
-  { "wakatime/vim-wakatime"},
-  { "softoika/ngswitcher.vim"},
+  { "norcalli/nvim-colorizer.lua" },
+  { "editorconfig/editorconfig-vim" },
+  { "iamcco/markdown-preview.nvim", run = "cd app && yarn install", cmd = "MarkdownPreview" },
+  { "wakatime/vim-wakatime" },
+  { "softoika/ngswitcher.vim" },
   {
     "folke/trouble.nvim",
-      cmd = "TroubleToggle",
+    cmd = "TroubleToggle",
+  },
+
+  -- breadcrumbs
+  {
+    "SmiteshP/nvim-navic",
+    config = function()
+      require("core.breadcrumbs").setup()
+    end,
   },
 
   {
@@ -313,9 +318,12 @@ local core_plugins =  {
     requires = "MunifTanjim/nui.nvim",
   },
 
-   -- SchemaStore
+  -- SchemaStore
   {
     "b0o/schemastore.nvim",
+  },
+  {
+    "RRethy/vim-illuminate",
   },
 }
 

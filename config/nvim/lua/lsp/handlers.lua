@@ -12,7 +12,6 @@ function M.setup()
     float = rvim.lsp.diagnostics.float,
   }
   vim.diagnostic.config(config)
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, rvim.lsp.float)
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, rvim.lsp.float)
 end
 

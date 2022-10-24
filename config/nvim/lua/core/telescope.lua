@@ -63,23 +63,26 @@ function M.config()
           --@usage don't include the filename in the search results
           only_sort_text = true,
         },
+        git_files = {
+          show_untracked = true,
+        },
       },
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-c>"] = actions.close,
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<CR>"] = actions.select_default,
+      mappings = {
+        i = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-c>"] = actions.close,
+          ["<C-n>"] = actions.cycle_history_next,
+          ["<C-p>"] = actions.cycle_history_prev,
+          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+          ["<CR>"] = actions.select_default,
+        },
+        n = {
+          ["<C-n>"] = actions.move_selection_next,
+          ["<C-p>"] = actions.move_selection_previous,
+          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+        },
       },
-      n = {
-        ["<C-n>"] = actions.move_selection_next,
-        ["<C-p>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-      },
-    },
     },
     extensions = {
       fzf = {

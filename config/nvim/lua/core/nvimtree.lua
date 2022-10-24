@@ -6,30 +6,21 @@ function M.config()
     active = true,
     on_config_done = nil,
     setup = {
-      disable_netrw = true,
-      hijack_netrw = true,
-      open_on_setup = false,
-      open_on_setup_file = false,
-      sort_by = "name",
-      ignore_buffer_on_setup = false,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
         "alpha",
       },
       auto_reload_on_write = true,
-      hijack_unnamed_buffer_when_opening = false,
       hijack_directories = {
-        enable = true,
+        enable = false,
         auto_open = true,
       },
+      update_cwd = true,
       update_to_buf_dir = {
         enable = false,
         auto_open = true,
       },
-      open_on_tab = false,
-      hijack_cursor = false,
-      update_cwd = false,
       diagnostics = {
         enable = true,
         show_on_dirs = false,
@@ -59,7 +50,6 @@ function M.config()
         height = 30,
         hide_root_folder = false,
         side = "left",
-        preserve_window_proportions = false,
         mappings = {
           custom_only = false,
           list = {},
@@ -159,6 +149,24 @@ function M.setup()
     return
   end
 
+  local status_ok_1, utils = pcall(require, "nvim-tree.utils")
+  if not status_ok_1 then
+    return
+  end
+
+  local function notify_level()
+    return function(msg)
+      vim.schedule(function()
+        vim.api.nvim_echo({ { msg, "WarningMsg" } }, false, {})
+      end)
+    end
+  end
+
+  utils.notify.warn = notify_level(vim.log.levels.WARN)
+  utils.notify.error = notify_level(vim.log.levels.ERROR)
+  utils.notify.info = notify_level(vim.log.levels.INFO)
+  utils.notify.debug = notify_level(vim.log.levels.DEBUG)
+
   if rvim.builtin.nvimtree._setup_called then
     Log:debug "ignoring repeated setup call for nvim-tree"
     return
@@ -169,6 +177,7 @@ function M.setup()
   local function telescope_find_files(_)
     require("core.nvimtree").start_telescope "find_files"
   end
+
   local function telescope_live_grep(_)
     require("core.nvimtree").start_telescope "live_grep"
   end
@@ -180,7 +189,7 @@ function M.setup()
       { key = "h", action = "close_node" },
       { key = "s", action = "vsplit" },
       { key = "t", action = "tabnew" },
-      { key = "C", action =  "cd" },
+      { key = "C", action = "cd" },
       { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
       { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
     }

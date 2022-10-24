@@ -10,6 +10,36 @@ function M.load_defaults()
     user_config_file = user_config_file:gsub("\\", "/")
   end
 
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = {
+      "Jaq",
+      "qf",
+      "help",
+      "man",
+      "lspinfo",
+      "spectre_panel",
+      "lir",
+      "DressingSelect",
+      "tsplayground",
+      "Markdown",
+    },
+    callback = function()
+      vim.cmd [[
+      nnoremap <silent> <buffer> q :close<CR>
+      nnoremap <silent> <buffer> <esc> :close<CR>
+      set nobuflisted
+    ]]
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = { "lir" },
+    callback = function()
+      vim.opt_local.number = false
+      vim.opt_local.relativenumber = false
+    end,
+  })
+
   local definitions = {
     {
       "TextYankPost",
@@ -18,7 +48,7 @@ function M.load_defaults()
         pattern = "*",
         desc = "Highlight text no yank",
         callback = function()
-          require("vim.highlight").on_yank { higroup = "Search", timeout = 200 }
+          require("vim.highlight").on_yank { higroup = "Search", timeout = 100 }
         end
       }
     },

@@ -59,11 +59,6 @@ return {
     style = "minimal",
     border = "rounded",
   },
-  peek = {
-    max_height = 15,
-    max_width = 30,
-    context = 10,
-  },
   on_attach_callback = nil,
   on_init_callback = nil,
   automatic_configuration = {
@@ -79,12 +74,6 @@ return {
       ["gD"] = { "<cmd>vsplit | vim.lsp.buf.definition<CR>", "Goto declaration" },
       ["gr"] = { vim.lsp.buf.references, "Goto references" },
       ["gi"] = { vim.lsp.buf.implementation, "Goto Implementation" },
-      ["gp"] = {
-        function()
-          require("lsp.peek").Peek "definition"
-        end,
-        "Peek definition",
-      },
       ["gl"] = {
         function()
           local config = rvim.lsp.diagnostics.float

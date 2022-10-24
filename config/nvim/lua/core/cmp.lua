@@ -140,7 +140,7 @@ M.config = function()
       keyword_length = 1,
     },
     experimental = {
-      ghost_text = true,
+      ghost_text = false,
       native_menu = false,
     },
     formatting = {
@@ -282,20 +282,15 @@ M.config = function()
           if is_insert_mode() then -- prevent overwriting brackets
             confirm_opts.behavior = cmp.ConfirmBehavior.Insert
           end
-          cmp.confirm(confirm_opts)
-          if jumpable(1) then
-            luasnip.jump(1)
+          if cmp.confirm(confirm_opts) then
+            return
           end
-          return
         end
 
-        if jumpable(1) then
-          if not luasnip.jump(1) then
-            fallback()
-          end
-        else
-          fallback()
+        if jumpable(1) and luasnip.jump(1) then
+          return
         end
+        fallback()
       end),
     },
   }

@@ -10,6 +10,8 @@ local builtins = {
   "core.telescope",
   "core.treesitter",
   "core.nvimtree",
+  "core.illuminate",
+  "core.breadcrumbs",
   "core.autopairs",
   "core.comment",
   "core.notify",
