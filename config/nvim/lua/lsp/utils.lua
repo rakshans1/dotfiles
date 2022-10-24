@@ -51,29 +51,34 @@ end
 
 ---Get supported filetypes per server
 ---@param server_name string can be any server supported by nvim-lsp-installer
----@return table supported filestypes as a list of strings
+---@return string[] supported filestypes as a list of strings
 function M.get_supported_filetypes(server_name)
-  local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
+  local status_ok, config = pcall(require, ("lspconfig.server_configurations.%s"):format(server_name))
   if not status_ok then
     return {}
   end
 
-  local server_available, requested_server = lsp_installer_servers.get_server(server_name)
-  if not server_available then
-    return {}
-  end
+  return config.default_config.filetypes or {}
+end
 
-  return requested_server:get_supported_filetypes()
+---Get supported servers per filetype
+---@param filter { filetype: string | string[] }?: (optional) Used to filter the list of server names.
+---@return string[] list of names of supported servers
+function M.get_supported_servers(filter)
+  local _, supported_servers = pcall(function()
+    return require("mason-lspconfig").get_available_servers(filter)
+  end)
+  return supported_servers or {}
 end
 
 ---Get all supported filetypes by nvim-lsp-installer
----@return table supported filestypes as a list of strings
+---@return string[] supported filestypes as a list of strings
 function M.get_all_supported_filetypes()
-  local status_ok, lsp_installer_filetypes = pcall(require, "nvim-lsp-installer._generated.filetype_map")
+  local status_ok, filetype_server_map = pcall(require, "mason-lspconfig.mappings.filetype")
   if not status_ok then
     return {}
   end
-  return vim.tbl_keys(lsp_installer_filetypes or {})
+  return vim.tbl_keys(filetype_server_map or {})
 end
 
 function M.conditional_document_highlight(client, bufnr)
@@ -147,45 +152,44 @@ function M.setup_codelens_refresh(client, bufnr)
 end
 
 ---filter passed to vim.lsp.buf.format
----gives higher priority to null-ls
----@param clients table clients attached to a buffer
+---always selects null-ls if it's available and caches the value per buffer
+---@param client table client attached to a buffer
 ---@return table chosen clients
-function M.format_filter(clients)
-  return vim.tbl_filter(function(client)
-    local status_ok, formatting_supported = pcall(function()
-      return client.supports_method "textDocument/formatting"
-    end)
-    -- give higher prio to null-ls
-    if status_ok and formatting_supported and client.name == "null-ls" then
-      return "null-ls"
-    else
-      return status_ok and formatting_supported and client.name
-    end
-  end, clients)
+function M.format_filter(client)
+  local filetype = vim.bo.filetype
+  local n = require "null-ls"
+  local s = require "null-ls.sources"
+  local method = n.methods.FORMATTING
+  local avalable_formatters = s.get_available(filetype, method)
+
+  if #avalable_formatters > 0 then
+    return client.name == "null-ls"
+  elseif client.supports_method "textDocument/formatting" then
+    return true
+  else
+    return false
+  end
 end
 
 ---Provide vim.lsp.buf.format for nvim <0.8
 ---@param opts table
 function M.format(opts)
-  opts = opts or { filter = M.format_filter }
+  opts = opts or {}
+  opts.filter = opts.filter or M.format_filter
 
   if vim.lsp.buf.format then
     return vim.lsp.buf.format(opts)
   end
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.buf_get_clients(bufnr)
+  local clients = vim.lsp.get_active_clients {
+    id = opts.id,
+    bufnr = bufnr,
+    name = opts.name,
+  }
 
   if opts.filter then
-    clients = opts.filter(clients)
-  elseif opts.id then
-    clients = vim.tbl_filter(function(client)
-      return client.id == opts.id
-    end, clients)
-  elseif opts.name then
-    clients = vim.tbl_filter(function(client)
-      return client.name == opts.name
-    end, clients)
+    clients = vim.tbl_filter(opts.filter, clients)
   end
 
   clients = vim.tbl_filter(function(client)
@@ -193,7 +197,7 @@ function M.format(opts)
   end, clients)
 
   if #clients == 0 then
-    vim.notify "[LSP] Format request failed, no matching language servers."
+    vim.notify_once "[LSP] Format request failed, no matching language servers."
   end
 
   local timeout_ms = opts.timeout_ms or 1000

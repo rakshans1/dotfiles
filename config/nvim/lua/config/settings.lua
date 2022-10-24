@@ -2,6 +2,16 @@ local M = {}
 local join_paths = require("utils").join_paths
 
 M.load_default_options = function()
+  local utils = require "utils"
+
+  local undodir = join_paths(get_cache_dir(), "undo")
+
+  if not utils.is_directory(undodir) then
+    vim.fn.mkdir(undodir, "p")
+  end
+
+
+
   local default_options = {
     backup = false,
     clipboard = "unnamedplus",
@@ -28,7 +38,7 @@ M.load_default_options = function()
     termguicolors = true,
     timeoutlen = 500,
     title = true,
-    undodir = join_paths(get_cache_dir(), "undo"),
+    undodir = undodir,
     undofile = true,
     updatetime = 300,
     writebackup = false,
@@ -41,8 +51,6 @@ M.load_default_options = function()
     numberwidth = 4,
     signcolumn = "yes",
     wrap = false,
-    spell = false,
-    spelllang = "en",
     scrolloff = 8,
     sidescrolloff = 8,
   }
@@ -66,7 +74,7 @@ M.load_headless_options = function()
   vim.opt.swapfile = false -- don't use a swap file
 end
 
-M.load_options = function()
+M.load_defaults = function()
   if #vim.api.nvim_list_uis() == 0 then
     M.load_headless_options()
     return

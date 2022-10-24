@@ -18,6 +18,8 @@ local skipped_servers = {
 
 local skipped_filetypes = { "markdown", "rst", "plaintext" }
 
+local join_paths = require("utils").join_paths
+
 return {
   templates_dir = join_paths(get_runtime_dir(), "site", "after", "ftplugin"),
   diagnostics = {
@@ -42,12 +44,11 @@ return {
       header = "",
       prefix = "",
       format = function(d)
-        local t = vim.deepcopy(d)
         local code = d.code or (d.user_data and d.user_data.lsp.code)
         if code then
-          t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
+          return string.format("%s [%s]", d.message, code):gsub("1. ", "")
         end
-        return t.message
+        return d.message
       end,
     },
   },
@@ -65,7 +66,6 @@ return {
   },
   on_attach_callback = nil,
   on_init_callback = nil,
-  automatic_servers_installation = true,
   automatic_configuration = {
     ---@usage list of servers that the automatic installer will skip
     skipped_servers = skipped_servers,
@@ -81,7 +81,7 @@ return {
       ["gi"] = { vim.lsp.buf.implementation, "Goto Implementation" },
       ["gp"] = {
         function()
-          require("lvim.lsp.peek").Peek "definition"
+          require("lsp.peek").Peek "definition"
         end,
         "Peek definition",
       },
@@ -106,6 +106,29 @@ return {
     insert_mode = {},
     visual_mode = {},
   },
+  buffer_options = {
+    --- enable completion triggered by <c-x><c-o>
+    omnifunc = "v:lua.vim.lsp.omnifunc",
+    --- use gq for formatting
+    formatexpr = "v:lua.vim.lsp.formatexpr(#{timeout_ms:500})",
+  },
+  installer = {
+    setup = {
+      ensure_installed = {},
+      automatic_installation = {
+        exclude = {},
+      },
+    },
+  },
+  nlsp_settings = {
+    setup = {
+      config_home            = join_paths(get_config_dir(), "lsp-settings"),
+      append_default_schemas = true,
+      local_settings_dir     = ".vim/lsp-settings",
+      ignored_servers        = {},
+      loader                 = "json"
+    }
+  },
   null_ls = {
     setup = {},
     config = {},
@@ -113,4 +136,3 @@ return {
   ---@deprecated use automatic_configuration.skipped_servers instead
   override = {},
 }
-

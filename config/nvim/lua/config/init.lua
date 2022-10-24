@@ -5,11 +5,6 @@ local M = {}
 local user_config_dir = get_config_dir()
 local user_config_file = utils.join_paths(user_config_dir, "config.lua")
 
-local function apply_defaults(configs, defaults)
-  configs = configs or {}
-  return vim.tbl_deep_extend("keep", configs, defaults)
-end
-
 ---Get the full path to the user configuration file
 ---@return string
 function M:get_user_config_path()
@@ -19,12 +14,7 @@ end
 --- Initialize rvim default configuration
 -- Define rvim global variable
 function M:init()
-  if vim.tbl_isempty(rvim or {}) then
-    rvim = vim.deepcopy(require "config.defaults")
-    local home_dir = vim.loop.os_homedir()
-    rvim.vsnip_dir = utils.join_paths(home_dir, ".config", "snippets")
-    rvim.database = { save_location = utils.join_paths(home_dir, ".config", "lunarvim_db"), auto_execute = 1 }
-  end
+  rvim = vim.deepcopy(require "config.defaults")
 
   require("keymappings").load_defaults()
 
@@ -32,15 +22,19 @@ function M:init()
   builtins.config { user_config_file = user_config_file }
 
   local settings = require "config.settings"
-  settings.load_options()
+  settings.load_defaults()
 
   local autocmds = require "core.autocmds"
-  rvim.autocommands = apply_defaults(rvim.autocommands, autocmds.load_augroups())
+  autocmds.load_defaults()
 
   local rvim_lsp_config = require "lsp.config"
-  rvim.lsp = apply_defaults(rvim.lsp, vim.deepcopy(rvim_lsp_config))
+  rvim.lsp = vim.deepcopy(rvim_lsp_config)
 
-  require("lsp.manager").init_defaults()
+  rvim.builtin.luasnip = {
+    sources = {
+      friendly_snippets = true,
+    },
+  }
 end
 
 
@@ -49,7 +43,7 @@ end
 function M:load(config_path)
   local autocmds = require "core.autocmds"
 
-  autocmds.define_augroups(rvim.autocommands)
+  autocmds.define_autocmds(rvim.autocommands)
 
   vim.g.mapleader = (rvim.leader == "space" and " ") or rvim.leader
 
@@ -66,7 +60,6 @@ function M:reload()
   vim.schedule(function()
     require_clean("utils.hooks").run_pre_reload()
 
-    M:init()
     M:load()
 
     require("core.autocmds").configure_format_on_save()

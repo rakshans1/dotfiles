@@ -2,7 +2,7 @@ local M = {}
 local Log = require "core.log"
 
 --- Load the default set of autogroups and autocommands.
-function M.load_augroups()
+function M.load_defaults()
   local user_config_file = require("config"):get_user_config_path()
 
   if vim.loop.os_uname().version:match "Windows" then
@@ -10,73 +10,139 @@ function M.load_augroups()
     user_config_file = user_config_file:gsub("\\", "/")
   end
 
-  return {
-    _general_settings = {
-      { "FileType", "qf,help,man", "nnoremap <silent> <buffer> q :close<CR>" },
+  local definitions = {
+    {
+      "TextYankPost",
       {
-        "TextYankPost",
-        "*",
-        "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
-      },
-      {
-        "BufWinEnter",
-        "dashboard",
-        "setlocal cursorline signcolumn=yes cursorcolumn nonumber norelativenumber",
-      },
-      {
-        "BufRead",
-        "*",
-        "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-      },
-      {
-        "BufNewFile",
-        "*",
-        "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-      },
-      { "FileType", "qf", "set nobuflisted" },
+        group = "_general_settings",
+        pattern = "*",
+        desc = "Highlight text no yank",
+        callback = function()
+          require("vim.highlight").on_yank { higroup = "Search", timeout = 200 }
+        end
+      }
     },
-    _formatoptions = {
+    {
+      "BufWinEnter",
       {
-        "BufWinEnter,BufRead,BufNewFile",
-        "*",
-        "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+        group = "_general_settings",
+        pattern = "dashboard",
+        command = "setlocal cursorline signcolumn=yes cursorcolumn nonumber norelativenumber"
+      }
+    },
+    {
+      "FileType",
+      {
+        group = "_buffer_mappings",
+        pattern = { "qf", "help", "man", "floaterm", "lspinfo", "lsp-installer", "null-ls-info", "dashboard" },
+        command = "nnoremap <silent> <buffer> q :close<CR>",
       },
     },
-    _filetypechanges = {
-      { "BufWinEnter", ".zsh", "setlocal filetype=sh" },
-      { "BufRead", "*.zsh", "setlocal filetype=sh" },
-      { "BufNewFile", "*.zsh", "setlocal filetype=sh" },
+    {
+      "BufRead",
+      {
+        pattern = "*",
+        command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o"
+      }
     },
-    _git = {
-      { "FileType", "gitcommit", "setlocal wrap" },
-      { "FileType", "gitcommit", "setlocal spell" },
+    {
+      "BufNewFile",
+      {
+        pattern = "*",
+        command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o"
+      }
     },
-    _markdown = {
-      { "FileType", "markdown", "setlocal wrap" },
-      { "FileType", "markdown", "setlocal spell nofoldenable" },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = "qf",
+        command = "set nobuflisted",
+      },
     },
-    _buffer_bindings = {
-      { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
+    {
+      { "BufWinEnter", "BufRead", "BufNewFile" },
+      {
+        group = "_format_options",
+        pattern = "*",
+        command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+      },
     },
-    _auto_resize = {
-      -- will cause split windows to be resized evenly if main window is resized
-      { "VimResized", "*", "wincmd =" },
+    {
+      { "BufWinEnter", "BufRead", "BufNewFile" },
+      {
+        group = "_filetypechanges",
+        pattern = ".zsh",
+        command = "setlocal filetype=sh",
+      },
     },
-    _auto_read = {
-      { "CursorHold", "*", "silent! checktime" },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = "gitcommit",
+        command = "setlocal wrap spell"
+      }
     },
-    _general_lsp = {
-      { "FileType", "lspinfo", "nnoremap <silent> <buffer> q :q<CR>" },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = "markdown",
+        command = "setlocal wrap spell nofoldenable"
+      }
     },
-    _mode_switching = {
-      -- will switch between absolute and relative line numbers depending on mode
-      {'BufEnter,FocusGained,InsertLeave', '*', 'set number relativenumber'},
-      {'BufLeave,FocusLost,InsertEnter', '*', 'set number norelativenumber'},
-      {'BufEnter,FocusGained,InsertLeave', 'NvimTree', 'set nonumber norelativenumber'},
-      {'BufLeave,FocusLost,InsertEnter', 'NvimTree', 'set nonumber norelativenumber'},
+    {
+      "VimResized",
+      {
+        group = "_auto_resize",
+        pattern = "*",
+        command = "tabdo wincmd =",
+      },
     },
-    custom_groups = {},
+    {
+      "CursorHold",
+      {
+        group = "_auto_read",
+        pattern = "*",
+        command = "silent! checktime"
+      }
+    },
+    {
+      { "BufEnter", "FocusGained", "InsertLeave" },
+      {
+        group = "_mode_switching",
+        pattern = "*",
+        command = "set number relativenumber"
+      }
+    },
+    {
+      { "BufLeave", "FocusLost", "InsertLeave" },
+      {
+        group = "_mode_switching",
+        pattern = "*",
+        command = "set number norelativenumber"
+      }
+    },
+    {
+      { "BufEnter", "FocusGained", "InsertLeave" },
+      {
+        group = "_mode_switching",
+        pattern = "NvimTree",
+        command = "set nonumber relativenumber"
+      }
+    },
+    {
+      { "BufLeave", "FocusLost", "InsertEnter" },
+      {
+        group = "_mode_switching",
+        pattern = "NvimTree",
+        command = "set nonumber norelativenumber"
+      }
+    }
   }
+
+  M.define_autocmds(definitions)
 end
 
 local get_format_on_save_opts = function()
@@ -106,7 +172,7 @@ function M.enable_format_on_save()
 end
 
 function M.disable_format_on_save()
-  pcall(vim.api.nvim_del_augroup_by_name, "lsp_format_on_save")
+  M.clear_augroup "lsp_format_on_save"
   Log:debug "disabled format-on-save"
 end
 
@@ -119,11 +185,11 @@ function M.configure_format_on_save()
 end
 
 function M.toggle_format_on_save()
-  local status, autocmds = pcall(vim.api.nvim_get_autocmds, {
+  local exists, autocmds = pcall(vim.api.nvim_get_autocmds, {
     group = "lsp_format_on_save",
     event = "BufWritePre",
   })
-  if not status or #autocmds == 0 then
+  if not exists or #autocmds == 0 then
     M.enable_format_on_save()
   else
     M.disable_format_on_save()
@@ -131,48 +197,53 @@ function M.toggle_format_on_save()
 end
 
 function M.enable_transparent_mode()
-  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
-  vim.cmd "let &fcs='eob: '"
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+      local hl_groups = {
+        "Normal",
+        "SignColumn",
+        "NormalNC",
+        "TelescopeBorder",
+        "NvimTreeNormal",
+        "EndOfBuffer",
+        "MsgArea",
+      }
+      for _, name in ipairs(hl_groups) do
+        vim.cmd(string.format("highlight %s ctermbg=none guibg=none", name))
+      end
+    end,
+  })
+  vim.opt.fillchars = "eob: "
 end
 
---- Disable autocommand groups if it exists
---- This is more reliable than trying to delete the augroup itself
+--- Clean autocommand in a group if it exists
+--- This is safer than trying to delete the augroup itself
 ---@param name string the augroup name
-function M.disable_augroup(name)
+function M.clear_augroup(name)
   -- defer the function in case the autocommand is still in-use
+  Log:debug("request to clear autocmds  " .. name)
   vim.schedule(function()
-    if vim.fn.exists("#" .. name) == 1 then
-      vim.cmd("augroup " .. name)
-      vim.cmd "autocmd!"
-      vim.cmd "augroup END"
-    end
+    pcall(function()
+      vim.api.nvim_clear_autocmds { group = name }
+    end)
   end)
 end
 
 --- Create autocommand groups based on the passed definitions
----@param definitions table contains trigger, pattern and text. The key will be used as a group name
----@param buffer boolean indicate if the augroup should be local to the buffer
-function M.define_augroups(definitions, buffer)
-  for group_name, definition in pairs(definitions) do
-    vim.cmd("augroup " .. group_name)
-    if buffer then
-      vim.cmd [[autocmd! * <buffer>]]
-    else
-      vim.cmd [[autocmd!]]
+--- Also creates the augroup automatically if it doesn't exist
+---@param definitions table contains a tuple of event, opts, see `:h nvim_create_autocmd`
+function M.define_autocmds(definitions)
+  for _, entry in ipairs(definitions) do
+    local event = entry[1]
+    local opts = entry[2]
+    if type(opts.group) == "string" and opts.group ~= "" then
+      local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
+      if not exists then
+        vim.api.nvim_create_augroup(opts.group, {})
+      end
     end
-
-    for _, def in pairs(definition) do
-      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
-      vim.cmd(command)
-    end
-
-    vim.cmd "augroup END"
+    vim.api.nvim_create_autocmd(event, opts)
   end
 end
 

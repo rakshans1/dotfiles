@@ -16,6 +16,7 @@ local builtins = {
   "core.lualine",
   "core.colorizer",
   "core.bufferline",
+  "core.mason"
 }
 
 function M.config(config)

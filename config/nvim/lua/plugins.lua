@@ -8,8 +8,12 @@ local core_plugins =  {
     "jose-elias-alvarez/null-ls.nvim",
   },
   { "antoinemadec/FixCursorHold.nvim", }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+  { "williamboman/mason-lspconfig.nvim" },
   {
-    "williamboman/nvim-lsp-installer",
+    "williamboman/mason.nvim",
+    config = function()
+      require("core.mason").setup()
+    end,
   },
   {
     "rcarriga/nvim-notify",
@@ -42,16 +46,29 @@ local core_plugins =  {
     end,
     requires = {
       "L3MON4D3/LuaSnip",
-      "rafamadriz/friendly-snippets",
     },
   },
   {
     "rafamadriz/friendly-snippets",
+    disable = not rvim.builtin.luasnip.sources.friendly_snippets,
   },
   {
     "L3MON4D3/LuaSnip",
     config = function()
-      require("luasnip/loaders/from_vscode").lazy_load()
+      local utils = require "utils"
+      local paths = {}
+      if rvim.builtin.luasnip.sources.friendly_snippets then
+        paths[#paths + 1] = utils.join_paths(get_runtime_dir(), "site", "pack", "packer", "start", "friendly-snippets")
+      end
+      local user_snippets = utils.join_paths(get_config_dir(), "snippets")
+      if utils.is_directory(user_snippets) then
+        paths[#paths + 1] = user_snippets
+      end
+      require("luasnip.loaders.from_lua").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = paths,
+      }
+      require("luasnip.loaders.from_snipmate").lazy_load()
     end,
   },
   {
@@ -263,7 +280,8 @@ local core_plugins =  {
 
   -- Debugger management
   {
-    "Pocco81/DAPInstall.nvim",
+    "Pocco81/dap-buddy.nvim",
+    branch = "dev",
     -- event = "BufWinEnter",
     -- event = "BufRead",
     disable = not rvim.builtin.dap.active,
