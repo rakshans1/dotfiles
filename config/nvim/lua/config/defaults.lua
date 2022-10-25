@@ -9,6 +9,9 @@ return {
   },
   keys = {},
 
+  use_icons = true,
+  icons = require "icons",
+
   builtin = {},
 
   plugins = {

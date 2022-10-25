@@ -25,6 +25,10 @@ local function add_lsp_buffer_keybindings(bufnr)
 end
 
 function M.common_capabilities()
+  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  if status_ok then
+    return cmp_nvim_lsp.default_capabilities()
+  end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -34,11 +38,6 @@ function M.common_capabilities()
       "additionalTextEdits",
     },
   }
-
-  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-  if status_ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-  end
 
   return capabilities
 end
@@ -60,15 +59,6 @@ function M.common_on_init(client, bufnr)
   end
 end
 
-local function attach_navic(client, bufnr)
-  vim.g.navic_silence = true
-  local status_ok, navic = pcall(require, "nvim-navic")
-  if not status_ok then
-    return
-  end
-  navic.attach(client, bufnr)
-end
-
 function M.common_on_attach(client, bufnr)
   if rvim.lsp.on_attach_callback then
     rvim.lsp.on_attach_callback(client, bufnr)
@@ -83,7 +73,6 @@ function M.common_on_attach(client, bufnr)
   end
   add_lsp_buffer_keybindings(bufnr)
   add_lsp_buffer_options(bufnr)
-  attach_navic(client, bufnr)
 end
 
 function M.get_common_opts()

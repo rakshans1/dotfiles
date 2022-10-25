@@ -93,14 +93,6 @@ function M.load_defaults()
     {
       { "BufWinEnter", "BufRead", "BufNewFile" },
       {
-        group = "_format_options",
-        pattern = "*",
-        command = "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
-      },
-    },
-    {
-      { "BufWinEnter", "BufRead", "BufNewFile" },
-      {
         group = "_filetypechanges",
         pattern = ".zsh",
         command = "setlocal filetype=sh",
@@ -169,7 +161,17 @@ function M.load_defaults()
         pattern = "NvimTree",
         command = "set nonumber norelativenumber"
       }
-    }
+    },
+    {
+      "BufWinEnter",
+      {
+        group = "_last_status",
+        pattern = "*",
+        callback = function()
+          vim.opt.laststatus = 3
+        end,
+      },
+    },
   }
 
   M.define_autocmds(definitions)

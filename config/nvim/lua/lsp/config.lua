@@ -26,10 +26,10 @@ return {
     signs = {
       active = true,
       values = {
-        { name = "DiagnosticSignError", text = "" },
-        { name = "DiagnosticSignWarn", text = "" },
-        { name = "DiagnosticSignHint", text = "" },
-        { name = "DiagnosticSignInfo", text = "" },
+        { name = "DiagnosticSignError", text = rvim.icons.diagnostics.Error },
+        { name = "DiagnosticSignWarn", text = rvim.icons.diagnostics.Warning },
+        { name = "DiagnosticSignHint", text = rvim.icons.diagnostics.Hint },
+        { name = "DiagnosticSignInfo", text = rvim.icons.diagnostics.Info },
       },
     },
     virtual_text = true,
@@ -52,7 +52,7 @@ return {
       end,
     },
   },
-  document_highlight = true,
+  document_highlight = false,
   code_lens_refresh = true,
   float = {
     focusable = false,
@@ -119,7 +119,9 @@ return {
     }
   },
   null_ls = {
-    setup = {},
+    setup = {
+      debug = false,
+    },
     config = {},
   },
   ---@deprecated use automatic_configuration.skipped_servers instead

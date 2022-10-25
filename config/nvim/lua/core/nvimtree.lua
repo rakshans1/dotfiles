@@ -17,18 +17,14 @@ function M.config()
         auto_open = true,
       },
       update_cwd = true,
-      update_to_buf_dir = {
-        enable = false,
-        auto_open = true,
-      },
       diagnostics = {
         enable = true,
         show_on_dirs = false,
         icons = {
-          hint = "",
-          info = "",
-          warning = "",
-          error = "",
+          hint = rvim.icons.diagnostics.BoldHint,
+          info = rvim.icons.diagnostics.BoldInformation,
+          warning = rvim.icons.diagnostics.BoldWarning,
+          error = rvim.icons.diagnostics.BoldError,
         },
       },
       update_focused_file = {
@@ -47,7 +43,6 @@ function M.config()
       },
       view = {
         width = 30,
-        height = 30,
         hide_root_folder = false,
         side = "left",
         mappings = {
@@ -76,27 +71,28 @@ function M.config()
             folder_arrow = true
           },
           glyphs = {
-            default = "",
-            symlink = "",
+            default = rvim.icons.ui.Text,
+            symlink = rvim.icons.ui.FileSymlink,
             git = {
-              unstaged = "",
-              staged = "S",
-              unmerged = "",
-              renamed = "➜",
-              deleted = "",
-              untracked = "U",
-              ignored = "◌",
+              deleted = rvim.icons.git.FileDeleted,
+              ignored = rvim.icons.git.FileIgnored,
+              renamed = rvim.icons.git.FileRenamed,
+              staged = rvim.icons.git.FileStaged,
+              unmerged = rvim.icons.git.FileUnmerged,
+              unstaged = rvim.icons.git.FileUnstaged,
+              untracked = rvim.icons.git.FileUntracked,
             },
             folder = {
-              default = "",
-              open = "",
-              empty = "",
-              empty_open = "",
-              symlink = "",
+              default = rvim.icons.ui.Folder,
+              empty = rvim.icons.ui.EmptyFolder,
+              empty_open = rvim.icons.ui.EmptyFolderOpen,
+              open = rvim.icons.ui.FolderOpen,
+              symlink = rvim.icons.ui.FolderSymlink,
             },
           },
         },
         highlight_git = true,
+        group_empty = false,
         root_folder_modifier = ":t",
       },
       filters = {
@@ -148,24 +144,6 @@ function M.setup()
     Log:error "Failed to load nvim-tree"
     return
   end
-
-  local status_ok_1, utils = pcall(require, "nvim-tree.utils")
-  if not status_ok_1 then
-    return
-  end
-
-  local function notify_level()
-    return function(msg)
-      vim.schedule(function()
-        vim.api.nvim_echo({ { msg, "WarningMsg" } }, false, {})
-      end)
-    end
-  end
-
-  utils.notify.warn = notify_level(vim.log.levels.WARN)
-  utils.notify.error = notify_level(vim.log.levels.ERROR)
-  utils.notify.info = notify_level(vim.log.levels.INFO)
-  utils.notify.debug = notify_level(vim.log.levels.DEBUG)
 
   if rvim.builtin.nvimtree._setup_called then
     Log:debug "ignoring repeated setup call for nvim-tree"

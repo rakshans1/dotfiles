@@ -7,17 +7,12 @@ local core_plugins = {
   {
     "jose-elias-alvarez/null-ls.nvim",
   },
-  { "antoinemadec/FixCursorHold.nvim", }, -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
   { "williamboman/mason-lspconfig.nvim" },
   {
     "williamboman/mason.nvim",
     config = function()
       require("core.mason").setup()
     end,
-  },
-  {
-    "rcarriga/nvim-notify",
-    disable = not rvim.builtin.notify.active,
   },
   { "Tastyep/structlog.nvim", },
   { "nvim-lua/popup.nvim", },
@@ -84,8 +79,8 @@ local core_plugins = {
     "hrsh7th/cmp-path",
   },
   {
-    "foke/lua-dev.nvim",
-    module = "lua-dev",
+    "folke/neodev.nvim",
+    module = "neodev",
   },
 
   -- Autopairs
@@ -324,6 +319,17 @@ local core_plugins = {
   },
   {
     "RRethy/vim-illuminate",
+    setup = function()
+      require("core.illuminate").setup()
+    end,
+    disable = not rvim.builtin.illuminate.active,
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("core.indentlines").setup()
+    end,
+    disable = not rvim.builtin.indentlines.active,
   },
 }
 

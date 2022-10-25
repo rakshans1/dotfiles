@@ -1,89 +1,95 @@
 local M = {}
 
+local icons = rvim.icons.kind
+
 M.config = function()
+  rvim.builtin.breadcrumbs = {
+    active = true,
+    on_config_done = nil,
+    winbar_filetype_exclude = {
+      "help",
+      "startify",
+      "dashboard",
+      "packer",
+      "neo-tree",
+      "neogitstatus",
+      "NvimTree",
+      "Trouble",
+      "alpha",
+      "lir",
+      "Outline",
+      "spectre_panel",
+      "toggleterm",
+      "DressingSelect",
+      "Jaq",
+      "harpoon",
+      "dap-repl",
+      "dap-terminal",
+      "dapui_console",
+      "lab",
+      "Markdown",
+      "notify",
+      "noice",
+      "",
+    },
+    options = {
+      icons = {
+        Array = icons.Array .. " ",
+        Boolean = icons.Boolean,
+        Class = icons.Class .. " ",
+        Color = icons.Color .. " ",
+        Constant = icons.Constant .. " ",
+        Constructor = icons.Constructor .. " ",
+        Enum = icons.Enum .. " ",
+        EnumMember = icons.EnumMember .. " ",
+        Event = icons.Event .. " ",
+        Field = icons.Field .. " ",
+        File = icons.File .. " ",
+        Folder = icons.Folder .. " ",
+        Function = icons.Function .. " ",
+        Interface = icons.Interface .. " ",
+        Key = icons.Key .. " ",
+        Keyword = icons.Keyword .. " ",
+        Method = icons.Method .. " ",
+        Module = icons.Module .. " ",
+        Namespace = icons.Namespace .. " ",
+        Null = icons.Null .. " ",
+        Number = icons.Number .. " ",
+        Object = icons.Object .. " ",
+        Operator = icons.Operator .. " ",
+        Package = icons.Package .. " ",
+        Property = icons.Property .. " ",
+        Reference = icons.Reference .. " ",
+        Snippet = icons.Snippet .. " ",
+        String = icons.String .. " ",
+        Struct = icons.Struct .. " ",
+        Text = icons.Text .. " ",
+        TypeParameter = icons.TypeParameter .. " ",
+        Unit = icons.Unit .. " ",
+        Value = icons.Value .. " ",
+        Variable = icons.Variable .. " ",
+      },
+      highlight = true,
+      separator = " " .. ">" .. " ",
+      depth_limit = 0,
+      depth_limit_indicator = "..",
+    },
+  }
+end
+
+M.setup = function()
   local status_ok, navic = pcall(require, "nvim-navic")
   if not status_ok then
     return
   end
 
-  navic.setup {
-    icons = {
-      Text = " ",
-      -- Method = "m",
-      -- Function = "",
-      -- Constructor = "",
-      Method = " ",
-      Function = " ",
-      Constructor = " ",
-      Field = " ",
-      -- Variable = "",
-      Variable = " ",
-      Class = " ",
-      Interface = " ",
-      -- Module = "",
-      Module = " ",
-      Property = " ",
-      Unit = " ",
-      Value = " ",
-      Enum = " ",
-      -- Keyword = "",
-      Keyword = " ",
-      -- Snippet = "",
-      Snippet = " ",
-      Color = " ",
-      File = " ",
-      Reference = " ",
-      Folder = " ",
-      EnumMember = " ",
-      Constant = " ",
-      Struct = " ",
-      Event = " ",
-      Operator = " ",
-      TypeParameter = " ",
-      Array = " ",
-      Number = " ",
-      String = " ",
-      Boolean = "蘒",
-      Object = " ",
-      Package = " ",
-      Namespace = "",
-      Key = "",
-      Null = "ﳠ",
-    },
-    highlight = true,
-    separator = " " .. ">" .. " ",
-    depth_limit = 0,
-    depth_limit_indicator = "..",
-  }
-end
+  M.create_winbar()
+  navic.setup(rvim.builtin.breadcrumbs.options)
 
-M.winbar_filetype_exclude = {
-  "help",
-  "startify",
-  "dashboard",
-  "packer",
-  "neogitstatus",
-  "NvimTree",
-  "Trouble",
-  "alpha",
-  "lir",
-  "Outline",
-  "spectre_panel",
-  "toggleterm",
-  "DressingSelect",
-  "Jaq",
-  "harpoon",
-  "dapui_scopes",
-  "dapui_breakpoints",
-  "dapui_stacks",
-  "dapui_watches",
-  "dap-repl",
-  "dap-terminal",
-  "dapui_console",
-  "lab",
-  "Markdown",
-  "",
-}
+  if rvim.builtin.breadcrumbs.on_config_done then
+    rvim.builtin.breadcrumbs.on_config_done()
+  end
+end
 
 M.get_filename = function()
   local filename = vim.fn.expand "%:t"
@@ -132,11 +138,7 @@ local get_gps = function()
 end
 
 local excludes = function()
-  if vim.tbl_contains(M.winbar_filetype_exclude, vim.bo.filetype) then
-    vim.opt_local.winbar = nil
-    return true
-  end
-  return false
+  return vim.tbl_contains(rvim.builtin.breadcrumbs.winbar_filetype_exclude or {}, vim.bo.filetype)
 end
 
 M.get_winbar = function()
@@ -196,7 +198,5 @@ M.create_winbar = function()
     )
   end
 end
-
-M.create_winbar()
 
 return M
