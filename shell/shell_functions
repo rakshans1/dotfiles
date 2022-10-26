@@ -117,7 +117,7 @@ function tm() {
     fi
   fi
 
-  # Open fuzzy search to zump to exiting sessions or create new on noop
+  # Open fuzzy search to jump to exiting sessions or create new on noop
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
     tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
