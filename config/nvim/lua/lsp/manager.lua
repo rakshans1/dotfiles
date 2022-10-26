@@ -29,7 +29,7 @@ local function resolve_config(server_name, ...)
   local has_custom_provider, custom_config = pcall(require, "lsp/providers/" .. server_name)
   if has_custom_provider then
     Log:debug("Using custom configuration for requested server: " .. server_name)
-    config = vim.tbl_deep_extend("force", defaults, custom_config)
+    defaults = vim.tbl_deep_extend("force", defaults, custom_config)
   end
 
   defaults = vim.tbl_deep_extend("force", defaults, ...)
