@@ -4,14 +4,27 @@ local Log = require "core.log"
 local fmt = string.format
 local rvim_lsp_utils = require "lsp.utils"
 
+local is_windows = vim.loop.os_uname().version:match "Windows"
+
 local function resolve_mason_config(server_name)
   local found, mason_config = pcall(require, "mason-lspconfig.server_configurations." .. server_name)
   if not found then
     Log:debug(fmt("mason configuration not found for %s", server_name))
     return {}
   end
-  Log:debug(fmt("resolved mason configuration for %s, got %s", server_name, vim.inspect(mason_config)))
-  return mason_config or {}
+  local server_mapping = require "mason-lspconfig.mappings.server"
+  local path = require "mason-core.path"
+  local pkg_name = server_mapping.lspconfig_to_package[server_name]
+  local install_dir = path.package_prefix(pkg_name)
+  local conf = mason_config(install_dir)
+  if is_windows and conf.cmd and conf.cmd[1] then
+    local exepath = vim.fn.exepath(conf.cmd[1])
+    if exepath ~= "" then
+      conf.cmd[1] = exepath
+    end
+  end
+  Log:debug(fmt("resolved mason configuration for %s, got %s", server_name, vim.inspect(conf)))
+  return conf or {}
 end
 
 ---Resolve the configuration for a server based on both common and user configuration
