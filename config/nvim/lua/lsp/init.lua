@@ -3,6 +3,12 @@ local Log = require "core.log"
 local utils = require "utils"
 local autocmds = require "core.autocmds"
 
+local function add_lsp_buffer_options(bufnr)
+  for k, v in pairs(rvim.lsp.buffer_options) do
+    vim.api.nvim_buf_set_option(bufnr, k, v)
+  end
+end
+
 local function add_lsp_buffer_keybindings(bufnr)
   local mappings = {
     normal_mode = "n",
@@ -19,6 +25,10 @@ local function add_lsp_buffer_keybindings(bufnr)
 end
 
 function M.common_capabilities()
+  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  if status_ok then
+    return cmp_nvim_lsp.default_capabilities()
+  end
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
   capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -29,22 +39,15 @@ function M.common_capabilities()
     },
   }
 
-  local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-  if status_ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-  end
-
   return capabilities
 end
 
 function M.common_on_exit(_, _)
   if rvim.lsp.document_highlight then
-    autocmds.disable_lsp_document_highlight()
-    pcall(vim.api.nvim_del_augroup_by_name, "lsp_document_highlight")
+    autocmds.clear_augroup "lsp_document_highlight"
   end
   if rvim.lsp.code_lens_refresh then
-    autocmds.disable_code_lens_refresh()
-    pcall(vim.api.nvim_del_augroup_by_name, "lsp_code_lens_refresh")
+    autocmds.clear_augroup "lsp_code_lens_refresh"
   end
 end
 
@@ -69,14 +72,7 @@ function M.common_on_attach(client, bufnr)
     lu.setup_codelens_refresh(client, bufnr)
   end
   add_lsp_buffer_keybindings(bufnr)
-end
-
-local function bootstrap_nlsp(opts)
-  opts = opts or {}
-  local lsp_settings_status_ok, lsp_settings = pcall(require, "nlspsettings")
-  if lsp_settings_status_ok then
-    lsp_settings.setup(opts)
-  end
+  add_lsp_buffer_options(bufnr)
 end
 
 function M.get_common_opts()
@@ -106,16 +102,16 @@ function M.setup()
     require("lsp.templates").generate_templates()
   end
 
-  bootstrap_nlsp {
-    config_home = utils.join_paths(get_config_dir(), "lsp-settings"),
-    local_settings_dir = ".vim/lsp-settings",
-    append_default_schemas = true,
-  }
+  pcall(function()
+    require("nlspsettings").setup(rvim.lsp.nlsp_settings.setup)
+  end)
 
-  require("nvim-lsp-installer").setup {
-    -- use the default nvim_data_dir, since the server binaries are independent
-    install_root_dir = utils.join_paths(vim.call("stdpath", "data"), "lsp_servers"),
-  }
+  pcall(function()
+    require("mason-lspconfig").setup(rvim.lsp.installer.setup)
+    local util = require "lspconfig.util"
+    -- automatic_installation is handled by lsp-manager
+    util.on_setup = nil
+  end)
 
   require("lsp.null-ls").setup()
 
@@ -123,4 +119,3 @@ function M.setup()
 end
 
 return M
-

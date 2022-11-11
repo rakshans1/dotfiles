@@ -10,12 +10,15 @@ local builtins = {
   "core.telescope",
   "core.treesitter",
   "core.nvimtree",
+  "core.illuminate",
+  "core.indentlines",
+  "core.breadcrumbs",
   "core.autopairs",
   "core.comment",
-  "core.notify",
   "core.lualine",
   "core.colorizer",
   "core.bufferline",
+  "core.mason"
 }
 
 function M.config(config)

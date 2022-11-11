@@ -42,10 +42,10 @@ M.config = function()
     },
     highlights = {
       background = {
-        gui = "italic",
+        italic = true,
       },
       buffer_selected = {
-        gui = "bold",
+        bold = true,
       },
     },
     options = {
@@ -57,7 +57,9 @@ M.config = function()
       -- NOTE: this plugin is designed with this icon in mind,
       -- and so changing this is NOT recommended, this is intended
       -- as an escape hatch for people who cannot bear it for whatever reason
-      indicator_icon = "▎",
+      indicator = {
+        style = "▎",
+      },
       buffer_close_icon = "",
       modified_icon = "●",
       close_icon = "",
@@ -129,7 +131,13 @@ end
 
 M.setup = function()
   require("keymappings").load(rvim.builtin.bufferline.keymap)
-  require("bufferline").setup {
+
+  local status_ok, bufferline = pcall(require, "bufferline")
+  if not status_ok then
+    return
+  end
+
+  bufferline.setup {
     options = rvim.builtin.bufferline.options,
     highlights = rvim.builtin.bufferline.highlights,
   }
@@ -145,20 +153,33 @@ end
 ---@param bufnr Number defaults to the current buffer
 ---@param force Boolean defaults to false
 function M.buf_kill(kill_command, bufnr, force)
+  kill_command = kill_command or "bd"
   local bo = vim.bo
   local api = vim.api
+  local fmt = string.format
+  local fnamemodify = vim.fn.fnamemodify
 
   if bufnr == 0 or bufnr == nil then
     bufnr = api.nvim_get_current_buf()
   end
 
-  kill_command = kill_command or "bd"
+  local bufname = api.nvim_buf_get_name(bufnr)
 
-  -- If buffer is modified and force isn't true, print error and abort
-  if not force and bo[bufnr].modified then
-    return api.nvim_err_writeln(
-      string.format("No write since last change for buffer %d (set force to true to override)", bufnr)
-    )
+  if not force then
+    local warning
+    if bo[bufnr].modified then
+      warning = fmt([[No write since last change for (%s)]], fnamemodify(bufname, ":t"))
+    elseif api.nvim_buf_get_option(bufnr, "buftype") == "terminal" then
+      warning = fmt([[Terminal %s will be killed]], bufname)
+    end
+    if warning then
+      vim.ui.input({
+        prompt = string.format([[%s. Close it anyway? [y]es or [n]o (default: no): ]], warning),
+      }, function(choice)
+        if choice:match "ye?s?" then force = true end
+      end)
+      if not force then return end
+    end
   end
 
   -- Get list of windows IDs with the buffer to close
@@ -166,9 +187,7 @@ function M.buf_kill(kill_command, bufnr, force)
     return api.nvim_win_get_buf(win) == bufnr
   end, api.nvim_list_wins())
 
-  if #windows == 0 then
-    return
-  end
+  if #windows == 0 then return end
 
   if force then
     kill_command = kill_command .. "!"

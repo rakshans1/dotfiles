@@ -24,12 +24,6 @@ local mode_adapters = {
 local defaults = {
   ---@usage change or add keymappings for insert mode
   insert_mode = {
-    -- 'jk' for quitting insert mode
-    ["jk"] = "<ESC>",
-    -- 'kj' for quitting insert mode
-    ["kj"] = "<ESC>",
-    -- 'jj' for quitting insert mode
-    ["jj"] = "<ESC>",
     -- Move current line / block with Alt-j/k ala vscode.
     ["<A-j>"] = "<Esc>:m .+1<CR>==gi",
     -- Move current line / block with Alt-j/k ala vscode.
@@ -78,7 +72,7 @@ local defaults = {
     ["<C-q>"] = ":call QuickFixToggle()<CR>",
     ["<C-p>"] = "<cmd>Telescope find_files<CR>",
     ["<C-n>"] = ":NvimTreeToggle<CR>",
-    ["<C-_>"] = "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>",
+    ["<C-_>"] = "<Plug>(comment_toggle_linewise_current)",
   },
 
   ---@usage change or add keymappings for terminal mode
@@ -95,7 +89,7 @@ local defaults = {
     -- Better indenting
     ["<"] = "<gv",
     [">"] = ">gv",
-    ["<C-_>"] = "<ESC><CMD>lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>",
+    ["<C-_>"] = "<Plug>(comment_toggle_linewise_visual)",
 
     -- ["p"] = '"0p',
     -- ["P"] = '"0P',
@@ -103,10 +97,6 @@ local defaults = {
 
   ---@usage change or add keymappings for visual block mode
   visual_block_mode = {
-    -- Move selected line / block of text in visual mode
-    ["K"] = ":move '<-2<CR>gv-gv",
-    ["J"] = ":move '>+1<CR>gv-gv",
-
     -- Move current line / block with Alt-j/k ala vscode.
     ["<A-j>"] = ":m '>+1<CR>gv-gv",
     ["<A-k>"] = ":m '<-2<CR>gv-gv",
@@ -129,16 +119,6 @@ if vim.fn.has "mac" == 1 then
   Log:debug "Activated mac keymappings"
 end
 
--- Append key mappings to lunarvim's defaults for a given mode
--- @param keymaps The table of key mappings containing a list per mode (normal_mode, insert_mode, ..)
-function M.append_to_defaults(keymaps)
-  for mode, mappings in pairs(keymaps) do
-    for k, v in pairs(mappings) do
-      defaults[mode][k] = v
-    end
-  end
-end
-
 -- Unsets all keybindings defined in keymaps
 -- @param keymaps The table of key mappings containing a list per mode (normal_mode, insert_mode, ..)
 function M.clear(keymaps)
@@ -148,7 +128,7 @@ function M.clear(keymaps)
     for key, _ in pairs(mappings) do
       -- some plugins may override default bindings that the user hasn't manually overriden
       if default[mode][key] ~= nil or (default[translated_mode] ~= nil and default[translated_mode][key] ~= nil) then
-        pcall(vim.api.nvim_del_keymap, translated_mode, key)
+        pcall(vim.keymap.del, translated_mode, key)
       end
     end
   end
@@ -165,7 +145,7 @@ function M.set_keymaps(mode, key, val)
     val = val[1]
   end
   if val then
-    vim.api.nvim_set_keymap(mode, key, val, opt)
+    vim.keymap.set(mode, key, val, opt)
   else
     pcall(vim.api.nvim_del_keymap, mode, key)
   end
@@ -193,9 +173,11 @@ end
 -- Load the default keymappings
 function M.load_defaults()
   M.load(M.get_defaults())
-  rvim.keys = {}
+  rvim.keys = rvim.keys or {}
   for idx, _ in pairs(defaults) do
-    rvim.keys[idx] = {}
+    if not rvim.keys[idx] then
+      rvim.keys[idx] = {}
+    end
   end
 end
 

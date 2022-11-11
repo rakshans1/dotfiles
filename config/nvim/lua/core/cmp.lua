@@ -1,16 +1,18 @@
-
 local M = {}
 M.methods = {}
 
----checks if the character preceding the cursor is a space character
----@return boolean true if it is a space character, false otherwise
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
 end
-M.methods.check_backspace = check_backspace
+M.methods.has_words_before = has_words_before
 
-local function T(str)
+---@deprecated use M.methods.has_words_before instead
+M.methods.check_backspace = function()
+  return not has_words_before()
+end
+
+local T = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
@@ -19,23 +21,10 @@ end
 ---@param key string
 ---@param mode string
 local function feedkeys(key, mode)
-  vim.fn.feedkeys(T(key), mode)
+  vim.api.nvim_feedkeys(T(key), mode, true)
 end
+
 M.methods.feedkeys = feedkeys
-
----checks if emmet_ls is available and active in the buffer
----@return boolean true if available, false otherwise
-local is_emmet_active = function()
-  local clients = vim.lsp.buf_get_clients()
-
-  for _, client in pairs(clients) do
-    if client.name == "emmet_ls" then
-      return true
-    end
-  end
-  return false
-end
-M.methods.is_emmet_active = is_emmet_active
 
 ---when inside a snippet, seeks to the nearest luasnip field if possible, and checks if it is jumpable
 ---@param dir number 1 for forward, -1 for backward; defaults to 1
@@ -43,28 +32,11 @@ M.methods.is_emmet_active = is_emmet_active
 local function jumpable(dir)
   local luasnip_ok, luasnip = pcall(require, "luasnip")
   if not luasnip_ok then
-    return
+    return false
   end
 
   local win_get_cursor = vim.api.nvim_win_get_cursor
   local get_current_buf = vim.api.nvim_get_current_buf
-
-  local function inside_snippet()
-    -- for outdated versions of luasnip
-    if not luasnip.session.current_nodes then
-      return false
-    end
-
-    local node = luasnip.session.current_nodes[get_current_buf()]
-    if not node then
-      return false
-    end
-
-    local snip_begin_pos, snip_end_pos = node.parent.snippet.mark:pos_begin_end()
-    local pos = win_get_cursor(0)
-    pos[1] = pos[1] - 1 -- LuaSnip is 0-based not 1-based like nvim for rows
-    return pos[1] >= snip_begin_pos[1] and pos[1] <= snip_end_pos[1]
-  end
 
   ---sets the current buffer's luasnip to the one nearest the cursor
   ---@return boolean true if a node is found, false otherwise
@@ -74,8 +46,6 @@ local function jumpable(dir)
       return false
     end
 
-    local pos = win_get_cursor(0)
-    pos[1] = pos[1] - 1
     local node = luasnip.session.current_nodes[get_current_buf()]
     if not node then
       return false
@@ -83,6 +53,9 @@ local function jumpable(dir)
 
     local snippet = node.parent.snippet
     local exit_node = snippet.insert_nodes[0]
+
+    local pos = win_get_cursor(0)
+    pos[1] = pos[1] - 1
 
     -- exit early if we're past the exit node
     if exit_node then
@@ -100,7 +73,7 @@ local function jumpable(dir)
       local n_next = node.next
       local next_pos = n_next and n_next.mark:pos_begin()
       local candidate = n_next ~= snippet and next_pos and (pos[1] < next_pos[1])
-        or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
+          or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
 
       -- Past unmarked exit node, exit early
       if n_next == nil or n_next == snippet.next then
@@ -139,11 +112,12 @@ local function jumpable(dir)
   end
 
   if dir == -1 then
-    return inside_snippet() and luasnip.jumpable(-1)
+    return luasnip.in_snippet() and luasnip.jumpable(-1)
   else
-    return inside_snippet() and seek_luasnip_cursor_node() and luasnip.jumpable()
+    return luasnip.in_snippet() and seek_luasnip_cursor_node() and luasnip.jumpable(1)
   end
 end
+
 M.methods.jumpable = jumpable
 
 M.config = function()
@@ -166,39 +140,13 @@ M.config = function()
       keyword_length = 1,
     },
     experimental = {
-      ghost_text = true,
+      ghost_text = false,
       native_menu = false,
     },
     formatting = {
       fields = { "kind", "abbr", "menu" },
       max_width = 0,
-      kind_icons = {
-        Class = " ",
-        Color = " ",
-        Constant = "ﲀ ",
-        Constructor = " ",
-        Enum = "練",
-        EnumMember = " ",
-        Event = " ",
-        Field = " ",
-        File = "",
-        Folder = " ",
-        Function = " ",
-        Interface = "ﰮ ",
-        Keyword = " ",
-        Method = " ",
-        Module = " ",
-        Operator = "",
-        Property = " ",
-        Reference = " ",
-        Snippet = " ",
-        Struct = " ",
-        Text = " ",
-        TypeParameter = " ",
-        Unit = "塞",
-        Value = " ",
-        Variable = " ",
-      },
+      kind_icons = rvim.icons.kind,
       source_names = {
         nvim_lsp = "(LSP)",
         emoji = "(Emoji)",
@@ -209,6 +157,8 @@ M.config = function()
         luasnip = "(Snippet)",
         buffer = "(Buffer)",
         tmux = "(TMUX)",
+        copilot = "(Copilot)",
+        treesitter = "(TreeSitter)",
       },
       duplicates = {
         buffer = 1,
@@ -220,12 +170,44 @@ M.config = function()
       format = function(entry, vim_item)
         local max_width = rvim.builtin.cmp.formatting.max_width
         if max_width ~= 0 and #vim_item.abbr > max_width then
-          vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. "…"
+          vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. rvim.icons.ui.Ellipsis
         end
-        vim_item.kind = rvim.builtin.cmp.formatting.kind_icons[vim_item.kind]
+        if rvim.use_icons then
+          vim_item.kind = rvim.builtin.cmp.formatting.kind_icons[vim_item.kind]
+
+          -- TODO: not sure why I can't put this anywhere else
+          vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+          if entry.source.name == "copilot" then
+            vim_item.kind = rvim.icons.git.Octoface
+            vim_item.kind_hl_group = "CmpItemKindCopilot"
+          end
+
+          vim.api.nvim_set_hl(0, "CmpItemKindTabnine", { fg = "#CA42F0" })
+          if entry.source.name == "cmp_tabnine" then
+            vim_item.kind = rvim.icons.misc.Robot
+            vim_item.kind_hl_group = "CmpItemKindTabnine"
+          end
+
+          vim.api.nvim_set_hl(0, "CmpItemKindCrate", { fg = "#F64D00" })
+          if entry.source.name == "crates" then
+            vim_item.kind = rvim.icons.misc.Package
+            vim_item.kind_hl_group = "CmpItemKindCrate"
+          end
+
+          if entry.source.name == "lab.quick_data" then
+            vim_item.kind = rvim.icons.misc.CircuitBoard
+            vim_item.kind_hl_group = "CmpItemKindConstant"
+          end
+
+          vim.api.nvim_set_hl(0, "CmpItemKindEmoji", { fg = "#FDE030" })
+          if entry.source.name == "emoji" then
+            vim_item.kind = rvim.icons.misc.Smiley
+            vim_item.kind_hl_group = "CmpItemKindEmoji"
+          end
+        end
         vim_item.menu = rvim.builtin.cmp.formatting.source_names[entry.source.name]
         vim_item.dup = rvim.builtin.cmp.formatting.duplicates[entry.source.name]
-          or rvim.builtin.cmp.formatting.duplicates_default
+            or rvim.builtin.cmp.formatting.duplicates_default
         return vim_item
       end,
     },
@@ -239,6 +221,36 @@ M.config = function()
       -- documentation = cmp.config.window.bordered(),
     },
     sources = {
+      {
+        name = "copilot",
+        -- keyword_length = 0,
+        max_item_count = 3,
+        trigger_characters = {
+          {
+            ".",
+            ":",
+            "(",
+            "'",
+            '"',
+            "[",
+            ",",
+            "#",
+            "*",
+            "@",
+            "|",
+            "=",
+            "-",
+            "{",
+            "/",
+            "\\",
+            "+",
+            "?",
+            " ",
+            -- "\t",
+            -- "\n",
+          },
+        },
+      },
       { name = "nvim_lsp" },
       { name = "path" },
       { name = "luasnip" },
@@ -251,23 +263,33 @@ M.config = function()
       { name = "crates" },
       { name = "tmux" },
     },
-    mapping =  {
-      ["<C-k>"] = cmp.mapping.select_prev_item(),
-      ["<C-j>"] = cmp.mapping.select_next_item(),
+    mapping = {
+      ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
+      ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+      ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
+      ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
       ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      -- TODO: potentially fix emmet nonsense
+      ["<C-y>"] = cmp.mapping {
+        i = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false },
+        c = function(fallback)
+          if cmp.visible() then
+            cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
+          else
+            fallback()
+          end
+        end,
+      },
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
-        elseif luasnip.expandable() then
-          luasnip.expand()
-        elseif jumpable() then
+        elseif luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
+        elseif jumpable(1) then
           luasnip.jump(1)
-        elseif check_backspace() then
+        elseif has_words_before() then
+          -- cmp.complete()
           fallback()
-        elseif is_emmet_active() then
-          return vim.fn["cmp#complete"]()
         else
           fallback()
         end
@@ -278,7 +300,7 @@ M.config = function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif jumpable(-1) then
+        elseif luasnip.jumpable(-1) then
           luasnip.jump(-1)
         else
           fallback()
@@ -291,28 +313,44 @@ M.config = function()
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.abort(),
       ["<CR>"] = cmp.mapping(function(fallback)
-        if cmp.visible() and cmp.confirm(rvim.builtin.cmp.confirm_opts) then
-          if jumpable() then
-            luasnip.jump(1)
+        if cmp.visible() then
+          local confirm_opts = vim.deepcopy(rvim.builtin.cmp.confirm_opts) -- avoid mutating the original opts below
+          local is_insert_mode = function()
+            return vim.api.nvim_get_mode().mode:sub(1, 1) == "i"
           end
-          return
+          if is_insert_mode() then -- prevent overwriting brackets
+            confirm_opts.behavior = cmp.ConfirmBehavior.Insert
+          end
+          if cmp.confirm(confirm_opts) then
+            return
+          end
         end
 
-        if jumpable() then
-          if not luasnip.jump(1) then
-            fallback()
-          end
-        else
-          fallback()
+        if jumpable(1) and luasnip.jump(1) then
+          return
         end
+        fallback()
       end),
     },
   }
 end
 
 function M.setup()
-  require("cmp").setup(rvim.builtin.cmp)
+  local cmp = require "cmp"
+  cmp.setup(rvim.builtin.cmp)
+
+  cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "path" },
+    },
+  })
+  cmp.setup.cmdline({ "/", "?" }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "buffer" },
+    }
+  })
 end
 
 return M
-

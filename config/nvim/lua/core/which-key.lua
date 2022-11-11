@@ -7,8 +7,8 @@ M.config = function()
     on_config_done = nil,
     setup = {
       plugins = {
-        marks = true, -- shows a list of your marks on ' and `
-        registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+        marks = false, -- shows a list of your marks on ' and `
+        registers = false, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
         -- the presets plugin, adds help for a bunch of default keybindings in Neovim
         -- No actual key bindings are created
         presets = {
@@ -16,9 +16,9 @@ M.config = function()
           motions = false, -- adds help for motions
           text_objects = false, -- help for text objects triggered after entering an operator
           windows = false, -- default bindings on <c-w>
-          nav = true, -- misc bindings to work with windows
-          z = true, -- bindings for folds, spelling and others prefixed with z
-          g = true, -- bindings for prefixed with g
+          nav = false, -- misc bindings to work with windows
+          z = false, -- bindings for folds, spelling and others prefixed with z
+          g = false, -- bindings for prefixed with g
         },
         spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
       },
@@ -76,14 +76,14 @@ M.config = function()
     -- NOTE: Prefer using : over <cmd> as the latter avoids going back in normal-mode.
     -- see https://neovim.io/doc/user/map.html#:map-cmd
     vmappings = {
-      ["/"] = { "<ESC><CMD>lua require('Comment.api').toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+      ["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
     },
     mappings = {
       ["w"] = { "<cmd>w!<CR>", "Save" },
       ["q"] = { "<cmd>lua require('utils.functions').smart_quit()<CR>", "Quit" },
-      ["/"] = { "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", "Comment" },
+      ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
       ["c"] = { ":set hlsearch! hlsearch?<CR>", "Clear highlight" },
-      ["f"] = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+      ["f"] = { require("lsp.utils").format, "Format" },
       ["o"] = { "<cmd>Telescope lsp_document_symbols<CR>", "Document Symbol" },
       ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
       b = {
@@ -91,6 +91,7 @@ M.config = function()
         j = { "<cmd>BufferLinePick<cr>", "Jump" },
         f = { "<cmd>Telescope buffers<cr>", "Find" },
         b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+        n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
         -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" },
         e = {
           "<cmd>BufferLinePickClose<cr>",
@@ -134,8 +135,8 @@ M.config = function()
       },
       g = {
         name = "Git",
-        j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-        k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
+        j = { "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk" },
+        k = { "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", "Prev Hunk" },
         l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
         p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
         r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
@@ -171,7 +172,7 @@ M.config = function()
         },
         f = { require("lsp.utils").format, "Format" },
         i = { "<cmd>LspInfo<cr>", "Info" },
-        I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+        I = { "<cmd>Mason<cr>", "Mason Info" },
         j = {
           vim.diagnostic.goto_next,
           "Next Diagnostic",
@@ -181,12 +182,6 @@ M.config = function()
           "Prev Diagnostic",
         },
         l = { vim.lsp.codelens.run, "CodeLens Action" },
-        p = {
-          name = "Peek",
-          d = { "<cmd>lua require('lsp.peek').Peek('definition')<cr>", "Definition" },
-          t = { "<cmd>lua require('lsp.peek').Peek('typeDefinition')<cr>", "Type Definition" },
-          i = { "<cmd>lua require('lsp.peek').Peek('implementation')<cr>", "Implementation" },
-        },
         q = { vim.diagnostic.setloclist, "Quickfix" },
         r = { vim.lsp.buf.rename, "Rename" },
         s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
@@ -194,7 +189,7 @@ M.config = function()
           "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
           "Workspace Symbols",
         },
-        e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix"}
+        e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" }
       },
       L = {
         name = "+NeoVim",
@@ -222,6 +217,7 @@ M.config = function()
           },
           P = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "Open the Packer logfile" },
         },
+        n = { "<cmd>Telescope notify<cr>", "View Notifications" },
         r = { "<cmd>lua require('utils').reload_lv_config()<cr>", "Reload configurations" },
       },
       ["p"] = { "<cmd>Telescope live_grep<cr>", "Text" },
@@ -231,6 +227,7 @@ M.config = function()
         c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
         f = { require("core.telescope").find_project_files, "Find File" },
         h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+        H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
         M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
         R = { "<cmd>Telescope registers<cr>", "Registers" },
@@ -238,7 +235,7 @@ M.config = function()
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
         C = { "<cmd>Telescope commands<cr>", "Commands" },
         p = {
-          "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+          "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
           "Colorscheme with Preview",
         },
         g = {

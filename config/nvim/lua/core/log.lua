@@ -11,25 +11,46 @@ vim.tbl_add_reverse_lookup(Log.levels)
 
 local notify_opts = {}
 
+function Log:set_level(level)
+  local logger_ok, _ = xpcall(function()
+    local log_level = Log.levels[level:upper()]
+    local structlog = require "structlog"
+    if structlog then
+      local logger = structlog.get_logger "rvim"
+      for _, s in ipairs(logger.sinks) do
+        s.level = log_level
+      end
+    end
+  end, debug.traceback)
+  if not logger_ok then
+    Log:debug("Unable to set logger's level: " .. debug.traceback())
+  end
+
+  local packer_ok, _ = xpcall(function()
+    package.loaded["packer.log"] = nil
+    require("packer.log").new { level = rvim.log.level }
+  end, debug.traceback)
+  if not packer_ok then
+    Log:debug("Unable to set packer's log level: " .. debug.traceback())
+  end
+end
+
 function Log:init()
   local status_ok, structlog = pcall(require, "structlog")
   if not status_ok then
     return nil
   end
 
-  package.loaded["packer.log"] = nil
-  require("packer.log").new { level = rvim.log.level }
-
   local log_level = Log.levels[(rvim.log.level):upper() or "WARN"]
   local rvim_log = {
     rvim = {
       sinks = {
         structlog.sinks.Console(log_level, {
-          async = false,
+          async = true,
           processors = {
             structlog.processors.Namer(),
             structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
-            structlog.processors.Timestamper "%H:%M:%S",
+            structlog.processors.Timestamper "%F %H%:%M:%S",
           },
           formatter = structlog.formatters.FormatColorizer( --
             "%s [%-5s] %s: %-30s",

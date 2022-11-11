@@ -6,38 +6,25 @@ function M.config()
     active = true,
     on_config_done = nil,
     setup = {
-      disable_netrw = true,
-      hijack_netrw = true,
-      open_on_setup = false,
-      open_on_setup_file = false,
-      sort_by = "name",
-      ignore_buffer_on_setup = false,
       ignore_ft_on_setup = {
         "startify",
         "dashboard",
         "alpha",
       },
       auto_reload_on_write = true,
-      hijack_unnamed_buffer_when_opening = false,
       hijack_directories = {
-        enable = true,
-        auto_open = true,
-      },
-      update_to_buf_dir = {
         enable = false,
         auto_open = true,
       },
-      open_on_tab = false,
-      hijack_cursor = false,
-      update_cwd = false,
+      update_cwd = true,
       diagnostics = {
         enable = true,
         show_on_dirs = false,
         icons = {
-          hint = "",
-          info = "",
-          warning = "",
-          error = "",
+          hint = rvim.icons.diagnostics.BoldHint,
+          info = rvim.icons.diagnostics.BoldInformation,
+          warning = rvim.icons.diagnostics.BoldWarning,
+          error = rvim.icons.diagnostics.BoldError,
         },
       },
       update_focused_file = {
@@ -56,10 +43,8 @@ function M.config()
       },
       view = {
         width = 30,
-        height = 30,
         hide_root_folder = false,
         side = "left",
-        preserve_window_proportions = false,
         mappings = {
           custom_only = false,
           list = {},
@@ -71,9 +56,10 @@ function M.config()
         indent_markers = {
           enable = false,
           icons = {
-            corner = "└ ",
-            edge = "│ ",
-            none = "  ",
+            corner = "└",
+            edge = "│",
+            item = "│",
+            none = " ",
           },
         },
         icons = {
@@ -85,27 +71,28 @@ function M.config()
             folder_arrow = true
           },
           glyphs = {
-            default = "",
-            symlink = "",
+            default = rvim.icons.ui.Text,
+            symlink = rvim.icons.ui.FileSymlink,
             git = {
-              unstaged = "",
-              staged = "S",
-              unmerged = "",
-              renamed = "➜",
-              deleted = "",
-              untracked = "U",
-              ignored = "◌",
+              deleted = rvim.icons.git.FileDeleted,
+              ignored = rvim.icons.git.FileIgnored,
+              renamed = rvim.icons.git.FileRenamed,
+              staged = rvim.icons.git.FileStaged,
+              unmerged = rvim.icons.git.FileUnmerged,
+              unstaged = rvim.icons.git.FileUnstaged,
+              untracked = rvim.icons.git.FileUntracked,
             },
             folder = {
-              default = "",
-              open = "",
-              empty = "",
-              empty_open = "",
-              symlink = "",
+              default = rvim.icons.ui.Folder,
+              empty = rvim.icons.ui.EmptyFolder,
+              empty_open = rvim.icons.ui.EmptyFolderOpen,
+              open = rvim.icons.ui.FolderOpen,
+              symlink = rvim.icons.ui.FolderSymlink,
             },
           },
         },
         highlight_git = true,
+        group_empty = false,
         root_folder_modifier = ":t",
       },
       filters = {
@@ -168,6 +155,7 @@ function M.setup()
   local function telescope_find_files(_)
     require("core.nvimtree").start_telescope "find_files"
   end
+
   local function telescope_live_grep(_)
     require("core.nvimtree").start_telescope "live_grep"
   end
@@ -179,7 +167,7 @@ function M.setup()
       { key = "h", action = "close_node" },
       { key = "s", action = "vsplit" },
       { key = "t", action = "tabnew" },
-      { key = "C", action =  "cd" },
+      { key = "C", action = "cd" },
       { key = "gtf", action = "telescope_find_files", action_cb = telescope_find_files },
       { key = "gtg", action = "telescope_live_grep", action_cb = telescope_live_grep },
     }

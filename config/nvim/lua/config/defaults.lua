@@ -5,9 +5,12 @@ return {
   format_on_save = {
     pattern = "*",
     timeout = 1000,
-    filter = require("lsp.handlers").format_filter,
+    filter = require("lsp.utils").format_filter,
   },
   keys = {},
+
+  use_icons = true,
+  icons = require "icons",
 
   builtin = {},
 

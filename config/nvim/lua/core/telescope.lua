@@ -1,5 +1,54 @@
 local M = {}
 
+local function get_pickers(actions)
+  return {
+    find_files = {
+      hidden = true,
+      previewer = false,
+    },
+    live_grep = {
+      --@usage don't include the filename in the search results
+      only_sort_text = true,
+    },
+    grep_string = {
+      only_sort_text = true,
+    },
+    buffers = {
+      previewer = false,
+      initial_mode = "normal",
+      mappings = {
+        i = {
+          ["<C-d>"] = actions.delete_buffer,
+        },
+        n = {
+          ["dd"] = actions.delete_buffer,
+        },
+      },
+    },
+    planets = {
+      show_pluto = true,
+      show_moon = true,
+    },
+    git_files = {
+      hidden = true,
+      previewer = false,
+      show_untracked = true,
+    },
+    lsp_references = {
+      initial_mode = "normal",
+    },
+    lsp_definitions = {
+      initial_mode = "normal",
+    },
+    lsp_declarations = {
+      initial_mode = "normal",
+    },
+    lsp_implementations = {
+      initial_mode = "normal",
+    },
+  }
+end
+
 function M.config()
   -- Define this minimal config so that it's available if telescope is not yet available.
   rvim.builtin.telescope = {
@@ -49,38 +98,32 @@ function M.config()
         "--glob=!.git/",
       },
       file_ignore_patterns = {},
-      path_display = { shorten = 5 },
+      path_display = { "smart" },
       winblend = 0,
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-      pickers = {
-        find_files = {
-          find_command = { "fd", "--type=file", "--hidden", "--smart-case" },
+      mappings = {
+        i = {
+          ["<C-j>"] = actions.move_selection_next,
+          ["<C-k>"] = actions.move_selection_previous,
+          ["<C-c>"] = actions.close,
+          ["<C-n>"] = actions.cycle_history_next,
+          ["<C-p>"] = actions.cycle_history_prev,
+          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+          ["<CR>"] = actions.select_default,
+          ["<C-d>"] = require("telescope.actions").delete_buffer,
         },
-        live_grep = {
-          --@usage don't include the filename in the search results
-          only_sort_text = true,
+        n = {
+          ["<C-n>"] = actions.move_selection_next,
+          ["<C-p>"] = actions.move_selection_previous,
+          ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
         },
       },
-    mappings = {
-      i = {
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
-        ["<C-c>"] = actions.close,
-        ["<C-n>"] = actions.cycle_history_next,
-        ["<C-p>"] = actions.cycle_history_prev,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-        ["<CR>"] = actions.select_default,
-      },
-      n = {
-        ["<C-n>"] = actions.move_selection_next,
-        ["<C-p>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
-      },
+      pickers = get_pickers(actions),
     },
-    },
+    pickers = get_pickers(actions),
     extensions = {
       fzf = {
         fuzzy = true,

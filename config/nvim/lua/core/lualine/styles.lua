@@ -9,8 +9,14 @@ styles.default = {
   style = "rvim",
   options = {
     icons_enabled = true,
-    component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
+    component_separators = {
+      left = rvim.icons.ui.DividerRight,
+      right = rvim.icons.ui.DividerLeft,
+    },
+    section_separators = {
+      left = rvim.icons.ui.BoldDividerRight,
+      right = rvim.icons.ui.BoldDividerLeft,
+    },
     disabled_filetypes = { "dashboard", "NvimTree", "Outline" },
   },
   sections = {
@@ -53,7 +59,7 @@ styles.default = {
     lualine_c = nil,
     lualine_x = nil,
     lualine_y = nil,
-    lualine_z = {'tabs'}
+    lualine_z = { 'tabs' }
   },
   extensions = { "nvim-tree" },
 }
