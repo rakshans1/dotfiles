@@ -70,7 +70,7 @@ return {
   buffer_mappings = {
     normal_mode = {
       ["K"] = { "vim.lsp.buf.hover", "Show hover" },
-      ["gd"] = { "vim.lsp.bug.definition", "Goto Definition" },
+      ["gd"] = { "vim.lsp.buf.definition", "Goto Definition" },
       ["gD"] = { "<cmd>vsplit | vim.lsp.buf.definition<CR>", "Goto declaration" },
       ["gr"] = { vim.lsp.buf.references, "Goto references" },
       ["gi"] = { vim.lsp.buf.implementation, "Goto Implementation" },

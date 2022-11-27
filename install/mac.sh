@@ -13,6 +13,8 @@ packages=(
   git-delta
   glow
   watch
+  stats
+  vivid
 )
 
 brew install "${packages[@]}"
@@ -27,7 +29,6 @@ casks=(
   dbeaver-community
   postman
   vlc
-  mark-text
 )
 
 brew install --cask "${casks[@]}"

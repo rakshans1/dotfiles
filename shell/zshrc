@@ -62,7 +62,7 @@ if [ "$(uname 2> /dev/null)" = "Linux" ]; then
   source /usr/share/autojump/autojump.sh
 fi
 if [ "$(uname 2> /dev/null)" = "Darwin" ]; then
-  source /usr/local/share/autojump/autojump.zsh
+  #source /usr/local/share/autojump/autojump.zsh
 fi
 # source $HOME/.nvm/nvm.sh
 if command -v pyenv 1>/dev/null 2>&1; then
