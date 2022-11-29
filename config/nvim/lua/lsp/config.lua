@@ -105,7 +105,9 @@ return {
     setup = {
       ensure_installed = {},
       automatic_installation = {
-        exclude = {},
+        exclude = {
+          "rome"
+        },
       },
     },
   },

@@ -210,15 +210,6 @@ function ds() {
   [ -n "$cid" ] && docker stop "$cid"
 }
 
-# Autojump with fuzzy search
-function j() {
-    if [[ "$#" -ne 0 ]]; then
-        cd $(autojump $@)
-        return
-    fi
-    cd "$(autojump -s | sort -k1gr | awk '$1 ~ /[0-9]:/ && $2 ~ /^\// { for (i=2; i<=NF; i++) { print $(i) } }' |  fzf --height 40% --reverse --inline-info)" 
-}
-
 # c - browse chrome history
 function c() {
   local cols sep google_history open
