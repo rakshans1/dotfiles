@@ -1,0 +1,3 @@
+nix build --no-link .#homeConfigurations.mbp.activationPackage
+"$(nix path-info .#homeConfigurations.mbp.activationPackage)"/activate
+home-manager switch --flake ".#mbp"

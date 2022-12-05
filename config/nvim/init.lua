@@ -11,10 +11,10 @@ vim.g.base16colorspace = 256
 vim.go.t_Co = "256"
 
 if vim.fn.has("termguicolors") then
-    vim.go.t_8f = "[[38;2;%lu;%lu;%lum"
-    vim.go.t_8b = "[[48;2;%lu;%lu;%lum"
-    vim.go.t_SI = "[[5 q" -- insert mode vertical line
-    vim.go.t_EI = "[[1 q" -- command mode block
+  vim.go.t_8f = "[[38;2;%lu;%lu;%lum"
+  vim.go.t_8b = "[[48;2;%lu;%lu;%lum"
+  vim.go.t_SI = "[[5 q" -- insert mode vertical line
+  vim.go.t_EI = "[[1 q" -- command mode block
 end
 
 local commands = require "core.commands"
@@ -26,7 +26,7 @@ require("lsp").setup()
 local formatters = require "lsp.null-ls.formatters"
 formatters.setup {
   {
-    exe = "prettierd",
+    exe = "prettier",
     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
     filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
   },

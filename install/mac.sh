@@ -1,20 +1,5 @@
 packages=(
-  fd
-  tmux
-  ripgrep
-  yarn
-  zsh
-  htop
-  bat
-  autojump
-  jq
-  neovim
-  wget
-  git-delta
-  glow
-  watch
   stats
-  vivid
 )
 
 brew install "${packages[@]}"

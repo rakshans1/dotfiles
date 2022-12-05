@@ -1,19 +1,43 @@
 local skipped_servers = {
   "angularls",
+  "ansiblels",
   "ccls",
+  "csharp_ls",
   "cssmodules_ls",
   "denols",
+  "ember",
   "emmet_ls",
   "eslint",
   "eslintls",
-  "grammarly",
+  "glint",
+  "golangci_lint_ls",
+  "gradle_ls",
   "graphql",
+  "jedi_language_server",
+  "ltex",
+  "ocamlls",
+  "phpactor",
+  "psalm",
   "pylsp",
   "quick_lint_js",
+  "reason_ls",
+  "rome",
+  "ruby_ls",
+  "scry",
+  "solang",
+  "solc",
+  "solidity_ls",
+  "sorbet",
+  "sourcekit",
+  "sourcery",
+  "spectral",
+  "sqlls",
+  "sqls",
   "stylelint_lsp",
-  "tailwindcss",
-  "elixir-ls",
-  "rust_analyzer"
+  "svlangserver",
+  "tflint",
+  "verible",
+  "vuels",
 }
 
 local skipped_filetypes = { "markdown", "rst", "plaintext" }
@@ -105,7 +129,9 @@ return {
     setup = {
       ensure_installed = {},
       automatic_installation = {
-        exclude = {},
+        exclude = {
+          "rome"
+        },
       },
     },
   },
