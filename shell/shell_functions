@@ -258,3 +258,34 @@ function curlsize() {
 function audioloop() {
   arecord -r 192000 -f s16_le --buffer-time=1 - | aplay --buffer-time=1 -
 }
+
+function nix-profile() {
+  local profile
+  if [[ $(uname) == "Darwin" ]] && [[ $(uname -m) == 'arm64' ]]
+  then
+    profile="mbp"
+  elif [[ $(uname) == "Darwin" ]]
+  then
+    profile="mbpi"
+  elif [[ $(uname) == "Linux" ]]
+  then
+    profile="linux"
+  fi
+
+  echo $profile
+}
+
+function nix-build() {
+  local profile=$(nix-profile)
+  nix build --no-link .#homeConfigurations.$profile.activationPackage
+}
+
+function nix-activate() {
+  local profile=$(nix-profile)
+  "$(nix path-info .#homeConfigurations.$profile.activationPackage)"/activate
+}
+
+function nix-switch() {
+  local profile=$(nix-profile)
+  home-manager switch --flake ".#$profile"
+}

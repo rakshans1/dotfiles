@@ -44,8 +44,6 @@ apt_packages+=(
   checkinstall
   libssl-dev
   curl
-  git
-  autojump
   imagemagick
   vim
   vsftpd
@@ -56,84 +54,15 @@ apt_packages+=(
   dconf-editor
 )
 
-# https://github.com/oguzhaninan/Stacer
-# add_ppa ppa:oguzhaninan/stacer
-# apt_packages+=(stacer)
-
 # https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 add_ppa ppa:papirus/papirus
 apt_packages+=(papirus-icon-theme)
-
-# https://www.digitalocean.com/community/tutorials/how-to-install-java-with-apt-get-on-ubuntu-16-04
-# add_ppa ppa:webupd8team/java
-# apt_packages+=(oracle-java8-installer)
 
 # https://www.ubuntuupdates.org/ppa/google_chrome
 apt_keys+=(https://dl-ssl.google.com/linux/linux_signing_key.pub)
 apt_source_files+=(google-chrome)
 apt_source_texts+=("deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main")
 apt_packages+=(google-chrome-stable)
-
-
-# https://yarnpkg.com/en/docs/install
-#apt_keys+=(https://dl.yarnpkg.com/debian/pubkey.gpg)
-#apt_source_files+=(yarn)
-#apt_source_texts+=("deb https://dl.yarnpkg.com/debian/ stable main")
-#apt_packages+=(yarn)
-
-# https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
-# apt_keys+=(https://www.virtualbox.org/download/oracle_vbox_2016.asc)
-# apt_source_files+=(virtualbox)
-# apt_source_texts+=("deb http://download.virtualbox.org/virtualbox/debian $release_name contrib")
-# apt_packages+=(virtualbox-5.1)
-
-
-# https://github.com/sharkdp/bat
-deb_installed+=(bat)
-batversion="$(curl -s "https://api.github.com/repos/sharkdp/bat/releases/latest" | jq -r .tag_name | sed 's/v//')" 
-deb_sources+=('https://github.com/sharkdp/bat/releases/latest/download/bat_'$batversion'_amd64.deb')
-
-# https://github.com/sharkdp/fd
-deb_installed+=(fd)
-fdversion="$(curl -s "https://api.github.com/repos/sharkdp/fd/releases/latest" | jq -r .tag_name | sed 's/v//')" 
-deb_sources+=('https://github.com/sharkdp/fd/releases/latest/download/fd_'$fdversion'_amd64.deb')
-
-
-# https://github.com/sharkdp/pastel
-deb_installed+=(pastel)
-pastelversion="$(curl -s "https://api.github.com/repos/sharkdp/pastel/releases/latest" | jq -r .tag_name | sed 's/v//')" 
-deb_sources+=('https://github.com/sharkdp/pastel/releases/latest/download/pastel_'$pastelversion'_amd64.deb')
-
-# https://github.com/sharkdp/vivid
-deb_installed+=(vivid)
-vividversion="$(curl -s "https://api.github.com/repos/sharkdp/vivid/releases/latest" | jq -r .tag_name | sed 's/v//')" 
-deb_sources+=('https://github.com/sharkdp/vivid/releases/latest/download/vivid_'$vividversion'_amd64.deb')
-
-# https://github.com/BurntSushi/ripgrep
-deb_installed+=(ripgrep)
-rgversion="$(curl -s "https://api.github.com/repos/BurntSushi/ripgrep/releases/latest" | jq -r .tag_name)"
-deb_sources+=('https://github.com/BurntSushi/ripgrep/releases/download/'$rgversion'/ripgrep_'$rgversion'_amd64.deb')
-
-# https://github.com/dandavison/delta
-deb_installed+=(delta)
-deltaversion="$(curl -s "https://api.github.com/repos/dandavison/delta/releases/latest" | jq -r .tag_name)"
-deb_sources+=('https://github.com/dandavison/delta/releases/download/'$deltaversion'/git-delta_'$deltaversion'_amd64.deb')
-
-# https://github.com/muesli/duf
-deb_installed+=(duf)
-dufversion="$(curl -s "https://api.github.com/repos/muesli/duf/releases/latest" | jq -r .tag_name | sed 's/v//')"
-deb_sources+=('https://github.com/muesli/duf/releases/latest/download/duf_'$dufversion'_linux_amd64.deb')
-
-# https://github.com/charmbracelet/glow
-deb_installed+=(glow)
-glowversion="$(curl -s "https://api.github.com/repos/charmbracelet/glow/releases/latest" | jq -r .tag_name | sed 's/v//')"
-deb_sources+=('https://github.com/charmbracelet/glow/releases/latest/download/duf_'$glowversion'_linux_amd64.deb')
-
-# https://github.com/ClementTsang/bottom
-deb_installed+=(bottom)
-bottomversion="$(curl -s "https://api.github.com/repos/ClementTsang/bottom/releases/latest" | jq -r .tag_name)"
-deb_sources+=('https://github.com/ClementTsang/bottom/releases/latest/download/bottom_'$bottomversion'_amd64.deb')
-
 
 ####################
 # ACTUALLY DO THINGS

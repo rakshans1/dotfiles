@@ -42,6 +42,9 @@
     yarn
     git
 
+    glow
+    duf
+
     nixpkgs-fmt
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils

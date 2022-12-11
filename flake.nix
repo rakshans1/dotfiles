@@ -17,6 +17,11 @@
   outputs =  inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, ... }: {
 
     homeConfigurations = {
+      linux = home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./nixpkgs/home-manager/linux.nix ];
+        extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
+      };
       mbp = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
         modules = [ ./nixpkgs/home-manager/mac.nix ];
