@@ -1,0 +1,16 @@
+#!/bin/sh
+export GUM_CHOOSE_CURSOR_FOREGROUND="29"
+export GUM_CHOOSE_ITEM_FOREGROUND="255"
+export GUM_CHOOSE_SELECTED_FOREGROUND="23"
+export GUM_WRITE_CURSOR_FOREGROUND="255"
+export GUM_CONFIRM_SELECTED_BACKGROUND="23"
+
+TYPE=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+SCOPE=$(gum input --placeholder "scope")
+
+test -n "$SCOPE" && SCOPE="($SCOPE)"
+
+SUMMARY=$(gum input --value "$TYPE$SCOPE: " --placeholder "Summary of this change")
+DESCRIPTION=$(gum write --placeholder "Details of this change (CTRL+D to finish)")
+
+gum confirm "Commit changes?" && git commit -m "$SUMMARY" -m "$DESCRIPTION"
