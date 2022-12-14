@@ -5,6 +5,9 @@ local function get_pickers(actions)
     find_files = {
       hidden = true,
       previewer = false,
+      path_display = {
+        truncate = 1
+      }
     },
     live_grep = {
       --@usage don't include the filename in the search results

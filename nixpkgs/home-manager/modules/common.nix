@@ -23,7 +23,7 @@
     tealdeer
     zoxide
     gh
-    ffmpeg_5
+    ffmpeg_5-full
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     neovim
@@ -46,6 +46,8 @@
     duf
 
     nixpkgs-fmt
+
+    awscli
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
   ] ++ lib.optionals stdenv.isLinux [
