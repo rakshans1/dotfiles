@@ -31,6 +31,10 @@ local core_plugins = {
     disable = not rvim.builtin.telescope.active,
   },
 
+  {
+    "github/copilot.vim"
+  },
+
   -- Install nvim-cmp, and buffer source as a dependency
   {
     "hrsh7th/nvim-cmp",

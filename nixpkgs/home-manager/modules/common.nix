@@ -34,6 +34,7 @@
     nodejs-18_x
     nodePackages.eslint_d
     nodePackages.prettier
+    nodePackages.serve
 
     pkgsUnstable.youtube-dl
     speedtest-cli
@@ -43,13 +44,15 @@
     git
 
     glow
+    gum
+    vhs
+
     duf
 
     nixpkgs-fmt
 
     awscli2
 
-    gum
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
   ] ++ lib.optionals stdenv.isLinux [
