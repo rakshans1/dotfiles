@@ -45,6 +45,12 @@ dir_path=(
   "$HOME/.poetry/bin"
 )
 
+# Nix
+if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+# End Nix
+
 [ -f ~/.asdf/asdf.sh ] && source ~/.asdf/asdf.sh
 
 for dir in ${(k)dir_path[@]}
@@ -87,11 +93,6 @@ export LS_COLORS="$(vivid generate ayu)"
 
 export MANPAGER='sh -c "col -bx | bat --language=man --style=grid --color=always --decorations=always --theme='"'Monokai Extended Light'"'"'
 
- # Nix
- if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-    . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
- fi
- # End Nix
 
 # Load the shell dotfiles
 for file in $HOME/dotfiles/shell/{shell_aliases,shell_functions}; do

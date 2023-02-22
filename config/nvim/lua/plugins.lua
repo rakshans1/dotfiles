@@ -31,8 +31,25 @@ local core_plugins = {
     disable = not rvim.builtin.telescope.active,
   },
 
-  {
-    "github/copilot.vim"
+  { "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup {
+          plugin_manager_path = get_runtime_dir() .. "/site/pack/packer",
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        }
+      end, 100)
+    end,
+  },
+
+  { "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua", "nvim-cmp" },
+    config = function()
+      require("copilot_cmp").setup()
+    end
   },
 
   -- Install nvim-cmp, and buffer source as a dependency
