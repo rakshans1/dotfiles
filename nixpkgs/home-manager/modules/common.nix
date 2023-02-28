@@ -36,7 +36,7 @@
     nodePackages.prettier
     nodePackages.serve
 
-    pkgsUnstable.youtube-dl
+    yt-dlp
     speedtest-cli
 
     tokei
