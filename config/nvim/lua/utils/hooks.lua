@@ -2,6 +2,7 @@ local M = {}
 
 local Log = require "core.log"
 local in_headless = #vim.api.nvim_list_uis() == 0
+local plugin_loader = require "plugin-loader"
 
 function M.run_pre_update()
   Log:debug "Starting pre-update hook"
@@ -13,12 +14,14 @@ end
 
 function M.run_on_packer_complete()
   Log:debug "Packer operation complete"
-  vim.api.nvim_exec_autocmds("User", {pattern = "PackerComplete"})
-
-  vim.g.colors_name = rvim.colorscheme
-  pcall(vim.cmd, "colorscheme " .. rvim.colorscheme)
+  vim.api.nvim_exec_autocmds("User", { pattern = "PackerComplete" })
 
   if M._reload_triggered then
+    if not in_headless then
+      vim.schedule(function()
+        pcall(vim.cmd.colorscheme, rvim.colorscheme)
+      end)
+    end
     Log:info "Reloaded configuration"
     M._reload_triggered = nil
   end
@@ -35,10 +38,7 @@ end
 ---It also forces regenerating any template ftplugin files
 ---Tip: Useful for clearing any outdated settings
 function M.reset_cache()
-  local impatient = _G.__luacache
-  if impatient then
-    impatient.clear_cache()
-  end
+  plugin_loader.recompile()
   local rvim_modules = {}
   for module, _ in pairs(package.loaded) do
     if module:match "core" or module:match "lsp" then
@@ -55,7 +55,7 @@ function M.run_post_update()
   M.reset_cache()
 
   Log:debug "Syncing core plugins"
-  require("plugin-loader").sync_core_plugins()
+  plugin_loader.sync_core_plugins()
 
   if not in_headless then
     vim.schedule(function()

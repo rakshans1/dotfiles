@@ -217,7 +217,6 @@ M.config = function()
           },
           P = { "<cmd>exe 'edit '.stdpath('cache').'/packer.nvim.log'<cr>", "Open the Packer logfile" },
         },
-        n = { "<cmd>Telescope notify<cr>", "View Notifications" },
         r = { "<cmd>lua require('utils').reload_lv_config()<cr>", "Reload configurations" },
       },
       ["p"] = { "<cmd>Telescope live_grep<cr>", "Text" },

@@ -52,7 +52,7 @@ function Log:init()
             structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
             structlog.processors.Timestamper "%F %H%:%M:%S",
           },
-          formatter = structlog.formatters.FormatColorizer( --
+          formatter = structlog.formatters.FormatColorizer(--
             "%s [%-5s] %s: %-30s",
             { "timestamp", "level", "logger_name", "msg" },
             { level = structlog.formatters.FormatColorizer.color_level() }
@@ -64,7 +64,7 @@ function Log:init()
             structlog.processors.StackWriter({ "line", "file" }, { max_parents = 3, stack_level = 2 }),
             structlog.processors.Timestamper "%H:%M:%S",
           },
-          formatter = structlog.formatters.Format( --
+          formatter = structlog.formatters.Format(--
             "%s [%-5s] %s: %-30s",
             { "timestamp", "level", "logger_name", "msg" }
           ),
@@ -91,7 +91,7 @@ function Log:init()
         vim_log_level = vim_log_level + 1
       end
 
-      logger:log(vim_log_level, msg)
+      self:add_entry(vim_log_level, msg)
     end
   end
 
@@ -124,7 +124,7 @@ function Log:configure_notifications(notif_handle)
       default_namer,
       notify_opts_injecter,
     },
-    formatter = structlog.formatters.Format( --
+    formatter = structlog.formatters.Format(--
       "%s",
       { "msg" },
       { blacklist_all = true }

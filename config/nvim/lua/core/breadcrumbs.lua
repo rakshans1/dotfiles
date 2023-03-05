@@ -70,7 +70,7 @@ M.config = function()
         Variable = icons.Variable .. " ",
       },
       highlight = true,
-      separator = " " .. ">" .. " ",
+      separator = " " .. rvim.icons.ui.ChevronShortRight .. " ",
       depth_limit = 0,
       depth_limit_indicator = "..",
     },
@@ -97,12 +97,8 @@ M.get_filename = function()
   local f = require "utils.functions"
 
   if not f.isempty(filename) then
-    local file_icon, file_icon_color =
-    require("nvim-web-devicons").get_icon_color(filename, extension, { default = true })
+    local file_icon, hl_group = require("nvim-web-devicons").get_icon(filename, extension, { default = true })
 
-    local hl_group = "FileIconColor" .. extension
-
-    vim.api.nvim_set_hl(0, hl_group, { fg = file_icon_color })
     if f.isempty(file_icon) then
       file_icon = ""
     end
@@ -130,8 +126,7 @@ local get_gps = function()
   end
 
   if not require("utils.functions").isempty(gps_location) then
-    -- TODO: replace with chevron
-    return ">" .. " " .. gps_location
+    return "%#NavicSeparator#" .. rvim.icons.ui.ChevronShortRight .. "%* " .. gps_location
   else
     return ""
   end
@@ -184,7 +179,7 @@ M.create_winbar = function()
   vim.api.nvim_create_augroup("_winbar", {})
   if vim.fn.has "nvim-0.8" == 1 then
     vim.api.nvim_create_autocmd(
-      { "CursorMoved", "CursorHold", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost", "TabClosed" },
+      { "CursorHoldI", "CursorHold", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost", "TabClosed" },
       {
         group = "_winbar",
         callback = function()

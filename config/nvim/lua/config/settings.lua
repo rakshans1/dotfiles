@@ -30,7 +30,6 @@ M.load_default_options = function()
     showmode = false,
     showtabline = 2,
     smartcase = true,
-    smartindent = true,
     splitbelow = true,
     splitright = true,
     swapfile = false,
