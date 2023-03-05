@@ -1,13 +1,15 @@
 local Log = require "core.log"
 
 local core_plugins = {
-  { "wbthomason/packer.nvim" },
-  { "neovim/nvim-lspconfig" },
-  { "tamago324/nlsp-settings.nvim" },
+  { "folke/lazy.nvim", tag = "stable" },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "neovim/nvim-lspconfig",
+    lazy = true,
+    dependencies = { "mason-lspconfig.nvim", "nlsp-settings.nvim" },
   },
-  { "williamboman/mason-lspconfig.nvim" },
+  { "williamboman/mason-lspconfig.nvim", lazy = true },
+  { "tamago324/nlsp-settings.nvim", lazy = true },
+  { "jose-elias-alvarez/null-ls.nvim", lazy = true },
   {
     "williamboman/mason.nvim",
     config = function()
@@ -23,13 +25,12 @@ local core_plugins = {
     config = function()
       require("core.telescope").setup()
     end,
-    disable = not rvim.builtin.telescope.active,
+    dependencies = { "telescope-fzf-native.nvim" },
+    lazy = true,
+    cmd = "Telescope",
+    enabled = rvim.builtin.telescope.active,
   },
-  {
-    "nvim-telescope/telescope-fzf-native.nvim",
-    run = "make",
-    disable = not rvim.builtin.telescope.active,
-  },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make", lazy = true, enabled = rvim.builtin.telescope.active },
 
   { "zbirenbaum/copilot.lua",
     cmd = "Copilot",
@@ -60,50 +61,55 @@ local core_plugins = {
         require("core.cmp").setup()
       end
     end,
-    requires = {
-      "L3MON4D3/LuaSnip",
+    event = { "InsertEnter", "CmdlineEnter" },
+    dependencies = {
+      "cmp-nvim-lsp",
+      "cmp_luasnip",
+      "cmp-buffer",
+      "cmp-path",
     },
   },
-  {
-    "rafamadriz/friendly-snippets",
-    disable = not rvim.builtin.luasnip.sources.friendly_snippets,
-  },
+  { "hrsh7th/cmp-nvim-lsp", lazy = true },
+  { "saadparwaiz1/cmp_luasnip", lazy = true },
+  { "hrsh7th/cmp-buffer", lazy = true },
+  { "hrsh7th/cmp-path", lazy = true },
   {
     "L3MON4D3/LuaSnip",
     config = function()
-      require("core.luasnip").setup()
+      local utils = require "utils"
+      local paths = {}
+      if rvim.builtin.luasnip.sources.friendly_snippets then
+        paths[#paths + 1] = utils.join_paths(get_runtime_dir(), "site", "pack", "lazy", "opt", "friendly-snippets")
+      end
+      local user_snippets = utils.join_paths(get_config_dir(), "snippets")
+      if utils.is_directory(user_snippets) then
+        paths[#paths + 1] = user_snippets
+      end
+      require("luasnip.loaders.from_lua").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = paths,
+      }
+      require("luasnip.loaders.from_snipmate").lazy_load()
     end,
     event = "InsertEnter",
     dependencies = {
       "friendly-snippets",
     },
-    enabled = rvim.builtin.luasnip.active,
   },
-  {
-    "hrsh7th/cmp-nvim-lsp",
-    lazy = true
-  },
-  {
-    "hrsh7th/cmp-buffer",
-    lazy = true
-  },
-  {
-    "hrsh7th/cmp-path",
-    lazy = true
-  },
+  { "rafamadriz/friendly-snippets", lazy = true, cond = rvim.builtin.luasnip.sources.friendly_snippets },
   {
     "folke/neodev.nvim",
-    module = "neodev",
+    lazy = true
   },
 
   -- Autopairs
   {
     "windwp/nvim-autopairs",
-    -- event = "InsertEnter",
+    event = "InsertEnter",
     config = function()
       require("core.autopairs").setup()
     end,
-    disable = not rvim.builtin.autopairs.active,
+    enabled = rvim.builtin.autopairs.active,
   },
 
   -- Treesitter
@@ -116,7 +122,7 @@ local core_plugins = {
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-    event = "BufReadPost",
+    event = "VeryLazy",
   },
 
   {
@@ -157,7 +163,7 @@ local core_plugins = {
     config = function()
       require("core.nvimtree").setup()
     end,
-    disable = not rvim.builtin.nvimtree.active,
+    enabled = rvim.builtin.nvimtree.active,
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -165,7 +171,7 @@ local core_plugins = {
       require("core.gitsigns").setup()
     end,
     event = "BufRead",
-    disable = not rvim.builtin.gitsigns.active,
+    enable = rvim.builtin.gitsigns.active,
   },
 
   -- Whichkey
@@ -174,8 +180,8 @@ local core_plugins = {
     config = function()
       require("core.which-key").setup()
     end,
-    event = "BufWinEnter",
-    disable = false,
+    event = "VeryLazy",
+    enabled = rvim.builtin.which_key.active,
   },
 
   -- Comments
@@ -185,7 +191,7 @@ local core_plugins = {
     config = function()
       require("core.comment").setup()
     end,
-    disable = not rvim.builtin.comment.active,
+    enable = rvim.builtin.comment.active,
   },
 
   -- Icons
@@ -195,11 +201,10 @@ local core_plugins = {
   {
     -- "hoob3rt/lualine.nvim",
     "nvim-lualine/lualine.nvim",
-    -- "Lunarvim/lualine.nvim",
     config = function()
       require("core.lualine").setup()
     end,
-    disable = not rvim.builtin.lualine.active,
+    enable = rvim.builtin.lualine.active,
   },
 
   -- Theme
@@ -278,7 +283,7 @@ local core_plugins = {
       require("core.bufferline").setup()
     end,
     branch = "main",
-    event = "BufWinEnter",
+    enabled = rvim.builtin.bufferline.active,
   },
 
   -- Debugging
@@ -288,7 +293,7 @@ local core_plugins = {
     config = function()
       require("core.dap").setup()
     end,
-    disable = not rvim.builtin.dap.active,
+    enable = rvim.builtin.dap.active,
   },
 
   -- Debugger management
@@ -297,7 +302,7 @@ local core_plugins = {
     branch = "dev",
     -- event = "BufWinEnter",
     -- event = "BufRead",
-    disable = not rvim.builtin.dap.active,
+    enable = rvim.builtin.dap.active,
   },
 
   -- Dashboard
@@ -307,18 +312,18 @@ local core_plugins = {
     config = function()
       require("core.dashboard").setup()
     end,
-    disable = not rvim.builtin.dashboard.active,
+    enable = rvim.builtin.dashboard.active,
   },
 
   -- Terminal
   {
     "akinsho/toggleterm.nvim",
-    event = "BufWinEnter",
+    event = "VeryLazy",
     branch = "main",
     config = function()
       require("core.terminal").setup()
     end,
-    disable = not rvim.builtin.terminal.active,
+    enable = rvim.builtin.terminal.active,
   },
 
   {
@@ -329,30 +334,38 @@ local core_plugins = {
   -- SchemaStore
   {
     "b0o/schemastore.nvim",
+    lazy = true
   },
   {
     "RRethy/vim-illuminate",
     setup = function()
       require("core.illuminate").setup()
     end,
-    disable = not rvim.builtin.illuminate.active,
+    event = "VeryLazy",
+    enabled = rvim.builtin.illuminate.active,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       require("core.indentlines").setup()
     end,
-    disable = not rvim.builtin.indentlines.active,
+    enabled = rvim.builtin.indentlines.active,
   },
 }
 
 local default_snapshot_path = join_paths(get_config_dir(), "snapshots", "default.json")
 local content = vim.fn.readfile(default_snapshot_path)
-local default_sha1 = vim.fn.json_decode(content)
+local default_sha1 = assert(vim.fn.json_decode(content))
+
+-- taken form <https://github.com/folke/lazy.nvim/blob/c7122d64cdf16766433588486adcee67571de6d0/lua/lazy/core/plugin.lua#L27>
+local get_short_name = function(long_name)
+  local name = long_name:sub(-4) == ".git" and long_name:sub(1, -5) or long_name
+  local slash = name:reverse():find("/", 1, true) --[[@as number?]]
+  return slash and name:sub(#name - slash + 2) or long_name:gsub("%W+", "_")
+end
 
 local get_default_sha1 = function(spec)
-  util = require("packer.util")
-  local short_name, _ = util.get_plugin_short_name(spec)
+  local short_name = get_short_name(spec[1])
   return default_sha1[short_name] and default_sha1[short_name].commit
 end
 

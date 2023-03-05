@@ -110,8 +110,8 @@ M.config = function()
           highlight = "PanelHeading",
         },
         {
-          filetype = "packer",
-          text = "Packer",
+          filetype = "lazy",
+          text = "Lazy",
           highlight = "PanelHeading",
           padding = 1,
         },

@@ -10,7 +10,7 @@ M.config = function()
       "help",
       "startify",
       "dashboard",
-      "packer",
+      "lazy",
       "neo-tree",
       "neogitstatus",
       "NvimTree",

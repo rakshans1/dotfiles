@@ -26,13 +26,6 @@ function Log:set_level(level)
     Log:debug("Unable to set logger's level: " .. debug.traceback())
   end
 
-  local packer_ok, _ = xpcall(function()
-    package.loaded["packer.log"] = nil
-    require("packer.log").new { level = rvim.log.level }
-  end, debug.traceback)
-  if not packer_ok then
-    Log:debug("Unable to set packer's log level: " .. debug.traceback())
-  end
 end
 
 function Log:init()

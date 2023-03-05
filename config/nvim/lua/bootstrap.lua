@@ -55,8 +55,7 @@ function M:init()
   self.install_path = get_install_path()
 
   self.pack_dir = join_paths(self.runtime_dir, "site", "pack")
-  self.packer_install_dir = join_paths(self.runtime_dir, "site", "pack", "packer", "start", "packer.nvim")
-  self.packer_cache_path = join_paths(self.config_dir, "plugin", "packer_compiled.lua")
+  self.lazy_install_dir = join_paths(self.pack_dir, "lazy", "opt", "lazy.nvim")
 
   vim.fn.mkdir(vim.fn.stdpath "cache", "p")
 
@@ -64,8 +63,10 @@ function M:init()
 
   require("plugin-loader").init {
     package_root = self.pack_dir,
-    install_path = self.packer_install_dir,
+    install_path = self.lazy_install_dir,
   }
+
+  require("config"):init()
 
   require("core.mason").bootstrap()
 

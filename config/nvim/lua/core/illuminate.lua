@@ -14,12 +14,13 @@ M.config = function()
       -- delay: delay in milliseconds
       delay = 120,
       -- filetypes_denylist: filetypes to not illuminate, this overrides filetypes_allowlist
+      file_overrides = {},
       filetypes_denylist = {
         "dirvish",
         "fugitive",
         "alpha",
         "NvimTree",
-        "packer",
+        "lazy",
         "neogitstatus",
         "Trouble",
         "lir",

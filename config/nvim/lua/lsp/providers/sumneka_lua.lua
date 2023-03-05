@@ -1,7 +1,7 @@
 local default_workspace = {
   library = {
     vim.fn.expand "$VIMRUNTIME",
-    get_rvim_base_dir(),
+    get_config_dir(),
     require("neodev.config").types(),
     "${3rd}/busted/library",
     "${3rd}/luassert/library",
@@ -47,7 +47,7 @@ local opts = {
     Lua = {
       telemetry = { enable = false },
       diagnostics = {
-        globals = { "vim", "rvim", "packer_plugins" },
+        globals = { "vim", "rvim", "reload" },
       },
       workspace = default_workspace,
     },

@@ -9,7 +9,7 @@ local function git_cmd(opts)
   end
 
   opts = opts or {}
-  opts.cwd = opts.cwd or get_rvim_base_dir()
+  opts.cwd = opts.cwd or get_config_dir()
 
   local stderr = {}
   local stdout, ret = Job
