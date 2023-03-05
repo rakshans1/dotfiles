@@ -73,19 +73,23 @@ function plugin_loader.cache_clear()
   end
 end
 
-function plugin_loader.recompile()
-  plugin_loader.cache_clear()
-  vim.cmd [[LuaCacheClear]]
-  pcall_packer_command "compile"
+function plugin_loader.compile()
+  Log:debug "calling packer.compile()"
   vim.api.nvim_create_autocmd("User", {
     pattern = "PackerCompileDone",
     once = true,
     callback = function()
       if utils.is_file(compile_path) then
-        Log:debug "generated packer_compiled.lua"
+        Log:debug "finished compiling packer_compiled.lua"
       end
     end,
   })
+  pcall_packer_command "compile"
+end
+
+function plugin_loader.recompile()
+  plugin_loader.cache_clear()
+  plugin_loader.compile()
 end
 
 function plugin_loader.reload(configurations)
@@ -148,17 +152,6 @@ function plugin_loader.load_snapshot(snapshot_file)
 end
 
 function plugin_loader.sync_core_plugins()
-  -- problem: rollback() will get stuck if a plugin directory doesn't exist
-  -- solution: call sync() beforehand
-  -- see https://github.com/wbthomason/packer.nvim/issues/862
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "PackerComplete",
-    once = true,
-    callback = function()
-      require("plugin-loader").load_snapshot(default_snapshot)
-    end,
-  })
-
   plugin_loader.cache_clear()
   local core_plugins = plugin_loader.get_core_plugins()
   Log:trace(string.format("Syncing core plugins: [%q]", table.concat(core_plugins, ", ")))
@@ -170,8 +163,7 @@ function plugin_loader.ensure_plugins()
     pattern = "PackerComplete",
     once = true,
     callback = function()
-      Log:debug "calling packer.clean()"
-      pcall_packer_command "clean"
+      plugin_loader.compile()
     end,
   })
   Log:debug "calling packer.install()"

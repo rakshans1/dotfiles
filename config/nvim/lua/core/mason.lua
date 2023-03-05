@@ -1,5 +1,7 @@
 local M = {}
 
+local join_paths = require("utils").join_paths
+
 function M.config()
   rvim.builtin.mason = {
     ui = {
@@ -16,6 +18,11 @@ function M.config()
         apply_language_filter = "<C-f>",
       },
     },
+    install_root_dir = join_paths(vim.fn.stdpath "data", "mason"),
+    PATH = "skip",
+    pip = {
+      install_args = {},
+    },
     log_level = vim.log.levels.INFO,
     max_concurrent_installers = 4,
 
@@ -30,11 +37,36 @@ function M.config()
   }
 end
 
+function M.get_prefix()
+  local default_prefix = join_paths(vim.fn.stdpath "data", "mason")
+  return vim.tbl_get(rvim.builtin, "mason", "install_root_dir") or default_prefix
+end
+
+---@param append boolean|nil whether to append to prepend to PATH
+local function add_to_path(append)
+  local p = join_paths(M.get_prefix(), "bin")
+  if vim.env.PATH:match(p) then
+    return
+  end
+  local string_separator = vim.loop.os_uname().version:match "Windows" and ";" or ":"
+  if append then
+    vim.env.PATH = vim.env.PATH .. string_separator .. p
+  else
+    vim.env.PATH = p .. string_separator .. vim.env.PATH
+  end
+end
+
+function M.bootstrap()
+  add_to_path()
+end
+
 function M.setup()
   local status_ok, mason = pcall(require, "mason")
   if not status_ok then
     return
   end
+
+  add_to_path(rvim.builtin.mason.PATH == "append")
 
   mason.setup(rvim.builtin.mason)
 end

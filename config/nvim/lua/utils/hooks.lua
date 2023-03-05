@@ -38,6 +38,7 @@ end
 ---It also forces regenerating any template ftplugin files
 ---Tip: Useful for clearing any outdated settings
 function M.reset_cache()
+  vim.cmd [[LuaCacheClear]]
   plugin_loader.recompile()
   local rvim_modules = {}
   for module, _ in pairs(package.loaded) do

@@ -9,7 +9,15 @@ function M.load_defaults()
     -- autocmds require forward slashes even on windows
     user_config_file = user_config_file:gsub("\\", "/")
   end
-
+  vim.api.nvim_create_augroup("rvim_reload_config_on_save", {})
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    group = "rvim_reload_config_on_save",
+    pattern = user_config_file,
+    desc = "Trigger LvimReload on saving config.lua",
+    callback = function()
+      require("rvim.config"):reload()
+    end,
+  })
   vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = {
       "Jaq",

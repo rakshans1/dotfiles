@@ -24,8 +24,8 @@ end
 ---Get the full path to runtime dir
 ---@return string
 function _G.get_runtime_dir()
-    -- when nvim is used directly
-    return vim.fn.stdpath "data"
+  -- when nvim is used directly
+  return vim.fn.stdpath "data"
 end
 
 ---Get the full path to config dir
@@ -66,6 +66,8 @@ function M:init()
     package_root = self.pack_dir,
     install_path = self.packer_install_dir,
   }
+
+  require("core.mason").bootstrap()
 
   return self
 end
