@@ -1,7 +1,7 @@
 local M = {}
 local Log = require "core.log"
 
-M.config = function()
+function M.config()
   rvim.builtin.treesitter = {
     on_config_done = nil,
     ensure_installed = {
@@ -19,6 +19,9 @@ M.config = function()
       "eex"
     }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = {},
+    parser_install_dir = nil,
+    sync_install = false,
+    auto_install = false,
     matchup = {
       enable = false, -- mandatory, false will disable the whole extension
       -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
@@ -85,7 +88,60 @@ M.config = function()
   }
 end
 
-M.setup = function()
+local function get_parsers(opts)
+  opts = opts or {}
+  opts.filter = opts.filter or function()
+    return true
+  end
+
+  local bundled_parsers = vim.tbl_filter(opts.filter, vim.api.nvim_get_runtime_file("parser/*.so", true))
+
+  if opts.name_only then
+    bundled_parsers = vim.tbl_map(function(parser)
+      return vim.fn.fnamemodify(parser, ":t:r")
+    end, bundled_parsers)
+  end
+
+  return bundled_parsers
+end
+
+local function is_installed(lang)
+  local configs = require "nvim-treesitter.configs"
+  local result = get_parsers {
+    filter = function(parser)
+      local install_dir = configs.get_parser_install_dir()
+      return vim.startswith(parser, install_dir) and (vim.fn.fnamemodify(parser, ":t:r") == lang)
+    end,
+  }
+  local parser_file = result and result[1] or ""
+  local stat = vim.loop.fs_stat(parser_file)
+  return stat and stat.type == "file"
+end
+
+local function ensure_updated_bundled()
+  local configs = require "nvim-treesitter.configs"
+  local bundled_parsers = get_parsers {
+    name_only = true,
+    filter = function(parser)
+      local install_dir = configs.get_parser_install_dir()
+      return not vim.startswith(parser, install_dir)
+    end,
+  }
+
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      local missing = vim.tbl_filter(function(parser)
+        return not is_installed(parser)
+      end, bundled_parsers)
+
+      if #missing > 0 then
+        vim.cmd { cmd = "TSInstall", args = missing, bang = true }
+      end
+    end,
+  })
+end
+
+function M.setup()
   -- avoid running in headless mode since it's harder to detect failures
   if #vim.api.nvim_list_uis() == 0 then
     Log:debug "headless mode detected, skipping running setup for treesitter"
@@ -101,10 +157,14 @@ M.setup = function()
   local opts = vim.deepcopy(rvim.builtin.treesitter)
 
   treesitter_configs.setup(opts)
+  ensure_updated_bundled()
 
   if rvim.builtin.treesitter.on_config_done then
     rvim.builtin.treesitter.on_config_done(treesitter_configs)
   end
 end
+
+M.get_parsers = get_parsers
+M.is_installed = is_installed
 
 return M

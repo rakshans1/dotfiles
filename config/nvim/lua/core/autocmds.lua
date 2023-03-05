@@ -13,33 +13,11 @@ function M.load_defaults()
   vim.api.nvim_create_autocmd("BufWritePost", {
     group = "rvim_reload_config_on_save",
     pattern = user_config_file,
-    desc = "Trigger LvimReload on saving config.lua",
+    desc = "Trigger RvimReload on saving config.lua",
     callback = function()
       require("rvim.config"):reload()
     end,
   })
-  vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = {
-      "Jaq",
-      "qf",
-      "help",
-      "man",
-      "lspinfo",
-      "spectre_panel",
-      "lir",
-      "DressingSelect",
-      "tsplayground",
-      "Markdown",
-    },
-    callback = function()
-      vim.cmd [[
-      nnoremap <silent> <buffer> q :close<CR>
-      nnoremap <silent> <buffer> <esc> :close<CR>
-      set nobuflisted
-    ]]
-    end,
-  })
-
   vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = { "lir" },
     callback = function()
@@ -56,7 +34,7 @@ function M.load_defaults()
         pattern = "*",
         desc = "Highlight text no yank",
         callback = function()
-          require("vim.highlight").on_yank { higroup = "Search", timeout = 100 }
+          vim.highlight.on_yank { higroup = "Search", timeout = 100 }
         end
       }
     },
@@ -72,8 +50,23 @@ function M.load_defaults()
       "FileType",
       {
         group = "_buffer_mappings",
-        pattern = { "qf", "help", "man", "floaterm", "lspinfo", "lsp-installer", "null-ls-info", "dashboard" },
-        command = "nnoremap <silent> <buffer> q :close<CR>",
+        pattern = {
+          "qf",
+          "help",
+          "man",
+          "floaterm",
+          "lspinfo",
+          "lir",
+          "lsp-installer",
+          "null-ls-info",
+          "tsplayground",
+          "DressingSelect",
+          "Jaq",
+        },
+        callback = function()
+          vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true })
+          vim.opt_local.buflisted = false
+        end,
       },
     },
     {
@@ -94,8 +87,20 @@ function M.load_defaults()
       "FileType",
       {
         group = "_filetype_settings",
-        pattern = "qf",
-        command = "set nobuflisted",
+        pattern = { "lua" },
+        desc = "fix gf functionality inside .lua files",
+        callback = function()
+          ---@diagnostic disable: assign-type-mismatch
+          -- credit: https://github.com/sam4llis/nvim-lua-gf
+          vim.opt_local.include = [[\v<((do|load)file|require|reload)[^''"]*[''"]\zs[^''"]+]]
+          vim.opt_local.includeexpr = "substitute(v:fname,'\\.','/','g')"
+          vim.opt_local.suffixesadd:prepend ".lua"
+          vim.opt_local.suffixesadd:prepend "init.lua"
+
+          for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+            vim.opt_local.path:append(path .. "/lua")
+          end
+        end,
       },
     },
     {
@@ -105,14 +110,6 @@ function M.load_defaults()
         pattern = ".zsh",
         command = "setlocal filetype=sh",
       },
-    },
-    {
-      "FileType",
-      {
-        group = "_filetype_settings",
-        pattern = "gitcommit",
-        command = "setlocal wrap spell"
-      }
     },
     {
       "FileType",

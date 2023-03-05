@@ -30,13 +30,7 @@ function M:init()
   local rvim_lsp_config = require "lsp.config"
   rvim.lsp = vim.deepcopy(rvim_lsp_config)
 
-  rvim.builtin.luasnip = {
-    sources = {
-      friendly_snippets = true,
-    },
-  }
 end
-
 
 --- Override the configuration with a user provided one
 -- @param config_path The path to the configuration overrides

@@ -19,7 +19,7 @@ end
 local function custom_filter(buf, buf_nums)
   local logs = vim.tbl_filter(function(b)
     return is_ft(b, "log")
-  end, buf_nums)
+  end, buf_nums or {})
   if vim.tbl_isempty(logs) then
     return true
   end
@@ -178,9 +178,9 @@ function M.buf_kill(kill_command, bufnr, force)
       vim.ui.input({
         prompt = string.format([[%s. Close it anyway? [y]es or [n]o (default: no): ]], warning),
       }, function(choice)
-        if choice:match "ye?s?" then force = true end
+        if choice ~= nil and choice:match "ye?s?" then M.buf_kill(kill_command, bufnr, true) end
       end)
-      if not force then return end
+      return
     end
   end
 
@@ -204,7 +204,7 @@ function M.buf_kill(kill_command, bufnr, force)
   if #buffers > 1 and #windows > 0 then
     for i, v in ipairs(buffers) do
       if v == bufnr then
-        local prev_buf_idx = i == 1 and (#buffers - 1) or (i - 1)
+        local prev_buf_idx = i == 1 and #buffers or (i - 1)
         local prev_buffer = buffers[prev_buf_idx]
         for _, win in ipairs(windows) do
           api.nvim_win_set_buf(win, prev_buffer)
