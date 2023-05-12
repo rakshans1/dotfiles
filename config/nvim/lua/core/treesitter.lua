@@ -16,7 +16,8 @@ function M.config()
       "css",
       "elixir",
       "heex",
-      "eex"
+      "eex",
+      "rust"
     }, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = {},
     parser_install_dir = nil,

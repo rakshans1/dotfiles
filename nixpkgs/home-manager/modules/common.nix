@@ -36,6 +36,10 @@
     nodePackages.prettier
     nodePackages.serve
 
+    rustc
+    cargo
+    rustfmt
+
     yt-dlp
     speedtest-cli
 

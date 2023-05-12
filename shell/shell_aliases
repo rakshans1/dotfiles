@@ -5,6 +5,7 @@
 # For a full list of active aliases, run `alias`.
 
 # Shortcuts
+alias nvim=lvim
 alias v="nvim"
 alias vim="nvim"
 alias t="tmux"
