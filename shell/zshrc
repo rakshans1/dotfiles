@@ -43,6 +43,7 @@ dir_path=(
   "$PYENV_HOME/bin"
   "$HOME/.fly/bin"
   "$HOME/.poetry/bin"
+  "/opt/homebrew/opt/openjdk/bin"
 )
 
 # Nix
@@ -123,3 +124,6 @@ bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
 bindkey "^h" backward-kill-word
 bindkey "^J" end-of-line
+
+# Codon compiler path (added by install script)
+export PATH=/Users/rakshan/.codon/bin:$PATH
