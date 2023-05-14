@@ -9,7 +9,7 @@
   home.homeDirectory = "/Users/rakshanshetty";
   home.username = "rakshanshetty";
 
-  home.stateVersion = "22.05";
+  home.stateVersion = "23.05";
 
   fonts.fontconfig.enable = true;
 

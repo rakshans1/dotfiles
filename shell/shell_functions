@@ -289,3 +289,7 @@ function nix-switch() {
   local profile=$(nix-profile)
   home-manager switch --flake ".#$profile"
 }
+
+function nix-update() {
+  nix flake update
+}
