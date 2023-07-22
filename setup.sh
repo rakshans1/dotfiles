@@ -151,8 +151,10 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitignore'
 
   'rc/ripgreprc'
+  'rc/iex.exs'
 
   'shell/tmux'
+
 )
 
 
@@ -267,20 +269,12 @@ setup_linux () {
 }
 
 setup_mac () {
-  # brew tap homebrew/cask-fonts
-  # brew install --cask font-fira-code 
-  # brew install --cask font-fira-code-nerd-font
   echo done
 }
 
 
 
 setup () {
-  if [ ! -d ~/.fzf ]; then
-    print_info "Installing fzf"
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --all
-  fi
   platform=$(uname);
   if [[ $platform == 'Linux' ]]; then
     setup_linux

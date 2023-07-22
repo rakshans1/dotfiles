@@ -17,33 +17,13 @@ source $ZSH/oh-my-zsh.sh
 bindkey -v
 
 # User configuration
-export ANDROID_HOME=${HOME}/Android/Sdk
-export GRADLE_HOME="/usr/share/gradle"
-export GOPATH=${HOME}/projects/go
-
-export GOPATH=${HOME}/projects/go
-export CARGO_HOME=$HOME/.cargo
-export DENO_HOME=$HOME/.deno
-export PYENV_HOME=$HOME/.pyenv
 
 # If directory exists they will be added to the path env variable
 declare -a dir_path
 dir_path=(
   "$HOME/dotfiles/bin"
   "$HOME/.local/bin"
-  "/usr/local/go/bin"
-  "$GOPATH/bin"
-  "$CARGO_HOME/bin"
-  "$DENO_HOME/bin"
-  "$ANDROID_HOME/tools"
-  "$ANDROID_HOME/tools/bin"
-  "$ANDROID_HOME/emulator"
-  "$ANDROID_HOME/platform-tools"
-  "$GRADLE_HOME/bin"
-  "$PYENV_HOME/bin"
   "$HOME/.fly/bin"
-  "$HOME/.poetry/bin"
-  "/opt/homebrew/opt/openjdk/bin"
 )
 
 # Nix
@@ -65,10 +45,6 @@ unset dir_path
 
 export PATH
 eval "$(zoxide init zsh --cmd j)"
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
 
 if command -v direnv 1>/dev/null 2>&1; then
   eval "$(direnv hook zsh)"
@@ -125,5 +101,3 @@ bindkey "^N" down-line-or-search
 bindkey "^h" backward-kill-word
 bindkey "^J" end-of-line
 
-# Codon compiler path (added by install script)
-export PATH=/Users/rakshan/.codon/bin:$PATH
