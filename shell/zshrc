@@ -32,8 +32,6 @@ if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
 fi
 # End Nix
 
-[ -f ~/.asdf/asdf.sh ] && source ~/.asdf/asdf.sh
-
 for dir in ${(k)dir_path[@]}
 do
   if [ -d ${dir} ]; then
