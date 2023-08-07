@@ -33,6 +33,7 @@
     nodePackages.eslint_d
     nodePackages.prettier
     nodePackages.serve
+    nodePackages.tailwindcss
 
     rustc
     cargo

@@ -14,7 +14,7 @@
     };
   };
 
-  outputs =  inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, ... }: {
+  outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, ... }: {
 
     homeConfigurations = {
       linux = home-manager.lib.homeManagerConfiguration {
@@ -39,7 +39,7 @@
       # ./result/sw/bin/darwin-rebuild switch --flake .
       mbp = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ 
+        modules = [
           ./nixpkgs/darwin/mbp/configuration.nix
         ];
         inputs = { inherit darwin nixpkgs; };

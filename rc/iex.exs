@@ -37,6 +37,8 @@ defmodule Util do
 
   def cls, do: IO.puts("\ec")
 
+  def recompile, do: IEx.Helpers.recompile()
+
   def raw(any, label \\ "iex") do
     IO.inspect(any,
       label: label,
@@ -61,7 +63,7 @@ end
 
 defmodule :_exit do
   defdelegate exit(), to: System, as: :halt
-  defdelegate q(), to: System, as: :halt
+  defdelegate q(), to: System, as: :stop
 end
 
 defmodule :_restart do
@@ -71,6 +73,7 @@ end
 defmodule :_util do
   defdelegate cls(), to: Util, as: :cls
   defdelegate raw(any), to: Util, as: :raw
+  defdelegate r(), to: Util, as: :recompile
 end
 
 import :_exit

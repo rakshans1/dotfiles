@@ -53,6 +53,7 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+lvim.builtin.nvimtree.setup.tab.sync.close = true
 
 
 lvim.builtin.telescope.defaults.layout_strategy = "horizontal"
@@ -61,6 +62,9 @@ lvim.builtin.telescope.defaults.layout_config.width = 0.95
 lvim.builtin.telescope.defaults.layout_config.preview_cutoff = 120
 lvim.builtin.telescope.defaults.sorting_strategy = "descending"
 lvim.builtin.telescope.defaults.layout_config.height = 0.75
+
+
+lvim.builtin.bufferline.options.mode = "tabs"
 
 local ok, actions = pcall(require, "telescope.actions")
 if ok then
