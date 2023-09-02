@@ -55,6 +55,7 @@
     nixpkgs-fmt
 
     awscli2
+    caddy
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
