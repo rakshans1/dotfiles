@@ -14,6 +14,8 @@ casks=(
   dbeaver-community
   postman
   vlc
+  transmission
+  multipass
 )
 
 brew install --cask "${casks[@]}"

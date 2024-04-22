@@ -56,6 +56,8 @@
 
     awscli2
     caddy
+    k9s
+    cloudflared
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils

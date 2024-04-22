@@ -79,3 +79,6 @@ end
 import :_exit
 import :_restart
 import :_util
+
+
+Application.put_env(:elixir, :ansi_enabled, true)
