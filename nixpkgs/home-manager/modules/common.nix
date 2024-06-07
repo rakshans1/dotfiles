@@ -27,7 +27,6 @@
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     neovim
-    helix
 
     nodejs-18_x
     nodePackages.eslint_d
@@ -58,6 +57,7 @@
     caddy
     k9s
     cloudflared
+    kubernetes-helm
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
