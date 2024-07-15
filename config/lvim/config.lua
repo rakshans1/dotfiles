@@ -5,7 +5,7 @@ vim.opt.relativenumber = true
 vim.o.background = "dark"
 vim.o.termguicolors = true
 vim.g.base16colorspace = 256
-vim.go.t_Co = 256
+-- vim.go.t_Co = 256
 vim.opt.backup = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.foldexpr = ""
@@ -14,10 +14,10 @@ vim.opt.ignorecase = true
 vim.opt.mouse = "a"
 
 if vim.fn.has("termguicolors") then
-  vim.go.t_8f = "[[38;2;%lu;%lu;%lum"
-  vim.go.t_8b = "[[48;2;%lu;%lu;%lum"
-  vim.go.t_SI = "[[5 q" -- insert mode vertical line
-  vim.go.t_EI = "[[1 q" -- command mode block
+  -- vim.go.t_8f = "[[38;2;%lu;%lu;%lum"
+  -- vim.go.t_8b = "[[48;2;%lu;%lu;%lum"
+  -- vim.go.t_SI = "[[5 q" -- insert mode vertical line
+  -- vim.go.t_EI = "[[1 q" -- command mode block
 end
 
 -- general
