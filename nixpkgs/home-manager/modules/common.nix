@@ -1,10 +1,17 @@
 { config, pkgs, pkgsUnstable, ... }:
+let
+  llm-mistral = pkgs.callPackage ../packages/llm-mistral/default.nix {};
+  llm-ollama = pkgs.callPackage ../packages/llm-ollama/default.nix {};
+in
 {
+
+  imports = [
+    ./zsh.nix
+  ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-  # programs.zsh.enable = true;
 
   home.packages = with pkgs; [
     fd
@@ -23,12 +30,12 @@
     tealdeer
     zoxide
     gh
-    ffmpeg_5-full
+    ffmpeg_7-full
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     neovim
 
-    nodejs-18_x
+    nodejs_22
     nodePackages.eslint_d
     nodePackages.prettier
     nodePackages.serve
@@ -37,6 +44,7 @@
     rustc
     cargo
     rustfmt
+    cargo-sweep
 
     yt-dlp
     speedtest-cli
@@ -52,12 +60,16 @@
     duf
 
     nixpkgs-fmt
+    nix-init
 
     awscli2
     caddy
-    k9s
     cloudflared
-    kubernetes-helm
+
+    (llm.withPlugins ([ llm-mistral llm-ollama ]))
+
+    ollama
+
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
