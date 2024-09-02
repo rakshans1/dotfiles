@@ -17,6 +17,7 @@ alias npmlist="npm list -g --depth 0"
 alias top="btm"
 alias s="subl"
 alias c="code ."
+alias ls="exa"
 
 case $( uname -s ) in
   Darwin)   ;;

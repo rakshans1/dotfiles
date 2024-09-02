@@ -6,29 +6,111 @@
     autosuggestion.enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    localVariables = {
+      POWERLEVEL9K_MODE = "nerdfont-complete";
+
+      POWERLEVEL9K_LEFT_PROMPT_ELEMENTS = [
+        "prompt_char"
+        "dir"
+        "dir_writable"
+        "vcs"
+      ];
+
+      POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS = [
+        "status"
+        "command_execution_time"
+      ];
+
+      POWERLEVEL9K_SHORTEN_DIR_LENGTH = 1;
+      POWERLEVEL9K_SHORTEN_STRATEGY = "truncate_left";
+      POWERLEVEL9K_SHORTEN_DELIMITER = "";
+
+      POWERLEVEL9K_PROMPT_CHAR_BACKGROUND = "232";
+      POWERLEVEL9K_PROMPT_CHAR_FOREGROUND = "242";
+
+      POWERLEVEL9K_HOST_LOCAL_BACKGROUND = "232";
+      POWERLEVEL9K_HOST_LOCAL_FOREGROUND = "242";
+      POWERLEVEL9K_HOST_REMOTE_BACKGROUND = "255";
+      POWERLEVEL9K_HOST_REMOTE_FOREGROUND = "232";
+
+      POWERLEVEL9K_USER_ICON = "\uF415"; # 
+      POWERLEVEL9K_ROOT_ICON = "\u26A1"; # ⚡
+      POWERLEVEL9K_HOST_ICON = "\uF109"; # 
+      POWERLEVEL9K_HOST_ICON_FOREGROUND = "red";
+      POWERLEVEL9K_HOST_ICON_BACKGROUND = "black";
+      POWERLEVEL9K_SSH_ICON = "\uF489";  # 
+
+      POWERLEVEL9K_DIR_HOME_BACKGROUND = "232";
+      POWERLEVEL9K_DIR_HOME_FOREGROUND = "242";
+      POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND = "232";
+      POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND = "242";
+      POWERLEVEL9K_DIR_DEFAULT_BACKGROUND = "232";
+      POWERLEVEL9K_DIR_DEFAULT_FOREGROUND = "242";
+      POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND = "232";
+      POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND = "red";
+
+      POWERLEVEL9K_STATUS_OK_BACKGROUND = "232";
+      POWERLEVEL9K_STATUS_ERROR_BACKGROUND = "232";
+      POWERLEVEL9K_STATUS_ERROR_FOREGROUND = "red";
+
+      POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND = "232";
+      POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND = "magenta";
+      POWERLEVEL9K_COMMAND_EXECUTION_TIME_ICON = "\u231A";
+
+      POWERLEVEL9K_VCS_CLEAN_BACKGROUND = "23";
+      POWERLEVEL9K_VCS_CLEAN_FOREGROUND = "252";
+      POWERLEVEL9K_VCS_MODIFIED_BACKGROUND = "252";
+      POWERLEVEL9K_VCS_MODIFIED_FOREGROUND = "23";
+      POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND = "252";
+      POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND = "23";
+
+      POWERLEVEL9K_HIDE_BRANCH_ICON = true;
+
+    };
+
+    plugins = [
+      {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "git-open";
+        src = pkgs.fetchFromGitHub {
+          owner = "paulirish";
+          repo = "git-open";
+          rev = "v3.1.0";
+          sha256 = "sha256-CkBmboP0PYxTSBEUJ3wXM3ftiYozsvI5jy//dyV/bgo=";
+        };
+        file = "share/git-open/git-open.plugin.zsh";
+      }
+      {
+        name = "zsh-completions";
+        src = "${pkgs.zsh-completions}";
+      }
+      {
+        name = "zsh-autosuggestions";
+        src = "${pkgs.zsh-autosuggestions}";
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = "${pkgs.zsh-syntax-highlighting}";
+      }
+      {
+        name = "zsh-forgit";
+        src = "${pkgs.zsh-forgit}";
+        file = "share/zsh/zsh-forgit/git-forgit.zsh";
+      }
+    ];
 
     oh-my-zsh = {
       enable = true;
-      custom = "$HOME/dotfiles/zsh";
-      theme = "powerlevel10k/powerlevel10k";
       plugins = [
         "vi-mode"
         "git"
-        "git-extras"
-        "git-open"
-        "zsh-completions"
-        "zsh-syntax-highlighting"
-        "zsh-autosuggestions"
-        "forgit"
-        "docker"
-        "docker-compose"
-        "yarn"
       ];
     };
     initExtra = ''
-      source $ZSH_CUSTOM/themes/powerlevel.sh
-      source $ZSH_CUSTOM/plugins/zshhighlight.sh
-
       eval "$(zoxide init zsh --cmd j)"
       export DIRENV_LOG_FORMAT=
 
@@ -68,6 +150,25 @@
       bindkey "^N" down-line-or-search
       bindkey "^h" backward-kill-word
       bindkey "^J" end-of-line
+
+      ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+      ZSH_HIGHLIGHT_PATTERNS+=("rm -rf *" "fg=white,bold,bg=red")
+      typeset -A ZSH_HIGHLIGHT_STYLES
+      ZSH_HIGHLIGHT_STYLES[path]="fg=white"
+      ZSH_HIGHLIGHT_STYLES[path_pathseparator]="fg=grey"
+      ZSH_HIGHLIGHT_STYLES[alias]="fg=30"
+      ZSH_HIGHLIGHT_STYLES[builtin]="fg=30"
+      ZSH_HIGHLIGHT_STYLES[function]="fg=30"
+      ZSH_HIGHLIGHT_STYLES[command]='fg=30'
+      ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
+      ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green'
+      ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=yellow"
+      ZSH_HIGHLIGHT_STYLES[redirection]="fg=magenta"
+      ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=30,bold"
+      ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=green,bold"
+      ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=magenta,bold"
+      ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
+      ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=124"
     '';
   };
 

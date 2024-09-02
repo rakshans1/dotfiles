@@ -1,27 +1,9 @@
-[submodule "zsh/plugins/zsh-syntax-highlighting"]
-	path = zsh/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "zsh/plugins/zsh-autosuggestions"]
-	path = zsh/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "tmux/themes/nord-tmux"]
 	path = tmux/themes/nord-tmux
 	url = https://github.com/arcticicestudio/nord-tmux.git
 [submodule "shell/work"]
 	path = shell/work
 	url = git@github.com:rakshans1/dotfiles-work.git
-[submodule "zsh/plugins/git-open"]
-	path = zsh/plugins/git-open
-	url = https://github.com/paulirish/git-open.git
-[submodule "zsh/themes/powerlevel10k"]
-	path = zsh/themes/powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "shell/tmux/plugins/tpm"]
 	path = shell/tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule "zsh/plugins/forgit"]
-	path = zsh/plugins/forgit
-	url = https://github.com/wfxr/forgit
-[submodule "zsh/plugins/zsh-completions"]
-	path = zsh/plugins/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions.git

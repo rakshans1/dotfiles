@@ -30,6 +30,7 @@ in
     tealdeer
     zoxide
     gh
+    eza
     ffmpeg_7-full
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
