@@ -33,7 +33,6 @@ in
     eza
     ffmpeg_7-full
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    pngpaste
     tesseract
 
     neovim
@@ -80,6 +79,7 @@ in
 
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
+    pngpaste
   ] ++ lib.optionals stdenv.isLinux [
   ];
 }
