@@ -16,7 +16,7 @@ alias upgrade="sudo apt-get upgrade"
 alias npmlist="npm list -g --depth 0"
 alias top="btm"
 alias s="subl"
-alias c="code ."
+alias c="cursor ."
 alias ls="exa"
 
 case $( uname -s ) in

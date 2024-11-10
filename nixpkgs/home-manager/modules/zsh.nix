@@ -111,6 +111,11 @@
       ];
     };
     initExtra = ''
+      # Nix
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
+      # End Nix
       eval "$(zoxide init zsh --cmd j)"
       export DIRENV_LOG_FORMAT=
 

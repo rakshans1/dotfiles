@@ -33,8 +33,12 @@ in
     eza
     ffmpeg_7-full
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    pngpaste
+    tesseract
 
     neovim
+    lunarvim
+    sublime4
 
     nodejs_22
     nodePackages.eslint_d
@@ -46,6 +50,8 @@ in
     cargo
     rustfmt
     cargo-sweep
+
+    k9s
 
     yt-dlp
     speedtest-cli
