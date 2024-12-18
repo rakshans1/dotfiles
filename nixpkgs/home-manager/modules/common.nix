@@ -1,8 +1,4 @@
 { config, pkgs, pkgsUnstable, ... }:
-let
-  llm-mistral = pkgs.callPackage ../packages/llm-mistral/default.nix {};
-  llm-ollama = pkgs.callPackage ../packages/llm-ollama/default.nix {};
-in
 {
 
   imports = [
@@ -19,7 +15,6 @@ in
     zsh
     wget
     fzf
-    glow
     tmux
     vivid
     bottom
@@ -32,12 +27,12 @@ in
     gh
     eza
     ffmpeg_7-full
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
     tesseract
 
     neovim
     lunarvim
-    sublime4
 
     nodejs_22
     nodePackages.eslint_d
@@ -71,8 +66,6 @@ in
     awscli2
     caddy
     cloudflared
-
-    (llm.withPlugins ([ llm-mistral llm-ollama ]))
 
     ollama
 
