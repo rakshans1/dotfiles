@@ -98,8 +98,8 @@
       }
       {
         name = "zsh-forgit";
-        src = "${pkgs.zsh-forgit}";
-        file = "share/zsh/zsh-forgit/git-forgit.zsh";
+        src = pkgs.zsh-forgit;
+        file = "share/zsh/zsh-forgit/forgit.plugin.zsh";
       }
     ];
 

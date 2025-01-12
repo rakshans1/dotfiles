@@ -22,7 +22,7 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
 lvim.keys.normal_mode["<C-x>"] = ":q!<CR>"
-lvim.keys.normal_mode["<C-n>"] = ":NvimTreeToggle<CR>"
+lvim.keys.normal_mode["<C-b>"] = ":NvimTreeToggle<CR>"
 lvim.keys.normal_mode["<C-_>"] = "<Plug>(comment_toggle_linewise_current)"
 lvim.keys.normal_mode["<C-p>"] = "<cmd>Telescope find_files<CR>"
 lvim.builtin.which_key.mappings["p"] = { "<cmd>Telescope live_grep<CR>", "Text" }
