@@ -80,7 +80,7 @@
           owner = "paulirish";
           repo = "git-open";
           rev = "v3.1.0";
-          sha256 = "sha256-CkBmboP0PYxTSBEUJ3wXM3ftiYozsvI5jy//dyV/bgo=";
+          sha256 = "sha256-bZOknoRMkPqm1pFFFbvrHrSi90ANLEE5fLcABYHov6Q=";
         };
         file = "share/git-open/git-open.plugin.zsh";
       }
