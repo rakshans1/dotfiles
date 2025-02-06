@@ -1,0 +1,13 @@
+{
+  "name": "karabiner",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "tsm": "^2.3.0"
+  },
+  "scripts": {
+    "build": "tsm rules.ts"
+  }
+}

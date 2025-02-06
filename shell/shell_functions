@@ -255,18 +255,27 @@ function nix-profile() {
 }
 
 function nix-build() {
+  local current_dir=$(pwd)
   local profile=$(nix-profile)
+  cd ~/dotfiles
   nix build --no-link .#homeConfigurations.$profile.activationPackage
+  cd $current_dir
 }
 
 function nix-activate() {
+  local current_dir=$(pwd)
   local profile=$(nix-profile)
+  cd ~/dotfiles
   "$(nix path-info .#homeConfigurations.$profile.activationPackage)"/activate
+  cd $current_dir
 }
 
 function nix-switch() {
+  local current_dir=$(pwd)
   local profile=$(nix-profile)
+  cd ~/dotfiles
   home-manager switch --flake ".#$profile"
+  cd $current_dir
 }
 
 function nix-update() {
@@ -279,4 +288,11 @@ function flac-to-mp3() {
 
 function mp3-dl() {
   yt-dlp --extract-audio --audio-format mp3 --audio-quality 0 $1
+}
+
+function karabiner-build() {
+  local current_dir=$(pwd)
+  cd ~/dotfiles/config/karabiner
+  yarn build
+  cd $current_dir
 }
