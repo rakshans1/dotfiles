@@ -1,6 +1,6 @@
 import fs from "fs";
 import { KarabinerRules } from "./types";
-import { createHyperSubLayers, app, open, rectangle, shell, whenHyper } from "./utils";
+import { createHyperSubLayers, app, open, chrome, rectangle, shell, whenHyper, key } from "./utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -22,14 +22,6 @@ const rules: KarabinerRules[] = [
               value: 1,
             },
           },
-          {
-            key_code: "left_shift",
-            modifiers: [
-              "left_command",
-              "left_control",
-              "left_option",
-            ],
-          },
         ],
         to_after_key_up: [
           {
@@ -48,76 +40,36 @@ const rules: KarabinerRules[] = [
       },
     ],
   },
-  {
-    "description": "Change hyper-(jikl) to (←↑↓→) keys",
-    "manipulators": [
-      {
-        "from": {
-          "key_code": "h",
-          modifiers: whenHyper(),
-        },
-        "to": [
-          {
-            "key_code": "left_arrow"
-          }
-        ],
-        "type": "basic"
-      },
-      {
-        "from": {
-          "key_code": "k",
-          modifiers: whenHyper(),
-        },
-        "to": [
-          {
-            "key_code": "up_arrow"
-          }
-        ],
-        "type": "basic"
-      },
-      {
-        "from": {
-          "key_code": "j",
-          modifiers: whenHyper(),
-        },
-        "to": [
-          {
-            "key_code": "down_arrow"
-          }
-        ],
-        "type": "basic"
-      },
-      {
-        "from": {
-          "key_code": "l",
-          modifiers: whenHyper(),
-        },
-        to: [
-          {
-            key_code: "right_arrow",
-          },
-        ],
-        "type": "basic"
-      }
-    ]
-  },
   ...createHyperSubLayers({
-    o: {
-      g: app("Arc"),
-      t: app("Iterm"),
-      v: app("Cursor"),
-      n: app("Obsidian"),
-      w: app("WhatsApp"),
-      s: app("Sublime Text"),
-      m: app("Youtube Music"),
-      p: app("Podcasts"),
-
+    h: key("left_arrow"),
+    j: key("down_arrow"),
+    k: key("up_arrow"),
+    l: key("right_arrow"),
+    u: key("page_down"),
+    i: key("page_up"),
+    s: app("Sublime Text"),
+    w: app("WhatsApp"),
+    g: app("Google Chrome"),
+    v: app("Cursor"),
+    n: app("Obsidian"),
+    m: app("Youtube Music"),
+    p: app("Podcasts"),
+    d: app("Discord"),
+    t: app("Iterm"),
+    f: app("Finder"),
+    b: {
+      t: open("https://twitter.com"),
+      alone: app("Arc")
+    },
+    y: {
+      h: chrome("https://www.youtube.com/feed/history")
     },
     // r = "Raycast"
     r: {
       c: open("raycast://extensions/raycast/system/open-camera"),
       p: open("raycast://extensions/raycast/raycast/confetti"),
       1: open("raycast://extensions/VladCuciureanu/toothpick/connect-favorite-device-1"),
+      alone: app("Raycast"),
     }
   })
 ];

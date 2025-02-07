@@ -8,11 +8,13 @@ export interface LayerCommand {
   description?: string;
 }
 
-type HyperKeySublayer = {
-  // The ? is necessary, otherwise we'd have to define something for _every_ key code
+type HyperKeyMappings = {
   [key_code in KeyCode]?: LayerCommand;
 };
 
+export interface HyperKeySublayer extends HyperKeyMappings {
+  alone?: LayerCommand;
+}
 
 export function whenHyper(): Modifiers {
   return {
@@ -25,11 +27,8 @@ export function whenHyper(): Modifiers {
     "optional": [
       "any"
     ]
-
   }
-
 }
-
 
 /**
  * Create a Hyper Key sublayer, where every command is prefixed with a key
@@ -72,6 +71,7 @@ export function createHyperSubLayer(
           },
         },
       ],
+      ...(commands.alone ? { to_if_alone: commands.alone.to } : {}),
       // This enables us to press other sublayer keys in the current sublayer
       // (e.g. Hyper + O > M even though Hyper + M is also a sublayer)
       // basically, only trigger a sublayer if no other sublayer is active
@@ -93,8 +93,9 @@ export function createHyperSubLayer(
       ],
     },
     // Define the individual commands that are meant to trigger in the sublayer
-    ...(Object.keys(commands) as (keyof typeof commands)[]).map(
-      (command_key): Manipulator => ({
+    ...(Object.keys(commands) as (keyof typeof commands)[])
+      .filter(key => key !== 'alone')
+      .map((command_key): Manipulator => ({
         ...commands[command_key],
         type: "basic" as const,
         from: {
@@ -111,8 +112,7 @@ export function createHyperSubLayer(
             value: 1,
           },
         ],
-      })
-    ),
+      })),
   ];
 }
 
@@ -228,4 +228,17 @@ export function rectangle(name: string): LayerCommand {
  */
 export function app(name: string): LayerCommand {
   return open(`-a '${name}.app'`);
+}
+
+export function chrome(url: string): LayerCommand {
+  return open(`-a 'Google Chrome' '${url}'`);
+}
+
+export function key(key: KeyCode): LayerCommand {
+  return {
+    to: [{
+      key_code: key
+    }],
+    description: `Key: ${key}`
+  }
 }

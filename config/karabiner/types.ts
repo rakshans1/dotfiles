@@ -157,6 +157,7 @@ export interface SoftwareFunction {
 }
 
 export type KeyCode =
+  | "."
   | "caps_lock"
   | "left_control"
   | "left_shift"
