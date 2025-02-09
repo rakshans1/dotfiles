@@ -1,0 +1,41 @@
+#!/usr/bin/osascript
+
+on run argv
+    if (count of argv) is 0 then
+        log "Error: No URL provided"
+        return
+    end if
+
+    set input_url to item 1 of argv
+    set input_pinned to item 2 of argv
+
+    tell application "Arc"
+        tell front window
+                set foundTab to false
+                repeat with t in tabs
+                    try
+                        set t_url to URL of t
+                        set t_location to location of t
+                        set t_valid to true
+
+                        if t_location is "unpinned" and input_pinned then
+                            set t_valid to false
+                        end if
+
+                        if t_url contains input_url and t_valid then
+                            select t
+                            set foundTab to true
+                            exit repeat
+                        end if
+                    on error errMsg
+                        log "Error getting URL: " & errMsg
+                    end try
+                end repeat
+
+                if not foundTab then
+                    make new tab with properties {URL:input_url}
+                end if
+        end tell
+        activate
+    end tell
+end run

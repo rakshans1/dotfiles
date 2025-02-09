@@ -1,4 +1,4 @@
-import { To, KeyCode, Manipulator, KarabinerRules, Modifiers } from "./types";
+import { To, KeyCode, Manipulator, KarabinerRules, Modifiers, ModifiersKeys } from "./types";
 
 /**
  * Custom way to describe a command in a layer
@@ -14,20 +14,6 @@ type HyperKeyMappings = {
 
 export interface HyperKeySublayer extends HyperKeyMappings {
   alone?: LayerCommand;
-}
-
-export function whenHyper(): Modifiers {
-  return {
-    "mandatory": [
-      "left_command",
-      "left_option",
-      "left_control",
-      "left_shift"
-    ],
-    "optional": [
-      "any"
-    ]
-  }
 }
 
 /**
@@ -210,34 +196,30 @@ export function shell(
 }
 
 /**
- * Shortcut for managing window sizing with Rectangle
- */
-export function rectangle(name: string): LayerCommand {
-  return {
-    to: [
-      {
-        shell_command: `open -g rectangle://execute-action?name=${name}`,
-      },
-    ],
-    description: `Window: ${name}`,
-  };
-}
-
-/**
  * Shortcut for "Open an app" command (of which there are a bunch)
  */
 export function app(name: string): LayerCommand {
   return open(`-a '${name}.app'`);
 }
 
-export function chrome(url: string): LayerCommand {
-  return open(`-a 'Google Chrome' '${url}'`);
-}
-
-export function key(key: KeyCode): LayerCommand {
+export function openLink(browser, url: string, pinned: boolean = false): LayerCommand {
+  let shellCommand = `~/dotfiles/bin/open-link '${url}'`
+  if (browser === "Arc") {
+   shellCommand = `~/dotfiles/bin/open-link-arc '${url}' '${pinned}'`
+  }
   return {
     to: [{
-      key_code: key
+      shell_command: shellCommand,
+    }],
+    description: `Open ${url}`,
+  };
+}
+
+export function key(key: KeyCode, modifiers: ModifiersKeys[] = []): LayerCommand {
+  return {
+    to: [{
+      key_code: key,
+      modifiers: modifiers
     }],
     description: `Key: ${key}`
   }

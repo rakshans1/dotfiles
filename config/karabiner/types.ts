@@ -93,7 +93,7 @@ export interface SimultaneousOptions {
   detect_key_down_uninterruptedly?: boolean;
 }
 
-type ModifiersKeys =
+export type ModifiersKeys =
   | "caps_lock"
   | "left_command"
   | "left_control"

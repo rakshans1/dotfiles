@@ -1,0 +1,35 @@
+#!/usr/bin/osascript
+
+on run argv
+    if (count of argv) is 0 then
+        log "Error: No URL provided"
+        return
+    end if
+
+    set input_url to item 1 of argv
+
+    tell application "Google Chrome"
+        tell front window
+                set foundTab to false
+                set tabIndex to 1
+                repeat with t in tabs
+                    try
+                        set t_url to URL of t as string
+                        if t_url contains input_url then
+                            set active tab index to tabIndex
+                            set foundTab to true
+                            exit repeat
+                        end if
+                    on error errMsg
+                        log "Error getting URL: " & errMsg
+                    end try
+                    set tabIndex to tabIndex + 1
+                end repeat
+
+                if not foundTab then
+                    make new tab with properties {URL:input_url}
+                end if
+        end tell
+        activate
+    end tell
+end run

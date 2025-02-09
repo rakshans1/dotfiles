@@ -1,6 +1,6 @@
 import fs from "fs";
 import { KarabinerRules } from "./types";
-import { createHyperSubLayers, app, open, chrome, rectangle, shell, whenHyper, key } from "./utils";
+import { createHyperSubLayers, app, open,  shell, key, openLink } from "./utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -40,6 +40,72 @@ const rules: KarabinerRules[] = [
       },
     ],
   },
+  {
+    // option + cmd + h/j/k/l -> option + cmd + left/down/up/right arrow
+    description: "Option + Command + h -> Option + Command + Left Arrow",
+    manipulators: [
+      {
+        from: {
+          key_code: "h",
+          modifiers: {
+            mandatory: ["left_option", "left_command"],
+          },
+        },
+        to: [
+          {
+            key_code: "left_arrow",
+            modifiers: ["left_option", "left_command"],
+          },
+        ],
+        type: "basic",
+      },
+      {
+        from: {
+          key_code: "l",
+          modifiers: {
+            mandatory: ["left_option", "left_command"],
+          },
+        },
+        to: [
+          {
+            key_code: "right_arrow",
+            modifiers: ["left_option", "left_command"],
+          },
+        ],
+        type: "basic",
+      },
+      {
+        from: {
+          key_code: "j",
+          modifiers: {
+            mandatory: ["left_option", "left_command"],
+          },
+        },
+        to: [
+          {
+            key_code: "down_arrow",
+            modifiers: ["left_option", "left_command"],
+          },
+        ],
+        type: "basic",
+      },
+      {
+        from: {
+          key_code: "k",
+          modifiers: {
+            mandatory: ["left_option", "left_command"],
+          },
+        },
+        to: [
+          {
+            key_code: "up_arrow",
+            modifiers: ["left_option", "left_command"],
+          },
+        ],
+        type: "basic",
+      },
+    ],
+  },
   ...createHyperSubLayers({
     h: key("left_arrow"),
     j: key("down_arrow"),
@@ -49,20 +115,38 @@ const rules: KarabinerRules[] = [
     i: key("page_up"),
     s: app("Sublime Text"),
     w: app("WhatsApp"),
-    g: app("Google Chrome"),
-    v: app("Cursor"),
     n: app("Obsidian"),
     m: app("Youtube Music"),
     p: app("Podcasts"),
     d: app("Discord"),
     t: app("Iterm"),
-    f: app("Finder"),
+    v: {
+      p: key("p", ["left_shift", "left_command"]),
+      alone: app("Cursor"),
+    },
+    g: {
+      m: openLink("Google Chrome", "https://maps.google.com", false),
+      alone: app("Google Chrome"),
+    },
+    f: {
+      d: open("~/Downloads"),
+      p: open("~/projects"),
+      m: open("~/Music"),
+      t: open("~/torrents"),
+      w: open("~/workspace"),
+      alone: app("Finder")
+    },
     b: {
-      t: open("https://twitter.com"),
+      t: openLink("Arc", "https://x.com", true),
+      c: openLink("Arc", "https://claude.ai", true),
+      e: openLink("Arc", "https://mail.google.com", true),
+      g: openLink("Arc", "https://github.com", false),
+      s: openLink("Arc", "https://app.slack.com/client/TNJRQ2H0E", true),
       alone: app("Arc")
     },
     y: {
-      h: chrome("https://www.youtube.com/feed/history")
+      h: openLink("Google Chrome", "https://www.youtube.com/feed/history"),
+      alone: openLink("Google Chrome", "https://www.youtube.com")
     },
     // r = "Raycast"
     r: {
