@@ -1,6 +1,6 @@
 import fs from "fs";
 import { KarabinerRules } from "./types";
-import { createHyperSubLayers, app, open,  shell, key, openLink } from "./utils";
+import { createHyperSubLayers, app, open, shell, key, openLink } from "./utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -119,8 +119,15 @@ const rules: KarabinerRules[] = [
     m: app("Youtube Music"),
     p: app("Podcasts"),
     d: app("Discord"),
-    t: app("Iterm"),
+    t: {
+      d: shell`~/.nix-profile/bin/tmux switch-client -t dotfiles`,
+      p: shell`~/.nix-profile/bin/tmux switch-client -t projects`,
+      w: shell`~/.nix-profile/bin/tmux switch-client -t work`,
+      alone: app("Iterm"),
+    },
     v: {
+      f: key("f", ["left_shift", "left_option"]),
+      s: key("o", ["left_shift", "left_command"]),
       p: key("p", ["left_shift", "left_command"]),
       alone: app("Cursor"),
     },

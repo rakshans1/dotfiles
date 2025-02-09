@@ -1632,15 +1632,10 @@
             ]
           },
           {
-            "description": "Hyper Key + t",
+            "description": "Hyper Key sublayer \"t\"",
             "manipulators": [
               {
-                "to": [
-                  {
-                    "shell_command": "open -a 'Iterm.app'"
-                  }
-                ],
-                "description": "Open -a 'Iterm.app'",
+                "description": "Toggle Hyper sublayer t",
                 "type": "basic",
                 "from": {
                   "key_code": "t",
@@ -1650,12 +1645,28 @@
                     ]
                   }
                 },
-                "conditions": [
+                "to_after_key_up": [
                   {
-                    "type": "variable_if",
-                    "name": "hyper",
-                    "value": 1
-                  },
+                    "set_variable": {
+                      "name": "hyper_sublayer_t",
+                      "value": 0
+                    }
+                  }
+                ],
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "hyper_sublayer_t",
+                      "value": 1
+                    }
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "shell_command": "open -a 'Iterm.app'"
+                  }
+                ],
+                "conditions": [
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_h",
@@ -1718,11 +1729,6 @@
                   },
                   {
                     "type": "variable_if",
-                    "name": "hyper_sublayer_t",
-                    "value": 0
-                  },
-                  {
-                    "type": "variable_if",
                     "name": "hyper_sublayer_v",
                     "value": 0
                   },
@@ -1750,6 +1756,83 @@
                     "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "~/.nix-profile/bin/tmux switch-client -t dotfiles"
+                  }
+                ],
+                "description": "~/.nix-profile/bin/tmux switch-client -t dotfiles",
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_t",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "~/.nix-profile/bin/tmux switch-client -t projects"
+                  }
+                ],
+                "description": "~/.nix-profile/bin/tmux switch-client -t projects",
+                "type": "basic",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_t",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "~/.nix-profile/bin/tmux switch-client -t work"
+                  }
+                ],
+                "description": "~/.nix-profile/bin/tmux switch-client -t work",
+                "type": "basic",
+                "from": {
+                  "key_code": "w",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_t",
+                    "value": 1
                   }
                 ]
               }
@@ -1884,6 +1967,62 @@
                   {
                     "type": "variable_if",
                     "name": "hyper",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "key_code": "f",
+                    "modifiers": [
+                      "left_shift",
+                      "left_option"
+                    ]
+                  }
+                ],
+                "description": "Key: f",
+                "type": "basic",
+                "from": {
+                  "key_code": "f",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_v",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "key_code": "o",
+                    "modifiers": [
+                      "left_shift",
+                      "left_command"
+                    ]
+                  }
+                ],
+                "description": "Key: o",
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_v",
                     "value": 1
                   }
                 ]
