@@ -10,12 +10,15 @@ export interface Manipulator {
   to?: To[];
   to_after_key_up?: To[];
   to_if_alone?: To[];
+  to_if_held_down?: To[];
   parameters?: Parameters;
   conditions?: Conditions[];
 }
 
 export interface Parameters {
   "basic.simultaneous_threshold_milliseconds"?: number;
+  "basic.to_if_alone_timeout_milliseconds"?: number;
+  "basic.to_if_held_down_threshold_milliseconds"?: number;
 }
 
 type Conditions =

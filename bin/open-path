@@ -1,0 +1,22 @@
+#!/usr/bin/osascript
+
+on run argv
+    if (count of argv) is 0 then
+        log "Error: No path provided"
+        return
+    end if
+
+    set input_path to item 1 of argv
+
+    tell application "Finder"
+        if not (exists window 1) then
+            -- No window exists, make a new one and reveal the path
+            make new Finder window
+            set target of window 1 to (POSIX file input_path)
+        else
+            -- Window exists, reveal the path in the front window
+            set target of window 1 to (POSIX file input_path)
+        end if
+        activate
+    end tell
+end run

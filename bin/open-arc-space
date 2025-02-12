@@ -1,0 +1,22 @@
+#!/usr/bin/osascript
+
+on run argv
+    if (count of argv) is 0 then
+        log "Error: No space name provided"
+        return
+    end if
+
+    set input_space to item 1 of argv
+
+    tell application "Arc"
+        tell front window
+            repeat with currentSpace in spaces
+                if title of currentSpace is input_space then
+                    tell currentSpace to focus
+                    exit repeat
+                end if
+            end repeat
+        end tell
+        activate
+    end tell
+end run

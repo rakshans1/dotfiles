@@ -1,6 +1,6 @@
 import fs from "fs";
 import { KarabinerRules } from "./types";
-import { createHyperSubLayers, app, open, shell, key, openLink } from "./utils";
+import { createHyperSubLayers, app, open, shell, key, openLink, openPath, openArcSpace } from "./utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -113,12 +113,30 @@ const rules: KarabinerRules[] = [
     l: key("right_arrow"),
     u: key("page_down"),
     i: key("page_up"),
-    s: app("Sublime Text"),
+    e: app("Sublime Text"),
+    s: {
+      h: key("grave_accent_and_tilde", ["left_command"]),
+      l: key("grave_accent_and_tilde", ["left_shift", "left_command"]),
+    },
     w: app("WhatsApp"),
-    n: app("Obsidian"),
+    n: {
+      d: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'"),
+      w: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'"),
+      m: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'"),
+      alone: app("Obsidian")
+    },
     m: app("Youtube Music"),
     p: app("Podcasts"),
-    d: app("Discord"),
+    d: {
+      a: key("a", ["left_command"]),
+      c: key("c", ["left_command"]),
+      v: key("v", ["left_command"]),
+      h: key("left_arrow", ["left_command", "left_option"]),
+      l: key("right_arrow", ["left_command", "left_option"]),
+      j: key("down_arrow", ["left_command", "left_option"]),
+      k: key("up_arrow", ["left_command", "left_option"]),
+      alone: app("Discord"),
+    },
     t: {
       d: shell`~/.nix-profile/bin/tmux switch-client -t dotfiles`,
       p: shell`~/.nix-profile/bin/tmux switch-client -t projects`,
@@ -126,21 +144,30 @@ const rules: KarabinerRules[] = [
       alone: app("Iterm"),
     },
     v: {
+      // Open git in side panel
+      g: key("g", ["left_shift", "left_control"]),
+      // Open file in side panel
       f: key("f", ["left_shift", "left_option"]),
+      // Search symbols
       s: key("o", ["left_shift", "left_command"]),
+      // Open Command Palette
       p: key("p", ["left_shift", "left_command"]),
       alone: app("Cursor"),
     },
     g: {
       m: openLink("Google Chrome", "https://maps.google.com", false),
-      alone: app("Google Chrome"),
+      alone: app("Google Chrome")
     },
     f: {
-      d: open("~/Downloads"),
-      p: open("~/projects"),
-      m: open("~/Music"),
-      t: open("~/torrents"),
-      w: open("~/workspace"),
+      d: openPath("~/Downloads"),
+      p: openPath("~/projects"),
+      m: openPath("~/Music"),
+      t: openPath("~/torrents"),
+      w: openPath("~/workspace"),
+      h: key("left_arrow", ["left_shift"]),
+      l: key("right_arrow", ["left_shift"]),
+      j: key("down_arrow", ["left_shift"]),
+      k: key("up_arrow", ["left_shift"]),
       alone: app("Finder")
     },
     b: {
@@ -149,6 +176,11 @@ const rules: KarabinerRules[] = [
       e: openLink("Arc", "https://mail.google.com", true),
       g: openLink("Arc", "https://github.com", false),
       s: openLink("Arc", "https://app.slack.com/client/TNJRQ2H0E", true),
+      m: openLink("Arc", "https://m.localhost", true),
+      r: openLink("Arc", "https://www.reddit.com", true),
+      1: openArcSpace("Work"),
+      2: openArcSpace("Personal"),
+      3: openArcSpace("Reading"),
       alone: app("Arc")
     },
     y: {
@@ -159,6 +191,7 @@ const rules: KarabinerRules[] = [
     r: {
       c: open("raycast://extensions/raycast/system/open-camera"),
       p: open("raycast://extensions/raycast/raycast/confetti"),
+      q: open("raycast://extensions/raycast/raycast/search-quicklinks"),
       1: open("raycast://extensions/VladCuciureanu/toothpick/connect-favorite-device-1"),
       alone: app("Raycast"),
     }
@@ -177,7 +210,7 @@ fs.writeFileSync(
           name: "Default",
           "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" },
           complex_modifications: {
-            rules,
+            rules: rules,
           },
         },
       ],

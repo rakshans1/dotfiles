@@ -224,3 +224,20 @@ export function key(key: KeyCode, modifiers: ModifiersKeys[] = []): LayerCommand
     description: `Key: ${key}`
   }
 }
+
+export function openPath(path: string): LayerCommand {
+  return {
+    to: [{
+      shell_command: `~/dotfiles/bin/open-path ${path}`
+    }],
+  }
+}
+
+export function openArcSpace(space: string): LayerCommand {
+  return {
+    to: [{
+      shell_command: `~/dotfiles/bin/open-arc-space ${space}`
+    }],
+    description: `Open Arc space ${space}`,
+  }
+}
