@@ -73,6 +73,7 @@
   ] ++ lib.optionals stdenv.isDarwin [
     coreutils
     pngpaste
+    blueutil
   ] ++ lib.optionals stdenv.isLinux [
   ];
 }

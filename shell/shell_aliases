@@ -36,13 +36,8 @@ alias myip="ip a | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
 # Download file and save it with filename of remote file
 alias get="curl -O -L"
 
-
-# Recursively delete node_modules folder
-alias clean_node_modules="find . -name "nodemodules" -type d -prune -exec rm -rf '{}' +"
-
 # File size
 alias fs="ls -sh"
 
 # zshrc config
-alias zshrc="vim ~/.zshrc"
 alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"

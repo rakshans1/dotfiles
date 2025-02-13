@@ -117,6 +117,7 @@ const rules: KarabinerRules[] = [
     s: {
       h: key("grave_accent_and_tilde", ["left_command"]),
       l: key("grave_accent_and_tilde", ["left_shift", "left_command"]),
+      1: shell`~/dotfiles/bin/bluetooth-connect "AirPod"`,
     },
     w: app("WhatsApp"),
     n: {

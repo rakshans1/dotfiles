@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Please provide a device name"
+    exit 1
+fi
+
+DEVICE_NAME="$1"
+
+DEVICE_ADDRESS=$(~/.nix-profile/bin/blueutil --paired | grep -i "$DEVICE_NAME" | awk -F ',' '{print $1}' | awk -F 'address:' '{print $2}' | tr -d ' ')
+
+~/.nix-profile/bin/blueutil --connect "$DEVICE_ADDRESS"
