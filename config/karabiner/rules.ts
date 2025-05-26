@@ -1,6 +1,15 @@
 import fs from "fs";
 import { KarabinerRules } from "./types";
-import { createHyperSubLayers, app, open, shell, key, openLink, openPath, openArcSpace } from "./utils";
+import {
+  createHyperSubLayers,
+  app,
+  open,
+  shell,
+  key,
+  openLink,
+  openPath,
+  openArcSpace,
+} from "./utils";
 
 const rules: KarabinerRules[] = [
   // Define the Hyper key itself
@@ -121,13 +130,18 @@ const rules: KarabinerRules[] = [
     },
     w: app("WhatsApp"),
     n: {
-      d: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'"),
-      w: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'"),
-      m: open("'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'"),
-      alone: app("Obsidian")
+      d: open(
+        "'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'",
+      ),
+      w: open(
+        "'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'",
+      ),
+      m: open(
+        "'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'",
+      ),
+      alone: app("Obsidian"),
     },
     m: app("Youtube Music"),
-    p: app("Podcasts"),
     d: {
       a: key("a", ["left_command"]),
       c: key("c", ["left_command"]),
@@ -157,7 +171,7 @@ const rules: KarabinerRules[] = [
     },
     g: {
       m: openLink("Google Chrome", "https://maps.google.com", false),
-      alone: app("Google Chrome")
+      alone: app("Google Chrome"),
     },
     f: {
       d: openPath("~/Downloads"),
@@ -169,7 +183,7 @@ const rules: KarabinerRules[] = [
       l: key("right_arrow", ["left_shift"]),
       j: key("down_arrow", ["left_shift"]),
       k: key("up_arrow", ["left_shift"]),
-      alone: app("Finder")
+      alone: app("Finder"),
     },
     b: {
       t: openLink("Arc", "https://x.com", true),
@@ -182,21 +196,20 @@ const rules: KarabinerRules[] = [
       1: openArcSpace("Work"),
       2: openArcSpace("Personal"),
       3: openArcSpace("Reading"),
-      alone: app("Arc")
+      alone: app("Arc"),
     },
     y: {
       h: openLink("Google Chrome", "https://www.youtube.com/feed/history"),
-      alone: openLink("Google Chrome", "https://www.youtube.com")
+      alone: openLink("Google Chrome", "https://www.youtube.com"),
     },
     // r = "Raycast"
     r: {
       c: open("raycast://extensions/raycast/system/open-camera"),
       p: open("raycast://extensions/raycast/raycast/confetti"),
       q: open("raycast://extensions/raycast/raycast/search-quicklinks"),
-      1: open("raycast://extensions/VladCuciureanu/toothpick/connect-favorite-device-1"),
       alone: app("Raycast"),
-    }
-  })
+    },
+  }),
 ];
 
 fs.writeFileSync(
@@ -209,7 +222,7 @@ fs.writeFileSync(
       profiles: [
         {
           name: "Default",
-          "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" },
+          virtual_hid_keyboard: { keyboard_type_v2: "ansi" },
           complex_modifications: {
             rules: rules,
           },
@@ -217,6 +230,6 @@ fs.writeFileSync(
       ],
     },
     null,
-    2
-  )
+    2,
+  ),
 );

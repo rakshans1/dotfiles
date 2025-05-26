@@ -14,8 +14,8 @@
     ripgrep
     zsh
     wget
-    fzf
     tmux
+    fzf
     vivid
     bottom
     bat
@@ -69,8 +69,21 @@
 
     ollama
 
+    kubectl
+
+    exiftool
+
+    (python3.withPackages (
+      ps: with ps; [
+        llm
+        llm-gemini
+        llm-ollama
+      ]
+    ))
 
   ] ++ lib.optionals stdenv.isDarwin [
+   # Mac App Store command line interface
+    mas
     coreutils
     pngpaste
     blueutil

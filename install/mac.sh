@@ -16,6 +16,15 @@ casks=(
   vlc
   transmission
   multipass
+  chrome-cli
 )
 
 brew install --cask "${casks[@]}"
+
+
+apps=(
+  # WhatsApp Messenger
+  "310633997"
+)
+
+mas install "${apps[@]}"

@@ -29,13 +29,6 @@ function list() {
     }'
 }
 
-
-# Start an HTTP server from a directory, optionally specifying the port
-# function serve() {
-  # local port="${1:-8080}"
-  # http-server . -g -b -o  -p ${port}
-# }
-
 # Kill application on particular port
 function killport() {
   kill -9 $(lsof -t -i:${1})
@@ -166,7 +159,11 @@ function gco() {
 
 # copy file content to clipboard
 function copy() {
-  cat $1 | xclip -sel clipboard
+  if is_mac; then
+    cat $1 | pbcopy
+  else
+    cat $1 | xclip -sel clipboard
+  fi
 }
 
 # Man fuzzy search
@@ -205,15 +202,23 @@ function curlsize() {
   curlheader $1 | grep -i Content-Length | grep -o '[0-9]\+' | numfmt --to=iec-i --suffix=B --padding=7
 }
 
+function is_mac() {
+  [[ $(uname) == "Darwin" ]]
+}
+
+function is_linux() {
+  [[ $(uname) == "Linux" ]]
+}
+
 function nix-profile() {
   local profile
-  if [[ $(uname) == "Darwin" ]] && [[ $(uname -m) == 'arm64' ]]
+  if is_mac && [[ $(uname -m) == 'arm64' ]]
   then
     profile="mbp"
-  elif [[ $(uname) == "Darwin" ]]
+  elif is_mac
   then
     profile="mbpi"
-  elif [[ $(uname) == "Linux" ]]
+  elif is_linux
   then
     profile="linux"
   fi
