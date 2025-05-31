@@ -6,6 +6,8 @@
     ./modules/common.nix
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   home.homeDirectory = "/Users/rakshan";
   home.username = "rakshan";
 
