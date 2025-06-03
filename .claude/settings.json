@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(touch:*)",
+      "Bash(git:*)"
+    ],
+    "deny": [
+      "Bash(rm:-rf)"
+    ]
+  }
+}
