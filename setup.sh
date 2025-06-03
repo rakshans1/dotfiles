@@ -208,6 +208,12 @@ main() {
           ln -s "$config" "$target"
       fi
   done
+
+  if [ ! -d ~/.claude ]; then
+    mkdir ~/.claude
+  fi
+
+  ln -fs ~/dotfiles/config/claude/settings.json ~/.claude/settings.json
 }
 
 setup_linux () {
