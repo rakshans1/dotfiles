@@ -82,6 +82,7 @@
     ))
 
     claude-code
+    gemini-cli
 
   ] ++ lib.optionals stdenv.isDarwin [
    # Mac App Store command line interface
