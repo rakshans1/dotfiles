@@ -254,6 +254,11 @@ function nix-update() {
   nix flake update
 }
 
+function nix-clean() {
+  nix-store --gc
+  nix-collect-garbage
+}
+
 function karabiner-build() {
   local current_dir=$(pwd)
   cd ~/dotfiles/config/karabiner
