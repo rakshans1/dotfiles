@@ -179,6 +179,8 @@
       ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=magenta,bold"
       ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
       ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=124"
+
+      export PATH="$HOME/.local/bin:$PATH"
     '';
   };
 
