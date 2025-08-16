@@ -71,6 +71,7 @@
     kubectl
 
     exiftool
+    age
 
     (python3.withPackages (
       ps: with ps; [
