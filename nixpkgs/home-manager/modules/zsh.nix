@@ -148,8 +148,6 @@
       done;
       unset file;
 
-      export EDITOR='vim'
-
       export KEYTIMEOUT=1
 
       stty stop undef

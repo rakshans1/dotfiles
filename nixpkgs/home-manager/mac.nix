@@ -16,4 +16,11 @@
   fonts.fontconfig.enable = true;
 
   programs.tmux.enable = false;
+
+  home.sessionVariables = {
+    LANG = "en_US.UTF-8";
+    LC_CTYPE = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    EDITOR = "vim";
+  };
 }

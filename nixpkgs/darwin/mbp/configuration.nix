@@ -42,6 +42,9 @@
   # Match existing nixbld group GID to avoid conflicts
   ids.gids.nixbld = 30000;
 
+  # Enable Touch ID for sudo authentication
+  security.pam.enableSudoTouchIdAuth = true;
+
   nix-homebrew = {
     # Install Homebrew under the default prefix
     enable = true;
