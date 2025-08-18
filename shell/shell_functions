@@ -248,7 +248,7 @@ function nix-switch() {
   cd ~/dotfiles
   home-manager switch --flake ".#$profile"
   nix build .#darwinConfigurations.$profile.system
-  ./result/sw/bin/darwin-rebuild switch --flake .#$profile
+  sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile
   cd $current_dir
 }
 

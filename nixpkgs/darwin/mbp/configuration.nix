@@ -40,10 +40,10 @@
   };
 
   # Match existing nixbld group GID to avoid conflicts
-  ids.gids.nixbld = 30000;
+  ids.gids.nixbld = 350;
 
   # Enable Touch ID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   nix-homebrew = {
     # Install Homebrew under the default prefix
@@ -89,6 +89,7 @@
       "vlc"
       "raycast"
       "discord"
+      "cursor-cli"
     ];
 
     # Mac App Store apps (requires mas CLI tool)
