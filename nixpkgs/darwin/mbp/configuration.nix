@@ -36,6 +36,7 @@
     trackpad = {
       Clicking = true;
       TrackpadThreeFingerDrag = true;
+      Dragging = true;
     };
   };
 
