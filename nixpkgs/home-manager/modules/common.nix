@@ -8,13 +8,13 @@
   # https://github.com/nix-community/nix-direnv#via-home-manager
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+  programs.direnv.config.global.log_filter = "^$";
 
   home.packages = with pkgs; [
     fd
     ripgrep
     zsh
     wget
-    tmux
     fzf
     vivid
     bottom
@@ -52,6 +52,7 @@
     tokei
     yarn
     git
+    git-lfs
 
     glow
     gum

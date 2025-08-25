@@ -122,7 +122,7 @@
       fi
       # End Nix
       eval "$(zoxide init zsh --cmd j)"
-      export DIRENV_LOG_FORMAT=
+      export DIRENV_LOG_FORMAT=""
 
       export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'
       export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

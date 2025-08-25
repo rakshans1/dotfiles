@@ -4,6 +4,7 @@
   imports = [
     ./modules/home-manager.nix
     ./modules/common.nix
+    ./modules/tmux.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -14,8 +15,6 @@
   home.stateVersion = "23.05";
 
   fonts.fontconfig.enable = true;
-
-  programs.tmux.enable = false;
 
   home.sessionVariables = {
     LANG = "en_US.UTF-8";

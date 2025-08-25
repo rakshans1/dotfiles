@@ -26,7 +26,9 @@
     NSGlobalDomain = {
       KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
       InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
+      "com.apple.trackpad.scaling" = 3.0;
     };
+
 
     dock = {
       autohide = true;
@@ -36,7 +38,7 @@
     trackpad = {
       Clicking = true;
       TrackpadThreeFingerDrag = true;
-      Dragging = true;
+      FirstClickThreshold = 0; # Click pressure: 0 = light, 1 = medium, 2 = firm
     };
   };
 
@@ -60,28 +62,25 @@
       "pomerium/tap" = homebrew-pomerium;
     };
 
-    # Optional: Enable fully-declarative tap management
-    #
-    # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
+    # Enable mutable taps to allow manual tap management
     mutableTaps = false;
   };
 
   # Optional: Align homebrew taps config with nix-homebrew
   homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
 
-  # Homebrew packages
+  # Homebrew packages - This is separate from nix-homebrew
   homebrew = {
+    enable = true;
     # CLI tools and libraries (brew install)
     brews = [
-      "stats"
       "pomerium-cli"
     ];
 
     # GUI applications (brew install --cask)
     casks = [
+      "stats"
       "iterm2"
-      "docker"
-      "visual-studio-code"
       "sublime-text"
       "sublime-merge"
       "google-chrome"
@@ -91,6 +90,9 @@
       "raycast"
       "discord"
       "cursor-cli"
+      "obsidian"
+      "omnidisksweeper"
+      "monitorcontrol"
     ];
 
     # Mac App Store apps (requires mas CLI tool)
