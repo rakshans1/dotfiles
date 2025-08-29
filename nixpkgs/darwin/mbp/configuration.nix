@@ -1,4 +1,4 @@
-{ pkgs, config, nix-homebrew, homebrew-core, homebrew-cask, homebrew-pomerium, ... }:
+{ pkgs, config, nix-homebrew, homebrew-core, homebrew-cask, ... }:
 {
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
@@ -26,6 +26,7 @@
     NSGlobalDomain = {
       KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
       InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
+      ApplePressAndHoldEnabled = false;
       "com.apple.trackpad.scaling" = 3.0;
     };
 
@@ -39,6 +40,9 @@
       Clicking = true;
       TrackpadThreeFingerDrag = true;
       FirstClickThreshold = 0; # Click pressure: 0 = light, 1 = medium, 2 = firm
+    };
+    screencapture = {
+      target = "clipboard";
     };
   };
 
@@ -59,7 +63,6 @@
     taps = {
       "homebrew/homebrew-core" = homebrew-core;
       "homebrew/homebrew-cask" = homebrew-cask;
-      "pomerium/tap" = homebrew-pomerium;
     };
 
     # Enable mutable taps to allow manual tap management
@@ -72,9 +75,9 @@
   # Homebrew packages - This is separate from nix-homebrew
   homebrew = {
     enable = true;
+
     # CLI tools and libraries (brew install)
     brews = [
-      "pomerium-cli"
     ];
 
     # GUI applications (brew install --cask)

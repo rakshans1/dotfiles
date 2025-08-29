@@ -179,6 +179,15 @@
       ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=124"
 
       export PATH="$HOME/.local/bin:$PATH"
+
+      # Cursor Agent integration: ensure command start/finish are detected
+      # Ref: https://forum.cursor.com/t/cursor-agent-terminal-doesn-t-work-well-with-powerlevel10k-oh-my-zsh/96808
+      if [[ -n $CURSOR_TRACE_ID ]]; then
+        PROMPT_EOL_MARK=""
+        test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
+        precmd() { print -Pn "\e]133;D;%?\a" }
+        preexec() { print -Pn "\e]133;C;\a" }
+      fi
     '';
   };
 

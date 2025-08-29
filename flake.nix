@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    aiTools.url = "github:numtide/nix-ai-tools";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -27,10 +28,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    homebrew-pomerium = {
-      url = "github:pomerium/homebrew-tap";
-      flake = false;
-    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, ... }: {
@@ -39,12 +36,18 @@
       linux = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./nixpkgs/home-manager/linux.nix ];
-        extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux; };
+        extraSpecialArgs = {
+          pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
+          aiTools = inputs.aiTools.packages.x86_64-linux;
+        };
       };
       mbp = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
         modules = [ ./nixpkgs/home-manager/mac.nix ];
-        extraSpecialArgs = { pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin; };
+        extraSpecialArgs = {
+          pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
+          aiTools = inputs.aiTools.packages.aarch64-darwin;
+        };
       };
     };
 
@@ -62,7 +65,6 @@
           nix-homebrew = inputs.nix-homebrew;
           homebrew-core = inputs.homebrew-core;
           homebrew-cask = inputs.homebrew-cask;
-          homebrew-pomerium = inputs.homebrew-pomerium;
         };
       };
     };

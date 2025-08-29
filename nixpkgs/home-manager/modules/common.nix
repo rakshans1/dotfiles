@@ -1,4 +1,4 @@
-{ config, pkgs, pkgsUnstable, ... }:
+{ config, pkgs, pkgsUnstable, aiTools, ... }:
 {
 
   imports = [
@@ -92,5 +92,5 @@
     pngpaste
     blueutil
   ] ++ lib.optionals stdenv.isLinux [
-  ];
+  ] ++ [ aiTools.crush ];
 }
