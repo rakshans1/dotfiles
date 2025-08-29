@@ -1,6 +1,6 @@
-# CLAUDE.md
+# Contributors Guide
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to all human and AI agents when working with code in this repository.
 
 ## Repository Overview
 
@@ -47,10 +47,10 @@ git submodule init && git submodule update
 
 ### Nix/Home Manager
 ```bash
-# Apply Home Manager configuration (macOS Apple Silicon)
+# To Apply Home Manager configuration
 nix-switch
 
-# Update flake dependencies
+# To update flake dependencies
 nix-update
 ```
 
