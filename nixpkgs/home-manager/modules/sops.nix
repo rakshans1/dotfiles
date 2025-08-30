@@ -4,13 +4,17 @@
   # SOPS age key configuration
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
 
-  # Default secrets file - common across platforms
-  sops.defaultSopsFile = ./private/secrets/common.yaml;
-
-  # Platform-specific secrets file based on system
+  # Define all your secrets here
   sops.secrets = {
-    # Common secrets available on all platforms
-    # Example configuration (uncomment when secrets exist):
+    # API Keys
+    "anthropic_api_key" = {
+      sopsFile = ./private/secrets/common.yaml;
+    };
+    "anthropic_base_url" = {
+      sopsFile = ./private/secrets/common.yaml;
+    };
+
+    # Add more secrets as needed:
     # "github_token" = {
     #   sopsFile = ./private/secrets/common.yaml;
     # };
@@ -18,15 +22,6 @@
     #   sopsFile = ./private/secrets/common.yaml;
     # };
 
-    # Development secrets
-    # "database_password" = {
-    #   sopsFile = ./private/secrets/development.yaml;
-    # };
-
-    # Personal service secrets
-    # "backup_encryption_key" = {
-    #   sopsFile = ./private/secrets/personal.yaml;
-    # };
   } // (
     # Platform-specific secrets
     if pkgs.stdenv.isDarwin then {
@@ -41,6 +36,4 @@
       # };
     }
   );
-
-  # Note: age, sops, and ssh-to-age are already installed via common.nix
 }

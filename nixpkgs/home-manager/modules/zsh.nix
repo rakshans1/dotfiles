@@ -180,6 +180,11 @@
 
       export PATH="$HOME/.local/bin:$PATH"
 
+      # SOPS age key file location for automatic decryption
+      export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+      export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.anthropic_api_key.path})
+      export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.anthropic_base_url.path})
+
       # Cursor Agent integration: ensure command start/finish are detected
       # Ref: https://forum.cursor.com/t/cursor-agent-terminal-doesn-t-work-well-with-powerlevel10k-oh-my-zsh/96808
       if [[ -n $CURSOR_TRACE_ID ]]; then
