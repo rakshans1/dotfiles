@@ -1,51 +1,25 @@
 { config, lib, pkgs, private, ... }:
 
-let
-  # Define secrets paths for clean access
-  inherit (config.sops.secrets)
-    k8s_cluster_name
-    k8s_server_endpoint
-    k8s_certificate_authority_data
-    k8s_region
-    k8s_namespace
-    k8s_aws_account_id;
-
-in
 {
   # Kubernetes configuration managed by Nix with SOPS secrets
 
-  # Activation script to generate kubeconfig at runtime
-  home.activation.kubernetesConfig = lib.hm.dag.entryAfter ["writeBoundary"] (
-    let
-      # Check if all secrets are configured (build-time check)
-      secretsConfigured = lib.all (secret: secret != null) [
-        k8s_cluster_name
-        k8s_server_endpoint
-        k8s_certificate_authority_data
-        k8s_region
-        k8s_namespace
-        # k8s_aws_account_id  # Temporarily disabled - using hardcoded value
-      ];
-    in
-    lib.optionalString secretsConfigured ''
-      # Ensure ~/.kube directory exists
-      mkdir -p $HOME/.kube
-      chmod 700 $HOME/.kube
+  # Generate kubeconfig with SOPS secrets
+  home.activation.kubernetesConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p $HOME/.kube
+    chmod 700 $HOME/.kube
 
+    if [[ -f "${config.sops.secrets.k8s_cluster_name.path}" && -f "${config.sops.secrets.k8s_server_endpoint.path}" && -f "${config.sops.secrets.k8s_certificate_authority_data.path}" && -f "${config.sops.secrets.k8s_region.path}" && -f "${config.sops.secrets.k8s_namespace.path}" && -f "${config.sops.secrets.k8s_aws_account_id.path}" ]]; then
       # Read secrets at runtime
-      CLUSTER_NAME_FULL=$(cat ${k8s_cluster_name.path})
-      # Extract short cluster name from ARN (works with both ARN and short name)
-      CLUSTER_NAME=''${CLUSTER_NAME_FULL##*/}
-      SERVER_ENDPOINT=$(cat ${k8s_server_endpoint.path})
-      CERT_DATA=$(cat ${k8s_certificate_authority_data.path})
-      REGION=$(cat ${k8s_region.path})
-      NAMESPACE=$(cat ${k8s_namespace.path})
-      # Temporarily hardcode AWS account ID until SOPS issue is resolved
-      AWS_ACCOUNT_ID="583463116790"
+      CLUSTER_NAME=$(cat ${config.sops.secrets.k8s_cluster_name.path})
+      SERVER_ENDPOINT=$(cat ${config.sops.secrets.k8s_server_endpoint.path})
+      CERT_DATA=$(cat ${config.sops.secrets.k8s_certificate_authority_data.path})
+      REGION=$(cat ${config.sops.secrets.k8s_region.path})
+      NAMESPACE=$(cat ${config.sops.secrets.k8s_namespace.path})
+      AWS_ACCOUNT_ID=$(cat ${config.sops.secrets.k8s_aws_account_id.path})
       CLUSTER_ARN="arn:aws:eks:$REGION:$AWS_ACCOUNT_ID:cluster/$CLUSTER_NAME"
 
-      # Generate kubeconfig with runtime-substituted values
-      cat > $HOME/.kube/config << EOF
+      # Generate kubeconfig
+      cat > $HOME/.kube/config <<EOF
 apiVersion: v1
 clusters:
 - cluster:
@@ -79,18 +53,8 @@ users:
       provideClusterInfo: false
 EOF
 
-      # Set kubeconfig permissions
       chmod 600 $HOME/.kube/config
-
-      # Verify kubeconfig was created
-      if [[ ! -f $HOME/.kube/config ]]; then
-        echo "ERROR: Failed to create kubeconfig file" >&2
-        exit 1
-      fi
-
       echo "Successfully generated kubeconfig for cluster: $CLUSTER_NAME"
-    '' + lib.optionalString (!secretsConfigured) ''
-      echo "WARNING: Kubernetes secrets not configured; skipping kubeconfig generation" >&2
-    ''
-  );
+    fi
+  '';
 }
