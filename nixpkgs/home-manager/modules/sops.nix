@@ -38,6 +38,9 @@
     "k8s_namespace" = {
       sopsFile = "${private}/secrets/common.yaml";
     };
+    "k8s_aws_account_id" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
 
     # Add more secrets as needed:
     # "github_token" = {
