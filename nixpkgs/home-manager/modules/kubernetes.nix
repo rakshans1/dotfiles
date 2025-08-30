@@ -24,7 +24,7 @@ in
         k8s_certificate_authority_data
         k8s_region
         k8s_namespace
-        k8s_aws_account_id
+        # k8s_aws_account_id  # Temporarily disabled until SOPS issue resolved
       ];
     in
     lib.optionalString secretsConfigured ''
