@@ -14,6 +14,14 @@
       sopsFile = "${private}/secrets/common.yaml";
     };
 
+    # AWS Credentials
+    "aws_access_key_id" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+    "aws_secret_access_key" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+
     # Add more secrets as needed:
     # "github_token" = {
     #   sopsFile = "${private}/secrets/common.yaml";

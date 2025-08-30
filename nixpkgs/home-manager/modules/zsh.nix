@@ -185,6 +185,10 @@
       export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.anthropic_api_key.path})
       export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.anthropic_base_url.path})
 
+      # AWS Credentials
+      export AWS_ACCESS_KEY_ID=$(cat ${config.sops.secrets.aws_access_key_id.path})
+      export AWS_SECRET_ACCESS_KEY=$(cat ${config.sops.secrets.aws_secret_access_key.path})
+
       # Cursor Agent integration: ensure command start/finish are detected
       # Ref: https://forum.cursor.com/t/cursor-agent-terminal-doesn-t-work-well-with-powerlevel10k-oh-my-zsh/96808
       if [[ -n $CURSOR_TRACE_ID ]]; then
