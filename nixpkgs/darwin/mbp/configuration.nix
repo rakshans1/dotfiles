@@ -1,8 +1,17 @@
-{ pkgs, config, nix-homebrew, homebrew-core, homebrew-cask, ... }:
+{ pkgs, config, nix-homebrew, homebrew-core, homebrew-cask, sops-nix, ... }:
 {
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
   ];
+
+  # Basic SOPS configuration
+  sops = {
+    age.keyFile = "/Users/${config.system.primaryUser}/.config/sops/age/keys.txt";
+    # Note: No default secrets file specified yet - add secrets as needed
+    secrets = {
+      # Secrets will be defined here when needed
+    };
+  };
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

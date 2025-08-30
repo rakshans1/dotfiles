@@ -5,6 +5,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     aiTools.url = "github:numtide/nix-ai-tools";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +43,7 @@
         extraSpecialArgs = {
           pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
           aiTools = inputs.aiTools.packages.x86_64-linux;
+          sops-nix = inputs.sops-nix;
         };
       };
       mbp = home-manager.lib.homeManagerConfiguration {
@@ -47,6 +52,7 @@
         extraSpecialArgs = {
           pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
           aiTools = inputs.aiTools.packages.aarch64-darwin;
+          sops-nix = inputs.sops-nix;
         };
       };
     };
@@ -56,6 +62,7 @@
         system = "aarch64-darwin";
         modules = [
           ./nixpkgs/darwin/mbp/configuration.nix
+          inputs.sops-nix.darwinModules.sops
         ];
         inputs = { inherit darwin nixpkgs; };
         specialArgs = {
@@ -63,6 +70,7 @@
           nix-homebrew = inputs.nix-homebrew;
           homebrew-core = inputs.homebrew-core;
           homebrew-cask = inputs.homebrew-cask;
+          sops-nix = inputs.sops-nix;
         };
       };
     };
