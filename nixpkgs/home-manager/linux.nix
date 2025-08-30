@@ -5,6 +5,7 @@
     ./modules/home-manager.nix
     ./modules/common.nix
     ./modules/sops.nix
+    ./modules/aws.nix
     sops-nix.homeManagerModules.sops
   ];
 

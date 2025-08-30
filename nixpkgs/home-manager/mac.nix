@@ -6,6 +6,7 @@
     ./modules/common.nix
     ./modules/tmux.nix
     ./modules/sops.nix
+    ./modules/aws.nix
     sops-nix.homeManagerModules.sops
   ];
 
