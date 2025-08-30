@@ -12,14 +12,13 @@ let
 
 in
 {
-  # Create ~/.kube directory with correct permissions
-  home.file.".kube".source = null;
+  # Kubernetes configuration managed by Nix with SOPS secrets
 
   # Activation script to generate kubeconfig at runtime
   home.activation.kubernetesConfig = lib.hm.dag.entryAfter ["writeBoundary"] (
     let
-      # Check if all secrets exist and are non-empty
-      secretsExist = lib.all (secret: builtins.pathExists secret.path && (builtins.readFile secret.path) != "") [
+      # Check if all secrets are configured (build-time check)
+      secretsConfigured = lib.all (secret: secret != null) [
         k8s_cluster_name
         k8s_server_endpoint
         k8s_certificate_authority_data
@@ -28,7 +27,7 @@ in
         k8s_aws_account_id
       ];
     in
-    lib.optionalString secretsExist ''
+    lib.optionalString secretsConfigured ''
       # Ensure ~/.kube directory exists
       mkdir -p $HOME/.kube
       chmod 700 $HOME/.kube
@@ -87,8 +86,8 @@ EOF
       fi
 
       echo "Successfully generated kubeconfig for cluster: $CLUSTER_NAME"
-    '' + lib.optionalString (!secretsExist) ''
-      echo "WARNING: Some SOPS secrets are missing or empty; skipping kubeconfig generation" >&2
+    '' + lib.optionalString (!secretsConfigured) ''
+      echo "WARNING: Kubernetes secrets not configured; skipping kubeconfig generation" >&2
     ''
   );
 }
