@@ -218,11 +218,11 @@
     "private": {
       "flake": false,
       "locked": {
-        "lastModified": 1756565546,
-        "narHash": "sha256-er2QGf6ds+Et9poD9YLNXBQ5JYIqkgNoQ6j/zEikl5g=",
+        "lastModified": 1756566468,
+        "narHash": "sha256-zXfjv5/wcqwWnMHDVwEgPJjYfk0NlVPJGp3dWIFGj8s=",
         "ref": "refs/heads/main",
-        "rev": "16f5f695625172b3c5125c114f900243c5b6bd2e",
-        "revCount": 66,
+        "rev": "9c03426439db1c464a4e5a108f62b9ece57f48d2",
+        "revCount": 69,
         "type": "git",
         "url": "file:///Users/rakshan/dotfiles/private"
       },

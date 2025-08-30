@@ -24,7 +24,7 @@ in
         k8s_certificate_authority_data
         k8s_region
         k8s_namespace
-        # k8s_aws_account_id  # Temporarily disabled until SOPS issue resolved
+        # k8s_aws_account_id  # Temporarily disabled - using hardcoded value
       ];
     in
     lib.optionalString secretsConfigured ''
@@ -33,12 +33,15 @@ in
       chmod 700 $HOME/.kube
 
       # Read secrets at runtime
-      CLUSTER_NAME=$(cat ${k8s_cluster_name.path})
+      CLUSTER_NAME_FULL=$(cat ${k8s_cluster_name.path})
+      # Extract short cluster name from ARN (works with both ARN and short name)
+      CLUSTER_NAME=''${CLUSTER_NAME_FULL##*/}
       SERVER_ENDPOINT=$(cat ${k8s_server_endpoint.path})
       CERT_DATA=$(cat ${k8s_certificate_authority_data.path})
       REGION=$(cat ${k8s_region.path})
       NAMESPACE=$(cat ${k8s_namespace.path})
-      AWS_ACCOUNT_ID=$(cat ${k8s_aws_account_id.path})
+      # Temporarily hardcode AWS account ID until SOPS issue is resolved
+      AWS_ACCOUNT_ID="583463116790"
       CLUSTER_ARN="arn:aws:eks:$REGION:$AWS_ACCOUNT_ID:cluster/$CLUSTER_NAME"
 
       # Generate kubeconfig with runtime-substituted values
