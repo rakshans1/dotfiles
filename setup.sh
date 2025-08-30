@@ -1,257 +1,67 @@
 #!/bin/bash
-############################
 
-# This symlinks all the dotfiles to ~/
+# Simple setup script for remaining configurations
+# Most dotfiles are now managed by Nix Home Manager
 
+set -e
 
-############################
+echo "🎯 Dotfiles Setup"
+echo "================="
+echo ""
+echo "ℹ️  Most configuration files are managed by Nix Home Manager."
+echo "   Run 'nix-switch' to apply Nix-managed configurations."
+echo ""
 
-########## Support Functions
+# Ensure .config directory exists
+mkdir -p "$HOME/.config"
 
-answer_is_yes() {
-  [[ "$REPLY" =~ ^[Yy]$ ]] \
-    && return 0 \
-    || return 1
-}
-
-ask() {
-  print_question "$1"
-  read
-}
-
-ask_for_confirmation() {
-  print_question "$1 (y/n) "
-  read -n 1
-  printf "\n"
-}
-
-ask_for_sudo() {
-
-  # Ask for the administrator password upfront
-  sudo -v
-
-  # Update existing `sudo` time stamp until this script has finished
-  # https://gist.github.com/cowboy/3118588
-  while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || exit
-  done &> /dev/null &
-
-}
-
-cmd_exists() {
-  [ -x "$(command -v "$1")" ] \
-    && printf 0 \
-    || printf 1
-}
-
-execute() {
-  $1 &> /dev/null
-  print_result $? "${2:-$1}"
-}
-
-get_answer() {
-  printf "$REPLY"
-}
-
-get_os() {
-
-  declare -r OS_NAME="$(uname -s)"
-  local os=""
-
-  if [ "$OS_NAME" == "Darwin" ]; then
-    os="osx"
-  elif [ "$OS_NAME" == "Linux" ] && [ -e "/etc/lsb-release" ]; then
-    os="ubuntu"
-  fi
-
-  printf "%s" "$os"
-
-}
-mkd() {
-  if [ -n "$1" ]; then
-    if [ -e "$1" ]; then
-      if [ ! -d "$1" ]; then
-        print_error "$1 - a file with the same name already exists!"
-      else
-        print_success "$1"
-      fi
+# Handle Karabiner configuration (requires symlinking due to TypeScript build process)
+if [ -d "$(pwd)/config/karabiner" ]; then
+    if [ ! -e "$HOME/.config/karabiner" ]; then
+        echo "🔗 Linking Karabiner configuration..."
+        ln -s "$(pwd)/config/karabiner" "$HOME/.config/karabiner"
+        echo "   ✅ Karabiner configuration linked"
     else
-      execute "mkdir -p $1" "$1"
+        echo "   ℹ️  Karabiner configuration already exists"
     fi
-  fi
-}
+fi
 
-print_error() {
-  # Print output in red
-  printf "\e[0;31m  [✖] $1 $2\e[0m\n"
-}
+# Platform-specific setup
+setup_linux() {
+    echo ""
+    echo "🐧 Linux setup..."
 
-print_info() {
-  # Print output in purple
-  printf "\n\e[0;35m $1\e[0m\n\n"
-}
-
-print_question() {
-  # Print output in yellow
-  printf "\e[0;33m  [?] $1\e[0m"
-}
-
-print_result() {
-  [ $1 -eq 0 ] \
-    && print_success "$2" \
-    || print_error "$2"
-
-  [ "$3" == "true" ] && [ $1 -ne 0 ] \
-    && exit
-}
-
-print_success() {
-  # Print output in green
-  printf "\e[0;32m  [✔] $1\e[0m\n"
-}
-
-# Warn user this script will overwrite current dotfiles
-while true; do
-  read -p "Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
-  case $yn in
-    [Yy]* ) break;;
-    [Nn]* ) exit;;
-    * ) echo "Please answer yes or no.";;
-  esac
-done
-
-# Get the dotfiles directory's absolute path
-SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd -P)"
-DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
-
-
-dir=~/dotfiles                        # dotfiles directory
-
-# Get current dir (so run this script from anywhere)
-
-export DOTFILES_DIR
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Change to the dotfiles directory
-echo -n "Changing to the $dir directory..."
-cd $dir
-echo "done"
-
-#
-# Actual symlink stuff
-#
-
-declare -a FILES_TO_SYMLINK=(
-  'shell/tmux.conf'
-
-  'git/gitconfig'
-  'git/gitignore'
-
-  'rc/ripgreprc'
-  'rc/iex.exs'
-
-  'shell/tmux'
-
-)
-
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-main() {
-
-  local i=''
-  local sourceFile=''
-  local targetFile=''
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  for i in ${FILES_TO_SYMLINK[@]}; do
-
-    sourceFile="$(pwd)/$i"
-    targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
-
-    if [ ! -e "$targetFile" ]; then
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-    elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-      print_success "$targetFile → $sourceFile"
-    else
-      ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-      if answer_is_yes; then
-        rm -rf "$targetFile"
-        execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-      else
-        print_error "$targetFile → $sourceFile"
-      fi
+    # Install Nerd Fonts
+    if [ ! -d "$HOME/.local/share/fonts/FiraCode" ]; then
+        echo "📦 Installing FiraCode Nerd Font..."
+        mkdir -p "$HOME/.local/share/fonts/FiraCode"
+        cd /tmp
+        wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+        unzip -q FiraCode.zip -d "$HOME/.local/share/fonts/FiraCode"
+        fc-cache -f "$HOME/.local/share/fonts/FiraCode" 2>/dev/null || true
+        echo "   ✅ FiraCode font installed"
+        cd - > /dev/null
     fi
-
-  done
-
-  unset FILES_TO_SYMLINK
-
-  echo -e "\\n\\ninstalling to ~/.config"
-  echo "=============================="
-  if [ ! -d "$HOME/.config" ]; then
-      echo "Creating ~/.config"
-      mkdir -p "$HOME/.config"
-  fi
-
-  config_files=$(ls -d ~/dotfiles/config/*)
-  for config in $config_files; do
-      target="$HOME/.config/$( basename "$config" )"
-      echo $target
-      if [ -e "$target" ]; then
-          echo "~${target#$HOME} already exists... Skipping."
-      else
-          echo "Creating symlink for $config"
-          ln -s "$config" "$target"
-      fi
-  done
-
-  if [ ! -d ~/.claude ]; then
-    mkdir ~/.claude
-  fi
-
-  ln -fs ~/dotfiles/config/claude/settings.json ~/.claude/settings.json
 }
 
-setup_linux () {
-  ###############################################################################
-  # Linux                                                      #
-  ###############################################################################
-  #ln -s ~/dotfiles/linux/mimeapps.list $HOME/.local/share/applications
-
-  if [ ! -d ~/.local/share/fonts ]; then
-    mkdir $HOME/.local/share/fonts
-  fi
-
-  if [ ! -d ~/.local/share/fonts/FiraCode ]; then
-    echo "Installing Fonts"
-    cd /tmp
-    wget -q --show-progress https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
-    unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode
-  fi
-
-  ###############################################################################
-  # Caps to Esc                                                                 #
-  ###############################################################################
-  setxkbmap -option caps:escape
+setup_mac() {
+    echo ""
+    echo "🍎 macOS setup..."
+    echo "   ℹ️  macOS configurations are handled by nix-darwin"
+    echo "   ℹ️  Run 'darwin-rebuild switch --flake .' for system settings"
 }
 
-setup_mac () {
-  echo done
-}
+# Platform detection and setup
+case "$(uname)" in
+    Linux*)  setup_linux ;;
+    Darwin*) setup_mac ;;
+    *)       echo "❌ Unsupported platform" ;;
+esac
 
-setup () {
-  platform=$(uname);
-  if [[ $platform == 'Linux' ]]; then
-    setup_linux
-  elif [[ $platform == 'Darwin' ]]; then
-    setup_mac
-  fi
-}
-
-
-main
-setup
+echo ""
+echo "🎉 Setup complete!"
+echo ""
+echo "Next steps:"
+echo "  • Run 'nix-switch' to apply Home Manager configurations"
+echo "  • Run 'darwin-rebuild switch --flake .' for macOS system settings (macOS only)"
+echo "  • Restart your shell or run 'source ~/.zshrc'"

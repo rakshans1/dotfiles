@@ -243,6 +243,7 @@ function nix-activate() {
 }
 
 function nix-switch() {
+  set -e
   local current_dir=$(pwd)
   local profile=$(nix-profile)
   cd ~/dotfiles

@@ -1,0 +1,19 @@
+{ config, pkgs, ... }:
+
+{
+  home.file.".claude/settings.json".text = ''
+    {
+      "permissions": {
+        "allow": [
+          "Read(~/.zshrc)"
+        ],
+        "deny": [
+        ]
+      },
+      "env": {
+        "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+        "DISABLE_AUTOUPDATER": "1"
+      }
+    }
+  '';
+}

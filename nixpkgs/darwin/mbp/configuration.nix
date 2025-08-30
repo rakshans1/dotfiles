@@ -50,6 +50,11 @@
   # Match existing nixbld group GID to avoid conflicts
   ids.gids.nixbld = 350;
 
+  # Nix configuration
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
   # Enable Touch ID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 

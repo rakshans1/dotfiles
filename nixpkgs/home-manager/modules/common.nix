@@ -3,6 +3,12 @@
 
   imports = [
     ./zsh.nix
+    ./git.nix
+    ./ripgrep.nix
+    ./bat.nix
+    ./elixir.nix
+    ./claude.nix
+    ./lvim.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -12,13 +18,11 @@
 
   home.packages = with pkgs; [
     fd
-    ripgrep
     zsh
     wget
     fzf
     vivid
     bottom
-    bat
     jq
     gnupg
     delta
@@ -52,8 +56,6 @@
 
     tokei
     yarn
-    git
-    git-lfs
 
     glow
     gum
