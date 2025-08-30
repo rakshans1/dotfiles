@@ -22,6 +22,23 @@
       sopsFile = "${private}/secrets/common.yaml";
     };
 
+    # Kubernetes Configuration
+    "k8s_certificate_authority_data" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+    "k8s_server_endpoint" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+    "k8s_cluster_name" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+    "k8s_region" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+    "k8s_namespace" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+
     # Add more secrets as needed:
     # "github_token" = {
     #   sopsFile = "${private}/secrets/common.yaml";

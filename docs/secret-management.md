@@ -8,7 +8,8 @@ SOPS-Nix integrated with **modular architecture** and **private repository as fl
 - **Architecture**: Modular SOPS configs for Home Manager + Darwin
 - **Private Repo**: Flake input (`git+file:///Users/rakshan/dotfiles/private`)
 - **Secrets**: `private/secrets/common.yaml` (encrypted)
-- **Environment**: Auto-exported in zsh
+- **Integration**: Environment variables + configuration files
+- **AWS**: Managed via Nix (config + credentials from SOPS secrets)
 
 ## Architecture
 
@@ -20,7 +21,8 @@ private = { url = "git+file:///Users/rakshan/dotfiles/private"; flake = false; }
 ```
 
 ### Module Structure
-- `nixpkgs/home-manager/modules/sops.nix` - User secrets
+- `nixpkgs/home-manager/modules/sops.nix` - User secrets definitions
+- `nixpkgs/home-manager/modules/aws.nix` - AWS configuration files
 - `nixpkgs/darwin/mbp/modules/sops.nix` - System secrets
 - `private/secrets/common.yaml` - Encrypted storage
 - `private/.sops.yaml` - SOPS config
@@ -28,7 +30,8 @@ private = { url = "git+file:///Users/rakshan/dotfiles/private"; flake = false; }
 ### Integration Points
 - Home Manager: `sops-nix.homeManagerModules.sops` + `./modules/sops.nix`
 - Darwin: `inputs.sops-nix.darwinModules.sops` + `./modules/sops.nix`
-- Environment: Auto-export via `config.sops.secrets.*.path` in zsh.nix
+- Environment Variables: Auto-export via `config.sops.secrets.*.path` in zsh.nix
+- Configuration Files: Generated via activation scripts (AWS, etc.)
 
 ## Key Files
 
@@ -40,7 +43,33 @@ private = { url = "git+file:///Users/rakshan/dotfiles/private"; flake = false; }
   sops.secrets = {
     "anthropic_api_key" = { sopsFile = "${private}/secrets/common.yaml"; };
     "anthropic_base_url" = { sopsFile = "${private}/secrets/common.yaml"; };
+    "aws_access_key_id" = { sopsFile = "${private}/secrets/common.yaml"; };
+    "aws_secret_access_key" = { sopsFile = "${private}/secrets/common.yaml"; };
   };
+}
+```
+
+### AWS Module (nixpkgs/home-manager/modules/aws.nix)
+```nix
+{ config, lib, pkgs, private, ... }:
+{
+  # Static config file managed by Home Manager
+  home.file.".aws/config".text = ''
+    [default]
+    region = ap-south-1
+    output = json
+  '';
+
+  # Dynamic credentials file from SOPS secrets
+  home.activation.awsCredentials = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p $HOME/.aws && chmod 700 $HOME/.aws
+    if [[ -f "${config.sops.secrets.aws_access_key_id.path}" ]]; then
+      echo "[default]" > $HOME/.aws/credentials
+      echo "aws_access_key_id = $(cat ${config.sops.secrets.aws_access_key_id.path})" >> $HOME/.aws/credentials
+      echo "aws_secret_access_key = $(cat ${config.sops.secrets.aws_secret_access_key.path})" >> $HOME/.aws/credentials
+      chmod 600 $HOME/.aws/credentials
+    fi
+  '';
 }
 ```
 
@@ -59,6 +88,7 @@ creation_rules:
 export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
 export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.anthropic_api_key.path})
 export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.anthropic_base_url.path})
+# AWS credentials managed via ~/.aws/config and ~/.aws/credentials files (see modules/aws.nix)
 ```
 
 ## Daily Usage
@@ -84,8 +114,10 @@ ssh-to-age -i ~/.ssh/id_ed25519.pub  # Get public key for .sops.yaml
 
 1. **Edit encrypted file**: `cd private && sops secrets/common.yaml`
 2. **Add to SOPS module**: `"new_secret" = { sopsFile = "${private}/secrets/common.yaml"; };`
-3. **Export in zsh** (if needed): `export NEW_SECRET=$(cat ${config.sops.secrets.new_secret.path})`
-4. **Apply**: `nix-switch && exec zsh`
+3. **Choose integration method**:
+   - **Environment variable**: `export NEW_SECRET=$(cat ${config.sops.secrets.new_secret.path})` in zsh.nix
+   - **Configuration file**: Create activation script in dedicated module (like aws.nix)
+4. **Apply**: `nix-switch && exec zsh` (if using env vars)
 
 ## Technical Notes
 
@@ -103,6 +135,18 @@ ssh-to-age -i ~/.ssh/id_ed25519.pub  # Get public key for .sops.yaml
 - **Empty env vars**: Run `exec zsh` after first setup
 - **Decryption fails**: Check `SOPS_AGE_KEY_FILE` environment variable
 - **Build errors**: Verify flake inputs + module paths
+
+## Usage Examples
+
+### Environment Variables (API Keys)
+- **Anthropic API**: Exported as `$ANTHROPIC_API_KEY` in zsh
+- **Good for**: CLI tools, development environments
+- **Integration**: Direct export in zsh.nix
+
+### Configuration Files (Credentials)
+- **AWS**: Managed as `~/.aws/config` and `~/.aws/credentials` files
+- **Good for**: Applications expecting standard config files
+- **Integration**: Home Manager activation scripts + file management
 
 ## Future Usage
 

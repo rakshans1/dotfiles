@@ -7,6 +7,7 @@
     ./modules/tmux.nix
     ./modules/sops.nix
     ./modules/aws.nix
+    ./modules/kubernetes.nix
     sops-nix.homeManagerModules.sops
   ];
 
