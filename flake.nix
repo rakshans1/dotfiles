@@ -32,28 +32,34 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    private = {
+      url = "git+file:///Users/rakshan/dotfiles/private";
+      flake = false; # Treat as source, not a flake
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, ... }: {
+  outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, sops-nix, private, ... }: {
 
     homeConfigurations = {
       linux = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./nixpkgs/home-manager/linux.nix ];
         extraSpecialArgs = {
-          pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
-          aiTools = inputs.aiTools.packages.x86_64-linux;
-          sops-nix = inputs.sops-nix;
-        };
+            pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
+            aiTools = inputs.aiTools.packages.x86_64-linux;
+            sops-nix = inputs.sops-nix;
+            private = inputs.private;
+          };
       };
       mbp = home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
         modules = [ ./nixpkgs/home-manager/mac.nix ];
         extraSpecialArgs = {
-          pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
-          aiTools = inputs.aiTools.packages.aarch64-darwin;
-          sops-nix = inputs.sops-nix;
-        };
+            pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
+            aiTools = inputs.aiTools.packages.aarch64-darwin;
+            sops-nix = inputs.sops-nix;
+            private = inputs.private;
+          };
       };
     };
 
@@ -66,12 +72,13 @@
         ];
         inputs = { inherit darwin nixpkgs; };
         specialArgs = {
-          inherit inputs;
-          nix-homebrew = inputs.nix-homebrew;
-          homebrew-core = inputs.homebrew-core;
-          homebrew-cask = inputs.homebrew-cask;
-          sops-nix = inputs.sops-nix;
-        };
+            inherit inputs;
+            nix-homebrew = inputs.nix-homebrew;
+            homebrew-core = inputs.homebrew-core;
+            homebrew-cask = inputs.homebrew-cask;
+            sops-nix = inputs.sops-nix;
+            private = inputs.private;
+          };
       };
     };
   };

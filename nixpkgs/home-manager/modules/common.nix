@@ -20,6 +20,7 @@
     bottom
     bat
     jq
+    gnupg
     delta
     neofetch
     tealdeer

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, private, ... }:
 
 {
   # SOPS age key configuration for system user
@@ -9,13 +9,13 @@
     # System-level secrets for Darwin
     # Example configuration (uncomment when secrets exist):
     # "admin_password" = {
-    #   sopsFile = ./private/secrets/darwin.yaml;
+    #   sopsFile = "${private}/secrets/darwin.yaml";
     #   owner = config.system.primaryUser;
     # };
 
     # Service credentials
     # "service_token" = {
-    #   sopsFile = ./private/secrets/darwin.yaml;
+    #   sopsFile = "${private}/secrets/darwin.yaml";
     # };
   };
 }

@@ -143,7 +143,7 @@
       unset file;
 
       # Load the shell dotfiles
-      for file in $HOME/dotfiles/private/{work_aliases,work_functions}; do
+      for file in $HOME/dotfiles/private/{private_aliases,private_functions}; do
         [ -r "$file" ] && [ -f "$file" ] && source "$file";
       done;
       unset file;

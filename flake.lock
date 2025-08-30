@@ -215,6 +215,22 @@
         "type": "github"
       }
     },
+    "private": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756556648,
+        "narHash": "sha256-sAR9UzJ7wTBwlMzmSHwxjDdcmv68SKIT5dWTTlmrlY0=",
+        "ref": "refs/heads/main",
+        "rev": "9381445ae0923139be637c467dd2f64df524dd10",
+        "revCount": 61,
+        "type": "git",
+        "url": "file:///Users/rakshan/dotfiles/private"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///Users/rakshan/dotfiles/private"
+      }
+    },
     "root": {
       "inputs": {
         "aiTools": "aiTools",
@@ -226,6 +242,7 @@
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_2",
         "nixpkgsUnstable": "nixpkgsUnstable",
+        "private": "private",
         "sops-nix": "sops-nix"
       }
     },
