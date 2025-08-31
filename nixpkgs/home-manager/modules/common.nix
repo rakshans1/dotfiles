@@ -9,6 +9,7 @@
     ./elixir.nix
     ./claude.nix
     ./lvim.nix
+    ./kitty.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
