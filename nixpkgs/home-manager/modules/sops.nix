@@ -42,14 +42,6 @@
       sopsFile = "${private}/secrets/common.yaml";
     };
 
-    # Add more secrets as needed:
-    # "github_token" = {
-    #   sopsFile = "${private}/secrets/common.yaml";
-    # };
-    # "openai_api_key" = {
-    #   sopsFile = "${private}/secrets/common.yaml";
-    # };
-
   } // (
     # Platform-specific secrets
     if pkgs.stdenv.isDarwin then {

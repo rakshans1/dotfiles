@@ -55,8 +55,28 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  # Enable Touch ID for sudo authentication
-  security.pam.services.sudo_local.touchIdAuth = true;
+  # Enable Touch ID for sudo authentication with tmux support
+  # TODO: When upgrading to nix-darwin post-Feb 2025, replace this manual PAM config with:
+  # programs.pam-reattach.enable = true;
+  # security.pam.services.sudo_local.touchIdAuth = true;
+  # See: https://github.com/nix-darwin/nix-darwin/pull/1344
+  security.pam.services.sudo_local = {
+    touchIdAuth = true;
+    text = ''
+      # sudo_local: allow touch ID and pam_reattach for tmux compatibility
+      auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so
+      auth       sufficient     pam_tid.so
+      auth       required       pam_opendirectory.so
+      account    required       pam_permit.so
+      password   required       pam_deny.so
+      session    required       pam_permit.so
+    '';
+  };
+
+  # Install pam-reattach to enable Touch ID in tmux
+  environment.systemPackages = with pkgs; [
+    pam-reattach
+  ];
 
   nix-homebrew = {
     # Install Homebrew under the default prefix
