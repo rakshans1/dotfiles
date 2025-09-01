@@ -7,10 +7,10 @@
   # Define all your secrets here
   sops.secrets = {
     # API Keys
-    "anthropic_api_key" = {
+    "llm_api_key" = {
       sopsFile = "${private}/secrets/common.yaml";
     };
-    "anthropic_base_url" = {
+    "llm_endpoint" = {
       sopsFile = "${private}/secrets/common.yaml";
     };
 

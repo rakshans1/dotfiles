@@ -41,10 +41,7 @@ private = { url = "git+file:///Users/rakshan/dotfiles/private"; flake = false; }
 {
   sops.age.keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
   sops.secrets = {
-    "anthropic_api_key" = { sopsFile = "${private}/secrets/common.yaml"; };
-    "anthropic_base_url" = { sopsFile = "${private}/secrets/common.yaml"; };
-    "aws_access_key_id" = { sopsFile = "${private}/secrets/common.yaml"; };
-    "aws_secret_access_key" = { sopsFile = "${private}/secrets/common.yaml"; };
+    ...
   };
 }
 ```
@@ -85,10 +82,6 @@ creation_rules:
 
 ### Environment Export (zsh.nix)
 ```bash
-export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
-export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.anthropic_api_key.path})
-export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.anthropic_base_url.path})
-# AWS credentials managed via ~/.aws/config and ~/.aws/credentials files (see modules/aws.nix)
 ```
 
 ## Daily Usage

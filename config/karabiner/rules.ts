@@ -156,7 +156,7 @@ const rules: KarabinerRules[] = [
       d: shell`~/.nix-profile/bin/tmux switch-client -t dotfiles`,
       p: shell`~/.nix-profile/bin/tmux switch-client -t projects`,
       w: shell`~/.nix-profile/bin/tmux switch-client -t work`,
-      alone: app("Iterm"),
+      alone: app("kitty"),
     },
     v: {
       // Open git in side panel
