@@ -17,6 +17,8 @@
   programs.direnv.nix-direnv.enable = true;
   programs.direnv.config.global.log_filter = "^$";
 
+  fonts.fontconfig.enable = true;
+  
   home.packages = with pkgs; [
     fd
     zsh
@@ -33,8 +35,6 @@
     gh
     eza
     ffmpeg_7-full
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
     tesseract
 
     neovim

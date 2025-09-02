@@ -79,6 +79,12 @@
     pam-reattach
   ];
 
+  # System-wide fonts
+  fonts.packages = with pkgs; [
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+  ];
+
   nix-homebrew = {
     # Install Homebrew under the default prefix
     enable = true;
