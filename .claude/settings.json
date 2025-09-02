@@ -1,9 +1,30 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ls *)",
-      "Bash(touch *)",
-      "Bash(git *)"
+      "Edit(**)",
+      "Bash(curl:*)",
+      "Bash(cd:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(ln:*)",
+      "Bash(mkdir:*)",
+      "Bash(chmod:*)",
+      "Bash(find:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)",
+      "Bash(awk:*)",
+      "Bash(sed:*)",
+      "Bash(cat:*)",
+      "Bash(echo:*)",
+      "Bash(touch:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(rg:*)",
+      "Bash(open:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [
       "Bash(rm:-rf)"

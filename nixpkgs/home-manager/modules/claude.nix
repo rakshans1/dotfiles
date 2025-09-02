@@ -5,23 +5,23 @@
   home.file.".claude/statusline.sh" = {
     text = ''
       #!/bin/bash
-      
+
       # Read JSON input from stdin
       input=$(cat)
-      
+
       # Extract values from JSON
       current_dir=$(echo "$input" | jq -r '.workspace.current_dir')
       model_name=$(echo "$input" | jq -r '.model.display_name')
       cost=$(echo "$input" | jq -r '.cost.total_cost_usd // "0.00"')
       lines_added=$(echo "$input" | jq -r '.cost.total_lines_added // 0')
       lines_removed=$(echo "$input" | jq -r '.cost.total_lines_removed // 0')
-      
+
       # Replace home directory path with ~
       home_dir="$HOME"
       if [[ "$current_dir" == "$home_dir"* ]]; then
         current_dir="~''${current_dir#$home_dir}"
       fi
-      
+
       # Format lines with colors and +/- symbols
       lines_display=""
       if [ "$lines_added" -gt 0 ] || [ "$lines_removed" -gt 0 ]; then
@@ -37,7 +37,7 @@
       else
         lines_display="0"
       fi
-      
+
       # Format the output as a single line with separators
       printf "\033[2m%s ◊ %s | %s $%s\033[0m" "$current_dir" "$model_name" "$lines_display" "$cost"
     '';
@@ -53,6 +53,7 @@
         "deny": [
         ]
       },
+      "includeCoAuthoredBy": false,
       "env": {
         "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
         "DISABLE_AUTOUPDATER": "1"
