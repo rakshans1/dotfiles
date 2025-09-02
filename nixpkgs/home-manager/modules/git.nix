@@ -14,26 +14,26 @@
       };
 
       diff = {
-        tool = "meld";
+        tool = "smerge";
       };
 
       difftool = {
         prompt = false;
-        meld = {
+        smerge = {
           trustExitCode = true;
-          cmd = "open -W -a Meld --args \"$LOCAL\" \"$REMOTE\"";
+          cmd = "smerge mergetool \"$LOCAL\" \"$REMOTE\"";
         };
       };
 
       merge = {
-        tool = "meld";
+        tool = "smerge";
       };
 
       mergetool = {
         prompt = false;
-        meld = {
+        smerge = {
           trustExitCode = true;
-          cmd = "open -W -a Meld --args --auto-merge \"$LOCAL\" \"$BASE\" \"$REMOTE\" --output=\"$MERGED\"";
+          cmd = "smerge mergetool \"$LOCAL\" \"$BASE\" \"$REMOTE\" -o \"$MERGED\"";
         };
       };
 
@@ -85,5 +85,20 @@
       # IDEs stuff
       ".idea"
     ];
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+    };
+    extensions = [
+      pkgs.gh-contribs
+      pkgs.gh-notify
+    ];
+  };
+
+  programs.gh-dash = {
+    enable = true;
   };
 }

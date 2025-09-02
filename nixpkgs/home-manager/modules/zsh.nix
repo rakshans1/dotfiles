@@ -121,18 +121,13 @@
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
       # End Nix
-      eval "$(zoxide init zsh --cmd j)"
+            eval "$(zoxide init zsh --cmd j)"
       export DIRENV_LOG_FORMAT=""
 
-      export FZF_DEFAULT_COMMAND='fd --type file --hidden --follow --exclude .git'
-      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-      export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-        --color=fg:#C6C8D1,bg:#161821,hl:#89b8c2
-        --color=fg+:#d2d4de,bg+:#262626,hl+:#95c4ce
-        --color=info:#b4be82,prompt:#e27878,pointer:#a093c7
-        --color=marker:#c0ca8e,spinner:#ada0d3,header:#84a0c6
-      '
-      [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+      # Ensure fzf uses reverse layout for all widgets
+      export FZF_CTRL_R_OPTS="--layout=reverse"
+      export FZF_ALT_C_OPTS="--layout=reverse"
+
       export RIPGREP_CONFIG_PATH=~/.ripgreprc
 
       export MANPAGER='sh -c "col -bx | bat --language=man --style=grid --color=always --decorations=always --theme='"'Monokai Extended Light'"'"'
@@ -179,6 +174,16 @@
       ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=124"
 
       export PATH="$HOME/.local/bin:$PATH"
+
+      # Yazi shell wrapper for changing directory when exiting
+      # Ref: https://yazi-rs.github.io/docs/quick-start/
+      function y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d $'\0' cwd < "$tmp"
+        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+        rm -f -- "$tmp"
+      }
 
       # SOPS age key file location for automatic decryption
       export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"

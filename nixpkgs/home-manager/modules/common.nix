@@ -6,6 +6,8 @@
     ./git.nix
     ./ripgrep.nix
     ./bat.nix
+    ./fzf.nix
+    ./yazi.nix
     ./elixir.nix
     ./claude.nix
     ./lvim.nix
@@ -17,13 +19,17 @@
   programs.direnv.nix-direnv.enable = true;
   programs.direnv.config.global.log_filter = "^$";
 
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   fonts.fontconfig.enable = true;
-  
+
   home.packages = with pkgs; [
     fd
     zsh
     wget
-    fzf
     vivid
     bottom
     jq
@@ -31,8 +37,6 @@
     delta
     neofetch
     tealdeer
-    zoxide
-    gh
     eza
     ffmpeg_7-full
     tesseract
@@ -98,5 +102,8 @@
     pngpaste
     blueutil
   ] ++ lib.optionals stdenv.isLinux [
-  ] ++ [ aiTools.crush ];
+  ] ++ [
+    aiTools.crush
+    (pkgs.callPackage ./ccusage {})
+  ];
 }
