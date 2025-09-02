@@ -24,10 +24,15 @@
       "Bash(rg:*)",
       "Bash(open:*)",
       "Bash(rm:*)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "mcp__nixos"
     ],
     "deny": [
       "Bash(rm:-rf)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "nixos"
+  ]
 }
