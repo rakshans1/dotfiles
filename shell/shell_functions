@@ -246,7 +246,7 @@ function nix-switch() {
   local current_dir=$(pwd)
   local profile=$(nix-profile)
   cd ~/dotfiles
-  nix flake update --update-input private
+  nix flake update private
   home-manager switch --flake ".#$profile"
   nix build .#darwinConfigurations.$profile.system
   sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile

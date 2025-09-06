@@ -129,6 +129,7 @@
       "obsidian"
       "omnidisksweeper"
       "monitorcontrol"
+      "ghostty"
     ];
 
     # Mac App Store apps (requires mas CLI tool)

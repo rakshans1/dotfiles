@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     aiTools.url = "github:numtide/nix-ai-tools";
+    ghostty.url = "github:ghostty-org/ghostty";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +48,7 @@
         extraSpecialArgs = {
             pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
             aiTools = inputs.aiTools.packages.x86_64-linux;
+            ghostty = inputs.ghostty.packages.x86_64-linux;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
           };

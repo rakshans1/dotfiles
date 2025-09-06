@@ -100,5 +100,49 @@
 
   programs.gh-dash = {
     enable = true;
+    settings = {
+      smartFilteringAtLaunch = true;
+      prSections = [
+        {
+          title = "My Pull Requests";
+          filters = "is:open author:@me";
+          type = null;
+        }
+        {
+          title = "Needs My Review";
+          filters = "is:open review-requested:@me";
+          type = null;
+        }
+        {
+          title = "Involved";
+          filters = "is:open involves:@me -author:@me";
+          type = null;
+        }
+      ];
+      issuesSections = [
+        {
+          title = "My Issues";
+          filters = "is:open author:@me";
+        }
+        {
+          title = "Assigned";
+          filters = "is:open assignee:@me";
+        }
+        {
+          title = "Involved";
+          filters = "is:open involves:@me -author:@me";
+        }
+      ];
+      repo = {
+        branchesRefetchIntervalSeconds = 30;
+        prsRefetchIntervalSeconds = 60;
+      };
+      defaults = {
+        prsLimit = 20;
+        prApproveComment = "LGTM";
+        issuesLimit = 20;
+        view = "prs";
+      };
+    };
   };
 }

@@ -11,7 +11,7 @@
     ./elixir.nix
     ./claude.nix
     ./lvim.nix
-    ./kitty.nix
+    ./ghostty.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -94,6 +94,7 @@
 
     claude-code
     gemini-cli
+    codex
 
   ] ++ lib.optionals stdenv.isDarwin [
    # Mac App Store command line interface
