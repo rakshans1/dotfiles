@@ -39,7 +39,6 @@
     };
     neovim = {
       url = "path:./config/rvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
