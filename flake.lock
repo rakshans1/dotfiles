@@ -205,6 +205,23 @@
         "type": "github"
       }
     },
+    "neovim": {
+      "inputs": {
+        "nixCats": "nixCats",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./config/rvim",
+        "type": "path"
+      },
+      "original": {
+        "path": "./config/rvim",
+        "type": "path"
+      },
+      "parent": []
+    },
     "nix-homebrew": {
       "inputs": {
         "brew-src": "brew-src"
@@ -220,6 +237,21 @@
       "original": {
         "owner": "zhaofengli-wip",
         "repo": "nix-homebrew",
+        "type": "github"
+      }
+    },
+    "nixCats": {
+      "locked": {
+        "lastModified": 1756502124,
+        "narHash": "sha256-/9xOYR6gIj+ctwu5Nk8ggPasODdKScsInz319BOZjVc=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "8370bc49fd01c0f352db7b37a98ce890a56fee6d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
         "type": "github"
       }
     },
@@ -322,6 +354,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "neovim": "neovim",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_4",
         "nixpkgsUnstable": "nixpkgsUnstable",

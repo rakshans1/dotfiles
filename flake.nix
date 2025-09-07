@@ -37,6 +37,10 @@
       url = "git+file:///Users/rakshan/dotfiles/private";
       flake = false; # Treat as source, not a flake
     };
+    neovim = {
+      url = "path:./config/rvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, sops-nix, private, ... }: {
@@ -61,6 +65,7 @@
             aiTools = inputs.aiTools.packages.aarch64-darwin;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
+            neovim = inputs.neovim;
           };
       };
     };

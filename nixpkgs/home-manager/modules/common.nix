@@ -40,6 +40,7 @@
     eza
     ffmpeg_7-full
     tesseract
+    just
 
     neovim
     lunarvim
@@ -68,7 +69,7 @@
 
     duf
 
-    nixpkgs-fmt
+    nixfmt-classic
     nix-init
 
     awscli2
