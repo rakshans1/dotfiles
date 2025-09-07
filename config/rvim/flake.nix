@@ -28,6 +28,10 @@
       url = "github:jedrzejboczar/possession.nvim";
       flake = false;
     };
+    plugins-early-retirement-nvim = {
+      url = "github:chrisgrieser/nvim-early-retirement";
+      flake = false;
+    };
     plugins-maximize-nvim = {
       url = "github:declancm/maximize.nvim";
       flake = false;
@@ -35,58 +39,82 @@
   };
 
   # see :help nixCats.flake.outputs
-  outputs = { self, nixpkgs, ... }@inputs:
-    let
-      inherit (inputs.nixCats) utils;
-      luaPath = ./.;
-      forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
-      extra_pkg_config = { allowUnfree = true; };
-      dependencyOverlays = # (import ./overlays inputs) ++
-        [ (utils.standardPluginOverlay inputs) ];
-      categoryDefinitions = import ./categories.nix inputs;
-      packageDefinitions = import ./packages.nix inputs;
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    inherit (inputs.nixCats) utils;
+    luaPath = ./.;
+    forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+    extra_pkg_config = {allowUnfree = true;};
+    dependencyOverlays =
+      # (import ./overlays inputs) ++
+      [(utils.standardPluginOverlay inputs)];
+    categoryDefinitions = import ./categories.nix inputs;
+    packageDefinitions = import ./packages.nix inputs;
 
-      defaultPackageName = "rvim";
-    in forEachSystem (system:
-      let
-        nixCatsBuilder = utils.baseBuilder luaPath {
+    defaultPackageName = "rvim";
+  in
+    forEachSystem (system: let
+      nixCatsBuilder =
+        utils.baseBuilder luaPath {
           inherit nixpkgs system dependencyOverlays extra_pkg_config;
-        } categoryDefinitions packageDefinitions;
-        defaultPackage = nixCatsBuilder defaultPackageName;
+        }
+        categoryDefinitions
+        packageDefinitions;
+      defaultPackage = nixCatsBuilder defaultPackageName;
 
-        pkgs = import nixpkgs { inherit system; };
-      in {
-        packages = utils.mkAllWithDefault defaultPackage;
-        devShells = {
-          default = pkgs.mkShell {
-            name = defaultPackageName;
-            packages = [ defaultPackage ];
-            inputsFrom = [ ];
-            shellHook = "";
-          };
+      pkgs = import nixpkgs {inherit system;};
+    in {
+      packages = utils.mkAllWithDefault defaultPackage;
+      devShells = {
+        default = pkgs.mkShell {
+          name = defaultPackageName;
+          packages = [defaultPackage];
+          inputsFrom = [];
+          shellHook = "";
         };
-
-      }) // (let
-        nixosModule = utils.mkNixosModules {
-          moduleNamespace = [ defaultPackageName ];
-          inherit defaultPackageName dependencyOverlays luaPath
-            categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-        };
-        homeModule = utils.mkHomeModules {
-          moduleNamespace = [ defaultPackageName ];
-          inherit defaultPackageName dependencyOverlays luaPath
-            categoryDefinitions packageDefinitions extra_pkg_config nixpkgs;
-        };
-      in {
-        overlays = utils.makeOverlays luaPath {
+      };
+    })
+    // (let
+      nixosModule = utils.mkNixosModules {
+        moduleNamespace = [defaultPackageName];
+        inherit
+          defaultPackageName
+          dependencyOverlays
+          luaPath
+          categoryDefinitions
+          packageDefinitions
+          extra_pkg_config
+          nixpkgs
+          ;
+      };
+      homeModule = utils.mkHomeModules {
+        moduleNamespace = [defaultPackageName];
+        inherit
+          defaultPackageName
+          dependencyOverlays
+          luaPath
+          categoryDefinitions
+          packageDefinitions
+          extra_pkg_config
+          nixpkgs
+          ;
+      };
+    in {
+      overlays =
+        utils.makeOverlays luaPath {
           inherit nixpkgs dependencyOverlays extra_pkg_config;
-        } categoryDefinitions packageDefinitions defaultPackageName;
+        }
+        categoryDefinitions
+        packageDefinitions
+        defaultPackageName;
 
-        nixosModules.default = nixosModule;
-        homeModules.default = homeModule;
+      nixosModules.default = nixosModule;
+      homeModules.default = homeModule;
 
-        inherit homeModule;
-        inherit (utils) templates;
-      });
-
+      inherit homeModule;
+      inherit (utils) templates;
+    });
 }

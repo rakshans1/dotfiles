@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.tmux = {
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
@@ -86,10 +88,10 @@
       bind -n M-l select-pane -R
 
       # Use Alt-arrow keys without prefix key to switch panes
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
+      # bind -n M-Left select-pane -L
+      # bind -n M-Right select-pane -R
+      # bind -n M-Up select-pane -U
+      # bind -n M-Down select-pane -D
 
       # Quick pane cycling
       bind -r TAB select-pane -t :.+

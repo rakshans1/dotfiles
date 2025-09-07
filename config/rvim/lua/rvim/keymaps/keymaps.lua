@@ -33,8 +33,8 @@ map('n', '<Leader>uw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })
 map('n', '<Leader>us', '<cmd>set spell!<CR>', { desc = 'Toggle spell check' })
 
 -- Tab navigation
-map('n', '[t', '<cmd>tabprevious<CR>', { desc = 'Previous tab' })
-map('n', ']t', '<cmd>tabnext<CR>', { desc = 'Next tab' })
+map('n', 'gT', '<cmd>tabprevious<CR>', { desc = 'Previous tab' })
+map('n', 'gt', '<cmd>tabnext<CR>', { desc = 'Next tab' })
 
 -- Resize window with Ctrl + arrow keys
 map('n', '<C-Up>', '<cmd>resize +4<CR>', { desc = 'Increase window height' })

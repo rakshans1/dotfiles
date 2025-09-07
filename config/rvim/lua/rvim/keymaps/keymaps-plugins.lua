@@ -16,12 +16,6 @@ map(
 )
 map(
   'n',
-  'gt',
-  '<cmd>lua vim.lsp.buf.type_definition()<cr>',
-  { desc = 'Type [D]efinition' }
-)
-map(
-  'n',
   'gI',
   '<cmd>lua vim.lsp.buf.implementation()<cr>',
   { desc = 'Type [D]efinition' }

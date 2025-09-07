@@ -643,7 +643,7 @@ echo "✅ All tests passed!"
 
 - [nixcats Documentation](https://nixcats.org/nixCats_installation.html)
 - [nixcats GitHub Repository](https://github.com/BirdeeHub/nixCats-nvim)
-- [Example Implementation: nyanvim](https://github.com/dileep-kishore/nyanvim)
+- [Example Implementation: rvim](https://github.com/dileep-kishore/rvim)
 - [Home Manager Documentation](https://nix-community.github.io/home-manager/)
 - [Neovim Plugin Development](https://neovim.io/doc/user/lua-guide.html)
 

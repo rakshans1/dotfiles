@@ -31,6 +31,22 @@
         "type": "github"
       }
     },
+    "plugins-early-retirement-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1755842151,
+        "narHash": "sha256-tI5+260WOgiSbAMIxzgMtGYmX0y+VTBaadkUl74diZQ=",
+        "owner": "chrisgrieser",
+        "repo": "nvim-early-retirement",
+        "rev": "1a5b09db3874f9e2c5b3f332b372c8cc972370f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chrisgrieser",
+        "repo": "nvim-early-retirement",
+        "type": "github"
+      }
+    },
     "plugins-iceberg-nvim": {
       "flake": false,
       "locked": {
@@ -147,6 +163,7 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",
         "plugins-iceberg-nvim": "plugins-iceberg-nvim",
         "plugins-incline-nvim": "plugins-incline-nvim",
         "plugins-lze": "plugins-lze",

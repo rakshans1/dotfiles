@@ -10,7 +10,13 @@ end
 -- Snacks pickers (find) [f]
 map(
   'n',
-  '<leader>o',
+  '<leader>n',
+  '<cmd>lua Snacks.picker.explorer()<cr>',
+  { desc = 'Open Explorer' }
+)
+map(
+  'n',
+  '<leader>p',
   '<cmd>lua Snacks.picker.git_files({untracked=true})<cr>',
   { desc = 'Find git files' }
 )
@@ -185,12 +191,6 @@ map(
   '<leader>rr',
   '<cmd>lua Snacks.rename.rename_file()<cr>',
   { desc = 'Rename file' }
-)
-map(
-  'n',
-  '<leader>ns',
-  '<cmd>lua Snacks.scratch.select()<cr>',
-  { desc = 'Toggle scratch buffer' }
 )
 map(
   'n',
