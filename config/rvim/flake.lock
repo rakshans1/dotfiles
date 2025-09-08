@@ -95,6 +95,22 @@
         "type": "github"
       }
     },
+    "plugins-custom-theme-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1662979862,
+        "narHash": "sha256-bWvIKDjFPR4aYW8wyaH0tkC0tZSuDriPORj2hFuQwXo=",
+        "owner": "Djancyp",
+        "repo": "custom-theme.nvim",
+        "rev": "75b5535b70d2e3a33977598d0a89a4e6c1b56b1a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Djancyp",
+        "repo": "custom-theme.nvim",
+        "type": "github"
+      }
+    },
     "plugins-early-retirement-nvim": {
       "flake": false,
       "locked": {
@@ -244,6 +260,7 @@
         "lexical": "lexical",
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_2",
+        "plugins-custom-theme-nvim": "plugins-custom-theme-nvim",
         "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",
         "plugins-iceberg-nvim": "plugins-iceberg-nvim",
         "plugins-incline-nvim": "plugins-incline-nvim",

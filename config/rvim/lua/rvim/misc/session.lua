@@ -10,8 +10,8 @@ require('lze').load {
     end,
     after = function(_)
       require('possession').setup {
-        autosave = { current = true },
-        autoload = false,
+        autosave = { current = true, cwd = true },
+        autoload = 'auto_cwd',
         plugins = {
           delete_hidden_buffers = false,
         },

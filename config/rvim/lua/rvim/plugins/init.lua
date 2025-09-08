@@ -309,4 +309,11 @@ require('lze').load {
       require('maximize').setup {}
     end,
   },
+  {
+    'custom-theme-nvim',
+    event = { 'DeferredUIEnter' },
+    after = function(_)
+      require('custom-theme').setup {}
+    end,
+  },
 }

@@ -72,6 +72,7 @@ in
         render-markdown-nvim
         guess-indent-nvim
         vim-matchup
+        transparent-nvim
         pkgs.neovimPlugins.incline-nvim
         pkgs.neovimPlugins.iceberg-nvim
       ];
@@ -142,6 +143,7 @@ in
         pkgs.neovimPlugins.obsidian-nvim
         pkgs.neovimPlugins.possession-nvim
         pkgs.neovimPlugins.maximize-nvim
+        pkgs.neovimPlugins.custom-theme-nvim
       ];
     };
 

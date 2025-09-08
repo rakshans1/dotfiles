@@ -41,6 +41,10 @@
       url = "github:numToStr/Navigator.nvim";
       flake = false;
     };
+    plugins-custom-theme-nvim = {
+      url = "github:Djancyp/custom-theme.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

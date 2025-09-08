@@ -6,7 +6,6 @@ require('lze').load {
     after = function(_)
       require('copilot').setup {
         panel = { enabled = false },
-        copilot_model = 'gpt-4o-copilot',
         suggestion = {
           enabled = true,
           auto_trigger = true,

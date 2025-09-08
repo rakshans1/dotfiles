@@ -1,1 +1,1 @@
-require('rvim')
+require 'rvim'

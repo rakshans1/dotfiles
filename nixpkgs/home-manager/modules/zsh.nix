@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -38,7 +40,7 @@
       POWERLEVEL9K_HOST_ICON = "\uF109"; # 
       POWERLEVEL9K_HOST_ICON_FOREGROUND = "red";
       POWERLEVEL9K_HOST_ICON_BACKGROUND = "black";
-      POWERLEVEL9K_SSH_ICON = "\uF489";  # 
+      POWERLEVEL9K_SSH_ICON = "\uF489"; # 
 
       POWERLEVEL9K_DIR_HOME_BACKGROUND = "232";
       POWERLEVEL9K_DIR_HOME_FOREGROUND = "242";
@@ -65,14 +67,13 @@
       POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND = "23";
 
       POWERLEVEL9K_HIDE_BRANCH_ICON = true;
-
     };
 
     plugins = [
       {
-          name = "powerlevel10k";
-          src = pkgs.zsh-powerlevel10k;
-          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
       }
       {
         name = "git-open";
@@ -192,6 +193,7 @@
       export ANTHROPIC_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
       export OPENAI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export OPENAI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
+      export OPENAI_API_BASE=$(cat ${config.sops.secrets.llm_endpoint.path})
       export GEMINI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export GEMINI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
 
@@ -206,5 +208,4 @@
       fi
     '';
   };
-
 }

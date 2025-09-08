@@ -55,10 +55,6 @@ M.dashboard = {
   },
   sections = {
     {
-      section = 'header',
-      indent = -5,
-    },
-    {
       section = 'keys',
       gap = 1,
       padding = 1,
