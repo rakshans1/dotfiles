@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.tmux = {
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
@@ -17,7 +13,6 @@
       # Terminal overrides
       set -ga terminal-overrides ",*256col*:Tc"
       set -g status-keys vi
-      setw -g pane-base-index 1
       setw -g monitor-activity on
       set -g visual-activity off
 
@@ -81,17 +76,41 @@
       bind k select-pane -U
       bind l select-pane -R
 
-      # Use Alt-vim keys without prefix key to switch panes
-      bind -n M-h select-pane -L
-      bind -n M-j select-pane -D
-      bind -n M-k select-pane -U
-      bind -n M-l select-pane -R
+      vim_pattern='(\S+/)?g?\.?(view|l?n?r?vim?x?|fzf)(diff)?(-wrapped)?'
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+          | grep -iqE '^[^TXZ ]+ +'\"$vim_pattern\"'$'"
+      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+      tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+      bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'
 
-      # Use Alt-arrow keys without prefix key to switch panes
-      # bind -n M-Left select-pane -L
-      # bind -n M-Right select-pane -R
-      # bind -n M-Up select-pane -U
-      # bind -n M-Down select-pane -D
+      bind-key -T copy-mode-vi 'C-h' select-pane -L
+      bind-key -T copy-mode-vi 'C-j' select-pane -D
+      bind-key -T copy-mode-vi 'C-k' select-pane -U
+      bind-key -T copy-mode-vi 'C-l' select-pane -R
+      bind-key -T copy-mode-vi 'C-\' select-pane -R
+
+      # Use Alt-vim keys without prefix key to switch panes
+      # bind -n M-h select-pane -L
+      # bind -n M-j select-pane -D
+      # bind -n M-k select-pane -U
+      # bind -n M-l select-pane -R
+
+      # Unbind conflicting plugin keybindings
+      # unbind -n M-h
+      # unbind -n M-j
+      # unbind -n M-k
+      # unbind -n M-l
+      # unbind -n M-Up
+      # unbind -n M-Down
+      # unbind -n M-Left
+      # unbind -n M-Right
+      # unbind -n C-h
+      # unbind -n C-j
+      # unbind -n C-k
+      # unbind -n C-l
 
       # Quick pane cycling
       bind -r TAB select-pane -t :.+

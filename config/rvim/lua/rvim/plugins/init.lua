@@ -104,8 +104,38 @@ require('lze').load {
     end,
   },
   {
-    'vim-tmux-navigator',
+    'navigator-nvim',
+    cmd = { 'NavigatorLeft', 'NavigatorRight', 'NavigatorUp', 'NavigatorDown' },
     event = { 'DeferredUIEnter' },
+    keys = {
+      {
+        '<C-h>',
+        '<CMD>NavigatorLeft<CR>',
+        desc = 'Move to left pane',
+      },
+      {
+        '<C-j>',
+        '<CMD>NavigatorDown<CR>',
+        desc = 'Move to down pane',
+      },
+      {
+        '<C-k>',
+        '<CMD>NavigatorUp<CR>',
+        desc = 'Move to up pane',
+      },
+      {
+        '<C-l>',
+        '<CMD>NavigatorRight<CR>',
+        desc = 'Move to right pane',
+      },
+    },
+    after = function(_)
+      require('Navigator').setup {
+        auto_save = nil,
+        disable_on_zoom = true,
+        mux = 'auto',
+      }
+    end,
   },
   {
     'trouble.nvim',

@@ -14,19 +14,15 @@ end
 -- Disable Space (noop)
 map('n', '<Space>', '<Nop>')
 
--- -- Paste keymaps (HACK: Avoid being overwritten)
--- map('n', 'p', 'p')
--- map('n', 'P', 'P')
-
 -- Window splitting
 map('n', '<Leader>wv', '<cmd>vsplit<CR>', { desc = 'Vertical split' })
 map('n', '<Leader>ws', '<cmd>split<CR>', { desc = 'Horizontal split' })
 
 -- Window navigation
-map('n', '<C-h>', '<C-w>h', { desc = 'Move to the window on the left' })
-map('n', '<C-j>', '<C-w>j', { desc = 'Move to the window below' })
-map('n', '<C-k>', '<C-w>k', { desc = 'Move to the window above' })
-map('n', '<C-l>', '<C-w>l', { desc = 'Move to the window on the right' })
+-- map('n', '<C-h>', '<C-w>h', { desc = 'Move to the window on the left' })
+-- map('n', '<C-j>', '<C-w>j', { desc = 'Move to the window below' })
+-- map('n', '<C-k>', '<C-w>k', { desc = 'Move to the window above' })
+-- map('n', '<C-l>', '<C-w>l', { desc = 'Move to the window on the right' })
 
 -- Set/unset options
 map('n', '<Leader>uw', '<cmd>set wrap!<CR>', { desc = 'Toggle wrap' })
@@ -70,6 +66,9 @@ map('n', '<C-n>', '<cmd>nohl<CR>', { desc = 'Clear search highlight' })
 
 -- Save files
 map('n', '<C-s>', '<cmd>w<CR>', { desc = 'Save file' })
+
+-- Close files
+map('n', '<C-x>', '<cmd>q!<CR>', { desc = 'Close file' })
 
 -- Close buffers, windows and tabs
 map(

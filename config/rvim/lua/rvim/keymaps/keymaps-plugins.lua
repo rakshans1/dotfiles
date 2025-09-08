@@ -10,12 +10,6 @@ end
 -- LSP (keymaps)
 map(
   'n',
-  'gD',
-  '<cmd>lua vim.lsp.buf.references()<cr>',
-  { desc = '[G]oto [D]eclaration' }
-)
-map(
-  'n',
   'gI',
   '<cmd>lua vim.lsp.buf.implementation()<cr>',
   { desc = 'Type [D]efinition' }
@@ -75,6 +69,12 @@ map(
   'n',
   'gd',
   '<cmd>Lspsaga goto_definition<cr>',
+  { desc = 'Lspsaga goto definition' }
+)
+map(
+  'n',
+  'gD',
+  '<cmd>vsplit | lua vim.lsp.buf.definition()<cr>',
   { desc = 'Lspsaga goto definition' }
 )
 -- LSP (rename)

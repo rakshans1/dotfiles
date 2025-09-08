@@ -44,7 +44,18 @@ require('lze').load {
     'mini.move',
     event = { 'DeferredUIEnter' },
     after = function(_)
-      require('mini.move').setup {}
+      require('mini.move').setup {
+        mappings = {
+          left = '<S-h>',
+          right = '<S-l>',
+          up = '<S-k>',
+          down = '<S-j>',
+          line_left = '<S-h>',
+          line_right = '<S-l>',
+          line_down = '<S-j>',
+          line_up = '<S-k>',
+        },
+      }
     end,
   },
   {

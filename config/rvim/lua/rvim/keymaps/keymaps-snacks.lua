@@ -10,9 +10,21 @@ end
 -- Snacks pickers (find) [f]
 map(
   'n',
-  '<leader>n',
+  '<C-b>',
   '<cmd>lua Snacks.picker.explorer()<cr>',
   { desc = 'Open Explorer' }
+)
+map(
+  'n',
+  '<leader>n',
+  '<cmd>lua Snacks.picker.explorer()<cr>',
+  { desc = 'Open Explorer with leader' }
+)
+map(
+  'n',
+  '<C-p>',
+  '<cmd>lua Snacks.picker.git_files({untracked=true})<cr>',
+  { desc = 'Find git files' }
 )
 map(
   'n',
@@ -91,7 +103,7 @@ map(
 map(
   'n',
   '<leader>go',
-  '"<cmd>lua Snacks.gitbrowse()<CR>"',
+  '<cmd>lua Snacks.gitbrowse()<CR>',
   { desc = 'Git browse' }
 )
 

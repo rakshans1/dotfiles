@@ -101,7 +101,11 @@ servers.cssls = {}
 servers.html = {}
 
 servers.lexical = {
-  cmd = { "/Users/rakshan/projects/elixir/lexical/start_lexical.sh"}
+  filetypes = { 'elixir', 'eelixir', 'heex' },
+  cmd = { 'lexical' },
+  root_dir = function(fname)
+    return vim.fs.dirname(vim.fs.find({ 'mix.exs' }, { path = fname, upward = true })[1])
+  end,
 }
 
 return servers

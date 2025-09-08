@@ -34,6 +34,7 @@ in
         typescript-language-server
         rust-analyzer
         tailwindcss-language-server
+        lexical
 
         # formatters
         stylua
@@ -124,7 +125,6 @@ in
         img-clip-nvim
         vim-repeat
         outline-nvim
-        vim-tmux-navigator
         trouble-nvim
         todo-comments-nvim
         refactoring-nvim
@@ -137,6 +137,7 @@ in
         flash-nvim
         tiny-inline-diagnostic-nvim
         zen-mode-nvim
+        pkgs.neovimPlugins.navigator-nvim
         pkgs.neovimPlugins.early-retirement-nvim
         pkgs.neovimPlugins.obsidian-nvim
         pkgs.neovimPlugins.possession-nvim

@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+    lexical.url = "github:lexical-lsp/lexical";
     plugins-lze = {
       url = "github:BirdeeHub/lze";
       flake = false;
@@ -24,7 +25,7 @@
       url = "github:obsidian-nvim/obsidian.nvim";
       flake = false;
     };
-     plugins-possession-nvim = {
+    plugins-possession-nvim = {
       url = "github:jedrzejboczar/possession.nvim";
       flake = false;
     };
@@ -34,6 +35,10 @@
     };
     plugins-maximize-nvim = {
       url = "github:declancm/maximize.nvim";
+      flake = false;
+    };
+    plugins-navigator-nvim = {
+      url = "github:numToStr/Navigator.nvim";
       flake = false;
     };
   };

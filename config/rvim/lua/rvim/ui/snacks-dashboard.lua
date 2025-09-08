@@ -7,9 +7,9 @@ M.dashboard = {
     keys = {
       {
         icon = ' ',
-        key = 'f',
+        key = 'p',
         desc = 'Find File',
-        action = ':lua Snacks.picker.files()',
+        action = ':lua Snacks.picker.git_files()',
       },
       {
         icon = ' ',
