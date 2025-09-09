@@ -196,6 +196,8 @@
       export OPENAI_API_BASE=$(cat ${config.sops.secrets.llm_endpoint.path})
       export GEMINI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export GEMINI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
+      export AVANTE_OPENAI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
+      export AVANTE_ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
 
 
       # Cursor Agent integration: ensure command start/finish are detected

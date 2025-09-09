@@ -110,17 +110,6 @@ end, { silent = true, expr = true })
 --   end
 -- end, { silent = true, expr = true })
 
--- ChatGPT
-map('n', '<leader>cg', '<cmd>ChatGPT<cr>', { desc = 'ChatGPT' })
-map('n', '<leader>ca', '<cmd>ChatGPTActAs<cr>', { desc = 'ChatGPT act as' })
-map(
-  'v',
-  '<leader>ce',
-  '<cmd>ChatGPTEditWithInstruction<cr>',
-  { desc = 'ChatGPT edit with instruction' }
-)
-map('n', '<leader>cr', ':ChatGPTRun ', { desc = 'ChatGPT run' })
-
 -- sessions ([P]ossession)
 map(
   'n',

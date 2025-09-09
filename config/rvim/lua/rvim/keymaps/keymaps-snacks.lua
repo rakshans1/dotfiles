@@ -10,12 +10,6 @@ end
 -- Snacks pickers (find) [f]
 map(
   'n',
-  '<C-b>',
-  '<cmd>lua Snacks.picker.explorer({ hidden = true })<cr>',
-  { desc = 'Open Explorer' }
-)
-map(
-  'n',
   '<leader>n',
   '<cmd>lua Snacks.picker.explorer({ hidden = true })<cr>',
   { desc = 'Open Explorer with leader' }
@@ -40,15 +34,15 @@ map(
 )
 map(
   'n',
-  '<leader>ff',
-  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
-  { desc = 'Find files' }
-)
-map(
-  'n',
   '<leader>fb',
   '<cmd>lua Snacks.picker.buffers()<cr>',
   { desc = 'Find buffers' }
+)
+map(
+  'n',
+  '<leader>fr',
+  '<cmd>lua Snacks.picker.recents()<cr>',
+  { desc = 'Snacks marks' }
 )
 map(
   'n',
@@ -136,53 +130,58 @@ map(
 -- Snacks pickers (misc) [t]
 map(
   'n',
-  '<leader>tc',
+  '<leader>sc',
+  '<cmd>lua Snacks.picker.commands()<cr>',
+  { desc = 'Search command' }
+)
+map(
+  'n',
+  '<leader>sC',
   '<cmd>lua Snacks.picker.command_history()<cr>',
   { desc = 'Search command history' }
 )
 map(
   'n',
-  '<leader>tr',
+  '<leader>vr',
   '<cmd>lua Snacks.picker.registers()<cr>',
   { desc = 'Search registers' }
 )
 map(
   'n',
-  '<leader>tu',
+  '<leader>vu',
   '<cmd>lua Snacks.picker.undo()<cr>',
   { desc = 'Snacks undo' }
 )
 map(
   'n',
-  '<leader>th',
+  '<leader>sh',
   '<cmd>lua Snacks.picker.help()<cr>',
   { desc = 'Search help' }
 )
 map(
   'n',
-  '<leader>tH',
+  '<leader>vh',
   '<cmd>lua Snacks.picker.highlights()<cr>',
   { desc = 'Search highlights' }
 )
 map(
   'n',
-  '<leader>ti',
+  '<leader>vi',
   '<cmd>lua Snacks.picker.icons()<cr>',
   { desc = 'Search icons' }
 )
 map(
   'n',
-  '<leader>tk',
-  '<cmd>lua Snacks.picker.keymaps()<cr>',
-  { desc = 'Search keymaps' }
+  '<Leader>vn',
+  '<cmd>lua Snacks.notifier.show_history()<CR>',
+  { desc = 'View notifications' }
 )
 map(
   'n',
-  '<leader>ty',
-  '<cmd>YankyRingHistory<cr>',
-  { desc = 'Search yank history' }
+  '<leader>vk',
+  '<cmd>lua Snacks.picker.keymaps()<cr>',
+  { desc = 'Search keymaps' }
 )
-
 -- Snacks pickers (lsp) [l]
 map(
   'n',
@@ -192,27 +191,27 @@ map(
 )
 map(
   'n',
-  '<leader>ls',
+  '<leader>o',
   '<cmd>lua Snacks.picker.lsp_symbols()<cr>',
-  { desc = 'LSP symbols' }
+  { desc = 'Outline' }
 )
 
 -- Other keymaps
 map(
   'n',
-  '<leader>rr',
+  '<leader>fR',
   '<cmd>lua Snacks.rename.rename_file()<cr>',
   { desc = 'Rename file' }
 )
 map(
   'n',
-  '<leader>T',
-  '<cmd>lua Snacks.terminal.toggle()<cr>',
-  { desc = 'Toggle Snacks terminal' }
+  '<leader>r',
+  '<cmd>lua Snacks.picker.grep()<cr>',
+  { desc = 'Grep Search' }
 )
 map(
   'n',
-  '<Leader>tn',
-  '<cmd>lua Snacks.notifier.show_history()<CR>',
-  { desc = 'View notifications' }
+  '<leader>t',
+  '<cmd>lua Snacks.terminal.toggle()<cr>',
+  { desc = 'Toggle Snacks terminal' }
 )

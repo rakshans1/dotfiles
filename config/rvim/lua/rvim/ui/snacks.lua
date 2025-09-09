@@ -42,6 +42,8 @@ require('lze').load {
               keys = {
                 ['<S-k>'] = { 'history_back', mode = { 'n' } },
                 ['<S-j>'] = { 'history_forward', mode = { 'n' } },
+                ['t'] = { 'tab' },
+                ['v'] = { 'edit_vsplit' },
               },
             },
             list = {

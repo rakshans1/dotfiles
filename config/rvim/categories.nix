@@ -128,7 +128,6 @@ in
         outline-nvim
         trouble-nvim
         todo-comments-nvim
-        refactoring-nvim
         nvim-bqf
         marks-nvim
         markdown-preview-nvim

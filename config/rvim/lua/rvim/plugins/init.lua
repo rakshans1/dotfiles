@@ -209,33 +209,6 @@ require('lze').load {
     end,
   },
   {
-    'refactoring.nvim',
-    event = { 'DeferredUIEnter' },
-    keys = {
-      {
-        '<leader>re',
-        ':Refactor extract ',
-        mode = 'x',
-        desc = 'Extract function',
-      },
-      {
-        '<leader>rf',
-        ':Refactor extract_to_file ',
-        mode = 'x',
-        desc = 'Extract function to file',
-      },
-      {
-        '<leader>rv',
-        ':Refactor extract_var ',
-        mode = 'x',
-        desc = 'Extract variable',
-      },
-    },
-    after = function(_)
-      require('refactoring').setup {}
-    end,
-  },
-  {
     'nvim-bqf',
     after = function(_)
       require('bqf').setup {
