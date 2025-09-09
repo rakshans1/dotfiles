@@ -18,6 +18,7 @@ alias top="btm"
 alias s="subl"
 alias c="cursor ."
 alias ls="exa"
+alias cl="clear"
 
 case $( uname -s ) in
   Darwin)   ;;

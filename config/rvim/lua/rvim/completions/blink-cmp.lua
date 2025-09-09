@@ -17,16 +17,10 @@ require('lze').load {
     end,
     after = function(_)
       require('blink.cmp').setup {
-        appearance = { nerd_font_variant = 'normal' },
         snippets = { preset = 'mini_snippets' },
         keymap = {
           preset = 'enter',
-          ['<Tab>'] = {},
-          ['<S-Tab>'] = {},
-          ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
-          ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
-          ['<C-j>'] = { 'snippet_forward', 'fallback' },
-          ['<C-k>'] = { 'snippet_backward', 'fallback' },
+          -- ['<CR>'] = { 'accept', 'fallback' },
         },
         signature = {
           enabled = false,

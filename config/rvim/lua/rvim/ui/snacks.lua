@@ -36,7 +36,22 @@ require('lze').load {
           right = { 'fold', 'git' },
           folds = { open = true, git_hl = true },
         },
-        picker = {},
+        picker = {
+          win = {
+            input = {
+              keys = {
+                ['<S-k>'] = { 'history_back', mode = { 'n' } },
+                ['<S-j>'] = { 'history_forward', mode = { 'n' } },
+              },
+            },
+            list = {
+              keys = {
+                ['t'] = { 'tab' },
+                ['v'] = { 'edit_vsplit' },
+              },
+            },
+          },
+        },
       }
     end,
   },
