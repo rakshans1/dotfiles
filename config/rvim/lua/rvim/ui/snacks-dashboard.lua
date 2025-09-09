@@ -6,22 +6,10 @@ M.dashboard = {
   preset = {
     keys = {
       {
-        icon = ' ',
-        key = 'p',
-        desc = 'Find File',
-        action = ':lua Snacks.picker.git_files()',
-      },
-      {
         icon = ' ',
         key = 'n',
         desc = 'New File',
         action = ':ene | startinsert',
-      },
-      {
-        icon = ' ',
-        key = 'g',
-        desc = 'Find Text',
-        action = ':lua Snacks.picker.grep()',
       },
       {
         icon = ' ',

@@ -11,25 +11,25 @@ end
 map(
   'n',
   '<C-b>',
-  '<cmd>lua Snacks.picker.explorer()<cr>',
+  '<cmd>lua Snacks.picker.explorer({ hidden = true })<cr>',
   { desc = 'Open Explorer' }
 )
 map(
   'n',
   '<leader>n',
-  '<cmd>lua Snacks.picker.explorer()<cr>',
+  '<cmd>lua Snacks.picker.explorer({ hidden = true })<cr>',
   { desc = 'Open Explorer with leader' }
 )
 map(
   'n',
   '<C-p>',
-  '<cmd>lua Snacks.picker.git_files({untracked=true})<cr>',
+  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
   { desc = 'Find git files' }
 )
 map(
   'n',
   '<leader>p',
-  '<cmd>lua Snacks.picker.git_files({untracked=true})<cr>',
+  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
   { desc = 'Find git files' }
 )
 map(
@@ -41,7 +41,7 @@ map(
 map(
   'n',
   '<leader>ff',
-  '<cmd>lua Snacks.picker.files()<cr>',
+  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
   { desc = 'Find files' }
 )
 map(
@@ -53,7 +53,7 @@ map(
 map(
   'n',
   '<leader>fg',
-  '<cmd>lua Snacks.picker.git_files()<cr>',
+  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
   { desc = 'Find git files' }
 )
 map(

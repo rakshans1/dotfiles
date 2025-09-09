@@ -40,6 +40,7 @@ require('lze').load {
           markdown = { 'prettierd' },
           typst = { 'typstyle' },
           kdl = { 'kdlfmt' },
+          elixir = { 'mix' },
           -- run formatters on filetypes that don't have other formatters configured.
           ['_'] = { 'trim_newlines', 'trim_whitespace' },
           -- Uncomment the following to run formatters on all filetypes.
