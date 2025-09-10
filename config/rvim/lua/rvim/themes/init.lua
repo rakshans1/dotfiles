@@ -15,4 +15,11 @@ vim.defer_fn(function()
   vim.api.nvim_set_hl(0, 'Pmenu', { fg = '#c7c9d1', bg = nil })
   vim.api.nvim_set_hl(0, 'PmenuSel', { fg = '#c7c9d1', bg = '#1f2233' })
   vim.api.nvim_set_hl(0, 'SnacksPickerTree', { fg = '#454d73', bg = nil })
+  vim.api.nvim_set_hl(
+    0,
+    'RenderMarkdownCodeBorder',
+    { fg = nil, bg = '#161822' }
+  )
+  vim.api.nvim_set_hl(0, 'RenderMarkdownH1', { fg = nil, bg = '#161822' })
+  vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', { fg = nil, bg = '#161822' })
 end, 100)

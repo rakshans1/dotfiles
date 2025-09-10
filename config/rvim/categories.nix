@@ -139,7 +139,6 @@ in
         zen-mode-nvim
         pkgs.neovimPlugins.navigator-nvim
         pkgs.neovimPlugins.early-retirement-nvim
-        pkgs.neovimPlugins.obsidian-nvim
         pkgs.neovimPlugins.possession-nvim
         pkgs.neovimPlugins.maximize-nvim
         pkgs.neovimPlugins.custom-theme-nvim

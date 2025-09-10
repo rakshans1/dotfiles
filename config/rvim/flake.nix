@@ -21,10 +21,6 @@
       url = "github:b0o/incline.nvim";
       flake = false;
     };
-    plugins-obsidian-nvim = {
-      url = "github:obsidian-nvim/obsidian.nvim";
-      flake = false;
-    };
     plugins-possession-nvim = {
       url = "github:jedrzejboczar/possession.nvim";
       flake = false;
