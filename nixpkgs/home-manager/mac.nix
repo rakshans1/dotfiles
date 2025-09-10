@@ -1,4 +1,4 @@
-{ config, pkgs, home-manager, sops-nix, ... }:
+{ config, pkgs, home-manager, sops-nix, neovim, ... }:
 
 {
   imports = [
@@ -8,6 +8,7 @@
     ./modules/sops.nix
     ./modules/aws.nix
     ./modules/kubernetes.nix
+    ./modules/rvim.nix
     sops-nix.homeManagerModules.sops
   ];
 

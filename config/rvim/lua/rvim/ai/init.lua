@@ -1,0 +1,1 @@
+require 'rvim.ai.avante'

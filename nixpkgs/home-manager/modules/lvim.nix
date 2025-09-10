@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-{
+{...}: {
   home.file.".config/lvim/config.lua".text = ''
     vim.opt.shiftwidth = 2
     vim.opt.tabstop = 2

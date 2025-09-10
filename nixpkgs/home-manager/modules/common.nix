@@ -1,6 +1,10 @@
-{ config, pkgs, pkgsUnstable, aiTools, ... }:
 {
-
+  config,
+  pkgs,
+  pkgsUnstable,
+  aiTools,
+  ...
+}: {
   imports = [
     ./zsh.nix
     ./git.nix
@@ -26,85 +30,92 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [
-    fd
-    zsh
-    wget
-    vivid
-    bottom
-    jq
-    gnupg
-    delta
-    neofetch
-    tealdeer
-    eza
-    ffmpeg_7-full
-    tesseract
+  home.packages = with pkgs;
+    [
+      fd
+      zsh
+      wget
+      vivid
+      bottom
+      jq
+      gnupg
+      delta
+      neofetch
+      tealdeer
+      eza
+      tree
+      ffmpeg_7-full
+      tesseract
+      just
+      lazygit
 
-    neovim
-    lunarvim
+      neovim
+      lunarvim
 
-    nodejs_22
-    nodePackages.eslint_d
-    nodePackages.serve
-    nodePackages.tailwindcss
+      nodejs_22
+      nodePackages.eslint_d
+      nodePackages.serve
+      nodePackages.tailwindcss
 
-    rustc
-    cargo
-    rustfmt
-    cargo-sweep
+      rustc
+      cargo
+      rustfmt
+      cargo-sweep
 
-    k9s
+      k9s
 
-    yt-dlp
-    speedtest-cli
+      yt-dlp
+      speedtest-cli
 
-    tokei
-    yarn
+      tokei
+      yarn
 
-    glow
-    gum
-    vhs
+      glow
+      gum
+      vhs
 
-    duf
+      duf
 
-    nixpkgs-fmt
-    nix-init
+      nixfmt-classic
+      nix-init
 
-    awscli2
-    caddy
-    cloudflared
+      awscli2
+      caddy
+      cloudflared
 
-    ollama
+      ollama
 
-    kubectl
+      kubectl
 
-    exiftool
-    age
-    sops
-    ssh-to-age
+      exiftool
+      age
+      sops
+      ssh-to-age
 
-    (python3.withPackages (
-      ps: with ps; [
-        llm
-        llm-gemini
-        llm-ollama
-      ]
-    ))
+      (python3.withPackages (
+        ps:
+          with ps; [
+            llm
+            llm-gemini
+            llm-ollama
+          ]
+      ))
 
-    claude-code
-    gemini-cli
-    codex
-
-  ] ++ lib.optionals stdenv.isDarwin [
-   # Mac App Store command line interface
-    mas
-    coreutils
-    pngpaste
-    blueutil
-  ] ++ lib.optionals stdenv.isLinux [
-  ] ++ [
-    aiTools.crush
-    (pkgs.callPackage ./ccusage {})
-  ];
+      claude-code
+      gemini-cli
+      codex
+    ]
+    ++ lib.optionals stdenv.isDarwin [
+      # Mac App Store command line interface
+      mas
+      coreutils
+      pngpaste
+      blueutil
+    ]
+    ++ lib.optionals stdenv.isLinux [
+    ]
+    ++ [
+      aiTools.crush
+      (pkgs.callPackage ./ccusage {})
+    ];
 }

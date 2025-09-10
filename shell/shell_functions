@@ -247,6 +247,7 @@ function nix-switch() {
   local profile=$(nix-profile)
   cd ~/dotfiles
   nix flake update private
+  nix flake update neovim
   home-manager switch --flake ".#$profile"
   nix build .#darwinConfigurations.$profile.system
   sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile

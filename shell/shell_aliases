@@ -5,8 +5,8 @@
 # For a full list of active aliases, run `alias`.
 
 # Shortcuts
-alias nvim=lvim
-alias v="nvim"
+alias nvim=rvim
+alias v="rvim"
 alias vim="nvim"
 alias t="tmux"
 alias x+="chmod +x"
@@ -18,6 +18,7 @@ alias top="btm"
 alias s="subl"
 alias c="cursor ."
 alias ls="exa"
+alias cl="clear"
 
 case $( uname -s ) in
   Darwin)   ;;
@@ -41,3 +42,8 @@ alias fs="ls -sh"
 
 # zshrc config
 alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"
+
+alias yolo-claude="claude --dangerously-skip-permissions"
+alias yolo-codex="codex --dangerously-bypass-approvals-and-sandbox --model gpt-5-high"
+alias :q="exit"
+alias :c="clear"

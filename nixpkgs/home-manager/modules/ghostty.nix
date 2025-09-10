@@ -1,11 +1,18 @@
-{ config, pkgs, ghostty ? null, lib, ... }:
-
 {
+  pkgs,
+  ghostty ? null,
+  lib,
+  ...
+}: {
   # Package installation:
   # - Linux: Install via Nix (flake or nixpkgs)
   # - macOS: No installation here (managed by Homebrew in darwin config)
   home.packages = lib.optionals pkgs.stdenv.isLinux [
-    (if ghostty != null then ghostty.default else pkgs.ghostty)
+    (
+      if ghostty != null
+      then ghostty.default
+      else pkgs.ghostty
+    )
   ];
 
   # Ghostty configuration file
