@@ -1,8 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-
-
 -- Clipboard
 vim.opt.clipboard = { 'unnamedplus' }
 
@@ -31,6 +29,7 @@ vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.o.timeoutlen = 300
 vim.opt.writebackup = false
+vim.opt.autoread = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.number = true
@@ -63,3 +62,13 @@ vim.opt.sessionoptions =
 -- Undercurl
 vim.cmd [[let &t_Cs = "\e[4:3m"]]
 vim.cmd [[let &t_Ce = "\e[4:0m"]]
+
+-- Auto-reload files when changed externally
+vim.api.nvim_create_autocmd(
+  { 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI' },
+  {
+    pattern = '*',
+    command = "if mode() != 'c' | checktime | endif",
+  }
+)
+

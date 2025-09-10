@@ -42,3 +42,8 @@ alias fs="ls -sh"
 
 # zshrc config
 alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"
+
+alias yolo-claude="claude --dangerously-skip-permissions"
+alias yolo-codex="codex --dangerously-bypass-approvals-and-sandbox --model gpt-5-high"
+alias :q="exit"
+alias :c="clear"

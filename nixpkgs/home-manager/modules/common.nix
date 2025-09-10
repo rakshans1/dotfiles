@@ -43,6 +43,7 @@
       neofetch
       tealdeer
       eza
+      tree
       ffmpeg_7-full
       tesseract
       just

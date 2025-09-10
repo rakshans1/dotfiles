@@ -272,6 +272,34 @@ const rules: KarabinerRules[] = [
 				to: [{ key_code: "n", modifiers: ["left_control"] }],
 				type: "basic",
 			},
+			{
+				conditions: [
+					{
+						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+						type: "frontmost_application_if",
+					},
+				],
+				from: {
+					key_code: "d",
+					modifiers: { mandatory: ["left_command"] },
+				},
+				to: [{ key_code: "d", modifiers: ["left_control"] }],
+				type: "basic",
+			},
+			{
+				conditions: [
+					{
+						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+						type: "frontmost_application_if",
+					},
+				],
+				from: {
+					key_code: "u",
+					modifiers: { mandatory: ["left_command"] },
+				},
+				to: [{ key_code: "u", modifiers: ["left_control"] }],
+				type: "basic",
+			},
 		],
 	},
 	...createHyperSubLayers({
