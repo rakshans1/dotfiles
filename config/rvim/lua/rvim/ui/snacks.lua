@@ -36,6 +36,10 @@ require('lze').load {
           right = { 'fold', 'git' },
           folds = { open = true, git_hl = true },
         },
+        terminal = {
+          enabled = true,
+          win = { position = 'float' },
+        },
         picker = {
           win = {
             input = {

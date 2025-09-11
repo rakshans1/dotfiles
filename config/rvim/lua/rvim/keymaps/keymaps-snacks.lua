@@ -209,3 +209,23 @@ map(
   '<cmd>lua Snacks.picker.grep()<cr>',
   { desc = 'Grep Search' }
 )
+
+-- Snacks terminal keymaps [t]
+-- map(
+--   'n',
+--   '<leader>tt',
+--   '<cmd>lua Snacks.terminal()<cr>',
+--   { desc = 'Toggle Terminal' }
+-- )
+-- map(
+--   { 'n', 't' },
+--   '\\',
+--   '<cmd>lua Snacks.terminal()<cr>',
+--   { desc = 'Open Terminal in Tab' }
+-- )
+-- map(
+--   'n',
+--   '<leader>tn',
+--   '<cmd>lua Snacks.terminal.open(nil, { win = { position = "bottom" } })<cr>',
+--   { desc = 'Open Terminal in Split' }
+-- )

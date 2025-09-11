@@ -3,11 +3,11 @@ require('lze').load {
     'neotest',
     keys = {
       {
-        '<leader>tn',
+        '<leader>tc',
         function()
           require('neotest').run.run()
         end,
-        desc = 'Test nearest',
+        desc = 'Test Current',
       },
       {
         '<leader>tf',
@@ -54,4 +54,3 @@ require('lze').load {
     end,
   },
 }
-

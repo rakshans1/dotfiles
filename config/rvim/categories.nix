@@ -139,6 +139,7 @@ in
         zen-mode-nvim
         neotest
         neotest-elixir
+        toggleterm-nvim
         pkgs.neovimPlugins.navigator-nvim
         pkgs.neovimPlugins.early-retirement-nvim
         pkgs.neovimPlugins.possession-nvim
