@@ -209,9 +209,3 @@ map(
   '<cmd>lua Snacks.picker.grep()<cr>',
   { desc = 'Grep Search' }
 )
-map(
-  'n',
-  '<leader>t',
-  '<cmd>lua Snacks.terminal.toggle()<cr>',
-  { desc = 'Toggle Snacks terminal' }
-)

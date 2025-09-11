@@ -137,6 +137,8 @@ in
         flash-nvim
         tiny-inline-diagnostic-nvim
         zen-mode-nvim
+        neotest
+        neotest-elixir
         pkgs.neovimPlugins.navigator-nvim
         pkgs.neovimPlugins.early-retirement-nvim
         pkgs.neovimPlugins.possession-nvim

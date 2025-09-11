@@ -9,6 +9,7 @@ require('lze').load {
         'nvim-treesitter-textobjects',
         'treesitter-context',
         'nvim-ts-autotag',
+        'nvim-treesitter-endwise',
       }
     end,
     after = function(_)
@@ -16,6 +17,7 @@ require('lze').load {
         highlight = { enable = true },
         indent = { enable = false },
         matchup = { enable = true },
+        endwise = { enable = true },
         incremental_selection = {
           enable = true,
           keymaps = {

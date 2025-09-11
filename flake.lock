@@ -256,7 +256,6 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-maximize-nvim": "plugins-maximize-nvim",
         "plugins-navigator-nvim": "plugins-navigator-nvim",
-        "plugins-obsidian-nvim": "plugins-obsidian-nvim",
         "plugins-possession-nvim": "plugins-possession-nvim"
       },
       "locked": {
@@ -543,22 +542,6 @@
       "original": {
         "owner": "numToStr",
         "repo": "Navigator.nvim",
-        "type": "github"
-      }
-    },
-    "plugins-obsidian-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1757223618,
-        "narHash": "sha256-kjCnoCs//8yRGayS4NcgESjkiiLVhOCraixGFa0mXo4=",
-        "owner": "obsidian-nvim",
-        "repo": "obsidian.nvim",
-        "rev": "68d4f41bb4a696cdee6c624de52ce0c5c2f3805c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "obsidian-nvim",
-        "repo": "obsidian.nvim",
         "type": "github"
       }
     },

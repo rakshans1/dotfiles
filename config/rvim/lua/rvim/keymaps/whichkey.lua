@@ -28,7 +28,7 @@ require('lze').load {
         { '<leader>p', group = '+Pos[session]' },
         { '<Leader>q', group = '+Close' },
         { '<leader>s', group = '+Search' },
-        { '<leader>t', group = '+Terminal' },
+        -- { '<leader>t', group = '+Terminal' },
         { '<leader>v', group = '+Vim' },
         { '<leader>u', group = '+Misc.' },
         { '<leader>x', group = '+Trouble' },
