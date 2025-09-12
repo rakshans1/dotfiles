@@ -266,6 +266,20 @@ const rules: KarabinerRules[] = [
 					},
 				],
 				from: {
+					key_code: "backslash",
+					modifiers: { mandatory: ["left_command"] },
+				},
+				to: [{ key_code: "backslash", modifiers: ["left_control"] }],
+				type: "basic",
+			},
+			{
+				conditions: [
+					{
+						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+						type: "frontmost_application_if",
+					},
+				],
+				from: {
 					key_code: "n",
 					modifiers: { mandatory: ["left_command"] },
 				},

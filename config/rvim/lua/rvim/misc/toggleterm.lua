@@ -1,4 +1,3 @@
-local backslash_timer
 local esc_timer
 
 require('lze').load {
@@ -15,17 +14,17 @@ require('lze').load {
     },
     keys = {
       {
+        '<C-\\>',
+        '<cmd>ToggleTerm direction=tab<cr>',
+        desc = 'Toggle Terminal',
+      },
+      {
         '<leader>tt',
         '<cmd>ToggleTerm direction=tab<cr>',
         desc = 'Toggle Terminal',
       },
       {
-        '\\',
-        '<cmd>ToggleTerm direction=tab<cr>',
-        desc = 'Double backslash to toggle terminal',
-      },
-      {
-        '<leader>tN',
+        '<leader>tn',
         '<cmd>TermNew direction=horizontal<cr>',
         desc = 'New Terminal (Horizontal)',
       },
