@@ -14,9 +14,14 @@ require('lze').load {
         provider = 'copilot',
         mode = 'agentic',
         providers = {
-          copilot = { model = 'gpt-4.1' },
-          openai = { model = 'gpt-4.1' },
-          claude = { model = 'claude-4-sonnet' },
+          openai = {
+            endpoint = os.getenv 'AVANTE_API_ENDPOINT',
+            model = 'gpt-4.1',
+          },
+          claude = {
+            endpoint = os.getenv 'AVANTE_API_ENDPOINT',
+            model = 'claude-4-sonnet',
+          },
         },
         behavior = {
           auto_suggestions = false,

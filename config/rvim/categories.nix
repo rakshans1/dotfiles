@@ -35,6 +35,7 @@ in
         rust-analyzer
         tailwindcss-language-server
         lexical
+        marksman
 
         # formatters
         stylua
@@ -117,13 +118,11 @@ in
         treesj
         nvim-autopairs
         copilot-lua
-        neogen
         avante-nvim
         ChatGPT-nvim
         wtf-nvim
         ssr-nvim
         grug-far-nvim
-        img-clip-nvim
         vim-repeat
         outline-nvim
         trouble-nvim
@@ -140,6 +139,8 @@ in
         neotest
         neotest-elixir
         toggleterm-nvim
+        nvim-scissors
+        pkgs.neovimPlugins.timber-nvim
         pkgs.neovimPlugins.navigator-nvim
         pkgs.neovimPlugins.early-retirement-nvim
         pkgs.neovimPlugins.possession-nvim

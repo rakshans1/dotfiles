@@ -1,0 +1,22 @@
+15:20:42.002 [error] Shutting down
+15:20:42.026 [warning] Received an Exit notification. Halting the server in 150ms
+15:20:42.026 [debug] Child :timer_server of Supervisor :kernel_sup started
+Pid: #PID<0.1495.0>
+Start Call: :timer.start_link()
+Restart: :permanent
+Shutdown: 1000
+Type: :worker
+15:20:42.038 [error] stdio received :eof, server will stop.
+15:20:42.038 [error] Child LXical.Server.Transport.StdIO of Supervisor LXical.Server.Supervisor terminated
+** (exit) normal
+Pid: #PID<0.1492.0>
+Start Call: LXical.Server.Transport.StdIO.start_link(:standard_io, &LXical.Server.protocol_message/1)
+Restart: :permanent
+Shutdown: 5000
+Type: :worker
+15:20:42.038 [info] Child LXical.Server.Transport.StdIO of Supervisor LXical.Server.Supervisor started
+Pid: #PID<0.1496.0>
+Start Call: LXical.Server.Transport.StdIO.start_link(:standard_io, &LXical.Server.protocol_message/1)
+Restart: :permanent
+Shutdown: 5000
+Type: :worker

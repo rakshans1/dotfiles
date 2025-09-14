@@ -269,3 +269,7 @@ function karabiner-build() {
   yarn build
   cd $current_dir
 }
+
+function nix-size() {
+  nix path-info --json --all | jq 'map(.narSize) | add | . / 1000000000'
+}

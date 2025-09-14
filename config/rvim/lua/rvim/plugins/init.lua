@@ -47,26 +47,6 @@ require('lze').load {
     end,
   },
   {
-    'img-clip.nvim',
-    event = { 'DeferredUIEnter' },
-    keys = {
-      {
-        '<leader>P',
-        '<cmd>PasteImage<cr>',
-        desc = 'Paste image from clipboard',
-      },
-    },
-    after = function(_)
-      require('img-clip').setup {
-        default = {
-          dir_path = 'assets',
-          relative_to_current_file = false,
-          show_dir_path_in_prompt = true,
-        },
-      }
-    end,
-  },
-  {
     'vim-repeat',
   },
   {
@@ -280,6 +260,35 @@ require('lze').load {
     },
     after = function(_)
       require('maximize').setup {}
+    end,
+  },
+  {
+    'nvim-scissors',
+    cmd = { 'ScissorsAddNewSnippet', 'ScissorsEditSnippet' },
+    keys = {
+      {
+        '<leader>se',
+        '<cmd>ScissorsEditSnippet<CR>',
+        desc = 'Edit snippet',
+      },
+      {
+        '<leader>sa',
+        '<cmd>ScissorsAddNewSnippet<CR>',
+        desc = 'Add new snippet',
+      },
+    },
+    after = function(_)
+      local snippetDir = vim.fn.expand '~/dotfiles/config/rvim/snippets'
+      require('scissors').setup {
+        snippetDir = snippetDir,
+      }
+    end,
+  },
+  {
+    'timber-nvim',
+    event = { 'DeferredUIEnter' },
+    after = function(_)
+      require('timber').setup {}
     end,
   },
   -- {

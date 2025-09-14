@@ -15,6 +15,8 @@ vim.defer_fn(function()
   vim.api.nvim_set_hl(0, 'Pmenu', { fg = '#c7c9d1', bg = nil })
   vim.api.nvim_set_hl(0, 'PmenuSel', { fg = '#c7c9d1', bg = '#1f2233' })
   vim.api.nvim_set_hl(0, 'SnacksPickerTree', { fg = '#454d73', bg = nil })
+  vim.api.nvim_set_hl(0, 'SnacksPickerDir', { fg = '#6c7189', bg = nil })
+  vim.api.nvim_set_hl(0, 'SnacksDashboardDir', { fg = '#6c7189', bg = nil })
   vim.api.nvim_set_hl(
     0,
     'RenderMarkdownCodeBorder',

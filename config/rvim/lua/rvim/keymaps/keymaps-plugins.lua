@@ -79,10 +79,6 @@ map(
 )
 -- LSP (rename)
 map('n', '<Leader>lr', ':IncRename ', { desc = 'Incremental rename' })
--- LSP (documentation generation)
-map('n', '<Leader>lg', "<cmd>lua require('neogen').generate()<CR>", {
-  desc = 'Generate documentation (neogen)',
-})
 -- Getting highlights at cursor
 map(
   'n',

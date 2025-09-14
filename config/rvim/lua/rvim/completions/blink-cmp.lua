@@ -20,7 +20,6 @@ require('lze').load {
         snippets = { preset = 'mini_snippets' },
         keymap = {
           preset = 'enter',
-          -- ['<CR>'] = { 'accept', 'fallback' },
         },
         signature = {
           enabled = false,
@@ -129,6 +128,11 @@ require('lze').load {
               should_show_items = function(ctx)
                 return ctx.trigger.initial_kind ~= 'trigger_character'
               end,
+              opts = {
+                search_paths = {
+                  vim.fn.expand '~/dotfiles/config/rvim/snippets',
+                },
+              },
             },
             lazydev = {
               name = 'LazyDev',

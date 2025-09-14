@@ -256,7 +256,8 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-maximize-nvim": "plugins-maximize-nvim",
         "plugins-navigator-nvim": "plugins-navigator-nvim",
-        "plugins-possession-nvim": "plugins-possession-nvim"
+        "plugins-possession-nvim": "plugins-possession-nvim",
+        "plugins-timber-nvim": "plugins-timber-nvim"
       },
       "locked": {
         "path": "./config/rvim",
@@ -558,6 +559,22 @@
       "original": {
         "owner": "jedrzejboczar",
         "repo": "possession.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-timber-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753062721,
+        "narHash": "sha256-K2/V855oL2OK5EyGnZFx2ihsVahJ4yWlo5L38e6Z/bQ=",
+        "owner": "Goose97",
+        "repo": "timber.nvim",
+        "rev": "d32f10e30c1056861c412a00a028869538998e30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Goose97",
+        "repo": "timber.nvim",
         "type": "github"
       }
     },

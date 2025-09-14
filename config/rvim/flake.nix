@@ -41,6 +41,10 @@
       url = "github:Djancyp/custom-theme.nvim";
       flake = false;
     };
+    plugins-timber-nvim = {
+      url = "github:Goose97/timber.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
