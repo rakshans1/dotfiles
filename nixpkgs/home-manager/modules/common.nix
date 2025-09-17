@@ -38,6 +38,8 @@
       vivid
       bottom
       jq
+      jqp
+      yq
       gnupg
       delta
       neofetch
