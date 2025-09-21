@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
-    lexical.url = "github:lexical-lsp/lexical";
+    expert.url = "github:elixir-lang/expert";
     plugins-lze = {
       url = "github:BirdeeHub/lze";
       flake = false;

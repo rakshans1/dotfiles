@@ -19,6 +19,7 @@ alias s="subl"
 alias c="cursor ."
 alias ls="exa"
 alias cl="clear"
+alias r=just
 
 case $( uname -s ) in
   Darwin)   ;;
@@ -44,6 +45,7 @@ alias fs="ls -sh"
 alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"
 
 alias yolo-claude="claude --dangerously-skip-permissions"
-alias yolo-codex="codex --dangerously-bypass-approvals-and-sandbox --model gpt-5-high"
+# alias yolo-codex='codex -m gpt-5-codex -c model_reasoning_effort="high" --yolo --search'
+alias yolo-codex='codex -m gpt-5 -c model_reasoning_effort="high" --yolo --search'
 alias :q="exit"
 alias :c="clear"

@@ -40,6 +40,10 @@
     neovim = {
       url = "path:./config/rvim";
     };
+    expert = {
+      url = "github:elixir-lang/expert";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, sops-nix, private, ... }: {
@@ -49,7 +53,10 @@
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
         modules = [ ./nixpkgs/home-manager/linux.nix ];
         extraSpecialArgs = {
-            pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.x86_64-linux;
+            pkgsUnstable = import inputs.nixpkgsUnstable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
             aiTools = inputs.aiTools.packages.x86_64-linux;
             ghostty = inputs.ghostty.packages.x86_64-linux;
             sops-nix = inputs.sops-nix;
@@ -60,11 +67,15 @@
         pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
         modules = [ ./nixpkgs/home-manager/mac.nix ];
         extraSpecialArgs = {
-            pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
+            pkgsUnstable = import inputs.nixpkgsUnstable {
+              system = "aarch64-darwin";
+              config.allowUnfree = true;
+            };
             aiTools = inputs.aiTools.packages.aarch64-darwin;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
             neovim = inputs.neovim;
+            expert = inputs.expert.packages.aarch64-darwin;
           };
       };
     };

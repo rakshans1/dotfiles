@@ -29,12 +29,13 @@ in
         basedpyright
         nixd
         bash-language-server
-        dockerfile-language-server-nodejs
+        dockerfile-language-server
         vscode-langservers-extracted
         typescript-language-server
         rust-analyzer
         tailwindcss-language-server
         lexical
+        inputs.expert
         marksman
 
         # formatters
@@ -54,6 +55,7 @@ in
         vale
         stylelint
         eslint_d
+        hadolint
       ];
     };
 
@@ -100,7 +102,6 @@ in
         indent-blankline-nvim
         which-key-nvim
         gitsigns-nvim
-        diffview-nvim
         neogit
         octo-nvim
         grapple-nvim
@@ -146,6 +147,7 @@ in
         pkgs.neovimPlugins.possession-nvim
         pkgs.neovimPlugins.maximize-nvim
         pkgs.neovimPlugins.custom-theme-nvim
+        vim-wakatime
       ];
     };
 

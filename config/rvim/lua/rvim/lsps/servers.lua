@@ -104,8 +104,12 @@ servers.lexical = {
   filetypes = { 'elixir', 'eelixir', 'heex' },
   cmd = { 'lexical' },
   root_dir = function(fname)
-    return vim.fs.dirname(vim.fs.find({ 'mix.exs' }, { path = fname, upward = true })[1])
+    return vim.fs.dirname(
+      vim.fs.find({ 'mix.exs' }, { path = fname, upward = true })[1]
+    )
   end,
 }
+
+-- servers.expert = {}
 
 return servers

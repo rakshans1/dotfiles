@@ -209,6 +209,13 @@
         precmd() { print -Pn "\e]133;D;%?\a" }
         preexec() { print -Pn "\e]133;C;\a" }
       fi
+
+      # just completion for zsh
+      # See: https://just.systems/man/en/shell-completion-scripts.html
+      if command -v just >/dev/null 2>&1; then
+        autoload -Uz compinit && compinit
+        eval "$(just --completions zsh)"
+      fi
     '';
   };
 }

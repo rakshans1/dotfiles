@@ -18,7 +18,6 @@ require('lze').load {
           section = { '▶', '▼' },
         },
         integrations = {
-          diffview = true,
           snacks = true,
         },
       }

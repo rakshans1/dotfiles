@@ -103,9 +103,9 @@
           ]
       ))
 
-      claude-code
-      gemini-cli
-      codex
+      pkgsUnstable.claude-code
+      pkgsUnstable.gemini-cli
+      pkgsUnstable.codex
     ]
     ++ lib.optionals stdenv.isDarwin [
       # Mac App Store command line interface

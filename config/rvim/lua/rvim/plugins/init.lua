@@ -298,4 +298,8 @@ require('lze').load {
   --     require('custom-theme').setup {}
   --   end,
   -- },
+  {
+    'vim-wakatime',
+    event = { 'DeferredUIEnter' },
+  },
 }

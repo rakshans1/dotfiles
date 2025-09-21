@@ -1,6 +1,9 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  expert ? null,
+  ...
+}: {
   home.file.".iex.exs".text = ''
     defmodule IExHelpers do
       @doc """
