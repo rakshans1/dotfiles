@@ -84,6 +84,7 @@
       awscli2
       caddy
       cloudflared
+      flyctl
 
       ollama
 
