@@ -104,7 +104,7 @@
           ]
       ))
 
-      pkgsUnstable.claude-code
+      # pkgsUnstable.claude-code  # Using custom version below
       pkgsUnstable.gemini-cli
       pkgsUnstable.codex
     ]
@@ -120,5 +120,6 @@
     ++ [
       aiTools.crush
       (pkgs.callPackage ./ccusage {})
+      (pkgs.callPackage ./claude-code {})
     ];
 }
