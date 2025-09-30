@@ -243,15 +243,29 @@ function nix-activate() {
 }
 
 function nix-switch() {
-  local current_dir=$(pwd)
-  local profile=$(nix-profile)
-  cd ~/dotfiles
-  nix flake update private
-  nix flake update neovim
-  home-manager switch --flake ".#$profile"
-  nix build .#darwinConfigurations.$profile.system
-  sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile
-  cd $current_dir
+  (
+    set -e
+    local current_dir=$(pwd)
+    local profile=$(nix-profile)
+    cd ~/dotfiles
+
+    echo "Updating private flake..."
+    nix flake update private
+
+    echo "Updating neovim flake..."
+    nix flake update neovim
+
+    echo "Switching home-manager configuration..."
+    home-manager switch --flake ".#$profile"
+
+    echo "Building darwin configuration..."
+    nix build .#darwinConfigurations.$profile.system
+
+    echo "Applying darwin configuration..."
+    sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile
+
+    cd $current_dir
+  )
 }
 
 function nix-update() {

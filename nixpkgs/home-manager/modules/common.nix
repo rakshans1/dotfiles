@@ -103,10 +103,6 @@
             llm-ollama
           ]
       ))
-
-      # pkgsUnstable.claude-code  # Using custom version below
-      pkgsUnstable.gemini-cli
-      pkgsUnstable.codex
     ]
     ++ lib.optionals stdenv.isDarwin [
       # Mac App Store command line interface
@@ -121,5 +117,7 @@
       aiTools.crush
       (pkgs.callPackage ./ccusage {})
       (pkgs.callPackage ./claude-code {})
+      (pkgs.callPackage ./codex {})
+      (pkgs.callPackage ./gemini-cli {})
     ];
 }
