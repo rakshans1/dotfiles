@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Print public SSH key to clipboard. 
+# Print public SSH key to clipboard.
 
 file="$HOME/.ssh/id_rsa.pub"
 

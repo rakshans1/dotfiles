@@ -1,4 +1,10 @@
-{ config, lib, pkgs, private, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  private,
+  ...
+}:
 
 {
   # SOPS age key configuration for system user

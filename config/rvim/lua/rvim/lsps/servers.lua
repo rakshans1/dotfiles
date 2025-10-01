@@ -43,8 +43,6 @@ servers.nixd = {
 
 servers.gopls = {}
 
-servers.astro = {}
-
 servers.bashls = {}
 
 servers.dockerls = {}
@@ -57,34 +55,7 @@ servers.harper_ls = {
   filetypes = { 'markdown', 'gitcommit', 'typst', 'html', 'text' },
 }
 
-servers.ltex_plus = {
-  filetypes = {
-    'bib',
-    'org',
-    'plaintex',
-    'rst',
-    'rnoweb',
-    'tex',
-    'pandoc',
-    'quarto',
-    'rmd',
-    'context',
-  },
-  settings = {
-    check_frequency = 'save',
-  },
-}
-
-servers.texlab = {}
-
 servers.marksman = {}
-
--- NOTE: julials must be installed manually
--- julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
--- julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.update()'
-servers.julials = {}
-
-servers.ts_ls = {}
 
 servers.ts_ls = {}
 
@@ -94,22 +65,12 @@ servers.svelte = {}
 
 servers.tailwindcss = {}
 
-servers.tinymist = {}
-
 servers.cssls = {}
 
 servers.html = {}
 
-servers.lexical = {
-  filetypes = { 'elixir', 'eelixir', 'heex' },
-  cmd = { 'lexical' },
-  root_dir = function(fname)
-    return vim.fs.dirname(
-      vim.fs.find({ 'mix.exs' }, { path = fname, upward = true })[1]
-    )
-  end,
-}
+servers.expert = {}
 
--- servers.expert = {}
+-- servers.copilot = {}
 
 return servers

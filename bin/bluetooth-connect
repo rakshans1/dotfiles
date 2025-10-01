@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-    echo "Please provide a device name"
-    exit 1
+  echo "Please provide a device name"
+  exit 1
 fi
 
 DEVICE_NAME="$1"

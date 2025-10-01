@@ -21,7 +21,7 @@ require('lze').load {
         },
         formatters_by_ft = {
           lua = { 'stylua' },
-          nix = { 'alejandra' },
+          nix = { 'nixfmt' },
           sh = { 'shfmt' },
           go = { 'gofumpt' },
           rust = { 'rustfmt' },

@@ -4,7 +4,8 @@
   pkgsUnstable,
   aiTools,
   ...
-}: {
+}:
+{
   imports = [
     ./zsh.nix
     ./git.nix
@@ -30,7 +31,8 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       fd
       zsh
@@ -78,8 +80,11 @@
 
       duf
 
-      nixfmt-classic
       nix-init
+      pkgsUnstable.nixfmt
+
+      shfmt
+      shellcheck
 
       awscli2
       caddy
@@ -96,12 +101,11 @@
       ssh-to-age
 
       (python3.withPackages (
-        ps:
-          with ps; [
-            llm
-            llm-gemini
-            llm-ollama
-          ]
+        ps: with ps; [
+          llm
+          llm-gemini
+          llm-ollama
+        ]
       ))
     ]
     ++ lib.optionals stdenv.isDarwin [
@@ -111,13 +115,12 @@
       pngpaste
       blueutil
     ]
-    ++ lib.optionals stdenv.isLinux [
-    ]
+    ++ lib.optionals stdenv.isLinux [ ]
     ++ [
       aiTools.crush
-      (pkgs.callPackage ./ccusage {})
-      (pkgs.callPackage ./claude-code {})
-      (pkgs.callPackage ./codex {})
-      (pkgs.callPackage ./gemini-cli {})
+      (pkgs.callPackage ./ccusage { })
+      (pkgs.callPackage ./claude-code { })
+      (pkgs.callPackage ./codex { })
+      (pkgs.callPackage ./gemini-cli { })
     ];
 }

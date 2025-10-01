@@ -1,4 +1,12 @@
-{ pkgs, config, nix-homebrew, homebrew-core, homebrew-cask, sops-nix, ... }:
+{
+  pkgs,
+  config,
+  nix-homebrew,
+  homebrew-core,
+  homebrew-cask,
+  sops-nix,
+  ...
+}:
 {
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
@@ -32,7 +40,6 @@
       "com.apple.trackpad.scaling" = 3.0;
     };
 
-
     dock = {
       autohide = true;
       show-recents = false;
@@ -53,7 +60,10 @@
 
   # Nix configuration
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # Enable Touch ID for sudo authentication with tmux support
@@ -75,9 +85,7 @@
   };
 
   # Install pam-reattach to enable Touch ID in tmux
-  environment.systemPackages = with pkgs; [
-    pam-reattach
-  ];
+  environment.systemPackages = with pkgs; [ pam-reattach ];
 
   # System-wide fonts
   fonts.packages = with pkgs; [
@@ -110,8 +118,7 @@
     enable = true;
 
     # CLI tools and libraries (brew install)
-    brews = [
-    ];
+    brews = [ ];
 
     # GUI applications (brew install --cask)
     casks = [

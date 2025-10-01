@@ -1,4 +1,11 @@
-{ config, pkgs, home-manager, sops-nix, neovim, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  sops-nix,
+  neovim,
+  ...
+}:
 
 {
   imports = [

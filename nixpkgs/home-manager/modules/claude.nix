@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   # Helper function script for Claude Code status line
   home.file.".claude/statusline.sh" = {
     text = ''

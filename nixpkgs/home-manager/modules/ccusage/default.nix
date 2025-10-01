@@ -1,7 +1,8 @@
-{ lib
-, buildNpmPackage
-, fetchzip
-, nodejs_22
+{
+  lib,
+  buildNpmPackage,
+  fetchzip,
+  nodejs_22,
 }:
 
 buildNpmPackage rec {

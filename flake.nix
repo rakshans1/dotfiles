@@ -46,13 +46,24 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixpkgsUnstable, darwin, sops-nix, private, ... }: {
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nixpkgsUnstable,
+      darwin,
+      sops-nix,
+      private,
+      ...
+    }:
+    {
 
-    homeConfigurations = {
-      linux = home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ ./nixpkgs/home-manager/linux.nix ];
-        extraSpecialArgs = {
+      homeConfigurations = {
+        linux = home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./nixpkgs/home-manager/linux.nix ];
+          extraSpecialArgs = {
             pkgsUnstable = import inputs.nixpkgsUnstable {
               system = "x86_64-linux";
               config.allowUnfree = true;
@@ -62,11 +73,11 @@
             sops-nix = inputs.sops-nix;
             private = inputs.private;
           };
-      };
-      mbp = home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
-        modules = [ ./nixpkgs/home-manager/mac.nix ];
-        extraSpecialArgs = {
+        };
+        mbp = home-manager.lib.homeManagerConfiguration {
+          pkgs = inputs.nixpkgs.legacyPackages.aarch64-darwin;
+          modules = [ ./nixpkgs/home-manager/mac.nix ];
+          extraSpecialArgs = {
             pkgsUnstable = import inputs.nixpkgsUnstable {
               system = "aarch64-darwin";
               config.allowUnfree = true;
@@ -77,18 +88,18 @@
             neovim = inputs.neovim;
             expert = inputs.expert.packages.aarch64-darwin;
           };
+        };
       };
-    };
 
-    darwinConfigurations = {
-      mbp = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./nixpkgs/darwin/mbp/configuration.nix
-          inputs.sops-nix.darwinModules.sops
-        ];
-        inputs = { inherit darwin nixpkgs; };
-        specialArgs = {
+      darwinConfigurations = {
+        mbp = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./nixpkgs/darwin/mbp/configuration.nix
+            inputs.sops-nix.darwinModules.sops
+          ];
+          inputs = { inherit darwin nixpkgs; };
+          specialArgs = {
             inherit inputs;
             nix-homebrew = inputs.nix-homebrew;
             homebrew-core = inputs.homebrew-core;
@@ -96,7 +107,7 @@
             sops-nix = inputs.sops-nix;
             private = inputs.private;
           };
+        };
       };
     };
-  };
 }

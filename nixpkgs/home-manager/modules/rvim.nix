@@ -1,9 +1,12 @@
-{ config, pkgs, neovim, ... }:
+{
+  config,
+  pkgs,
+  neovim,
+  ...
+}:
 
 {
-  imports = [
-    neovim.homeModules.default
-  ];
+  imports = [ neovim.homeModules.default ];
 
   rvim = {
     enable = true;

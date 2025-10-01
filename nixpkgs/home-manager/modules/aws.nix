@@ -1,4 +1,10 @@
-{ config, lib, pkgs, private, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  private,
+  ...
+}:
 
 {
   # AWS configuration files managed by Nix
@@ -10,8 +16,8 @@
     output = json
   '';
 
-    # Generate credentials file with SOPS secrets
-  home.activation.awsCredentials = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  # Generate credentials file with SOPS secrets
+  home.activation.awsCredentials = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p $HOME/.aws
     chmod 700 $HOME/.aws
 

@@ -37,6 +37,6 @@ buildNpmPackage rec {
     homepage = "https://github.com/anthropics/claude-code";
     license = lib.licenses.unfree;
     mainProgram = "claude";
-    maintainers = [];
+    maintainers = [ ];
   };
 }

@@ -1,7 +1,13 @@
-{ config, pkgs, home-manager, sops-nix, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  sops-nix,
+  ...
+}:
 
 {
-    imports = [
+  imports = [
     ./modules/home-manager.nix
     ./modules/common.nix
     ./modules/sops.nix

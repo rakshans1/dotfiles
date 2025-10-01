@@ -1,4 +1,10 @@
-{ config, lib, pkgs, private, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  private,
+  ...
+}:
 
 {
   # SOPS age key configuration
@@ -42,18 +48,22 @@
       sopsFile = "${private}/secrets/common.yaml";
     };
 
-  } // (
+  }
+  // (
     # Platform-specific secrets
-    if pkgs.stdenv.isDarwin then {
-      # macOS-specific secrets
-      # "keychain_password" = {
-      #   sopsFile = "${private}/secrets/darwin.yaml";
-      # };
-    } else {
-      # Linux-specific secrets
-      # "sudo_password" = {
-      #   sopsFile = "${private}/secrets/linux.yaml";
-      # };
-    }
+    if pkgs.stdenv.isDarwin then
+      {
+        # macOS-specific secrets
+        # "keychain_password" = {
+        #   sopsFile = "${private}/secrets/darwin.yaml";
+        # };
+      }
+    else
+      {
+        # Linux-specific secrets
+        # "sudo_password" = {
+        #   sopsFile = "${private}/secrets/linux.yaml";
+        # };
+      }
   );
 }

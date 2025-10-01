@@ -26,26 +26,26 @@ done
 printf "\n"
 
 show() {
-  printf "\e[%d;5;%dm%2s\e[m " $((mode+8)) $1 "$text"
+  printf "\e[%d;5;%dm%2s\e[m " $((mode + 8)) "$1" "$text"
 }
 
 printf "\n   +  "
 for i in $(seq 0 35); do
-  printf "%2b " $i
+  printf "%2b " "$i"
 done
 
 printf "\n\n %3d  " 0
 for i in $(seq 0 15); do
-  show $i
+  show "$i"
 done
 
 for i in $(seq 0 6); do
-  i=$(( i*36 + 16 ))
+  i=$((i * 36 + 16))
   printf "\n\n %3d  " $i
   for j in $(seq 0 35); do
-    val=$(( i+j ))
+    val=$((i + j))
     [ "$val" -le 255 ] || break
-    show $val
+    show "$val"
   done
 done
 

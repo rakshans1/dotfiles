@@ -10,7 +10,7 @@
     extraConfig = {
       core = {
         editor = "lvim";
-        pager = "delta --syntax-theme=\"Nord\" --24-bit-color=\"always\" --file-style=\"#84a0c6\" --hunk-header-style=\"#84a0c6\" --plus-style=\"syntax #45493e\" --plus-emph-style=\"syntax #2C3025\" --minus-style=\"normal #53343b\" --minus-emph-style=\"normal #200108\"";
+        pager = ''delta --syntax-theme="Nord" --24-bit-color="always" --file-style="#84a0c6" --hunk-header-style="#84a0c6" --plus-style="syntax #45493e" --plus-emph-style="syntax #2C3025" --minus-style="normal #53343b" --minus-emph-style="normal #200108"'';
       };
 
       diff = {
@@ -21,7 +21,7 @@
         prompt = false;
         smerge = {
           trustExitCode = true;
-          cmd = "smerge mergetool \"$LOCAL\" \"$REMOTE\"";
+          cmd = ''smerge mergetool "$LOCAL" "$REMOTE"'';
         };
       };
 
@@ -33,7 +33,7 @@
         prompt = false;
         smerge = {
           trustExitCode = true;
-          cmd = "smerge mergetool \"$LOCAL\" \"$BASE\" \"$REMOTE\" -o \"$MERGED\"";
+          cmd = ''smerge mergetool "$LOCAL" "$BASE" "$REMOTE" -o "$MERGED"'';
         };
       };
 
@@ -62,9 +62,9 @@
       up = "pull --rebase --autostash";
 
       # Reset
-      unstage = "reset HEAD --";                    # Mixed reset (affects HEAD and Index)
-      undo = "reset --soft HEAD~1";                 # Undo last commit (affects HEAD only)
-      reset = "reset --hard HEAD~1";                # Remove last commit (from HEAD, Index and Working Dir)
+      unstage = "reset HEAD --"; # Mixed reset (affects HEAD and Index)
+      undo = "reset --soft HEAD~1"; # Undo last commit (affects HEAD only)
+      reset = "reset --hard HEAD~1"; # Remove last commit (from HEAD, Index and Working Dir)
     };
 
     ignores = [

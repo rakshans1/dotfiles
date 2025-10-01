@@ -1,5 +1,6 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p nix-prefetch-github nodePackages.npm
+# shellcheck shell=bash
 
 set -euo pipefail
 
@@ -11,7 +12,7 @@ sed -i'' -e "s/version = \".*\";/version = \"$version\";/" default.nix
 
 echo "Fetching GitHub hash for v$version"
 nix-prefetch-github google-gemini gemini-cli --rev "v$version" | tee github-hash.json
-hash=$(cat github-hash.json | grep '"hash"' | cut -d'"' -f4)
+hash=$(grep '"hash"' github-hash.json | cut -d'"' -f4)
 rm github-hash.json
 
 sed -i'' -e "s|hash = \".*\";|hash = \"$hash\";|" default.nix

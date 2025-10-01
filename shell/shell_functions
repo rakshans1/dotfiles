@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 # Edit dotfiles
 function dotfiles() {
-  if tmux has-session -t dotfiles 2> /dev/null; then
+  if tmux has-session -t dotfiles 2>/dev/null; then
     tmux attach -t dotfiles
     exit
   fi
@@ -15,10 +15,9 @@ function mkd() {
   mkdir -p "$@" && cd "$@"
 }
 
-
 # List all files, long format, colorized, permissions in octal
 function list() {
-   ls -l  "$@" | awk '
+  ls -l "$@" | awk '
     {
       k=0;
       for (i=0;i<=8;i++)
@@ -37,10 +36,10 @@ function killport() {
 # Extract archives - use: extract <file>
 # Based on http://dotfiles.org/~pseup/.bashrc
 function extract() {
-  if [ -f "$1" ] ; then
+  if [ -f "$1" ]; then
     local filename=$(basename "$1")
     local foldername="${filename%%.*}"
-    local fullpath=`perl -e 'use Cwd "abs_path";print abs_path(shift)' "$1"`
+    local fullpath=$(perl -e 'use Cwd "abs_path";print abs_path(shift)' "$1")
     local didfolderexist=false
     if [ -d "$foldername" ]; then
       didfolderexist=true
@@ -52,19 +51,19 @@ function extract() {
     fi
     mkdir -p "$foldername" && cd "$foldername"
     case $1 in
-      *.tar.bz2) tar xjf "$fullpath" ;;
-      *.tar.gz) tar xzf "$fullpath" ;;
-      *.tar.xz) tar Jxvf "$fullpath" ;;
-      *.tar.Z) tar xzf "$fullpath" ;;
-      *.tar) tar xf "$fullpath" ;;
-      *.taz) tar xzf "$fullpath" ;;
-      *.tb2) tar xjf "$fullpath" ;;
-      *.tbz) tar xjf "$fullpath" ;;
-      *.tbz2) tar xjf "$fullpath" ;;
-      *.tgz) tar xzf "$fullpath" ;;
-      *.txz) tar Jxvf "$fullpath" ;;
-      *.zip) unzip "$fullpath" ;;
-      *) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
+    *.tar.bz2) tar xjf "$fullpath" ;;
+    *.tar.gz) tar xzf "$fullpath" ;;
+    *.tar.xz) tar Jxvf "$fullpath" ;;
+    *.tar.Z) tar xzf "$fullpath" ;;
+    *.tar) tar xf "$fullpath" ;;
+    *.taz) tar xzf "$fullpath" ;;
+    *.tb2) tar xjf "$fullpath" ;;
+    *.tbz) tar xjf "$fullpath" ;;
+    *.tbz2) tar xjf "$fullpath" ;;
+    *.tgz) tar xzf "$fullpath" ;;
+    *.txz) tar Jxvf "$fullpath" ;;
+    *.zip) unzip "$fullpath" ;;
+    *) echo "'$1' cannot be extracted via extract()" && cd .. && ! $didfolderexist && rm -r "$foldername" ;;
     esac
   else
     echo "'$1' is not a valid file"
@@ -73,10 +72,10 @@ function extract() {
 
 # Prints terinal colors
 function printcolors() {
-  for i in {0..255} ; do
+  for i in {0..255}; do
     printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i"
-    if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then
-        printf "\n";
+    if ((i == 15)) || ((i > 15)) && (((i - 15) % 6 == 0)); then
+      printf "\n"
     fi
   done
 }
@@ -86,7 +85,7 @@ function tm() {
   emulate -L zsh
   # If provided with args, pass them through.
   if [[ -n "$@" ]]; then
-   tmux "$@"
+    tmux "$@"
     return
   fi
 
@@ -94,13 +93,13 @@ function tm() {
   if [ -f .tmux ] && [ -x .tmux ]; then
     # Prompt the first time we see a given .tmux file before running it.
     local DIGEST="$(openssl sha512 .tmux)"
-    if ! grep -q "$DIGEST" ~/..tmux.digests 2> /dev/null; then
+    if ! grep -q "$DIGEST" ~/..tmux.digests 2>/dev/null; then
       cat .tmux
       read -k 1 -r \
         'REPLY?Trust (and run) this .tmux file? (t = trust, otherwise = skip) '
       echo
       if [[ $REPLY =~ ^[Tt]$ ]]; then
-        echo "$DIGEST" >> ~/..tmux.digests
+        echo "$DIGEST" >>~/..tmux.digests
         ./.tmux
         return
       fi
@@ -113,14 +112,15 @@ function tm() {
   # Open fuzzy search to jump to exiting sessions or create new on noop
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1")
+    return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || tmux new -A -s "$(basename "$(pwd)")"
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || tmux new -A -s "$(basename "$(pwd)")"
 }
 
 # Remove old kernels and clean /boot dir
 function purge_kernels() {
-  echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -n '/'`uname -r`'/q;p') $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -n '/'"$(uname -r | sed "s/\([0-9.-]*\)-\([^0-9]\+\)/\1/")"'/q;p') | xargs sudo apt-get -y purge
+  echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -n '/'$(uname -r)'/q;p') $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -n '/'"$(uname -r | sed "s/\([0-9.-]*\)-\([^0-9]\+\)/\1/")"'/q;p') | xargs sudo apt-get -y purge
 }
 
 # Preview files
@@ -142,15 +142,14 @@ function fzf-preview() {
 # Git search recent branch
 function git-branch() {
   git branch -a --sort=committerdate --color=always |
- fzf-preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-  sed 's/.* //' | cut -d' ' -f1 |
-  sed 's#remotes/[^/]*/##'
+    fzf-preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+    sed 's/.* //' | cut -d' ' -f1 |
+    sed 's#remotes/[^/]*/##'
 }
 
 # Git checkout with fuzzy search
 function gco() {
-  if [ -z "$1" ]
-  then
+  if [ -z "$1" ]; then
     git checkout $(git-branch)
   else
     git checkout $@
@@ -168,8 +167,7 @@ function copy() {
 
 # Man fuzzy search
 function man() {
-  if [ $# -eq 0 ]
-  then
+  if [ $# -eq 0 ]; then
     /usr/bin/man -k . | fzf --prompt='Man> ' | awk '{print $1}' | xargs -r /usr/bin/man
   else
     /usr/bin/man $@
@@ -188,8 +186,8 @@ function deb() {
 # Cat
 function cat() {
   case $1 in
-    *.md) glow -p $@;;
-    *) bat $@;;
+  *.md) glow -p $@ ;;
+  *) bat $@ ;;
   esac
 }
 
@@ -212,14 +210,11 @@ function is_linux() {
 
 function nix-profile() {
   local profile
-  if is_mac && [[ $(uname -m) == 'arm64' ]]
-  then
+  if is_mac && [[ $(uname -m) == 'arm64' ]]; then
     profile="mbp"
-  elif is_mac
-  then
+  elif is_mac; then
     profile="mbpi"
-  elif is_linux
-  then
+  elif is_linux; then
     profile="linux"
   fi
 

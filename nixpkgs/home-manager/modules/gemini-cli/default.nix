@@ -1,11 +1,12 @@
-{ lib
-, buildNpmPackage
-, fetchFromGitHub
-, nodejs_22
-, jq
-, pkg-config
-, ripgrep
-, libsecret
+{
+  lib,
+  buildNpmPackage,
+  fetchFromGitHub,
+  nodejs_22,
+  jq,
+  pkg-config,
+  ripgrep,
+  libsecret,
 }:
 
 buildNpmPackage rec {
@@ -23,8 +24,14 @@ buildNpmPackage rec {
 
   npmDepsHash = "sha256-l5AFQH5h6CPNnuSP0jjla3UbBhjPDVEc8fL5NWcT1XQ=";
 
-  nativeBuildInputs = [ jq pkg-config ];
-  buildInputs = [ ripgrep libsecret ];
+  nativeBuildInputs = [
+    jq
+    pkg-config
+  ];
+  buildInputs = [
+    ripgrep
+    libsecret
+  ];
 
   # Remove node-pty dependency which causes build issues
   postPatch = ''
