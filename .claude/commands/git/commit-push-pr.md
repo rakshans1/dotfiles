@@ -1,6 +1,5 @@
 ---
 description: Create a git commit, push it and create a PR
-model: claude-3-5-haiku-20241022
 ---
 
 ## Context

@@ -11,6 +11,21 @@
       };
     };
 
+    keymap = {
+      manager.prepend_keymap = [
+        {
+          on = [ "g" "w" ];
+          run = "cd ~/workspaces";
+          desc = "Go to workspaces";
+        }
+        {
+          on = [ "g" "p" ];
+          run = "cd ~/project";
+          desc = "Go to project";
+        }
+      ];
+    };
+
     theme = {
       # Iceberg color scheme
       manager = {
