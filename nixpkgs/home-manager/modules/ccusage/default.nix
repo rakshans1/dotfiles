@@ -16,7 +16,7 @@ buildNpmPackage rec {
     hash = "sha256-4NtB5LvaTMD3/egmZgCRHVAZdt0yk8ITaBdIa7X8e2Y=";
   };
 
-  npmDepsHash = "sha256-/+6POHvy7EVjY0VcKmVf7OuUcWyMDVDI5stShZ1Q3o0=";
+  npmDepsHash = "sha256-MOz/kIZug6+qy9RCvgFjxQI9XnoYYwdzBHrpzCa+qWM=";
   forceEmptyCache = true;
 
   postPatch = ''
