@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p nodePackages.npm nix-prefetch-scripts
+#!nix-shell -i bash -p nodePackages.npm nix-prefetch-scripts prefetch-npm-deps
 # shellcheck shell=bash
 
 set -euo pipefail
@@ -24,6 +24,15 @@ sed -i'' -e "s|hash = \".*\";|hash = \"$sri_hash\";|" default.nix
 npm i --package-lock-only "ccusage@$version"
 rm -f package.json
 
+# Calculate npmDepsHash
+echo "Calculating npmDepsHash..."
+npm_deps_hash=$(prefetch-npm-deps package-lock.json)
+npm_deps_sri=$(nix hash to-sri --type sha256 "$npm_deps_hash")
+
+# Update npmDepsHash in default.nix
+sed -i'' -e "s|npmDepsHash = \".*\";|npmDepsHash = \"$npm_deps_sri\";|" default.nix
+
 echo "Updated ccusage to version $version"
 echo "Source hash: $sri_hash"
-echo "You may need to update npmDepsHash after trying to build"
+echo "npmDepsHash: $npm_deps_sri"
+echo "All hashes updated automatically!"
