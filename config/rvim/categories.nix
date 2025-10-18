@@ -105,6 +105,7 @@ in
       which-key-nvim
       gitsigns-nvim
       neogit
+      diffview-nvim
       octo-nvim
       grapple-nvim
       yazi-nvim

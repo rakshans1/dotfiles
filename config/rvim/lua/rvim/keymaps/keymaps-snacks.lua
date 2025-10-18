@@ -70,24 +70,24 @@ map(
 )
 
 -- Snacks pickers (git) [g]
-map(
-  'n',
-  '<leader>gd',
-  '<cmd>lua Snacks.picker.git_diff()<cr>',
-  { desc = 'Git Diff' }
-)
-map(
-  'n',
-  '<leader>gL',
-  '<cmd>lua Snacks.picker.git_log()<cr>',
-  { desc = 'Git Log' }
-)
-map(
-  'n',
-  '<leader>gf',
-  '<cmd>lua Snacks.picker.git_log_file()<cr>',
-  { desc = 'Git log file' }
-)
+-- map(
+--   'n',
+--   '<leader>gd',
+--   '<cmd>lua Snacks.picker.git_diff()<cr>',
+--   { desc = 'Git Diff' }
+-- )
+-- map(
+--   'n',
+--   '<leader>gL',
+--   '<cmd>lua Snacks.picker.git_log()<cr>',
+--   { desc = 'Git Log' }
+-- )
+-- map(
+--   'n',
+--   '<leader>gf',
+--   '<cmd>lua Snacks.picker.git_log_file()<cr>',
+--   { desc = 'Git log file' }
+-- )
 map(
   'n',
   '<leader>gb',
