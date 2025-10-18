@@ -98,6 +98,53 @@ local location = {
   padding = { left = 1, right = 0 },
 }
 
+-- WakaTime component with async updates
+local wakatime_stats = ''
+local function update_wakatime()
+  local wakatime_cli = vim.fn.expand '~/.wakatime/wakatime-cli'
+  if vim.fn.filereadable(wakatime_cli) == 1 then
+    local Job = require 'plenary.job'
+    Job
+      :new({
+        command = wakatime_cli,
+        args = { '--today' },
+        on_exit = function(j, return_val)
+          if return_val == 0 then
+            local result = table.concat(j:result(), '\n')
+            wakatime_stats = result:match '%d+%s*hr%s*%d+%s*min'
+              or result:match '%d+%s*min'
+              or result:match '%d+%s*sec'
+              or ''
+          else
+            wakatime_stats = ''
+          end
+        end,
+      })
+      :start()
+  end
+end
+
+-- Update immediately on load
+vim.schedule(update_wakatime)
+
+-- Update every 60 seconds
+local timer = vim.loop.new_timer()
+timer:start(
+  60000, -- initial delay (60 seconds)
+  60000, -- repeat every 60 seconds
+  vim.schedule_wrap(update_wakatime)
+)
+
+local wakatime = {
+  function()
+    return wakatime_stats ~= '' and '󱫟 ' .. wakatime_stats or ''
+  end,
+  cond = function()
+    return wakatime_stats ~= ''
+  end,
+  padding = { left = 1, right = 1 },
+}
+
 require('lze').load {
   {
     'lualine.nvim',
@@ -159,7 +206,7 @@ require('lze').load {
         sections = {
           lualine_a = { mode },
           lualine_b = { branch, diff },
-          lualine_c = {},
+          lualine_c = { wakatime },
           lualine_x = {},
           lualine_y = {
             macro,

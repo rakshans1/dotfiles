@@ -300,6 +300,6 @@ require('lze').load {
   -- },
   {
     'vim-wakatime',
-    event = { 'DeferredUIEnter' },
+    -- event = { 'DeferredUIEnter' },
   },
 }
