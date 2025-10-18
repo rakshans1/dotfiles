@@ -152,6 +152,7 @@ in
       pkgs.neovimPlugins.custom-theme-nvim
       pkgs.neovimPlugins.sidekick-nvim
       vim-wakatime
+      lualine-nvim
     ];
   };
 
