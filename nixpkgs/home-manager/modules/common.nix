@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   pkgsUnstable,
   aiTools,
@@ -17,6 +16,7 @@
     ./claude.nix
     ./lvim.nix
     ./ghostty.nix
+    ./sublime.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -100,7 +100,7 @@
       sops
       ssh-to-age
 
-      (python3.withPackages (
+      (pkgsUnstable.python3.withPackages (
         ps: with ps; [
           llm
           llm-gemini

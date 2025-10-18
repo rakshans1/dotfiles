@@ -3029,11 +3029,6 @@
                     }
                   }
                 ],
-                "to_if_alone": [
-                  {
-                    "shell_command": "open -a 'Finder.app'"
-                  }
-                ],
                 "conditions": [
                   {
                     "type": "variable_if",

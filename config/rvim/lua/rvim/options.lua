@@ -37,7 +37,7 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.laststatus = 3
 vim.opt.signcolumn = 'yes'
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.scrolloff = 8
 vim.opt.guifont = 'FiraCode Nerd Font Mono:h13'
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
@@ -71,4 +71,3 @@ vim.api.nvim_create_autocmd(
     command = "if mode() != 'c' | checktime | endif",
   }
 )
-

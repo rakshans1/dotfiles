@@ -1,6 +1,7 @@
 {
   lib,
   buildNpmPackage,
+  writableTmpDirAsHomeHook,
   fetchzip,
   nodejs_22,
 }:
@@ -31,6 +32,10 @@ buildNpmPackage rec {
       --set DISABLE_AUTOUPDATER 1 \
       --unset DEV
   '';
+
+  nativeInstallCheckInputs = [
+    writableTmpDirAsHomeHook
+  ];
 
   meta = {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";

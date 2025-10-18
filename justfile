@@ -119,3 +119,21 @@ nix-check: nix-check-format
 
 # Combined fix
 nix-fix: nix-fix-format
+
+# Run neovim flake
+rvim-run:
+    cd config/rvim && nix run .#
+
+alias rvim := rvim-run
+
+# Show neovim flake output
+rvim-show:
+    cd config/rvim && nix flake show
+
+# Update neovim flake
+rvim-update:
+    cd config/rvim && nix flake update
+
+# Check neovim flake
+rvim-check:
+    cd config/rvim && nix flake check

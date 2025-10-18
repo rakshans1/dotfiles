@@ -185,6 +185,8 @@
 
       # SOPS age key file location for automatic decryption
       export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
+      export LLM_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
+      export LLM_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
       # export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       # export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.llm_endpoint.path})
       # export ANTHROPIC_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})

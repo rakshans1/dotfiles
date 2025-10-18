@@ -15,6 +15,7 @@
     ./modules/sops.nix
     ./modules/aws.nix
     ./modules/kubernetes.nix
+    ./modules/raycast.nix
     ./modules/rvim.nix
     sops-nix.homeManagerModules.sops
   ];

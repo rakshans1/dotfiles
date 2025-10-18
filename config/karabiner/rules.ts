@@ -384,7 +384,7 @@ const rules: KarabinerRules[] = [
 			l: key("right_arrow", ["left_shift"]),
 			j: key("down_arrow", ["left_shift"]),
 			k: key("up_arrow", ["left_shift"]),
-			alone: app("Finder"),
+			// alone: app("Finder"),
 		},
 		b: {
 			t: openLink("Arc", "https://x.com", true),
