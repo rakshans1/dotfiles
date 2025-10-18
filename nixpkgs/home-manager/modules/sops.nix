@@ -48,6 +48,11 @@
       sopsFile = "${private}/secrets/common.yaml";
     };
 
+    # WakaTime API Key
+    "wakatime_api_key" = {
+      sopsFile = "${private}/secrets/common.yaml";
+    };
+
   }
   // (
     # Platform-specific secrets

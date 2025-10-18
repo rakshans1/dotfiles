@@ -137,3 +137,9 @@ rvim-update:
 # Check neovim flake
 rvim-check:
     cd config/rvim && nix flake check
+
+secrets-edit:
+  sops private/secrets/common.yaml
+
+secrets-view:
+  sops -d private/secrets/common.yaml

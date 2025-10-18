@@ -1,1 +1,1 @@
-require 'rvim.ai.avante'
+-- require 'rvim.ai.avante'

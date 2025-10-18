@@ -138,6 +138,7 @@ ssh-to-age -i ~/.ssh/id_ed25519.pub  # Get public key for .sops.yaml
 
 ### Configuration Files (Credentials)
 - **AWS**: Managed as `~/.aws/config` and `~/.aws/credentials` files
+- **WakaTime**: Managed as `~/.wakatime.cfg` file
 - **Good for**: Applications expecting standard config files
 - **Integration**: Home Manager activation scripts + file management
 
