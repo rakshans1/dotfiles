@@ -330,136 +330,159 @@
   };
 
   # Iceberg theme for Sublime Merge
-  home.file."Library/Application Support/Sublime Merge/Packages/User/Merge.sublime-theme" = {
-    text = builtins.toJSON {
-      variables = {
-        # Iceberg color palette
-        iceberg_bg = "#161821";
-        iceberg_bg_light = "#1e2132";
-        iceberg_bg_lighter = "#272c42";
-        iceberg_fg = "#c6c8d1";
-        iceberg_fg_dim = "#6b7089";
-        iceberg_fg_darker = "#444b71";
-        iceberg_blue = "#84a0c6";
-        iceberg_cyan = "#89b8c2";
-        iceberg_green = "#b4be82";
-        iceberg_red = "#e27878";
-        iceberg_orange = "#e2a478";
-        iceberg_purple = "#a093c7";
+  # home.file."Library/Application Support/Sublime Merge/Packages/Theme - Iceberg/Iceberg.sublime-merge-theme" =
+  #   {
+  #     text = builtins.toJSON {
+  #       variables = {
+  #         # Iceberg color palette
+  #         iceberg_bg = "#161821";
+  #         iceberg_bg_light = "#1e2132";
+  #         iceberg_bg_lighter = "#272c42";
+  #         iceberg_fg = "#c6c8d1";
+  #         iceberg_fg_dim = "#6b7089";
+  #         iceberg_fg_darker = "#444b71";
+  #         iceberg_blue = "#84a0c6";
+  #         iceberg_cyan = "#89b8c2";
+  #         iceberg_green = "#b4be82";
+  #         iceberg_red = "#e27878";
+  #         iceberg_orange = "#e2a478";
+  #         iceberg_purple = "#a093c7";
+  #
+  #         # UI colors
+  #         background = "#0f1117";
+  #         foreground = "#c6c8d1";
+  #         text_fg = "#c6c8d1";
+  #
+  #         # Sidebar
+  #         sidebar_bg = "#0f1117";
+  #         sidebar_fg = "#c6c8d1";
+  #         sidebar_heading = "#6b7089";
+  #         sidebar_label = "#c6c8d1";
+  #
+  #         # Tabs
+  #         tab_bg = "#0f1117";
+  #         tab_fg = "#6b7089";
+  #         tab_selected_bg = "#161821";
+  #         tab_selected_fg = "#c6c8d1";
+  #
+  #         # Status bar
+  #         status_bar_bg = "#0f1117";
+  #         status_bar_fg = "#c6c8d1";
+  #
+  #         # Diff colors
+  #         diff_added = "#b4be82";
+  #         diff_added_bg = "#1e2132";
+  #         diff_deleted = "#e27878";
+  #         diff_deleted_bg = "#1e2132";
+  #         diff_modified = "#84a0c6";
+  #         diff_modified_bg = "#1e2132";
+  #
+  #         # Git graph colors
+  #         git_graph_line = "#6b7089";
+  #
+  #         # Buttons
+  #         button_bg = "#1e2132";
+  #         button_fg = "#c6c8d1";
+  #       };
+  #       rules = [
+  #         {
+  #           "class" = "title_bar";
+  #           style = "dark";
+  #           fg = "#c6c8d1";
+  #           bg = "#0f1117";
+  #         }
+  #       ];
+  #     };
+  #   };
+  #
+  # # Iceberg color scheme for Sublime Merge (in User package)
+  # home.file."Library/Application Support/Sublime Merge/Packages/User/Iceberg.sublime-color-scheme" = {
+  #   text = builtins.toJSON {
+  #     variables = {
+  #       blue = "#84a0c6";
+  #       cyan = "#89b8c2";
+  #       green = "#b4be82";
+  #       red = "#e27878";
+  #       orange = "#e2a478";
+  #       purple = "#a093c7";
+  #       yellow = "#e2c792";
+  #       fg = "#c6c8d1";
+  #       bg = "#161821";
+  #     };
+  #     globals = {
+  #       background = "#161821";
+  #       foreground = "#c6c8d1";
+  #       caret = "#c6c8d1";
+  #       selection = "#1e2132";
+  #       line_highlight = "#1e2132";
+  #
+  #       # Diff specific colors for Sublime Merge
+  #       diff_header = "#84a0c6";
+  #       diff_header_from = "#e27878";
+  #       diff_header_to = "#b4be82";
+  #       diff_deleted = "#e27878";
+  #       diff_inserted = "#b4be82";
+  #       diff_changed = "#84a0c6";
+  #     };
+  #     rules = [
+  #       {
+  #         scope = "diff.deleted";
+  #         foreground = "var(red)";
+  #         background = "#1e2132";
+  #       }
+  #       {
+  #         scope = "diff.inserted";
+  #         foreground = "var(green)";
+  #         background = "#1e2132";
+  #       }
+  #       {
+  #         scope = "diff.changed";
+  #         foreground = "var(blue)";
+  #       }
+  #       {
+  #         scope = "diff.header";
+  #         foreground = "var(cyan)";
+  #         font_style = "bold";
+  #       }
+  #       {
+  #         scope = "diff.range";
+  #         foreground = "var(purple)";
+  #       }
+  #       {
+  #         scope = "markup.inserted";
+  #         foreground = "var(green)";
+  #       }
+  #       {
+  #         scope = "markup.deleted";
+  #         foreground = "var(red)";
+  #       }
+  #       {
+  #         scope = "markup.changed";
+  #         foreground = "var(blue)";
+  #       }
+  #     ];
+  #   };
+  # };
+  #
+  # # Sublime Merge view-specific settings for default Merge theme
+  # home.file."Library/Application Support/Sublime Merge/Packages/User/Diff - Merge.sublime-settings" =
+  #   {
+  #     text = builtins.toJSON {
+  #       color_scheme = "Iceberg.sublime-color-scheme";
+  #     };
+  #   };
+  #
+  # home.file."Library/Application Support/Sublime Merge/Packages/User/Commit Message - Merge.sublime-settings" =
+  #   {
+  #     text = builtins.toJSON {
+  #       color_scheme = "Iceberg.sublime-color-scheme";
+  #     };
+  #   };
 
-        # UI colors
-        background = "#0f1117";
-        foreground = "#c6c8d1";
-        text_fg = "#c6c8d1";
-
-        # Sidebar
-        sidebar_bg = "#0f1117";
-        sidebar_fg = "#c6c8d1";
-        sidebar_heading = "#6b7089";
-        sidebar_label = "#c6c8d1";
-
-        # Tabs
-        tab_bg = "#0f1117";
-        tab_fg = "#6b7089";
-        tab_selected_bg = "#161821";
-        tab_selected_fg = "#c6c8d1";
-
-        # Status bar
-        status_bar_bg = "#0f1117";
-        status_bar_fg = "#c6c8d1";
-
-        # Diff colors
-        diff_added = "#b4be82";
-        diff_added_bg = "#1e2132";
-        diff_deleted = "#e27878";
-        diff_deleted_bg = "#1e2132";
-        diff_modified = "#84a0c6";
-        diff_modified_bg = "#1e2132";
-
-        # Git graph colors
-        git_graph_line = "#6b7089";
-
-        # Buttons
-        button_bg = "#1e2132";
-        button_fg = "#c6c8d1";
-      };
-      rules = [
-        {
-          "class" = "title_bar";
-          style = "dark";
-          fg = "#c6c8d1";
-          bg = "#0f1117";
-        }
-      ];
-    };
-  };
-
-  # Iceberg color scheme for Sublime Merge
-  home.file."Library/Application Support/Sublime Merge/Packages/User/Merge.sublime-color-scheme" = {
-    text = builtins.toJSON {
-      variables = {
-        blue = "#84a0c6";
-        cyan = "#89b8c2";
-        green = "#b4be82";
-        red = "#e27878";
-        orange = "#e2a478";
-        purple = "#a093c7";
-        yellow = "#e2c792";
-        fg = "#c6c8d1";
-        bg = "#161821";
-      };
-      globals = {
-        background = "#161821";
-        foreground = "#c6c8d1";
-        caret = "#c6c8d1";
-        selection = "#1e2132";
-        line_highlight = "#1e2132";
-
-        # Diff specific colors
-        diff_header = "#84a0c6";
-        diff_header_from = "#e27878";
-        diff_header_to = "#b4be82";
-        diff_deleted = "#e27878";
-        diff_inserted = "#b4be82";
-        diff_changed = "#84a0c6";
-      };
-      rules = [
-        {
-          scope = "diff.deleted";
-          foreground = "var(red)";
-          background = "#1e2132";
-        }
-        {
-          scope = "diff.inserted";
-          foreground = "var(green)";
-          background = "#1e2132";
-        }
-        {
-          scope = "diff.changed";
-          foreground = "var(blue)";
-        }
-        {
-          scope = "diff.header";
-          foreground = "var(cyan)";
-          font_style = "bold";
-        }
-        {
-          scope = "diff.range";
-          foreground = "var(purple)";
-        }
-        {
-          scope = "markup.inserted";
-          foreground = "var(green)";
-        }
-        {
-          scope = "markup.deleted";
-          foreground = "var(red)";
-        }
-        {
-          scope = "markup.changed";
-          foreground = "var(blue)";
-        }
-      ];
-    };
-  };
+  # home.file."Library/Application Support/Sublime Merge/Packages/User/File Mode - Merge.sublime-settings" =
+  #   {
+  #     text = builtins.toJSON {
+  #       color_scheme = "Iceberg.sublime-color-scheme";
+  #     };
+  #   };
 }
