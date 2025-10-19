@@ -274,6 +274,7 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs_4",
+        "plugins-blink-cmp-git": "plugins-blink-cmp-git",
         "plugins-custom-theme-nvim": "plugins-custom-theme-nvim",
         "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",
         "plugins-iceberg-nvim": "plugins-iceberg-nvim",
@@ -429,6 +430,22 @@
         "owner": "NixOS",
         "ref": "release-25.05",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugins-blink-cmp-git": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759993721,
+        "narHash": "sha256-zGXFZdID1ej8T1Knp4RpfJQ1uocw2GbOQEJbti6Pkhk=",
+        "owner": "Kaiser-Yang",
+        "repo": "blink-cmp-git",
+        "rev": "e3ad0ffaaa3b3b7e2158cc72cd6dad2d19842c46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kaiser-Yang",
+        "repo": "blink-cmp-git",
         "type": "github"
       }
     },
