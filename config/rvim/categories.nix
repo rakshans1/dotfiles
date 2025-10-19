@@ -90,6 +90,7 @@ in
       mini-snippets
       blink-compat
       blink-cmp-avante
+      pkgs.neovimPlugins.blink-cmp-git
       friendly-snippets
       lazydev-nvim
       lspsaga-nvim
@@ -106,7 +107,6 @@ in
       gitsigns-nvim
       neogit
       diffview-nvim
-      octo-nvim
       grapple-nvim
       yazi-nvim
       comment-nvim
@@ -151,6 +151,7 @@ in
       pkgs.neovimPlugins.maximize-nvim
       pkgs.neovimPlugins.custom-theme-nvim
       pkgs.neovimPlugins.sidekick-nvim
+      pkgs.neovimPlugins.octo-nvim
       vim-wakatime
       lualine-nvim
     ];

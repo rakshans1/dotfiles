@@ -282,6 +282,7 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-maximize-nvim": "plugins-maximize-nvim",
         "plugins-navigator-nvim": "plugins-navigator-nvim",
+        "plugins-octo-nvim": "plugins-octo-nvim",
         "plugins-possession-nvim": "plugins-possession-nvim",
         "plugins-sidekick-nvim": "plugins-sidekick-nvim",
         "plugins-timber-nvim": "plugins-timber-nvim"
@@ -556,6 +557,22 @@
       "original": {
         "owner": "numToStr",
         "repo": "Navigator.nvim",
+        "type": "github"
+      }
+    },
+    "plugins-octo-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1760843330,
+        "narHash": "sha256-x6mXpz/ustmmpuDaTSAzhLGn6LPshMIEy0rvGEAO5W8=",
+        "owner": "pwntester",
+        "repo": "octo.nvim",
+        "rev": "29f54a69fbc2791d04624e5f8c88a3e1a1bc8f19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pwntester",
+        "repo": "octo.nvim",
         "type": "github"
       }
     },

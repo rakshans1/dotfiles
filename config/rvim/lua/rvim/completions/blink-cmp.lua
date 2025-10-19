@@ -13,6 +13,7 @@ require('lze').load {
         'lazydev.nvim',
         'mini.snippets',
         'blink-cmp-avante',
+        'blink-cmp-git',
       }
     end,
     after = function(_)
@@ -122,6 +123,7 @@ require('lze').load {
             'path',
             'snippets',
             'buffer',
+            'git',
           },
           providers = {
             snippets = {
@@ -142,6 +144,17 @@ require('lze').load {
             avante = {
               module = 'blink-cmp-avante',
               name = 'Avante',
+            },
+            git = {
+              module = 'blink-cmp-git',
+              name = 'Git',
+              -- only enable this source when filetype is gitcommit, markdown, or 'octo'
+              enabled = function()
+                return vim.tbl_contains(
+                  { 'octo', 'gitcommit', 'markdown' },
+                  vim.bo.filetype
+                )
+              end,
             },
           },
         },

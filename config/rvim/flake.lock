@@ -31,6 +31,22 @@
         "type": "github"
       }
     },
+    "plugins-blink-cmp-git": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759993721,
+        "narHash": "sha256-zGXFZdID1ej8T1Knp4RpfJQ1uocw2GbOQEJbti6Pkhk=",
+        "owner": "Kaiser-Yang",
+        "repo": "blink-cmp-git",
+        "rev": "e3ad0ffaaa3b3b7e2158cc72cd6dad2d19842c46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kaiser-Yang",
+        "repo": "blink-cmp-git",
+        "type": "github"
+      }
+    },
     "plugins-custom-theme-nvim": {
       "flake": false,
       "locked": {
@@ -159,6 +175,22 @@
         "type": "github"
       }
     },
+    "plugins-octo-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1760843330,
+        "narHash": "sha256-x6mXpz/ustmmpuDaTSAzhLGn6LPshMIEy0rvGEAO5W8=",
+        "owner": "pwntester",
+        "repo": "octo.nvim",
+        "rev": "29f54a69fbc2791d04624e5f8c88a3e1a1bc8f19",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pwntester",
+        "repo": "octo.nvim",
+        "type": "github"
+      }
+    },
     "plugins-possession-nvim": {
       "flake": false,
       "locked": {
@@ -211,6 +243,7 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "plugins-blink-cmp-git": "plugins-blink-cmp-git",
         "plugins-custom-theme-nvim": "plugins-custom-theme-nvim",
         "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",
         "plugins-iceberg-nvim": "plugins-iceberg-nvim",
@@ -219,6 +252,7 @@
         "plugins-lzextras": "plugins-lzextras",
         "plugins-maximize-nvim": "plugins-maximize-nvim",
         "plugins-navigator-nvim": "plugins-navigator-nvim",
+        "plugins-octo-nvim": "plugins-octo-nvim",
         "plugins-possession-nvim": "plugins-possession-nvim",
         "plugins-sidekick-nvim": "plugins-sidekick-nvim",
         "plugins-timber-nvim": "plugins-timber-nvim"
