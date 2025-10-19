@@ -126,7 +126,7 @@
       export FZF_CTRL_R_OPTS="--layout=reverse"
       export FZF_ALT_C_OPTS="--layout=reverse"
 
-      export RIPGREP_CONFIG_PATH=~/.ripgreprc
+      export RIPGREP_CONFIG_PATH=~/.config/ripgrep/ripgreprc
 
       export MANPAGER='sh -c "col -bx | bat --language=man --style=grid --color=always --decorations=always --theme='"'Monokai Extended Light'"'"'
 
