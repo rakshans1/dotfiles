@@ -48,6 +48,14 @@
       url = "github:folke/sidekick.nvim";
       flake = false;
     };
+    plugins-octo-nvim = {
+      url = "github:pwntester/octo.nvim";
+      flake = false;
+    };
+    plugins-blink-cmp-git = {
+      url = "github:Kaiser-Yang/blink-cmp-git";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

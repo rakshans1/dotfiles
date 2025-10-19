@@ -34,4 +34,10 @@ vim.defer_fn(function()
   vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', { fg = nil, bg = '#161822' })
   vim.api.nvim_set_hl(0, 'RenderMarkdownH6', { fg = nil, bg = '#161822' })
   vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', { fg = nil, bg = '#161822' })
+
+  -- Diff highlighting with better syntax visibility
+  vim.api.nvim_set_hl(0, 'DiffAdd', { bg = '#404A37', fg = nil })
+  vim.api.nvim_set_hl(0, 'DiffChange', { bg = '#1a1a2a', fg = nil })
+  vim.api.nvim_set_hl(0, 'DiffDelete', { bg = '#461A20', fg = '#3B3C44' })
+  vim.api.nvim_set_hl(0, 'DiffText', { bg = '#2a2a3a', fg = nil })
 end, 100)

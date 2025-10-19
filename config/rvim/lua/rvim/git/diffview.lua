@@ -11,7 +11,6 @@ require('lze').load {
     },
     keys = {
       { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diffview Open' },
-      { '<leader>gq', '<cmd>DiffviewClose<cr>', desc = 'Diffview Close' },
       {
         '<leader>gf',
         '<cmd>DiffviewFileHistory %<cr>',
