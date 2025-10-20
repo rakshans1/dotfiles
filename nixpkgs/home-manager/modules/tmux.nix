@@ -153,7 +153,7 @@
       #+--------+
       #+--- Bars ---+
       set -g status-left "#[fg=#c6c8d1,bg=black,bold] #S #[fg=black,bg=brightblack,nobold,noitalics,nounderscore]"
-      set -g status-right "#{prefix_highlight}#[fg=#c6c8d1,bg=#0f1117,nobold,noitalics,nounderscore]#[fg=black,bg=#c6c8d1] %d-%m-%Y #[fg=black,bg=#c6c8d1,nobold,noitalics,nounderscore]#[fg=black,bg=#c6c8d1] %I:%M #[fg=black,bg=#c6c8d1,nobold,noitalics,nounderscore]#[fg=colour250,bg=black,bold] #H "
+      set -g status-right "#{prefix_highlight}#[fg=#c6c8d1,bg=#0f1117,nobold,noitalics,nounderscore]#[fg=black,bg=#c6c8d1] %d-%m-%Y #[fg=black,bg=#c6c8d1,nobold,noitalics,nounderscore]#[fg=black,bg=#c6c8d1] %I:%M"
 
       #+--- Windows ---+
       set -g window-status-format "#[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#I #[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#W #F #[fg=#6b7089,bg=#0f1117,nobold,noitalics,nounderscore]"

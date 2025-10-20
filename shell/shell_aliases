@@ -8,7 +8,6 @@
 alias nvim=rvim
 alias v="rvim"
 alias vim="nvim"
-alias t="tmux"
 alias x+="chmod +x"
 alias hosts="sudo nvim /etc/hosts"
 alias update="sudo apt-get update"

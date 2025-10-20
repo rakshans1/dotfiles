@@ -81,7 +81,7 @@ function printcolors() {
 }
 
 # Tmux function to open .tmux files if it exits
-function tm() {
+function t() {
   emulate -L zsh
   # If provided with args, pass them through.
   if [[ -n "$@" ]]; then
