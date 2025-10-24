@@ -118,11 +118,6 @@ function t() {
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || tmux new -A -s "$(basename "$(pwd)")"
 }
 
-# Remove old kernels and clean /boot dir
-function purge_kernels() {
-  echo $(dpkg --list | grep linux-image | awk '{ print $2 }' | sort -V | sed -n '/'$(uname -r)'/q;p') $(dpkg --list | grep linux-headers | awk '{ print $2 }' | sort -V | sed -n '/'"$(uname -r | sed "s/\([0-9.-]*\)-\([^0-9]\+\)/\1/")"'/q;p') | xargs sudo apt-get -y purge
-}
-
 # Preview files
 function p() {
   fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
@@ -162,6 +157,15 @@ function copy() {
     cat $1 | pbcopy
   else
     cat $1 | xclip -sel clipboard
+  fi
+}
+
+# paste clipboard content to file
+function paste() {
+  if is_mac; then
+    pbpaste
+  else
+    xclip -sel clipboard -o
   fi
 }
 
@@ -206,79 +210,4 @@ function is_mac() {
 
 function is_linux() {
   [[ $(uname) == "Linux" ]]
-}
-
-function nix-profile() {
-  local profile
-  if is_mac && [[ $(uname -m) == 'arm64' ]]; then
-    profile="mbp"
-  elif is_mac; then
-    profile="mbpi"
-  elif is_linux; then
-    profile="linux"
-  fi
-
-  echo $profile
-}
-
-function nix-build() {
-  local current_dir=$(pwd)
-  local profile=$(nix-profile)
-  cd ~/dotfiles
-  nix build --no-link .#homeConfigurations.$profile.activationPackage
-  cd $current_dir
-}
-
-function nix-activate() {
-  local current_dir=$(pwd)
-  local profile=$(nix-profile)
-  cd ~/dotfiles
-  "$(nix path-info .#homeConfigurations.$profile.activationPackage)"/activate
-  cd $current_dir
-}
-
-function nix-switch() {
-  (
-    set -e
-    local current_dir=$(pwd)
-    local profile=$(nix-profile)
-    cd ~/dotfiles
-
-    echo "Updating private flake..."
-    nix flake update private
-
-    echo "Updating neovim flake..."
-    nix flake update neovim
-
-    echo "Switching home-manager configuration..."
-    home-manager switch --flake ".#$profile"
-
-    echo "Building darwin configuration..."
-    nix build .#darwinConfigurations.$profile.system
-
-    echo "Applying darwin configuration..."
-    sudo ./result/sw/bin/darwin-rebuild switch --flake .#$profile
-
-    cd $current_dir
-  )
-}
-
-function nix-update() {
-  nix flake update
-}
-
-function nix-clean() {
-  nix-store --gc
-  nix-collect-garbage
-}
-
-function karabiner-build() {
-  local current_dir=$(pwd)
-  cd ~/dotfiles/config/karabiner
-  yarn build
-  cd $current_dir
-}
-
-function nix-size() {
-  nix path-info --json --all | jq 'map(.narSize) | add | . / 1000000000'
 }

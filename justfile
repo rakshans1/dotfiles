@@ -19,8 +19,9 @@ check-code:
 shell-ls:
   #!/usr/bin/env bash
   set -euo pipefail
-  # Find .sh files and bin/* files, but exclude non-shell scripts
-  find . \( -name '*.sh' -o -path './bin/*' \) -type f -not -type l -print 2>/dev/null | while read -r file; do
+  # Find .sh files and bin/* files, but exclude non-shell scripts and common directories
+  find . \( -name node_modules -o -name .git -o -name .cache \) -prune -o \
+    \( -name '*.sh' -o -path './bin/*' \) -type f -not -type l -print 2>/dev/null | while read -r file; do
     # Check if file has a shell shebang
     if head -n1 "$file" | grep -qE '^#!/.*(bash|sh|zsh)'; then
       echo "$file"

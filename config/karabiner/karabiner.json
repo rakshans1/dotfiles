@@ -1863,10 +1863,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'"
+                    "shell_command": "~/dotfiles/bin/rr o daily"
                   }
                 ],
-                "description": "Open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'",
+                "description": "~/dotfiles/bin/rr o daily",
                 "type": "basic",
                 "from": {
                   "key_code": "d",
@@ -1887,10 +1887,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'"
+                    "shell_command": "~/dotfiles/bin/rr o weekly"
                   }
                 ],
-                "description": "Open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'",
+                "description": "~/dotfiles/bin/rr o weekly",
                 "type": "basic",
                 "from": {
                   "key_code": "w",
@@ -1911,10 +1911,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'"
+                    "shell_command": "~/dotfiles/bin/rr o monthly"
                   }
                 ],
-                "description": "Open 'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'",
+                "description": "~/dotfiles/bin/rr o monthly",
                 "type": "basic",
                 "from": {
                   "key_code": "m",

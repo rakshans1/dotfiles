@@ -127,6 +127,14 @@
       export FZF_ALT_C_OPTS="--layout=reverse"
 
       export RIPGREP_CONFIG_PATH=~/.config/ripgrep/ripgreprc
+      export XDG_CONFIG_HOME=~/.config
+
+      # Gum styling - Iceberg theme (blue #84a0c6 = terminal color 110)
+      export GUM_CONFIRM_SELECTED_BACKGROUND="110"
+      export GUM_CONFIRM_PROMPT_FOREGROUND="110"
+      export GUM_SPIN_SPINNER_FOREGROUND="110"
+      export GUM_STYLE_FOREGROUND="110"
+      export GUM_STYLE_BORDER_FOREGROUND="110"
 
       export MANPAGER='sh -c "col -bx | bat --language=man --style=grid --color=always --decorations=always --theme='"'Monokai Extended Light'"'"'
 
@@ -172,6 +180,7 @@
       ZSH_HIGHLIGHT_STYLES[unknown-token]="fg=124"
 
       export PATH="$HOME/.local/bin:$PATH"
+      export PATH="$HOME/dotfiles/bin:$PATH"
 
       # Yazi shell wrapper for changing directory when exiting
       # Ref: https://yazi-rs.github.io/docs/quick-start/
@@ -215,6 +224,11 @@
         autoload -Uz compinit && compinit
         eval "$(just --completions zsh)"
       fi
+
+      # rr completion
+      fpath=(~/dotfiles/private/rr/completions $fpath)
+      autoload -Uz compinit
+      compinit
     '';
   };
 }

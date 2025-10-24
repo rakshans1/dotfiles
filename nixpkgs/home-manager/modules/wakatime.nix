@@ -18,7 +18,7 @@
           # Generate .wakatime.cfg
           cat > $HOME/.wakatime.cfg <<EOF
     [settings]
-    debug=true
+    debug=false
     hidefilenames = false
     ignore =
         COMMIT_EDITMSG\$

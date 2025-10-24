@@ -1,18 +1,8 @@
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
 # Shortcuts
 alias nvim=rvim
 alias v="rvim"
 alias vim="nvim"
 alias x+="chmod +x"
-alias hosts="sudo nvim /etc/hosts"
-alias update="sudo apt-get update"
-alias upgrade="sudo apt-get upgrade"
-alias npmlist="npm list -g --depth 0"
 alias top="btm"
 alias s="subl"
 alias c="cursor ."
@@ -36,12 +26,6 @@ alias myip="ip a | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
 
 # Download file and save it with filename of remote file
 alias get="curl -O -L"
-
-# File size
-alias fs="ls -sh"
-
-# zshrc config
-alias reload_zsh="source ~/.zshrc && echo 'Shell config reloaded from ~/.zshrc'"
 
 alias yolo-claude="claude --dangerously-skip-permissions"
 alias yolo-codex='codex -m gpt-5-codex -c model_reasoning_effort="high" --yolo --search'

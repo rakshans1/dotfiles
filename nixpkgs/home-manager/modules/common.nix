@@ -17,6 +17,7 @@
     ./lvim.nix
     ./ghostty.nix
     ./sublime.nix
+    ./glow.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -86,6 +87,7 @@
       shfmt
       shellcheck
 
+      rclone
       awscli2
       caddy
       cloudflared

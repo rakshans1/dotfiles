@@ -188,6 +188,28 @@ map(
   '<cmd>lua Snacks.picker.keymaps()<cr>',
   { desc = 'Search keymaps' }
 )
+map('n', '<leader>vp', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+
+  -- Get git root
+  local git_root = vim.fn.systemlist(
+    'git -C '
+      .. vim.fn.shellescape(vim.fn.fnamemodify(file, ':h'))
+      .. ' rev-parse --show-toplevel'
+  )[1]
+
+  if git_root and git_root ~= '' and not git_root:match '^fatal:' then
+    local path_from_git_root = file:sub(#git_root + 2) -- +2 to skip the trailing slash
+    vim.fn.setreg('+', path_from_git_root)
+    require('snacks').notify.info('Yanked `' .. path_from_git_root .. '`')
+  else
+    vim.notify('Not in a git repository', vim.log.levels.WARN)
+  end
+end, { desc = 'Copy git root path' })
 -- Snacks pickers (lsp) [l]
 map(
   'n',

@@ -331,15 +331,9 @@ const rules: KarabinerRules[] = [
 		},
 		w: app("WhatsApp"),
 		n: {
-			d: open(
-				"'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-day'",
-			),
-			w: open(
-				"'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-week'",
-			),
-			m: open(
-				"'obsidian://adv-uri?vault=brain&commandid=journals:journal:calendar:open-month'",
-			),
+			d: shell`~/dotfiles/bin/rr o daily`,
+			w: shell`~/dotfiles/bin/rr o weekly`,
+			m: shell`~/dotfiles/bin/rr o monthly`,
 			alone: app("Obsidian"),
 		},
 		m: app("Youtube Music"),
