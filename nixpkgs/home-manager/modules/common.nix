@@ -53,6 +53,7 @@
       tesseract
       just
       lazygit
+      overmind
 
       neovim
       lunarvim

@@ -519,25 +519,6 @@ trace "namespace" "message"   # Shows when RR_VERBOSE >= 2
 
 ## Integration with Existing Commands
 
-### Backward Compatibility
-
-Old commands continue to work during migration:
-
-| Old Command | New Command | Status |
-|-------------|-------------|--------|
-| `nix-profile` | `rr nix profile` | Both work identically |
-| `nix-switch` | `rr nix switch` | Both work identically |
-| `nix-update` | `rr nix update` | Both work identically |
-| `nix-clean` | `rr nix clean` | Both work identically |
-| `karabiner-build` | `rr karabiner build` | Both work identically |
-| `git-branch` | `rr git branch` | Both work identically |
-
-**Migration strategy:**
-- Both systems work in parallel
-- No breaking changes
-- Gradually adopt `rr` commands
-- Old commands may be deprecated in future
-
 ### Shell Functions
 
 `rr` namespaces can call existing functions from `shell/shell_functions`:
@@ -656,7 +637,7 @@ exec zsh
 
 ### Command not in history
 
-History tracking started in Phase 3. Earlier commands won't appear.
+Only `rr` commands are tracked in the history file at `~/.config/rr/history`.
 
 ### Alias not recognized
 
@@ -680,24 +661,21 @@ rr -v nix profile 2>&1
 rr -v -q nix profile
 ```
 
-## Implementation Status
+## Features
 
-**Current Phase: 5 (Complete) ✅**
+The `rr` CLI includes the following capabilities:
 
-All planned features implemented:
-- ✅ Core dispatcher with namespace routing
-- ✅ Command history tracking
-- ✅ Namespace aliasing
-- ✅ Smart search and discovery
-- ✅ Iceberg theme via Nix
-- ✅ Non-interactive mode (LLM-friendly)
-- ✅ Shell completion (zsh)
-- ✅ Quiet/silent/verbose modes
-- ✅ JSON output (where applicable)
-- ✅ Documentation system
-- ✅ Feature consistency across namespaces
-
-See `thoughts/_shared/plans/20251020_rr-cli-dispatcher-implementation.md` for complete implementation history.
+- Core dispatcher with namespace routing
+- Command history tracking
+- Namespace aliasing
+- Smart search and discovery
+- Iceberg theme via Nix
+- Non-interactive mode (LLM-friendly)
+- Shell completion (zsh)
+- Quiet/silent/verbose modes
+- JSON output (where applicable)
+- Comprehensive documentation system
+- Feature consistency across namespaces
 
 ## Additional Resources
 
@@ -755,5 +733,3 @@ See `private/rr/CONTRIBUTORS.md` for detailed contribution guidelines.
 ---
 
 **Last Updated:** 2025-10-24
-**Implementation Phase:** 5 (Complete)
-**Status:** Production Ready ✅

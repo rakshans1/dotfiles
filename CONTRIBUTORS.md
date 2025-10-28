@@ -24,6 +24,9 @@ See [docs/nix-implementation.md](docs/nix-implementation.md) for complete implem
 ### Secret Management
 See [docs/secret-management.md](docs/secret-management.md) for complete implementation guide
 
+### RR CLI
+See [docs/rr-cli.md](docs/rr-cli.md) for complete RR CLI documentation
+
 ### Configuration File Structure
 - **Shell**: tmux, zsh aliases/functions in `shell/`
 - **Git**: Global git configuration in `git/`
@@ -48,17 +51,30 @@ git submodule init && git submodule update
 
 ### Nix/Home Manager
 ```bash
-# To Apply Home Manager configuration
-nix-switch
+# To apply Home Manager configuration (updates flakes and rebuilds)
+rr nix switch
 
-# To update flake dependencies
-nix-update
+# To update flake dependencies only
+rr nix update
+
+# To build without activating
+rr nix build
+
+# To check Nix store size
+rr nix size
+
+# To clean up old generations
+rr nix clean
 ```
 
 ### Karabiner Configuration
 ```bash
-# Build Karabiner rules (in config/karabiner/)
-karabiner-build
+# Build Karabiner rules from TypeScript
+rr karabiner build
+
+# Short aliases
+rr k build
+rr kb build
 ```
 
 ## Development Notes
