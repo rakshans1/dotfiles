@@ -126,6 +126,20 @@ require('lze').load {
                 }
               end,
             },
+            search_files_in_directory = {
+              action = function(_, item)
+                if not item then
+                  return
+                end
+                local dir = vim.fn.fnamemodify(item.file, ':p:h')
+                require('snacks').picker.files {
+                  cwd = dir,
+                  hidden = true,
+                  ignored = true,
+                  follow = false,
+                }
+              end,
+            },
           },
           win = {
             input = {
@@ -147,6 +161,7 @@ require('lze').load {
                 ['v'] = { 'edit_vsplit' },
                 ['y'] = { 'copy_file_path', desc = 'Copy file path' },
                 ['s'] = { 'search_in_directory', desc = 'Search in directory' },
+                ['f'] = { 'search_files_in_directory', desc = 'Search files in directory' },
               },
             },
           },
