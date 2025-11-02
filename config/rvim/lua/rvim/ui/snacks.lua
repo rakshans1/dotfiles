@@ -41,6 +41,7 @@ require('lze').load {
           win = { position = 'float' },
         },
         picker = {
+          matcher = { ignorecase = true },
           actions = {
             set_glob_pattern = function(picker)
               require('snacks').input({
