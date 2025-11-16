@@ -5,7 +5,7 @@ require('lze').load {
     load = function(name)
       require('lzextras').loaders.multi {
         name,
-        'snacks.nvim',
+        'snacks-nvim',
       }
     end,
     cmd = { 'Octo' },

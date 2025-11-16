@@ -23,7 +23,7 @@ map(
 map(
   'n',
   '<leader>p',
-  '<cmd>lua Snacks.picker.files({ hidden = true })<cr>',
+  '<cmd>lua Snacks.picker.files({ hidden = true, matcher: { ignorecase: true } })<cr>',
   { desc = 'Find git files' }
 )
 map(

@@ -18,7 +18,7 @@ require('lze').load {
         javascriptreact = { 'biomejs' },
         typescriptreact = { 'biomejs' },
         svelte = { 'eslint_d' },
-        elixir = { 'credo' },
+        -- elixir = { 'credo' },
       }
     end,
   },

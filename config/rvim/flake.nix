@@ -44,6 +44,10 @@
       url = "github:Goose97/timber.nvim";
       flake = false;
     };
+    plugins-snacks-nvim = {
+      url = "github:folke/snacks.nvim";
+      flake = false;
+    };
     plugins-sidekick-nvim = {
       url = "github:folke/sidekick.nvim";
       flake = false;

@@ -98,7 +98,6 @@ in
       promise-async
       nvim-ufo
       conform-nvim
-      snacks-nvim
       nvim-notify
       noice-nvim
       inc-rename-nvim
@@ -151,9 +150,11 @@ in
       pkgs.neovimPlugins.maximize-nvim
       pkgs.neovimPlugins.custom-theme-nvim
       pkgs.neovimPlugins.sidekick-nvim
+      pkgs.neovimPlugins.snacks-nvim
       pkgs.neovimPlugins.octo-nvim
       vim-wakatime
       lualine-nvim
+      undotree
     ];
   };
 

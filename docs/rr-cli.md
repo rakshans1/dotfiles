@@ -271,6 +271,41 @@ rr server <command>        # See: rr server --help
 
 **Detailed docs:** `rr docs server` or see `private/rr/docs/namespaces/server.md`
 
+### util (multiple commands)
+
+Utility commands for data processing and system tasks.
+
+**Commands:**
+- `blob parse|url|download` - Parse and download S3 blob data
+- `procs` - List processes by working directory (macOS only)
+
+```bash
+# Examples
+rr util procs                    # List processes in current directory
+rr util procs --select           # Interactive selection
+rr util procs --kill             # Select and kill processes
+rr util blob parse               # Parse blob JSON
+```
+
+**Detailed docs:** `rr docs util` or see `private/rr/docs/namespaces/util.md`
+
+### dotfiles (1 command)
+
+Manages dotfiles repository and updates npm-based CLI tools.
+
+| Command | Description | Features |
+|---------|-------------|----------|
+| `update cli` | Update npm CLI tools | Quiet, Verbose, Non-interactive, Gum UI |
+
+```bash
+# Examples
+rr dotfiles update cli         # Update all CLI tools
+rr -y dotfiles update cli      # Non-interactive update
+rr -v dotfiles update cli      # Verbose mode
+```
+
+**Detailed docs:** `rr docs dotfiles` or see `private/rr/docs/namespaces/dotfiles.md`
+
 ## Global Flags
 
 All flags must come **before** the namespace:

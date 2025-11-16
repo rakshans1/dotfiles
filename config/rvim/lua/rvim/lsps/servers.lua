@@ -51,9 +51,9 @@ servers.biome = {}
 
 servers.jsonls = {}
 
-servers.harper_ls = {
-  filetypes = { 'markdown', 'gitcommit', 'typst', 'html', 'text' },
-}
+-- servers.harper_ls = {
+--   filetypes = { 'markdown', 'gitcommit', 'typst', 'html', 'text' },
+-- }
 
 servers.marksman = {}
 
@@ -61,9 +61,9 @@ servers.ts_ls = {}
 
 servers.rust_analyzer = {}
 
-servers.svelte = {}
+-- servers.svelte = {}
 
-servers.tailwindcss = {}
+-- servers.tailwindcss = {}
 
 servers.cssls = {}
 

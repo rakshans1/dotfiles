@@ -1,6 +1,6 @@
 require('lze').load {
   {
-    'snacks.nvim',
+    'snacks-nvim',
     after = function(_)
       local snacks = require 'snacks'
       local snacks_dashboard = require 'rvim.ui.snacks-dashboard'
@@ -162,7 +162,10 @@ require('lze').load {
                 ['v'] = { 'edit_vsplit' },
                 ['y'] = { 'copy_file_path', desc = 'Copy file path' },
                 ['s'] = { 'search_in_directory', desc = 'Search in directory' },
-                ['f'] = { 'search_files_in_directory', desc = 'Search files in directory' },
+                ['f'] = {
+                  'search_files_in_directory',
+                  desc = 'Search files in directory',
+                },
               },
             },
           },

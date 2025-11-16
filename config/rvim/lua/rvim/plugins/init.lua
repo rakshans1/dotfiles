@@ -302,4 +302,8 @@ require('lze').load {
     'vim-wakatime',
     -- event = { 'DeferredUIEnter' },
   },
+  {
+    'undotree',
+    cmd = { 'UndotreeToggle' },
+  },
 }
