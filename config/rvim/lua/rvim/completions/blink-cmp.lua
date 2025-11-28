@@ -14,6 +14,7 @@ require('lze').load {
         'mini.snippets',
         'blink-cmp-avante',
         'blink-cmp-git',
+        'blink-cmp-fuzzy-path',
       }
     end,
     after = function(_)
@@ -120,7 +121,7 @@ require('lze').load {
             'avante',
             'lazydev',
             'lsp',
-            'path',
+            'fuzzy-path',
             'snippets',
             'buffer',
             'git',
@@ -155,6 +156,11 @@ require('lze').load {
                   vim.bo.filetype
                 )
               end,
+            },
+            ['fuzzy-path'] = {
+              module = 'blink-cmp-fuzzy-path',
+              name = 'Fuzzy Path',
+              score_offset = 3,
             },
           },
         },

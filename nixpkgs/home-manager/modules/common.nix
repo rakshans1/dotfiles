@@ -102,6 +102,7 @@
       age
       sops
       ssh-to-age
+      chafa
 
       (pkgsUnstable.python3.withPackages (
         ps: with ps; [

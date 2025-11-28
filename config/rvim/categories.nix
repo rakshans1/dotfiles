@@ -91,6 +91,7 @@ in
       blink-compat
       blink-cmp-avante
       pkgs.neovimPlugins.blink-cmp-git
+      pkgs.neovimPlugins.blink-cmp-fuzzy-path
       friendly-snippets
       lazydev-nvim
       lspsaga-nvim

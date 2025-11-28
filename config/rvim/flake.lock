@@ -2,11 +2,11 @@
   "nodes": {
     "nixCats": {
       "locked": {
-        "lastModified": 1762227818,
-        "narHash": "sha256-GSnU4XJucZojGVBGY7djqsT37P9YViCMTVw58tsqrOs=",
+        "lastModified": 1763330129,
+        "narHash": "sha256-KbOeWIF52SV53BOeETGO2C5ewaV2Ex9iaXH7G72gOr8=",
         "owner": "BirdeeHub",
         "repo": "nixCats-nvim",
-        "rev": "fa7991a4fa7d7227486910ce6724215b88eb8296",
+        "rev": "c81551ed87db2aefab30a12cf7425ff94dc0ad64",
         "type": "github"
       },
       "original": {
@@ -17,17 +17,33 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1762156382,
-        "narHash": "sha256-Yg7Ag7ov5+36jEFC1DaZh/12SEXo6OO3/8rqADRxiqs=",
+        "lastModified": 1763312402,
+        "narHash": "sha256-3YJkOBrFpmcusnh7i8GXXEyh7qZG/8F5z5+717550Hk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7241bcbb4f099a66aafca120d37c65e8dda32717",
+        "rev": "85a6c4a07faa12aaccd81b36ba9bfc2bec974fa1",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "plugins-blink-cmp-fuzzy-path": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1762927718,
+        "narHash": "sha256-SvCG7G+uszmVPg6qJV4oUzd6S64yHoqBwp+mAPYH+n0=",
+        "owner": "newtoallofthis123",
+        "repo": "blink-cmp-fuzzy-path",
+        "rev": "f13d4b98c83fbe37b13cb17c125aab40b3ff87d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "newtoallofthis123",
+        "repo": "blink-cmp-fuzzy-path",
         "type": "github"
       }
     },
@@ -98,11 +114,11 @@
     "plugins-incline-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1749113304,
-        "narHash": "sha256-Xz2OLjms3Yt+xv/BfYZoCb8O+zF6/Z5ZHBQOqcUvo6c=",
+        "lastModified": 1763297530,
+        "narHash": "sha256-4YMtnhm1DvywnfxD2D9POZLq+368AsBqbGk6OvNL8/0=",
         "owner": "b0o",
         "repo": "incline.nvim",
-        "rev": "0fd2d5a27504dba7fdc507a53275f22c081fe640",
+        "rev": "6a3b0635bcd2490dbb1fa124217d41bf69ca0fa2",
         "type": "github"
       },
       "original": {
@@ -178,11 +194,11 @@
     "plugins-octo-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1762208128,
-        "narHash": "sha256-Xb1raDOgKt51dIk4amTXcUJkrqkhIvicC1cF+T7SkNg=",
+        "lastModified": 1763208318,
+        "narHash": "sha256-pG8iH9dF1QwRWsGu7ykqLvxaTR/0eLLiEzxwY7c2YO4=",
         "owner": "pwntester",
         "repo": "octo.nvim",
-        "rev": "bb705d90ec9479d5061274a1caa46a98da736a6b",
+        "rev": "519467401a3879d1f5ec187581502d40820d70e9",
         "type": "github"
       },
       "original": {
@@ -226,11 +242,11 @@
     "plugins-snacks-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1762235168,
-        "narHash": "sha256-WFS2jdeuHZOmh5OROyiTI5GKQNp6c+0IWtF0QyzetgY=",
+        "lastModified": 1763236069,
+        "narHash": "sha256-SjZIYC8X4tr0RhgNu87wQRhY6hUm2hpXoyu+snJJdL8=",
         "owner": "folke",
         "repo": "snacks.nvim",
-        "rev": "41712e3026a6d690e3c65f83b335cb34e054d2cd",
+        "rev": "836e07336ba523d4da480cd66f0241815393e98e",
         "type": "github"
       },
       "original": {
@@ -242,11 +258,11 @@
     "plugins-timber-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1760605212,
-        "narHash": "sha256-IOUVQyIwPRaHHuNrVTg2zGDSiFGg/3QlmTpclNAoxsE=",
+        "lastModified": 1762829029,
+        "narHash": "sha256-Njz2gNZS1wIfTkh/HEPEIRyXXp+n7NQANxw6KNodDuw=",
         "owner": "Goose97",
         "repo": "timber.nvim",
-        "rev": "405a9afeabf56181fb04e8a0f23eb9ecdb2c736f",
+        "rev": "b72d2628ee6f91d7117fdbf3b8f883eb7e066bdd",
         "type": "github"
       },
       "original": {
@@ -259,6 +275,7 @@
       "inputs": {
         "nixCats": "nixCats",
         "nixpkgs": "nixpkgs",
+        "plugins-blink-cmp-fuzzy-path": "plugins-blink-cmp-fuzzy-path",
         "plugins-blink-cmp-git": "plugins-blink-cmp-git",
         "plugins-custom-theme-nvim": "plugins-custom-theme-nvim",
         "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",

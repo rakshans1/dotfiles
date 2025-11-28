@@ -191,6 +191,14 @@ function deb() {
 function cat() {
   case $1 in
   *.md) glow -p $@ ;;
+  *.png | *.jpg | *.jpeg | *.gif | *.bmp | *.webp | *.svg)
+    if [[ -n "$TMUX" ]]; then
+      # Inside tmux, use sixel or simpler output
+      chafa -f kitty --passthrough tmux $@
+    else
+      chafa $@
+    fi
+    ;;
   *) bat $@ ;;
   esac
 }

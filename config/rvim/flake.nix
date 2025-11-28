@@ -60,6 +60,10 @@
       url = "github:Kaiser-Yang/blink-cmp-git";
       flake = false;
     };
+    plugins-blink-cmp-fuzzy-path = {
+      url = "github:newtoallofthis123/blink-cmp-fuzzy-path";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

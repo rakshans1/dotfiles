@@ -12,7 +12,10 @@
 
     extraConfig = ''
       # Terminal overrides
-      set -ga terminal-overrides ",*256col*:Tc"
+      set -g allow-passthrough on
+      # set -ga terminal-overrides ",*256col*:Tc"
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
       set -g status-keys vi
       setw -g monitor-activity on
       set -g visual-activity off
@@ -86,7 +89,7 @@
       bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
       bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
       tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
-      bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'
+      # bind-key -n C-\\ if-shell "$is_vim" 'send-keys C-\\'  'select-pane -l'
 
       bind-key -T copy-mode-vi 'C-h' select-pane -L
       bind-key -T copy-mode-vi 'C-j' select-pane -D

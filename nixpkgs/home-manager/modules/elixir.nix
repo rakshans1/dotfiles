@@ -82,6 +82,7 @@
       defdelegate cls(), to: Util, as: :cls
       defdelegate raw(any), to: Util, as: :raw
       defdelegate r(), to: Util, as: :recompile
+      defdelegate copy(any), to: IExHelpers, as: :copy
     end
 
     import :_exit
