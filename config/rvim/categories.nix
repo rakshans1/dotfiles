@@ -122,6 +122,7 @@ in
       treesj
       nvim-autopairs
       copilot-lua
+      pkgs.neovimPlugins.copilot-lsp
       avante-nvim
       ChatGPT-nvim
       wtf-nvim

@@ -3,8 +3,15 @@ require('lze').load {
     'copilot.lua',
     event = 'InsertEnter',
     cmd = 'Copilot',
+    -- load = function(name)
+    -- require('lzextras').loaders.multi {
+    --   name,
+    --   'copilot-lsp',
+    -- }
+    -- end,
     after = function(_)
       require('copilot').setup {
+        -- nes = { enabled = true },
         panel = { enabled = false },
         suggestion = {
           enabled = true,

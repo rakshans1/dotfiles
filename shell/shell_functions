@@ -191,15 +191,20 @@ function deb() {
 function cat() {
   case $1 in
   *.md) glow -p $@ ;;
-  *.png | *.jpg | *.jpeg | *.gif | *.bmp | *.webp | *.svg)
-    if [[ -n "$TMUX" ]]; then
-      # Inside tmux, use sixel or simpler output
-      chafa -f kitty --passthrough tmux $@
+  *)
+    # Check if it's an image file using file command (works without extensions)
+    local mime_type=$(file --mime-type -b "$1" 2>/dev/null)
+    if [[ $mime_type == image/* ]]; then
+      if [[ -n "$TMUX" ]]; then
+        # Inside tmux, use sixel or simpler output
+        chafa -f kitty --passthrough tmux $@
+      else
+        chafa $@
+      fi
     else
-      chafa $@
+      bat $@
     fi
     ;;
-  *) bat $@ ;;
   esac
 }
 

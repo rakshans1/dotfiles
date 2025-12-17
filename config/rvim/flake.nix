@@ -64,6 +64,10 @@
       url = "github:newtoallofthis123/blink-cmp-fuzzy-path";
       flake = false;
     };
+    plugins-copilot-lsp = {
+      url = "github:copilotlsp-nvim/copilot-lsp";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

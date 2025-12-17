@@ -6,7 +6,7 @@
     enableZshIntegration = true;
 
     settings = {
-      manager = {
+      mgr = {
         show_hidden = true;
       };
     };
@@ -34,7 +34,7 @@
 
     theme = {
       # Iceberg color scheme
-      manager = {
+      mgr = {
         cwd = {
           fg = "#c6c8d1";
           bg = "#161821";

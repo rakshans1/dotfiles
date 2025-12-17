@@ -11,7 +11,7 @@
 
 buildNpmPackage rec {
   pname = "gemini-cli";
-  version = "0.18.4";
+  version = "0.21.0";
 
   nodejs = nodejs_22;
 
@@ -19,10 +19,10 @@ buildNpmPackage rec {
     owner = "google-gemini";
     repo = "gemini-cli";
     rev = "v${version}";
-    hash = "sha256-TSHL3X+p74yFGTNFk9r4r+nnul2etgVdXxy8x9BjsRg=";
+    hash = "sha256-iETTEZyiLdMXOi7Nqm+ivS/iS9V0mW0Ne9ZHmmVA1B4=";
   };
 
-  npmDepsHash = "sha256-2Z6YrmUHlYKRU3pR0ZGwQbBgzNFqakBB6LYZqf66nSs=";
+  npmDepsHash = "sha256-XDimCRagM1Fsz4FWNQsu4jUAq58xGx6zPwUtQ1nSmIE=";
 
   nativeBuildInputs = [
     jq
