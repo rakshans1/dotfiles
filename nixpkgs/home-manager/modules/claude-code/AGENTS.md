@@ -1,13 +1,8 @@
 # Claude Code Module Update Guide
 
-Custom Home Manager module for latest claude-code from npm.
+Native binary module for claude-code (darwin-only).
 
 ## Automatic Update Process
-
-The `update.sh` script automatically updates **all required hashes**:
-- Package version
-- Source hash (`hash`)
-- npm dependencies hash (`npmDepsHash`)
 
 ```bash
 cd nixpkgs/home-manager/modules/claude-code
@@ -15,27 +10,12 @@ cd nixpkgs/home-manager/modules/claude-code
 ```
 
 The script will:
-1. Fetch the latest version from npm
-2. Download and hash the source
-3. Generate updated package-lock.json
-4. Calculate npmDepsHash automatically
-5. Update all values in default.nix
-
-After the script completes, simply commit and apply:
-
-```bash
-git add .
-git commit -m "chore: Update claude-code to v<VERSION>"
-nix-switch
-```
-
-## Troubleshooting
-
-**Hash mismatch:** Should not happen - script calculates correct hashes
-**Build fails:** Check package structure changes in `default.nix`
-**Verify installation:** `claude --version`
+1. Fetch the latest version from Google Cloud Storage
+2. Download manifest.json with checksums
+3. Convert checksums to SRI format
+4. Update hashes.json
 
 ## Files
-- `default.nix` - Package definition
-- `update.sh` - Fully automated update script
-- `package-lock.json` - npm dependencies (auto-generated)
+- `default.nix` - Package definition (fetches native binary)
+- `hashes.json` - Version and platform hashes
+- `update.sh` - Automated update script

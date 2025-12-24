@@ -12,10 +12,10 @@
 
     extraConfig = ''
       # Terminal overrides
-      set -g allow-passthrough on
-      # set -ga terminal-overrides ",*256col*:Tc"
-      set -ga update-environment TERM
-      set -ga update-environment TERM_PROGRAM
+      # set -g allow-passthrough on
+      set -ga terminal-overrides ",*256col*:Tc"
+      # set -ga update-environment TERM
+      # set -ga update-environment TERM_PROGRAM
       set -g status-keys vi
       setw -g monitor-activity on
       set -g visual-activity off

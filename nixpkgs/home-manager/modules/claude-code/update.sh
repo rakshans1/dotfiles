@@ -1,38 +1,49 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p nodePackages.npm nix-prefetch-scripts prefetch-npm-deps
+#!nix-shell -i bash -p curl jq
 # shellcheck shell=bash
 
 set -euo pipefail
 
-version=$(npm view @anthropic-ai/claude-code version)
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+BASE_URL="https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases"
+
+# Fetch latest version
+version=$(curl -s "$BASE_URL/latest")
 echo "Latest claude-code version: $version"
 
-# Update version in default.nix
-cd "$(dirname "${BASH_SOURCE[0]}")"
-sed -i'' -e "s/version = \".*\";/version = \"$version\";/" default.nix
+current=$(jq -r '.version' hashes.json)
+echo "Current version: $current"
 
-# Get new source hash
-url="https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-$version.tgz"
-echo "Fetching hash for $url"
-hash=$(nix-prefetch-url --type sha256 --unpack "$url")
-sri_hash=$(nix hash to-sri --type sha256 "$hash")
+if [[ "$version" == "$current" ]]; then
+  echo "Already up to date"
+  exit 0
+fi
 
-# Update source hash in default.nix
-sed -i'' -e "s|hash = \".*\";|hash = \"$sri_hash\";|" default.nix
+echo "Updating from $current to $version"
 
-# Generate updated lock file
-npm i --package-lock-only "@anthropic-ai/claude-code@$version"
-rm -f package.json
+# Fetch manifest
+manifest=$(curl -s "$BASE_URL/$version/manifest.json")
 
-# Calculate npmDepsHash
-echo "Calculating npmDepsHash..."
-npm_deps_hash=$(prefetch-npm-deps package-lock.json)
-npm_deps_sri=$(nix hash to-sri --type sha256 "$npm_deps_hash")
+# Convert hex checksum to SRI format
+hex_to_sri() {
+  echo "sha256-$(echo "$1" | xxd -r -p | base64)"
+}
 
-# Update npmDepsHash in default.nix
-sed -i'' -e "s|npmDepsHash = \".*\";|npmDepsHash = \"$npm_deps_sri\";|" default.nix
+# Extract darwin-arm64 checksum and convert to SRI
+darwin_arm64_hex=$(echo "$manifest" | jq -r '.platforms."darwin-arm64".checksum')
+darwin_arm64_sri=$(hex_to_sri "$darwin_arm64_hex")
 
-echo "Updated claude-code to version $version"
-echo "Source hash: $sri_hash"
-echo "npmDepsHash: $npm_deps_sri"
-echo "All hashes updated automatically!"
+echo "aarch64-darwin: $darwin_arm64_sri"
+
+# Write hashes.json
+cat > hashes.json << EOF
+{
+  "version": "$version",
+  "hashes": {
+    "aarch64-darwin": "$darwin_arm64_sri"
+  }
+}
+EOF
+
+echo "Updated to $version"

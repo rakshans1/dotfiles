@@ -1,47 +1,57 @@
 {
   lib,
-  buildNpmPackage,
-  writableTmpDirAsHomeHook,
-  fetchzip,
-  nodejs_22,
+  stdenv,
+  fetchurl,
+  makeWrapper,
 }:
-buildNpmPackage rec {
-  pname = "claude-code";
-  version = "2.0.71";
 
-  nodejs = nodejs_22;
+let
+  versionData = builtins.fromJSON (builtins.readFile ./hashes.json);
+  inherit (versionData) version hashes;
 
-  src = fetchzip {
-    url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-    hash = "sha256-krbaIy1KfmbwroQRZpGR6bOYNc2l/GZKjhavmiwVCms=";
+  platformMap = {
+    aarch64-darwin = "darwin-arm64";
   };
 
-  npmDepsHash = "sha256-pha8B2lR2bLBJd4b0nVGY+iAQFVno09OFvU0f5Qry3k=";
+  platform = stdenv.hostPlatform.system;
+  platformSuffix = platformMap.${platform} or (throw "Unsupported system: ${platform}");
+in
+stdenv.mkDerivation {
+  pname = "claude-code";
+  inherit version;
 
-  postPatch = ''
-    cp ${./package-lock.json} package-lock.json
+  src = fetchurl {
+    url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${version}/${platformSuffix}/claude";
+    hash = hashes.${platform};
+  };
+
+  dontUnpack = true;
+
+  nativeBuildInputs = [ makeWrapper ];
+
+  dontStrip = true;
+
+  installPhase = ''
+    runHook preInstall
+    install -Dm755 $src $out/bin/claude
+    runHook postInstall
   '';
 
-  dontNpmBuild = true;
-
-  AUTHORIZED = "1";
-
-  # Disable auto-updates during installation
-  postInstall = ''
+  postFixup = ''
     wrapProgram $out/bin/claude \
       --set DISABLE_AUTOUPDATER 1 \
-      --unset DEV
+      --set CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC 1 \
+      --set DISABLE_NON_ESSENTIAL_MODEL_CALLS 1 \
+      --set DISABLE_TELEMETRY 1
   '';
-
-  nativeInstallCheckInputs = [
-    writableTmpDirAsHomeHook
-  ];
 
   meta = {
     description = "Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster";
     homepage = "https://github.com/anthropics/claude-code";
+    changelog = "https://github.com/anthropics/claude-code/releases";
     license = lib.licenses.unfree;
+    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     mainProgram = "claude";
-    maintainers = [ ];
+    platforms = [ "aarch64-darwin" ];
   };
 }
