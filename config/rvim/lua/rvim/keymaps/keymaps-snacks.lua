@@ -1,3 +1,5 @@
+local Snacks = require('snacks')
+
 -- Helper function for key mappings
 local function map(mode, key, action, opts)
   local options = { noremap = true, silent = true }
@@ -132,6 +134,16 @@ map(
   '<cmd>lua Snacks.picker.todo_comments()<cr>',
   { desc = 'Find todos' }
 )
+map('n', '<leader>fe', function()
+  local ext = vim.fn.expand('%:e')
+  if ext and ext ~= '' then
+    Snacks.picker.grep({
+      args = { '--glob=*.' .. ext },
+    })
+  else
+    vim.notify('Current buffer has no file extension', vim.log.levels.WARN)
+  end
+end, { desc = 'Find files (same extension)' })
 
 -- Snacks pickers (misc) [t]
 map(

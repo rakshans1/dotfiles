@@ -45,6 +45,7 @@
       yq
       gnupg
       delta
+      difftastic
       neofetch
       tealdeer
       eza
@@ -127,4 +128,7 @@
       (pkgs.callPackage ./codex { })
       (pkgs.callPackage ./gemini-cli { })
     ];
+
+  # Create symlink for claude-code at ~/.local/bin/claude
+  home.file.".local/bin/claude".source = "${pkgs.callPackage ./claude-code { }}/bin/claude";
 }
