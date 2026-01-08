@@ -334,6 +334,7 @@ const rules: KarabinerRules[] = [
 			d: shell`~/dotfiles/bin/rr o daily`,
 			w: shell`~/dotfiles/bin/rr o weekly`,
 			m: shell`~/dotfiles/bin/rr o monthly`,
+			p: shell`~/dotfiles/bin/rr o pin`,
 			alone: app("Obsidian"),
 		},
 		m: app("Youtube Music"),

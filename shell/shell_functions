@@ -169,6 +169,22 @@ function paste() {
   fi
 }
 
+# copy path to clipboard
+function copypath() {
+  local path_to_copy
+  if [ -z "$1" ]; then
+    path_to_copy="$PWD"
+  else
+    path_to_copy="$(realpath "$1")"
+  fi
+
+  if is_mac; then
+    echo -n "$path_to_copy" | pbcopy
+  else
+    echo -n "$path_to_copy" | xclip -sel clipboard
+  fi
+}
+
 # Man fuzzy search
 function man() {
   if [ $# -eq 0 ]; then

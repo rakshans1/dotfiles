@@ -1931,6 +1931,30 @@
                     "value": 1
                   }
                 ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "~/dotfiles/bin/rr o pin"
+                  }
+                ],
+                "description": "~/dotfiles/bin/rr o pin",
+                "type": "basic",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_n",
+                    "value": 1
+                  }
+                ]
               }
             ]
           },
