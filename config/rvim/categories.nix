@@ -37,7 +37,6 @@ in
       copilot-language-server
       rust-analyzer
       tailwindcss-language-server
-      lexical
       marksman
 
       # formatters

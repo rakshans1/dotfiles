@@ -3,6 +3,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # Pinned nixpkgs for marksman - workaround for Swift build failure
+    # https://github.com/NixOS/nixpkgs/issues/483584
+    nixpkgs-marksman.url = "github:nixos/nixpkgs/70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     plugins-lze = {
       url = "github:BirdeeHub/lze";
@@ -80,9 +83,19 @@
       extra_pkg_config = {
         allowUnfree = true;
       };
+      # Capture pinned nixpkgs for marksman overlay (Swift build fix)
+      # https://github.com/NixOS/nixpkgs/issues/483584
+      nixpkgs-marksman = inputs.nixpkgs-marksman;
       dependencyOverlays =
         # (import ./overlays inputs) ++
-        [ (utils.standardPluginOverlay inputs) ];
+        [
+          (utils.standardPluginOverlay inputs)
+          # Pin marksman to working nixpkgs (Swift build fix)
+          (final: prev: {
+            marksman =
+              (import nixpkgs-marksman { system = prev.system; }).marksman;
+          })
+        ];
       categoryDefinitions = import ./categories.nix inputs;
       packageDefinitions = import ./packages.nix inputs;
 

@@ -64,6 +64,8 @@
       nodePackages.serve
       nodePackages.tailwindcss
 
+      bun
+
       rustc
       cargo
       rustfmt
@@ -105,13 +107,17 @@
       ssh-to-age
       chafa
 
-      (pkgsUnstable.python3.withPackages (
-        ps: with ps; [
-          llm
-          llm-gemini
-          llm-ollama
-        ]
-      ))
+      # (pkgsUnstable.python3.withPackages (
+      #   ps: with ps; [
+      #     llm
+      #     llm-gemini
+      #     llm-ollama
+      #   ]
+      # ))
+
+      # lsp to be installed globally
+      typescript-language-server
+      bash-language-server
     ]
     ++ lib.optionals stdenv.isDarwin [
       # Mac App Store command line interface
