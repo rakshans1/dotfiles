@@ -4,7 +4,7 @@
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     baseIndex = 1;
-    terminal = "tmux-256color";
+    terminal = "xterm-ghostty";
     historyLimit = 10000;
     keyMode = "vi";
     mouse = true;

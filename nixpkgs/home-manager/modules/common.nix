@@ -60,16 +60,13 @@
       lunarvim
 
       nodejs_22
-      nodePackages.eslint_d
       nodePackages.serve
-      nodePackages.tailwindcss
+      pnpm
 
       bun
 
       rustc
       cargo
-      rustfmt
-      cargo-sweep
 
       k9s
 
