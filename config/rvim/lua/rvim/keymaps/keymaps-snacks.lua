@@ -1,4 +1,4 @@
-local Snacks = require('snacks')
+local Snacks = require 'snacks'
 
 -- Helper function for key mappings
 local function map(mode, key, action, opts)
@@ -135,11 +135,11 @@ map(
   { desc = 'Find todos' }
 )
 map('n', '<leader>fe', function()
-  local ext = vim.fn.expand('%:e')
+  local ext = vim.fn.expand '%:e'
   if ext and ext ~= '' then
-    Snacks.picker.grep({
+    Snacks.picker.grep {
       args = { '--glob=*.' .. ext },
-    })
+    }
   else
     vim.notify('Current buffer has no file extension', vim.log.levels.WARN)
   end
@@ -222,6 +222,15 @@ map('n', '<leader>vp', function()
     vim.notify('Not in a git repository', vim.log.levels.WARN)
   end
 end, { desc = 'Copy git root path' })
+map('n', '<leader>vP', function()
+  local file = vim.fn.expand '%:p'
+  if file == '' then
+    vim.notify('No file in current buffer', vim.log.levels.WARN)
+    return
+  end
+  vim.fn.setreg('+', file)
+  require('snacks').notify.info('Yanked `' .. file .. '`')
+end, { desc = 'Copy absolute path' })
 -- Snacks pickers (lsp) [l]
 map(
   'n',

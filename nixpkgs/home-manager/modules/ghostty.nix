@@ -31,6 +31,9 @@
 
     window-save-state = always
 
+    # Keybinds
+    keybind = global:cmd+grave_accent=toggle_quick_terminal
+
     # macOS specific
     macos-option-as-alt = true
     macos-titlebar-style = hidden

@@ -279,11 +279,11 @@
     "homebrew-core": {
       "flake": false,
       "locked": {
-        "lastModified": 1769494875,
-        "narHash": "sha256-a4zfpu8d+Sb3McyFgduj6+i2mHyTWsgE7h4To5PEeog=",
+        "lastModified": 1770874471,
+        "narHash": "sha256-6nNje5eeo4pQ4iLLvAs5jH0OhBi3GgCTQZrKvaCpJMk=",
         "owner": "homebrew",
         "repo": "homebrew-core",
-        "rev": "d44d53a3a62ff7393639dcb3fa0024ebfe1a2736",
+        "rev": "00a1e03e2861d4b508502cd9cbaf632952c50359",
         "type": "github"
       },
       "original": {
@@ -724,11 +724,11 @@
     "private": {
       "flake": false,
       "locked": {
-        "lastModified": 1769511662,
-        "narHash": "sha256-ET1Be4JtBrUsQaSkD7FBYAkE9XyeLCienoVkRrpuofQ=",
+        "lastModified": 1770624381,
+        "narHash": "sha256-nM/mfRI5dVP7PDLdYGUAvdEq8C19footMb8BhDsM8Bs=",
         "ref": "refs/heads/main",
-        "rev": "5848bc9d8373f4ae6b335bd91bcf5d59d4af2e83",
-        "revCount": 88,
+        "rev": "b53723b825bd28faac88765f6e70e348f65f58b8",
+        "revCount": 98,
         "type": "git",
         "url": "file:///Users/rakshan/dotfiles/private"
       },

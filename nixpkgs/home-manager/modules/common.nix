@@ -18,6 +18,7 @@
     ./ghostty.nix
     ./sublime.nix
     ./glow.nix
+    ./bottom.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager
@@ -39,7 +40,7 @@
       zsh
       wget
       vivid
-      bottom
+
       jq
       jqp
       yq

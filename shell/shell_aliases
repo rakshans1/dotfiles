@@ -31,3 +31,4 @@ alias yolo-claude="claude --dangerously-skip-permissions"
 alias yolo-codex='codex -m gpt-5-codex -c model_reasoning_effort="high" --yolo --search'
 alias :q="exit"
 alias :c="clear"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

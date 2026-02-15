@@ -118,7 +118,7 @@
     enable = true;
 
     # CLI tools and libraries (brew install)
-    brews = [ ];
+    brews = [ "yap" ];
 
     # GUI applications (brew install --cask)
     casks = [
