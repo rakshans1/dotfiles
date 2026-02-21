@@ -57,6 +57,8 @@
       lazygit
       overmind
 
+      asciiquarium-transparent
+
       neovim
       lunarvim
 
