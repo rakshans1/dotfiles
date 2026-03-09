@@ -11,7 +11,7 @@
 
 buildNpmPackage rec {
   pname = "gemini-cli";
-  version = "0.29.5";
+  version = "0.32.1";
 
   nodejs = nodejs_22;
 
@@ -19,10 +19,10 @@ buildNpmPackage rec {
     owner = "google-gemini";
     repo = "gemini-cli";
     rev = "v${version}";
-    hash = "sha256-+gFSTq0CXMZa2OhP2gOuWa5WtteKW7Ys78lgnz7J72g=";
+    hash = "sha256-2vi4bYWdiwTdGVXgOwq31sgly0mL3cBALTXbR0bGSh8=";
   };
 
-  npmDepsHash = "sha256-RGiWtJkLFV1UfFahHPzxtzJIsPCseEwfSsPdLfBkavI=";
+  npmDepsHash = "sha256-xmKoVMrwItuCNi6Te+EzGnbmO7nWL7JetNNaQQWnYgw=";
 
   nativeBuildInputs = [
     jq
@@ -47,6 +47,8 @@ buildNpmPackage rec {
     rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-core
     rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-a2a-server
     rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-test-utils
+    rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-devtools
+    rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/@google/gemini-cli-sdk
     rm -rf $out/lib/node_modules/@google/gemini-cli/node_modules/gemini-cli-vscode-ide-companion
 
     # Remove broken symlinks in .bin directory

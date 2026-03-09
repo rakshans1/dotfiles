@@ -95,6 +95,12 @@
             marksman =
               (import nixpkgs-marksman { system = prev.system; }).marksman;
           })
+          # Disable ast-grep tests (test_scan_invalid_rule_id fails on macOS due to locale)
+          (final: prev: {
+            ast-grep = prev.ast-grep.overrideAttrs (old: {
+              doCheck = false;
+            });
+          })
         ];
       categoryDefinitions = import ./categories.nix inputs;
       packageDefinitions = import ./packages.nix inputs;

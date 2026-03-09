@@ -137,6 +137,7 @@
       "omnidisksweeper"
       "monitorcontrol"
       "ghostty"
+      "libreoffice"
     ];
 
     # Mac App Store apps (requires mas CLI tool)
