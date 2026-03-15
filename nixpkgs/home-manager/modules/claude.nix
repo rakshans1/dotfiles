@@ -7,15 +7,6 @@
 {
   # Claude Code configuration managed by Nix
 
-  # Helper function script for Claude Code status line
-  home.file.".claude/statusline.sh" = {
-    text = ''
-      input=$(cat)
-      echo "$input" | ccusage statusline
-    '';
-    executable = true;
-  };
-
   # Generate Claude Code settings.json dynamically (writable)
   home.activation.claudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p $HOME/.claude
@@ -35,10 +26,6 @@
       "env": {
         "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
         "DISABLE_AUTOUPDATER": "1"
-      },
-      "statusLine": {
-        "type": "command",
-        "command": "~/.claude/statusline.sh"
       }
     }
     EOF

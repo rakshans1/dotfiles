@@ -97,7 +97,7 @@
       cloudflared
       flyctl
 
-      ollama
+      pkgsUnstable.ollama
 
       kubectl
 
@@ -129,7 +129,6 @@
     ++ lib.optionals stdenv.isLinux [ ]
     ++ [
       aiTools.crush
-      (pkgs.callPackage ./ccusage { })
       (pkgs.callPackage ./claude-code { })
       (pkgs.callPackage ./codex { })
       (pkgs.callPackage ./gemini-cli { })
