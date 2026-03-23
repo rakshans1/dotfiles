@@ -316,6 +316,116 @@ const rules: KarabinerRules[] = [
 			},
 		],
 	},
+	{
+		description: "Hyper + f: Browser tab/space switching",
+		manipulators: [
+			// Chrome: h → previous tab (Ctrl+Shift+Tab)
+			{
+				type: "basic",
+				from: { key_code: "h", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "tab", modifiers: ["left_control", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$", "^md\\.obsidian$"] },
+				],
+			},
+			// Chrome: l → next tab (Ctrl+Tab)
+			{
+				type: "basic",
+				from: { key_code: "l", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "tab", modifiers: ["left_control"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$", "^md\\.obsidian$"] },
+				],
+			},
+			// Arc: h → previous space (Option+Cmd+Left)
+			{
+				type: "basic",
+				from: { key_code: "h", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "left_arrow", modifiers: ["left_option", "left_command"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^company\\.thebrowser\\.Browser$"] },
+				],
+			},
+			// Arc: l → next space (Option+Cmd+Right)
+			{
+				type: "basic",
+				from: { key_code: "l", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "right_arrow", modifiers: ["left_option", "left_command"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^company\\.thebrowser\\.Browser$"] },
+				],
+			},
+			// Arc: k → previous tab (Option+Cmd+Up)
+			{
+				type: "basic",
+				from: { key_code: "k", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "up_arrow", modifiers: ["left_option", "left_command"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^company\\.thebrowser\\.Browser$"] },
+				],
+			},
+			// Arc: j → next tab (Option+Cmd+Down)
+			{
+				type: "basic",
+				from: { key_code: "j", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "down_arrow", modifiers: ["left_option", "left_command"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^company\\.thebrowser\\.Browser$"] },
+				],
+			},
+		],
+	},
+	{
+		description: "Hyper + d/s + h/l: Ghostty tmux swap pane/window",
+		manipulators: [
+			// Ghostty: d + h → swap pane left
+			{
+				type: "basic",
+				from: { key_code: "h", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-pane -U" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_d", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"] },
+				],
+			},
+			// Ghostty: d + l → swap pane right
+			{
+				type: "basic",
+				from: { key_code: "l", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-pane -D" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_d", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"] },
+				],
+			},
+			// Ghostty: s + h → swap window left
+			{
+				type: "basic",
+				from: { key_code: "h", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-window -t -1 -d" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_s", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"] },
+				],
+			},
+			// Ghostty: s + l → swap window right
+			{
+				type: "basic",
+				from: { key_code: "l", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-window -t +1 -d" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_s", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"] },
+				],
+			},
+		],
+	},
 	...createHyperSubLayers({
 		h: key("left_arrow"),
 		j: key("down_arrow"),

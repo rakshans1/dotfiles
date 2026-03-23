@@ -21,7 +21,7 @@ unalias gcm
 
 # IP addresses
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
-alias myip="ip a | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
+alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
 
 
 # Download file and save it with filename of remote file

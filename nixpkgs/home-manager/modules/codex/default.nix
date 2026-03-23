@@ -7,16 +7,16 @@
 
 buildNpmPackage rec {
   pname = "codex";
-  version = "0.112.0";
+  version = "0.116.0";
 
   nodejs = nodejs_22;
 
   src = fetchzip {
     url = "https://registry.npmjs.org/@openai/codex/-/codex-${version}.tgz";
-    hash = "sha256-AnSaFN3Mmc98fqwTWGAkhj1nX6AoaI5JofD2tOBTY9U=";
+    hash = "sha256-wc4Q25PkwN7PaetgU3VqUPlU3SJYUq4/+t3qpj9mutY=";
   };
 
-  npmDepsHash = "sha256-vrtYPTb5KZgHNmnH7QhWh3DHeLyDsFGLNRlEpuyR/v8=";
+  npmDepsHash = "sha256-DnAK49XRIZjh5w9bK0nErafhfq8O1apGu94lStWIMQg=";
   makeCacheWritable = true;
 
   postPatch = ''

@@ -6,7 +6,7 @@
 # Each invocation reads JSON from stdin and writes a state file to
 # ~/.cache/tmux-agent-monitor/pid-<PID>.json
 
-set -eo pipefail
+set -o pipefail
 
 STATE_DIR="$HOME/.cache/tmux-agent-monitor"
 mkdir -p "$STATE_DIR"
@@ -51,8 +51,8 @@ session_id=$(echo "$input" | grep -o '"session_id"[[:space:]]*:[[:space:]]*"[^"]
 title=""
 if [ "$event_type" = "UserPromptSubmit" ]; then
   title=$(echo "$input" | grep -o '"prompt"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | sed 's/.*"prompt"[[:space:]]*:[[:space:]]*"//' | sed 's/"//')
-  # Truncate to 60 chars
-  title=$(echo "$title" | cut -c1-60)
+  # Sanitize: strip control chars, newlines, quotes, backslashes; truncate
+  title=$(printf '%s' "$title" | tr -d '\n\r\\"' | tr -cd '[:print:]' | cut -c1-60)
 fi
 
 # Try to get the actual claude process PID (our parent)
@@ -81,7 +81,8 @@ state_file="$STATE_DIR/pid-${claude_pid}.json"
 
 # Preserve existing title if we don't have a new one
 if [ -z "$title" ] && [ -f "$state_file" ]; then
-  title=$(grep -o '"title":"[^"]*"' "$state_file" | head -1 | sed 's/"title":"//' | sed 's/"//')
+  title=$(grep -o '"title":"[^"]*"' "$state_file" 2>/dev/null | head -1 | sed 's/"title":"//' | sed 's/"//' || true)
+  title=$(printf '%s' "$title" | tr -d '\n\r\\"' | tr -cd '[:print:]' | cut -c1-60 || true)
 fi
 
 # Build JSON manually (no jq dependency)

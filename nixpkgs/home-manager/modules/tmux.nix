@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, pkgsUnstable, ... }:
 {
   programs.tmux = {
     enable = true;
+    package = pkgsUnstable.tmux;
     shell = "${pkgs.zsh}/bin/zsh";
     baseIndex = 1;
     terminal = "xterm-ghostty";
@@ -120,8 +121,12 @@
       # Quick pane cycling
       bind -r TAB select-pane -t :.+
 
-      bind > swap-pane -D # swap current pane with next one
-      bind < swap-pane -U # swap current pane with next one
+      unbind ,
+      bind , swap-pane -D # swap current pane with next one
+      bind . swap-pane -U # swap current pane with previous one
+
+      bind > swap-window -t +1 -d # swap current window with next one
+      bind < swap-window -t -1 -d # swap current window with previous one
 
       ###############################################
       ## Theme Settings
@@ -165,6 +170,7 @@
 
       # Agent Monitor
       bind-key a display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
+      bind-key -T root MouseDown1StatusRight display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
 
       # Plugin configurations
       set -g @continuum-restore 'on'
