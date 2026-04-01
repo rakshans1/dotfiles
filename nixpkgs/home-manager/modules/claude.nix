@@ -24,18 +24,10 @@
       },
       "includeCoAuthoredBy": false,
       "env": {
-        "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
-        "DISABLE_AUTOUPDATER": "1",
-        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+        "DISABLE_AUTOUPDATER": "1"
       },
       "hooks": {
         "UserPromptSubmit": [
-          {
-            "matcher": "",
-            "hooks": [{"type": "command", "command": "$HOME/dotfiles/config/tmux-agent-monitor/scripts/hook.sh"}]
-          }
-        ],
-        "PreToolUse": [
           {
             "matcher": "",
             "hooks": [{"type": "command", "command": "$HOME/dotfiles/config/tmux-agent-monitor/scripts/hook.sh"}]

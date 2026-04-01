@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 {
   programs.zsh = {
+    envExtra = ''
+      eval "$(direnv hook zsh)"
+    '';
     enable = true;
     autosuggestion.enable = true;
     enableCompletion = true;

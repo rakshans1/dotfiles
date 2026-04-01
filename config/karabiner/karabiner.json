@@ -551,8 +551,7 @@
                   {
                     "type": "frontmost_application_if",
                     "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$",
-                      "^md\\.obsidian$"
+                      "^com\\.google\\.Chrome$"
                     ]
                   }
                 ]
@@ -584,7 +583,64 @@
                   {
                     "type": "frontmost_application_if",
                     "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$",
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Applications/Obsidian.app/Contents/MacOS/Obsidian command id=workspace:previous-tab"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_f",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^md\\.obsidian$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Applications/Obsidian.app/Contents/MacOS/Obsidian command id=workspace:next-tab"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_f",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
                       "^md\\.obsidian$"
                     ]
                   }

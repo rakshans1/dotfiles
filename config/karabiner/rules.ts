@@ -326,7 +326,7 @@ const rules: KarabinerRules[] = [
 				to: [{ key_code: "tab", modifiers: ["left_control", "left_shift"] }],
 				conditions: [
 					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
-					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$", "^md\\.obsidian$"] },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$"] },
 				],
 			},
 			// Chrome: l → next tab (Ctrl+Tab)
@@ -336,7 +336,27 @@ const rules: KarabinerRules[] = [
 				to: [{ key_code: "tab", modifiers: ["left_control"] }],
 				conditions: [
 					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
-					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$", "^md\\.obsidian$"] },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^com\\.google\\.Chrome$"] },
+				],
+			},
+			// Obsidian: h → previous tab (via CLI)
+			{
+				type: "basic",
+				from: { key_code: "h", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "/Applications/Obsidian.app/Contents/MacOS/Obsidian command id=workspace:previous-tab" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^md\\.obsidian$"] },
+				],
+			},
+			// Obsidian: l → next tab (via CLI)
+			{
+				type: "basic",
+				from: { key_code: "l", modifiers: { optional: ["any"] } },
+				to: [{ shell_command: "/Applications/Obsidian.app/Contents/MacOS/Obsidian command id=workspace:next-tab" }],
+				conditions: [
+					{ type: "variable_if", name: "hyper_sublayer_f", value: 1 },
+					{ type: "frontmost_application_if", bundle_identifiers: ["^md\\.obsidian$"] },
 				],
 			},
 			// Arc: h → previous space (Option+Cmd+Left)

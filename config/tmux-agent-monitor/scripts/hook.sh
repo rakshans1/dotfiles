@@ -1,7 +1,7 @@
 #!/bin/bash
 # Claude Code lifecycle hook — writes session state to cache files.
 # Registered in ~/.claude/settings.json for events:
-#   UserPromptSubmit, PreToolUse, Stop, Notification, PermissionRequest
+#   UserPromptSubmit, Stop, Notification, PermissionRequest, SubagentStop
 #
 # Each invocation reads JSON from stdin and writes a state file to
 # ~/.cache/tmux-agent-monitor/pid-<PID>.json
@@ -19,7 +19,7 @@ event_type=$(echo "$input" | grep -o '"hook_event_name"[[:space:]]*:[[:space:]]*
 
 # Determine status from event type
 case "$event_type" in
-  UserPromptSubmit|PreToolUse)
+  UserPromptSubmit)
     status="working"
     ;;
   Stop|Notification|SubagentStop)
@@ -91,6 +91,3 @@ cat > "${state_file}.tmp" <<EOF
 EOF
 
 mv "${state_file}.tmp" "$state_file"
-
-# Force tmux status bar refresh
-tmux refresh-client -S 2>/dev/null || true
