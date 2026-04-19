@@ -37,7 +37,7 @@ darwin_arm64_sri=$(hex_to_sri "$darwin_arm64_hex")
 echo "aarch64-darwin: $darwin_arm64_sri"
 
 # Write hashes.json
-cat > hashes.json << EOF
+cat >hashes.json <<EOF
 {
   "version": "$version",
   "hashes": {

@@ -106,6 +106,10 @@
             homebrew-cask = inputs.homebrew-cask;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
+            pkgsUnstable = import inputs.nixpkgsUnstable {
+              system = "aarch64-darwin";
+              config.allowUnfree = true;
+            };
           };
         };
       };

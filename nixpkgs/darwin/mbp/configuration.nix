@@ -5,12 +5,20 @@
   homebrew-core,
   homebrew-cask,
   sops-nix,
+  pkgsUnstable,
   ...
 }:
 {
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
     ./modules/sops.nix
+  ];
+
+  # Workaround: nix-homebrew expects ruby_4_0 which isn't in release-25.05
+  nixpkgs.overlays = [
+    (final: prev: {
+      ruby_4_0 = pkgsUnstable.ruby_4_0;
+    })
   ];
 
   # Used for backwards compatibility, please read the changelog before changing.
@@ -138,6 +146,7 @@
       "monitorcontrol"
       "ghostty"
       "libreoffice"
+      "telegram"
     ];
 
     # Mac App Store apps (requires mas CLI tool)

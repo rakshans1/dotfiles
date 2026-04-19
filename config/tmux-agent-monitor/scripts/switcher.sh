@@ -75,10 +75,22 @@ for f in "$STATE_DIR"/pid-*.json; do
 
   # Status indicator (sorted: ? < ~ < = so needs_input sorts first)
   case "$status" in
-    needs_input)  indicator="\033[31;1m? INPUT  \033[0m"; sort_key="0" ;;
-    working)      indicator="\033[33m~ working\033[0m"; sort_key="1" ;;
-    idle)         indicator="\033[32m= idle   \033[0m"; sort_key="2" ;;
-    *)            indicator="  $status"; sort_key="3" ;;
+  needs_input)
+    indicator="\033[31;1m? INPUT  \033[0m"
+    sort_key="0"
+    ;;
+  working)
+    indicator="\033[33m~ working\033[0m"
+    sort_key="1"
+    ;;
+  idle)
+    indicator="\033[32m= idle   \033[0m"
+    sort_key="2"
+    ;;
+  *)
+    indicator="  $status"
+    sort_key="3"
+    ;;
   esac
 
   # nvim label
@@ -116,15 +128,16 @@ fi
 
 # Sort by sort_key (field 2), then display fields 3+ to user
 # Preview uses field 1 (pane_id) for capture-pane
-selected=$(printf '%b\n' "${entries[@]}" | sort -t$'\t' -k2,2 | \
+# shellcheck disable=SC2016
+selected=$(printf '%b\n' "${entries[@]}" | sort -t$'\t' -k2,2 |
   fzf --ansi \
-      --delimiter=$'\t' \
-      --with-nth=3.. \
-      --header="Agent Sessions  ? = needs input  ~ = working  = = idle" \
-      --preview='tmux capture-pane -e -t $(echo {} | cut -f1) -p -S -30 2>/dev/null | tail -25' \
-      --preview-window=right:50%:wrap \
-      --no-sort \
-      --reverse) || exit 0
+    --delimiter=$'\t' \
+    --with-nth=3.. \
+    --header="Agent Sessions  ? = needs input  ~ = working  = = idle" \
+    --preview='tmux capture-pane -e -t $(echo {} | cut -f1) -p -S -30 2>/dev/null | tail -25' \
+    --preview-window=right:50%:wrap \
+    --no-sort \
+    --reverse) || exit 0
 
 # Extract the pane ID (first tab-delimited field)
 selected_pane=$(echo "$selected" | cut -f1)
@@ -148,7 +161,7 @@ target_full=$(echo "$target_info" | awk '{print $4}')
 
 # Write a temp switch script to run after the popup closes
 switch_script=$(mktemp /tmp/agent-switch-XXXXXX.sh)
-cat > "$switch_script" <<SCRIPT
+cat >"$switch_script" <<SCRIPT
 #!/bin/bash
 tmux select-window -t '$target_window'
 tmux select-pane -t '$target_full'
@@ -156,12 +169,12 @@ SCRIPT
 
 if [ -n "$target_nvim_socket" ] && [ -S "$target_nvim_socket" ]; then
   # Single nvim call: check buftype, find toggleterm, and open it — all in one Lua expression
-  cat >> "$switch_script" <<NVIMCMD
+  cat >>"$switch_script" <<NVIMCMD
 nvim --headless --server '$target_nvim_socket' --remote-expr 'luaeval("(function() if vim.bo.buftype == [[terminal]] then return [[already]] end; local tid = 0; local ok, terms = pcall(function() return require([[toggleterm.terminal]]).get_all() end); if ok then for _, t in pairs(terms) do if t.job_id and vim.fn.jobpid(t.job_id) ~= 0 then local pid = vim.fn.jobpid(t.job_id); local check = vim.fn.system([[pgrep -P ]] .. pid .. [[ -a 2>/dev/null]]); if check:find([[${target_pid}]]) or pid == ${target_pid} then tid = t.id; break end end end end; vim.schedule(function() vim.cmd([[stopinsert]]); if tid > 0 then vim.cmd(tid .. [[ToggleTerm direction=tab]]) else vim.cmd([[ToggleTerm direction=tab]]) end end); return [[ok]] end)()")' > /dev/null 2>&1
 NVIMCMD
 fi
 
-echo "rm -f '$switch_script'" >> "$switch_script"
+echo "rm -f '$switch_script'" >>"$switch_script"
 chmod +x "$switch_script"
 
 # Switch session first, then run the script in background after popup closes

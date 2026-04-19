@@ -38,9 +38,9 @@ for f in "$STATE_DIR"/pid-*.json; do
   total=$((total + 1))
 
   case "$status" in
-    working)      working=$((working + 1)) ;;
-    idle)         idle=$((idle + 1)) ;;
-    needs_input)  needs_input=$((needs_input + 1)) ;;
+  working) working=$((working + 1)) ;;
+  idle) idle=$((idle + 1)) ;;
+  needs_input) needs_input=$((needs_input + 1)) ;;
   esac
 done
 

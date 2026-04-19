@@ -19,22 +19,21 @@ event_type=$(echo "$input" | grep -o '"hook_event_name"[[:space:]]*:[[:space:]]*
 
 # Determine status from event type
 case "$event_type" in
-  UserPromptSubmit)
-    status="working"
-    ;;
-  Stop|Notification|SubagentStop)
-    status="idle"
-    ;;
-  PermissionRequest)
-    status="needs_input"
-    ;;
-  *)
-    exit 0
-    ;;
+UserPromptSubmit)
+  status="working"
+  ;;
+Stop | Notification | SubagentStop)
+  status="idle"
+  ;;
+PermissionRequest)
+  status="needs_input"
+  ;;
+*)
+  exit 0
+  ;;
 esac
 
 # Gather context
-pid="$$"
 claude_pid="${PPID:-$$}"
 pane_id="${TMUX_PANE:-}"
 nvim_socket="${NVIM:-}"
@@ -86,7 +85,7 @@ if [ -z "$title" ] && [ -f "$state_file" ]; then
 fi
 
 # Build JSON manually (no jq dependency)
-cat > "${state_file}.tmp" <<EOF
+cat >"${state_file}.tmp" <<EOF
 {"status":"${status}","pid":${claude_pid},"pane":"${pane_id}","nvim_socket":"${nvim_socket}","cwd":"${cwd}","project":"${project}","session_id":"${session_id}","title":"${title}","timestamp":${timestamp}}
 EOF
 

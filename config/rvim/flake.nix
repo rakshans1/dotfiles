@@ -92,8 +92,7 @@
           (utils.standardPluginOverlay inputs)
           # Pin marksman to working nixpkgs (Swift build fix)
           (final: prev: {
-            marksman =
-              (import nixpkgs-marksman { system = prev.system; }).marksman;
+            marksman = (import nixpkgs-marksman { system = prev.system; }).marksman;
           })
           # Disable ast-grep tests (test_scan_invalid_rule_id fails on macOS due to locale)
           (final: prev: {
