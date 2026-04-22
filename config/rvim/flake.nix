@@ -71,6 +71,10 @@
       url = "github:copilotlsp-nvim/copilot-lsp";
       flake = false;
     };
+    plugins-diffview-nvim = {
+      url = "github:dlyongemallo/diffview.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs

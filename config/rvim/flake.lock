@@ -111,6 +111,22 @@
         "type": "github"
       }
     },
+    "plugins-diffview-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1776840130,
+        "narHash": "sha256-uiHOv6xFD7DJ4IaEsICZL93Wq6bJzqFpX3QuvMmRCYk=",
+        "owner": "dlyongemallo",
+        "repo": "diffview.nvim",
+        "rev": "1031f0937de767c15024517c0186909b35076355",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dlyongemallo",
+        "repo": "diffview.nvim",
+        "type": "github"
+      }
+    },
     "plugins-early-retirement-nvim": {
       "flake": false,
       "locked": {
@@ -312,6 +328,7 @@
         "plugins-blink-cmp-git": "plugins-blink-cmp-git",
         "plugins-copilot-lsp": "plugins-copilot-lsp",
         "plugins-custom-theme-nvim": "plugins-custom-theme-nvim",
+        "plugins-diffview-nvim": "plugins-diffview-nvim",
         "plugins-early-retirement-nvim": "plugins-early-retirement-nvim",
         "plugins-iceberg-nvim": "plugins-iceberg-nvim",
         "plugins-incline-nvim": "plugins-incline-nvim",

@@ -12,6 +12,7 @@
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
     ./modules/sops.nix
+    ./modules/default-apps.nix
   ];
 
   # Workaround: nix-homebrew expects ruby_4_0 which isn't in release-25.05

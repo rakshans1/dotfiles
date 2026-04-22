@@ -16,11 +16,6 @@ require('lze').load {
         '<cmd>DiffviewFileHistory %<cr>',
         desc = 'Diffview File History',
       },
-      {
-        '<leader>gL',
-        '<cmd>DiffviewFileHistory<cr>',
-        desc = 'Diffview Branch History',
-      },
     },
     after = function(_)
       require('diffview').setup {
@@ -42,8 +37,8 @@ require('lze').load {
         },
         file_history_panel = {
           win_config = {
-            position = 'bottom',
-            height = 16,
+            position = 'left',
+            width = 35,
           },
         },
       }
