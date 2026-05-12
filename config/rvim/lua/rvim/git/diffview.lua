@@ -9,14 +9,6 @@ require('lze').load {
       'DiffviewFocusFiles',
       'DiffviewFileHistory',
     },
-    keys = {
-      { '<leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diffview Open' },
-      {
-        '<leader>gf',
-        '<cmd>DiffviewFileHistory %<cr>',
-        desc = 'Diffview File History',
-      },
-    },
     after = function(_)
       require('diffview').setup {
         enhanced_diff_hl = true,

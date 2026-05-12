@@ -32,7 +32,6 @@ require('lze').load {
         { '<leader>v', group = '+Vim' },
         { '<leader>u', group = '+Misc.' },
         { '<leader>x', group = '+Trouble' },
-        { '<leader>z', group = '+Zen' },
         { '<leader>[', group = '+prev' },
         { '<leader>]', group = '+next' },
       }

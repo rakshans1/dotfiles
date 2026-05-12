@@ -148,11 +148,12 @@
       "ghostty"
       "libreoffice"
       "telegram"
+      "kid3"
     ];
 
     # Mac App Store apps (requires mas CLI tool)
     masApps = {
-      "WhatsApp Messenger" = 310633997;
+      # "WhatsApp Messenger" = 310633997;
     };
 
     # Automatically remove packages not listed above

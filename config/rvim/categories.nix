@@ -106,6 +106,7 @@ in
       gitsigns-nvim
       neogit
       diffview-nvim
+      codediff-nvim
       grapple-nvim
       yazi-nvim
       comment-nvim
@@ -139,7 +140,6 @@ in
       nvim-ts-autotag
       flash-nvim
       tiny-inline-diagnostic-nvim
-      zen-mode-nvim
       neotest
       neotest-elixir
       toggleterm-nvim

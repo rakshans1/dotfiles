@@ -3,9 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    # Pinned nixpkgs for marksman - workaround for Swift build failure
-    # https://github.com/NixOS/nixpkgs/issues/483584
-    nixpkgs-marksman.url = "github:nixos/nixpkgs/70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7";
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
     plugins-lze = {
       url = "github:BirdeeHub/lze";
@@ -75,6 +72,10 @@
       url = "github:dlyongemallo/diffview.nvim";
       flake = false;
     };
+    plugins-codediff-nvim = {
+      url = "github:esmuellert/codediff.nvim";
+      flake = false;
+    };
   };
 
   # see :help nixCats.flake.outputs
@@ -87,17 +88,10 @@
       extra_pkg_config = {
         allowUnfree = true;
       };
-      # Capture pinned nixpkgs for marksman overlay (Swift build fix)
-      # https://github.com/NixOS/nixpkgs/issues/483584
-      nixpkgs-marksman = inputs.nixpkgs-marksman;
       dependencyOverlays =
         # (import ./overlays inputs) ++
         [
           (utils.standardPluginOverlay inputs)
-          # Pin marksman to working nixpkgs (Swift build fix)
-          (final: prev: {
-            marksman = (import nixpkgs-marksman { system = prev.system; }).marksman;
-          })
           # Disable ast-grep tests (test_scan_invalid_rule_id fails on macOS due to locale)
           (final: prev: {
             ast-grep = prev.ast-grep.overrideAttrs (old: {

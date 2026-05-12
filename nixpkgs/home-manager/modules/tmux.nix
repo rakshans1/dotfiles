@@ -1,11 +1,11 @@
-{ pkgs, pkgsUnstable, ... }:
+{ pkgs, ... }:
 {
   programs.tmux = {
     enable = true;
-    package = pkgsUnstable.tmux;
+    package = pkgs.tmux;
     shell = "${pkgs.zsh}/bin/zsh";
     baseIndex = 1;
-    terminal = "xterm-ghostty";
+    terminal = "tmux-256color";
     historyLimit = 10000;
     keyMode = "vi";
     mouse = true;
@@ -172,24 +172,13 @@
       bind-key a display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
       bind-key -T root MouseDown1StatusRight display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
 
-      # Plugin configurations
-      set -g @continuum-restore 'on'
     '';
 
     plugins = with pkgs.tmuxPlugins; [
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-strategy-vim 'session'
-          set -g @resurrect-strategy-nvim 'session'
           set -g @resurrect-capture-pane-contents 'on'
-        '';
-      }
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '15'
         '';
       }
       open
@@ -200,6 +189,13 @@
         extraConfig = ''
           set -g @prefix_highlight_fg 'white'
           set -g @prefix_highlight_bg 'blue'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '15'
         '';
       }
     ];

@@ -2,7 +2,17 @@
 {
   programs.zsh = {
     envExtra = ''
-      eval "$(direnv hook zsh)"
+      if command -v direnv >/dev/null 2>&1; then
+        if [[ -n "$CODEX_SHELL" ]]; then
+          unset DIRENV_DIFF DIRENV_DIR DIRENV_FILE DIRENV_WATCHES
+          eval "$(direnv export zsh)"
+        else
+          eval "$(direnv hook zsh)"
+        fi
+      fi
+    '';
+    profileExtra = ''
+      export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
     '';
     enable = true;
     autosuggestion.enable = true;
