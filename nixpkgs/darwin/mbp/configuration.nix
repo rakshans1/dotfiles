@@ -13,6 +13,7 @@
     nix-homebrew.darwinModules.nix-homebrew
     ./modules/sops.nix
     ./modules/default-apps.nix
+    ./modules/kanata.nix
   ];
 
   # Workaround: nix-homebrew expects ruby_4_0 which isn't in release-25.05
@@ -93,8 +94,11 @@
     '';
   };
 
-  # Install pam-reattach to enable Touch ID in tmux
-  environment.systemPackages = with pkgs; [ pam-reattach ];
+  # System packages
+  environment.systemPackages = with pkgs; [
+    pam-reattach # Touch ID in tmux
+    kanata-with-cmd # Keyboard remapper (with shell command support)
+  ];
 
   # System-wide fonts
   fonts.packages = with pkgs; [
@@ -146,7 +150,7 @@
       "omnidisksweeper"
       "monitorcontrol"
       "ghostty"
-      "libreoffice"
+      # "libreoffice"
       "telegram"
       "kid3"
     ];

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, private, ... }:
 {
   programs.zsh = {
     envExtra = ''
@@ -209,18 +209,13 @@
       export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
       export LLM_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export LLM_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
-      # export ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
-      # export ANTHROPIC_BASE_URL=$(cat ${config.sops.secrets.llm_endpoint.path})
-      # export ANTHROPIC_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
       export OPENAI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export OPENAI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
       export OPENAI_API_BASE=$(cat ${config.sops.secrets.llm_endpoint.path})
       export GEMINI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
       export GEMINI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
-      export AVANTE_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
-      export AVANTE_OPENAI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
-      export AVANTE_ANTHROPIC_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
 
+      ${import "${private}/zsh-env.nix" { inherit config; }}
 
       # Cursor Agent integration: ensure command start/finish are detected
       # Ref: https://forum.cursor.com/t/cursor-agent-terminal-doesn-t-work-well-with-powerlevel10k-oh-my-zsh/96808

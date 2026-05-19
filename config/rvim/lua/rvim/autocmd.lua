@@ -82,3 +82,33 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'WinNew' }, {
     end
   end,
 })
+
+local claude_term_group =
+  vim.api.nvim_create_augroup('_claude_term_mouse', { clear = true })
+
+local saved_mouse = nil
+
+local function is_claude_term(buf)
+  if not vim.api.nvim_buf_is_valid(buf) then return false end
+  if vim.bo[buf].buftype ~= 'terminal' then return false end
+  local title = (vim.b[buf].term_title or ''):lower()
+  return title:find 'claude' ~= nil
+end
+
+local function refresh_claude_mouse()
+  local buf = vim.api.nvim_get_current_buf()
+  if is_claude_term(buf) then
+    if saved_mouse == nil then
+      saved_mouse = vim.o.mouse
+      vim.opt.mouse = ''
+    end
+  elseif saved_mouse ~= nil then
+    vim.opt.mouse = saved_mouse
+    saved_mouse = nil
+  end
+end
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'TermRequest', 'TermLeave' }, {
+  group = claude_term_group,
+  callback = vim.schedule_wrap(refresh_claude_mouse),
+})

@@ -23,6 +23,7 @@
         ]
       },
       "includeCoAuthoredBy": false,
+      "tui": "fullscreen",
       "env": {
         "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "1",
         "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
