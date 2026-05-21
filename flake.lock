@@ -844,11 +844,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1779382778,
-        "narHash": "sha256-rSC3kyy5to8z7IEo6IEfRhLPzjfhqLMF6OjxAgCni2Q=",
+        "lastModified": 1779383914,
+        "narHash": "sha256-bmvqN/2c7sCK1+jgQ2wZ2SpSa/U9Y5HxBaQSZYS+KAE=",
         "ref": "refs/heads/main",
-        "rev": "436a9ce7663f5526d8b50f973efc7d2216e73c42",
-        "revCount": 122,
+        "rev": "a7909606efeaa487bee2caf7c3be184474d0bbcf",
+        "revCount": 123,
         "type": "git",
         "url": "file:///Users/rakshan/dotfiles/private"
       },
