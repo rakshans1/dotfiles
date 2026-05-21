@@ -16,7 +16,6 @@
     ./claude.nix
     ./lvim.nix
     ./ghostty.nix
-    ./kanata.nix
     ./sublime.nix
     ./glow.nix
     ./bottom.nix

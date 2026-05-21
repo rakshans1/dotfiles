@@ -16,11 +16,6 @@ This is a personal dotfiles repository that manages system configuration files, 
 ### Nix Integration
 See [docs/nix-implementation.md](docs/nix-implementation.md) for complete implementation guide
 
-### Kanata Keyboard Remapper
-See [docs/kanata.md](docs/kanata.md) for setup and daily commands. Replaces
-Karabiner-Elements complex_modifications; runs as a launchd daemon. Helper:
-`rr kanata grant|restart|status|logs|check`.
-
 ### Karabiner Configuration System
 - **TypeScript-based Rules**: `config/karabiner/rules.ts` generates Karabiner configuration
 - **Hyper Key Setup**: Caps Lock → Hyper key with sublayers for efficient keyboard shortcuts
