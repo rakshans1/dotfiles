@@ -35,7 +35,6 @@
     };
     private = {
       url = "git+file:///Users/rakshan/dotfiles/private";
-      flake = false; # Treat as source, not a flake
     };
     neovim = {
       url = "path:./config/rvim";

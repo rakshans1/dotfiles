@@ -6,15 +6,18 @@
   homebrew-cask,
   sops-nix,
   pkgsUnstable,
+  inputs,
   ...
 }:
 {
   imports = [
     nix-homebrew.darwinModules.nix-homebrew
+    inputs.private.darwinModules.iv
     ./modules/sops.nix
     ./modules/default-apps.nix
-    ./modules/kanata.nix
   ];
+
+  programs.iv.enable = true;
 
   # Workaround: nix-homebrew expects ruby_4_0 which isn't in release-25.05
   nixpkgs.overlays = [
@@ -97,7 +100,6 @@
   # System packages
   environment.systemPackages = with pkgs; [
     pam-reattach # Touch ID in tmux
-    kanata-with-cmd # Keyboard remapper (with shell command support)
   ];
 
   # System-wide fonts
