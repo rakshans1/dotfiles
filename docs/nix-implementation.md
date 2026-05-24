@@ -29,12 +29,19 @@ nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 homebrew-core/cask.url = "github:homebrew/homebrew-*";
 
 # Private repository
-private.url = "git+file:///Users/rakshan/dotfiles/private";
+private = {
+  url = "git+file:///Users/rakshan/dotfiles/private";
+  flake = false; # root flake treats private as a source-only input
+};
 ```
 
 ### Outputs
 - **homeConfigurations**: `linux`, `mbp` (user-level configs)
 - **darwinConfigurations**: `mbp` (system-level macOS config)
+
+The private repository also has its own flake for personal-machine overlays. The
+private `mbp` configuration imports the public dotfiles modules and adds private
+inputs such as `iv`, keeping those pins out of the public/root `flake.lock`.
 
 ## Module Architecture
 
@@ -144,7 +151,7 @@ extraSpecialArgs = {
   pkgsUnstable = inputs.nixpkgsUnstable.legacyPackages.aarch64-darwin;
   aiTools = inputs.aiTools.packages.aarch64-darwin;
   sops-nix = inputs.sops-nix;
-  private = inputs.private;
+  private = inputs.private; # source path in the root flake, private flake self in private/flake.nix
 };
 ```
 

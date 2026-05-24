@@ -35,6 +35,7 @@
     };
     private = {
       url = "git+file:///Users/rakshan/dotfiles/private";
+      flake = false;
     };
     neovim = {
       url = "path:./config/rvim";
@@ -53,7 +54,6 @@
       nixpkgsUnstable,
       darwin,
       sops-nix,
-      private,
       ...
     }:
     {
@@ -99,7 +99,6 @@
           ];
           inputs = { inherit darwin nixpkgs; };
           specialArgs = {
-            inherit inputs;
             nix-homebrew = inputs.nix-homebrew;
             homebrew-core = inputs.homebrew-core;
             homebrew-cask = inputs.homebrew-cask;

@@ -1,12 +1,12 @@
 # Secret Management
 
-SOPS-Nix integrated with **modular architecture** and **private repository as flake input**.
+SOPS-Nix integrated with **modular architecture** and the private repository as a source input.
 
 ## Implementation Summary
 
 - **Encryption**: Age keys (converted from SSH Ed25519)
 - **Architecture**: Modular SOPS configs for Home Manager + Darwin
-- **Private Repo**: Flake input (`git+file:///Users/rakshan/dotfiles/private`)
+- **Private Repo**: Source input (`git+file:///Users/rakshan/dotfiles/private`, `flake = false`)
 - **Secrets**: `private/secrets/common.yaml` (encrypted)
 - **Integration**: Environment variables + configuration files
 - **AWS**: Managed via Nix (config + credentials from SOPS secrets)
@@ -115,8 +115,8 @@ ssh-to-age -i ~/.ssh/id_ed25519.pub  # Get public key for .sops.yaml
 ## Technical Notes
 
 ### Architecture Decision
-**Problem**: Private repo (separate git) wasn't accessible to Nix flakes
-**Solution**: Added as flake input enables clean `"${private}/secrets/common.yaml"` references
+**Problem**: Private repo (separate git) wasn't accessible to Nix flakes without leaking private flake inputs into the public lock
+**Solution**: Added as a source-only input, which enables clean `"${private}/secrets/common.yaml"` references without evaluating `private/flake.nix`
 
 ### Key Details
 - **Age Keys**: Converted from existing SSH Ed25519 via `ssh-to-age`
