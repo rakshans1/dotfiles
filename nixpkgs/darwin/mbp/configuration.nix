@@ -161,8 +161,9 @@
     # Automatically remove packages not listed above
     onActivation.cleanup = "zap";
 
-    # Auto-update homebrew and packages
-    onActivation.autoUpdate = true;
-    onActivation.upgrade = true;
+    # Don't hit the network on every system switch. Update/upgrade brew
+    # deliberately (e.g. `brew update && brew upgrade`) instead of on activation.
+    onActivation.autoUpdate = false;
+    onActivation.upgrade = false;
   };
 }
