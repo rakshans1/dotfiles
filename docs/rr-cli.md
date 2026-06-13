@@ -277,6 +277,7 @@ Utility commands for data processing and system tasks.
 
 **Commands:**
 - `blob parse|url|download` - Parse and download S3 blob data
+- `record` - Record with PTY, clean on exit, and copy to clipboard
 - `procs` - List processes by working directory (macOS only)
 
 ```bash
@@ -285,6 +286,7 @@ rr util procs                    # List processes in current directory
 rr util procs --select           # Interactive selection
 rr util procs --kill             # Select and kill processes
 rr util blob parse               # Parse blob JSON
+rr util record                   # Record, clean, and copy on exit
 ```
 
 **Detailed docs:** `rr docs util` or see `private/rr/docs/namespaces/util.md`

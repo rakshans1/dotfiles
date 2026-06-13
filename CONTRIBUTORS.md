@@ -18,8 +18,9 @@ See [docs/nix-implementation.md](docs/nix-implementation.md) for complete implem
 
 ### Karabiner Configuration System
 - **TypeScript-based Rules**: `config/karabiner/rules.ts` generates Karabiner configuration
-- **Hyper Key Setup**: Caps Lock → Hyper key with sublayers for efficient keyboard shortcuts
+- **Hyper Key Setup**: Right Command → Hyper key with sublayers for efficient keyboard shortcuts
 - **Build Process**: Uses `tsm` to compile TypeScript rules to JSON configuration
+- **Shortcut Docs**: When changing Karabiner shortcuts, update the global shortcut note at `../Documents/brain/notes/random/keyboard shortcuts.md`
 
 ### Secret Management
 See [docs/secret-management.md](docs/secret-management.md) for complete implementation guide

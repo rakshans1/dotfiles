@@ -139,6 +139,10 @@ rvim-update:
 rvim-check:
     cd config/rvim && nix flake check
 
+# Update invideo flake inputs (iv + invideo-cli) in the private flake
+invideo-update:
+    cd private && nix flake update --allow-dirty-locks iv invideo-cli
+
 secrets-edit:
   sops private/secrets/common.yaml
 

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { KarabinerRules } from "./types";
+import { KarabinerRules, KeyCode, Manipulator } from "./types";
 import {
 	app,
 	createHyperSubLayers,
@@ -11,20 +11,240 @@ import {
 	shell,
 } from "./utils";
 
-// ──────── Hold/tap tunables ────────
-const HOLD_TIME = 150; // letter holds (a/s/d/f, t)
-const TAP_TIMEOUT = 400; // max ms to count as tap
+const numericJumpKeys: KeyCode[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-const hrmParams = {
-	"basic.to_if_held_down_threshold_milliseconds": HOLD_TIME,
-	"basic.to_if_alone_timeout_milliseconds": TAP_TIMEOUT,
-};
+function appTabJumpManipulators(
+	appName: string,
+	bundleIdentifiers: string[],
+): Manipulator[] {
+	return numericJumpKeys.map((key) => ({
+		type: "basic",
+		description: `${appName}: Right Option + ${key} -> Command + ${key}`,
+		from: {
+			key_code: key,
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [{ key_code: key, modifiers: ["left_command"] }],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: bundleIdentifiers,
+			},
+		],
+	}));
+}
 
-const notHyperHeld = {
-	type: "variable_if" as const,
-	name: "hyper",
-	value: 0,
-};
+const tmuxWindowJumpManipulators: Manipulator[] = numericJumpKeys.map((key) => ({
+	type: "basic",
+	description: `Ghostty: Right Option + ${key} -> tmux window ${key}`,
+	from: {
+		key_code: key,
+		modifiers: { mandatory: ["right_option"], optional: ["any"] },
+	},
+	to: [
+		{
+			shell_command: `/Users/rakshan/.nix-profile/bin/tmux select-window -t ${key}`,
+		},
+	],
+	conditions: [
+		{
+			type: "frontmost_application_if",
+			bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+		},
+	],
+}));
+
+const tmuxBufferManipulators: Manipulator[] = [
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + [ -> tmux copy mode",
+		from: {
+			key_code: "open_bracket",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command: "/Users/rakshan/.nix-profile/bin/tmux copy-mode",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + ] -> tmux paste buffer",
+		from: {
+			key_code: "close_bracket",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command: "/Users/rakshan/.nix-profile/bin/tmux paste-buffer",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + , -> tmux swap window left",
+		from: {
+			key_code: "comma",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/.nix-profile/bin/tmux swap-window -t -1 -d",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + . -> tmux swap window right",
+		from: {
+			key_code: "period",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/.nix-profile/bin/tmux swap-window -t +1 -d",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + \\ -> tmux prefix v",
+		from: {
+			key_code: "backslash",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{ key_code: "b", modifiers: ["left_control"] },
+			{ key_code: "v" },
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + - -> tmux prefix V",
+		from: {
+			key_code: "hyphen",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{ key_code: "b", modifiers: ["left_control"] },
+			{ key_code: "v", modifiers: ["left_shift"] },
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + z -> tmux zoom pane",
+		from: {
+			key_code: "z",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command: "/Users/rakshan/.nix-profile/bin/tmux resize-pane -Z",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + i -> copy tmux pane id",
+		from: {
+			key_code: "i",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/.nix-profile/bin/tmux display-message -p '#{pane_id}' | /usr/bin/tr -d '\\n' | /usr/bin/pbcopy",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + n -> tmux prefix c",
+		from: {
+			key_code: "n",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{ key_code: "b", modifiers: ["left_control"] },
+			{ key_code: "c" },
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + x -> tmux prefix x",
+		from: {
+			key_code: "x",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{ key_code: "b", modifiers: ["left_control"] },
+			{ key_code: "x" },
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+];
 
 const rules: KarabinerRules[] = [
 	// Right Command is the Hyper trigger. Tap alone does nothing.
@@ -53,11 +273,6 @@ const rules: KarabinerRules[] = [
 				from: { key_code: "escape", modifiers: { optional: ["any"] } },
 				to: [
 					{ set_variable: { name: "hyper", value: 0 } },
-					{ set_variable: { name: "spc_sublayer", value: 0 } },
-					{ set_variable: { name: "a_held", value: 0 } },
-					{ set_variable: { name: "s_held", value: 0 } },
-					{ set_variable: { name: "d_held", value: 0 } },
-					{ set_variable: { name: "f_held", value: 0 } },
 				],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
@@ -339,6 +554,17 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
+		description: "Right Option: current app numeric jump and tmux buffer controls",
+		manipulators: [
+			...tmuxWindowJumpManipulators,
+			...tmuxBufferManipulators,
+			...appTabJumpManipulators("Chrome", ["^com\\.google\\.Chrome$"]),
+			...appTabJumpManipulators("Arc", ["^company\\.thebrowser\\.Browser$"]),
+			...appTabJumpManipulators("Obsidian", ["^md\\.obsidian$"]),
+		],
+	},
+
+	{
 		description: "Hyper + d/s + h/l: Ghostty tmux swap pane/window",
 		manipulators: [
 			{
@@ -471,137 +697,6 @@ const rules: KarabinerRules[] = [
 		},
 	}),
 
-	// Home-row mods (gregorias pattern with retroactive emit + debug variables).
-	{
-		description: "a-hold = Cmd",
-		manipulators: [
-			{
-				type: "basic",
-				from: { key_code: "a", modifiers: { optional: ["any"] } },
-				conditions: [notHyperHeld],
-				to_if_alone: [
-					{ set_variable: { name: "a_held", value: 0 } },
-					{ halt: true, key_code: "a" },
-				],
-				to_if_held_down: [
-					{ key_code: "left_command" },
-					{ set_variable: { name: "a_held", value: 1 } },
-				],
-				to_after_key_up: [
-					{ set_variable: { name: "a_held", value: 0 } },
-				],
-				to_delayed_action: {
-					to_if_canceled: [
-						{ key_code: "a" },
-						{ set_variable: { name: "a_held", value: 0 } },
-					],
-					to_if_invoked: [{ key_code: "vk_none" }],
-				},
-				parameters: hrmParams,
-			},
-		],
-	},
-	{
-		description: "s-hold = Opt",
-		manipulators: [
-			{
-				type: "basic",
-				from: { key_code: "s", modifiers: { optional: ["any"] } },
-				conditions: [notHyperHeld],
-				to_if_alone: [
-					{ set_variable: { name: "s_held", value: 0 } },
-					{ halt: true, key_code: "s" },
-				],
-				to_if_held_down: [
-					{ key_code: "left_option" },
-					{ set_variable: { name: "s_held", value: 1 } },
-				],
-				to_after_key_up: [
-					{ set_variable: { name: "s_held", value: 0 } },
-				],
-				to_delayed_action: {
-					to_if_canceled: [
-						{ key_code: "s" },
-						{ set_variable: { name: "s_held", value: 0 } },
-					],
-					to_if_invoked: [{ key_code: "vk_none" }],
-				},
-				parameters: hrmParams,
-			},
-		],
-	},
-	{
-		description: "d-hold = Ctrl",
-		manipulators: [
-			{
-				type: "basic",
-				from: { key_code: "d", modifiers: { optional: ["any"] } },
-				conditions: [notHyperHeld],
-				to_if_alone: [
-					{ set_variable: { name: "d_held", value: 0 } },
-					{ halt: true, key_code: "d" },
-				],
-				to_if_held_down: [
-					{ key_code: "left_control" },
-					{ set_variable: { name: "d_held", value: 1 } },
-				],
-				to_after_key_up: [
-					{ set_variable: { name: "d_held", value: 0 } },
-				],
-				to_delayed_action: {
-					to_if_canceled: [
-						{ key_code: "d" },
-						{ set_variable: { name: "d_held", value: 0 } },
-					],
-					to_if_invoked: [{ key_code: "vk_none" }],
-				},
-				parameters: hrmParams,
-			},
-		],
-	},
-	{
-		description: "f-hold = Shift + shift-nav (tmux window switch)",
-		manipulators: [
-			{
-				type: "basic",
-				from: { key_code: "f", modifiers: { optional: ["any"] } },
-				conditions: [notHyperHeld],
-				to_if_alone: [
-					{ set_variable: { name: "f_held", value: 0 } },
-					{ halt: true, key_code: "f" },
-				],
-				to_if_held_down: [
-					{ key_code: "left_shift" },
-					{ set_variable: { name: "f_held", value: 1 } },
-				],
-				to_after_key_up: [
-					{ set_variable: { name: "f_held", value: 0 } },
-				],
-				to_delayed_action: {
-					to_if_canceled: [
-						{ key_code: "f" },
-						{ set_variable: { name: "f_held", value: 0 } },
-					],
-					to_if_invoked: [{ key_code: "vk_none" }],
-				},
-				parameters: hrmParams,
-			},
-			{
-				type: "basic",
-				description: "f + h -> Shift+Left (tmux prev window)",
-				from: { key_code: "h", modifiers: { optional: ["any"] } },
-				to: [{ key_code: "left_arrow", modifiers: ["left_shift"] }],
-				conditions: [{ type: "variable_if", name: "f_held", value: 1 }],
-			},
-			{
-				type: "basic",
-				description: "f + l -> Shift+Right (tmux next window)",
-				from: { key_code: "l", modifiers: { optional: ["any"] } },
-				to: [{ key_code: "right_arrow", modifiers: ["left_shift"] }],
-				conditions: [{ type: "variable_if", name: "f_held", value: 1 }],
-			},
-		],
-	},
 ];
 
 fs.writeFileSync(

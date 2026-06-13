@@ -14,11 +14,13 @@
     ./yazi.nix
     ./elixir.nix
     ./claude.nix
+    ./codex.nix
     ./lvim.nix
     ./ghostty.nix
     ./sublime.nix
     ./glow.nix
     ./bottom.nix
+    ./caddy.nix
   ];
 
   # https://github.com/nix-community/nix-direnv#via-home-manager

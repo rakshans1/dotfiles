@@ -3,7 +3,7 @@
   programs.zsh = {
     envExtra = ''
       if command -v direnv >/dev/null 2>&1; then
-        if [[ -n "$CODEX_SHELL" ]]; then
+        if [[ -n "$CODEX_SHELL" || -n "$CODEX_CI" || -n "$CODEX_THREAD_ID" ]]; then
           unset DIRENV_DIFF DIRENV_DIR DIRENV_FILE DIRENV_WATCHES
           eval "$(direnv export zsh)"
         else
@@ -225,6 +225,24 @@
         precmd() { print -Pn "\e]133;D;%?\a" }
         preexec() { print -Pn "\e]133;C;\a" }
       fi
+
+      # Name the tmux window after the git project (repo root basename), or the
+      # current dir basename when not in a repo. Skips windows manually renamed
+      # via `prefix R` (which sets the @manual_name window option).
+      autoload -Uz add-zsh-hook
+      _tmux_name_window() {
+        [[ -n "$TMUX" ]] || return
+        [[ "$(tmux show-window-options -v @manual_name 2>/dev/null)" == "1" ]] && return
+        local name
+        if name="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+          name="''${name:t}"
+        else
+          name="''${PWD:t}"
+        fi
+        tmux rename-window -- "$name"
+      }
+      add-zsh-hook chpwd _tmux_name_window
+      _tmux_name_window  # name the window when the shell first starts
 
       # just completion for zsh
       # See: https://just.systems/man/en/shell-completion-scripts.html

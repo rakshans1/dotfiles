@@ -17,9 +17,11 @@
   xdg.configFile."ghostty/config".text = ''
     # Font configuration
     font-family = FiraCode Nerd Font Mono
+    font-style-italic = Regular
+    font-style-bold-italic = Bold
     font-size = 14
 
-    theme = iceberg-dark
+    theme = Iceberg Dark
 
     # Terminal behavior
     shell-integration = detect

@@ -15,6 +15,32 @@ function mkd() {
   mkdir -p "$@" && cd "$@"
 }
 
+# Intercept `open -a "Google Chrome" <url>` so an already-open tab is focused
+# instead of spawning a duplicate tab. Falls back to the real `open` otherwise.
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  function open() {
+    local app="" url="" expect_app=0 arg
+    for arg in "$@"; do
+      if [[ "$expect_app" == 1 ]]; then
+        app="$arg"
+        expect_app=0
+        continue
+      fi
+      case "$arg" in
+        -a) expect_app=1 ;;
+        http://*|https://*) url="$arg" ;;
+      esac
+    done
+
+    if [[ "$app" == "Google Chrome" && -n "$url" ]]; then
+      open-link "$url"
+      return $?
+    fi
+
+    command open "$@"
+  }
+fi
+
 # List all files, long format, colorized, permissions in octal
 function list() {
   ls -l "$@" | awk '
