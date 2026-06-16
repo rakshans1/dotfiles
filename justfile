@@ -121,6 +121,12 @@ nix-check: nix-check-format
 # Combined fix
 nix-fix: nix-fix-format
 
+# Regenerate agent instruction files (AGENTS.md / CLAUDE.md) from private sources
+agents:
+    @bin/sync-agents
+
+alias agents-sync := agents
+
 # Run neovim flake
 rvim-run:
     cd config/rvim && nix run .#

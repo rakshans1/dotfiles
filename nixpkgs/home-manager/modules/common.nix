@@ -15,6 +15,7 @@
     ./elixir.nix
     ./claude.nix
     ./codex.nix
+    ./agents.nix
     ./lvim.nix
     ./ghostty.nix
     ./sublime.nix

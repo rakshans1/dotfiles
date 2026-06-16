@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# Regenerate global agent instruction files from the private dotfiles repo.
+#
+#   ~/.codex/AGENTS.md  = codex.md  + shared.md
+#   ~/.claude/CLAUDE.md = claude.md + shared.md
+#
+# Source of truth: private/extras/agents/{shared,claude,codex}.md
+# Called both by the Home Manager activation (agents.nix) and the `just agents`
+# recipe, so a quick edit applies instantly without a full `rr nix switch`.
+set -Eeuo pipefail
+
+AGENTS_DIR="${AGENTS_DIR:-$HOME/dotfiles/private/extras/agents}"
+SHARED="$AGENTS_DIR/shared.md"
+
+# writeAgentFile <preamble-file> <target-file>: preamble (if present) + shared.
+writeAgentFile() {
+  local preamble="$1" target="$2"
+  mkdir -p "$(dirname "$target")"
+  if [ -r "$preamble" ]; then
+    cat "$preamble" >"$target"
+    printf '\n' >>"$target"
+    cat "$SHARED" >>"$target"
+  else
+    cp "$SHARED" "$target"
+  fi
+  chmod 644 "$target"
+}
+
+if [ ! -r "$SHARED" ]; then
+  echo "sync-agents: $SHARED not found; skipping" >&2
+  exit 0
+fi
+
+writeAgentFile "$AGENTS_DIR/codex.md" "$HOME/.codex/AGENTS.md"
+writeAgentFile "$AGENTS_DIR/claude.md" "$HOME/.claude/CLAUDE.md"
+echo "Successfully applied managed agent instruction files"
