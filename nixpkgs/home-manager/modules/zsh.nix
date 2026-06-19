@@ -226,20 +226,21 @@
         preexec() { print -Pn "\e]133;C;\a" }
       fi
 
-      # Name the tmux window after the git project (repo root basename), or the
-      # current dir basename when not in a repo. Skips windows manually renamed
-      # via `prefix R` (which sets the @manual_name window option).
+      # Store the git-project name (repo root basename), or the current dir
+      # basename when not in a repo, in the @auto_window_name window option.
+      # tmux's automatic-rename renders it (see tmux.nix). Manual renames are
+      # preserved automatically: `tmux rename-window` turns automatic-rename off
+      # for the window, so this option stops affecting its name.
       autoload -Uz add-zsh-hook
       _tmux_name_window() {
         [[ -n "$TMUX" ]] || return
-        [[ "$(tmux show-window-options -v @manual_name 2>/dev/null)" == "1" ]] && return
         local name
         if name="$(git rev-parse --show-toplevel 2>/dev/null)"; then
           name="''${name:t}"
         else
           name="''${PWD:t}"
         fi
-        tmux rename-window -- "$name"
+        tmux set-option -w @auto_window_name "$name"
       }
       add-zsh-hook chpwd _tmux_name_window
       _tmux_name_window  # name the window when the shell first starts

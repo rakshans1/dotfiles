@@ -91,6 +91,11 @@ map('n', '<Leader>qa', '<cmd>qa<CR>', { desc = 'Close all and quit' })
 map('v', '<', '<gv', { desc = 'Indent left' })
 map('v', '>', '>gv', { desc = 'Indent right' })
 
+-- Open current file in Google Chrome
+map('n', '<Leader>ob', function()
+  vim.system({ 'open', '-a', 'Google Chrome', vim.fn.expand('%:p') })
+end, { desc = 'Open file in Chrome' })
+
 -- Macros
 map('n', 'Q', '@qj', { desc = 'Run q macro' })
 map('x', 'Q', ':norm @q<CR>', { desc = 'Run q macro' })

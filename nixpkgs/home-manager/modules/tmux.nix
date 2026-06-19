@@ -50,15 +50,19 @@
       ## Window Settings
       ###############################################
 
-      # Window names are driven by a zsh chpwd hook (see zsh.nix): git repo ->
-      # project name, otherwise the current dir basename. tmux's own
-      # automatic-rename is left off so it doesn't fight the hook.
-      set-window-option -g automatic-rename off
+      # A zsh chpwd hook (see zsh.nix) stores the git-project name (or dir
+      # basename) in the @auto_window_name option; automatic-rename renders it,
+      # falling back to the path basename when the option is unset.
+      #
+      # Because this goes through automatic-rename, running `tmux rename-window`
+      # (or `prefix R`) turns automatic-rename OFF for that window, so a manual
+      # name sticks -- including when new panes open in the window. To restore
+      # auto-naming: tmux setw -u automatic-rename (then cd).
+      set-window-option -g automatic-rename on
+      set-option -g automatic-rename-format '#{?@auto_window_name,#{@auto_window_name},#{b:pane_current_path}}'
       set-option -g set-titles on
 
-      # Rename the current window and mark it manual so the zsh hook stops
-      # auto-naming it. To restore auto-naming: tmux setw -u @manual_name (then cd).
-      bind R command-prompt -I "#W" "rename-window -- '%%' ; set-window-option @manual_name 1"
+      bind R command-prompt -I "#W" "rename-window -- '%%'"
 
       # use vim keys for splitting
       bind-key v split-window -h -c "#{pane_current_path}"
