@@ -253,6 +253,7 @@
       fi
 
       # rr completion
+      fpath=(${private.packages.${pkgs.system}.iv}/share/zsh/site-functions $fpath)
       fpath=(~/dotfiles/private/rr/completions $fpath)
       autoload -Uz compinit
       compinit
