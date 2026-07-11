@@ -1,13 +1,17 @@
 #!/bin/bash
 # fzf popup switcher — lists all Claude Code sessions with status, allows switching.
 # Handles both standalone tmux panes and Claude running inside nvim toggleterm.
+# Data source: vigil (single hook consumer) via `vigil query --json`.
+# Interim script: replaced entirely by `vigil ui` in M2.
 
-STATE_DIR="$HOME/.cache/tmux-agent-monitor"
+VIGIL="$HOME/projects/rust/vigil/.nix-cargo/bin/vigil"
 
-if [ ! -d "$STATE_DIR" ]; then
-  echo "No Claude sessions found."
+rows=$("$VIGIL" query --json 2>/dev/null)
+if [ -z "$rows" ] || [ "$rows" = "[]" ]; then
+  echo "No active Claude sessions."
   echo ""
   echo "Hooks haven't fired yet. Start or interact with a Claude Code session first."
+  echo "(Sessions started before the vigil cutover report only after a restart.)"
   read -r -n 1 -s -p "Press any key to close..."
   exit 0
 fi
@@ -21,33 +25,21 @@ pane_ids=()
 nvim_sockets=()
 pids=()
 
-for f in "$STATE_DIR"/pid-*.json; do
-  [ -f "$f" ] || continue
+while IFS= read -r row; do
+  status=$(echo "$row" | jq -r '.state // empty')
+  pid=$(echo "$row" | jq -r '.pid // empty')
+  pane=$(echo "$row" | jq -r '.pane_id // empty')
+  nvim_socket=$(echo "$row" | jq -r '.nvim_socket // empty')
+  cwd=$(echo "$row" | jq -r '.cwd // empty')
+  ts=$(echo "$row" | jq -r '.updated_at // empty')
+  title=$(echo "$row" | jq -r '.title // empty')
+  project=$(echo "$row" | jq -r '.project // empty')
 
-  status=$(grep -o '"status":"[^"]*"' "$f" | head -1 | sed 's/"status":"//' | sed 's/"//')
-  pid=$(grep -o '"pid":[0-9]*' "$f" | head -1 | sed 's/"pid"://')
-  pane=$(grep -o '"pane":"[^"]*"' "$f" | head -1 | sed 's/"pane":"//' | sed 's/"//')
-  nvim_socket=$(grep -o '"nvim_socket":"[^"]*"' "$f" | head -1 | sed 's/"nvim_socket":"//' | sed 's/"//')
-  cwd=$(grep -o '"cwd":"[^"]*"' "$f" | head -1 | sed 's/"cwd":"//' | sed 's/"//')
-  ts=$(grep -o '"timestamp":[0-9]*' "$f" | head -1 | sed 's/"timestamp"://')
-  title=$(grep -o '"title":"[^"]*"' "$f" | head -1 | sed 's/"title":"//' | sed 's/"//')
-  project=$(grep -o '"project":"[^"]*"' "$f" | head -1 | sed 's/"project":"//' | sed 's/"//')
+  # vigil distinguishes done from idle; keep v0's display buckets
+  [ "$status" = "done" ] && status="idle"
 
-  # Skip dead processes
-  if [ -n "$pid" ] && ! kill -0 "$pid" 2>/dev/null; then
-    rm -f "$f"
-    continue
-  fi
-
-  # Skip stale (1 hour)
-  if [ -n "$ts" ] && [ $((now - ts)) -gt 3600 ]; then
-    rm -f "$f"
-    continue
-  fi
-
-  # Verify pane still exists
+  # Verify pane still exists (vigil reaps, but panes can churn between ticks)
   if [ -n "$pane" ] && ! tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx "$pane"; then
-    rm -f "$f"
     continue
   fi
 
@@ -116,7 +108,7 @@ for f in "$STATE_DIR"/pid-*.json; do
   pane_ids+=("$pane")
   nvim_sockets+=("$nvim_socket")
   pids+=("$pid")
-done
+done < <(echo "$rows" | jq -c '.[]')
 
 if [ ${#entries[@]} -eq 0 ]; then
   echo "No active Claude sessions."

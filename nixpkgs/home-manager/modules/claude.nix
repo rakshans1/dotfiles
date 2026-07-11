@@ -6,13 +6,16 @@
 }:
 
 let
-  monitorHook = [
+  # vigil is the single hook consumer for all agent state (see
+  # ~/projects/rust/vigil). Nix re-applies these on every switch, so a tool
+  # that rewrites settings.json is healed by the next rr nix switch.
+  vigilHook = [
     {
       matcher = "";
       hooks = [
         {
           type = "command";
-          command = "$HOME/dotfiles/config/tmux-agent-monitor/scripts/hook.sh";
+          command = "$HOME/projects/rust/vigil/.nix-cargo/bin/vigil signal";
         }
       ];
     }
@@ -36,11 +39,15 @@ let
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
     };
     hooks = {
-      UserPromptSubmit = monitorHook;
-      Stop = monitorHook;
-      Notification = monitorHook;
-      PermissionRequest = monitorHook;
-      SubagentStop = monitorHook;
+      UserPromptSubmit = vigilHook;
+      Stop = vigilHook;
+      Notification = vigilHook;
+      PermissionRequest = vigilHook;
+      SubagentStop = vigilHook;
+      PostToolUse = vigilHook;
+      SessionStart = vigilHook;
+      SessionEnd = vigilHook;
+      PreCompact = vigilHook;
     };
     enabledPlugins = {
       "code@personal" = true;
