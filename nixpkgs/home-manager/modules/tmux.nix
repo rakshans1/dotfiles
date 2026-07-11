@@ -76,9 +76,6 @@
       ## Pane Settings
       ###############################################
 
-      # Syncronize pane commands
-      bind a setw synchronize-panes
-
       # Use shift hjkl to resize
       bind-key -r J resize-pane -D 5
       bind-key -r K resize-pane -U 5
@@ -177,9 +174,9 @@
       set -g window-status-current-format "#[fg=black,bg=#c6c8d1,nobold,noitalics,nounderscore] #[fg=black,bg=#c6c8d1]#I #[fg=black,bg=#c6c8d1,nobold,noitalics,nounderscore] #[fg=black,bg=#c6c8d1]#W #F #[fg=#c6c8d1,bg=#0f1117,nobold,noitalics,nounderscore]"
       set -g window-status-separator ""
 
-      # Agent Monitor
-      bind-key a display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
-      bind-key -T root MouseDown1StatusRight display-popup -E -w 80% -h 60% "~/dotfiles/config/tmux-agent-monitor/scripts/switcher.sh"
+      # Agent Monitor (vigil)
+      bind-key a display-popup -E -w 80% -h 60% "~/projects/rust/vigil/.nix-cargo/bin/vigil ui"
+      bind-key -T root MouseDown1StatusRight display-popup -E -w 80% -h 60% "~/projects/rust/vigil/.nix-cargo/bin/vigil ui"
 
     '';
 
