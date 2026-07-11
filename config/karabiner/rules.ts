@@ -77,6 +77,46 @@ const tmuxBufferManipulators: Manipulator[] = [
 	},
 	{
 		type: "basic",
+		description: "Ghostty: Right Option + ; -> vigil cycle slide prev",
+		from: {
+			key_code: "semicolon",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --prev",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
+		description: "Ghostty: Right Option + ' -> vigil cycle slide next",
+		from: {
+			key_code: "quote",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --next",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
 		description: "Ghostty: Right Option + [ -> tmux copy mode",
 		from: {
 			key_code: "open_bracket",
@@ -603,6 +643,22 @@ const rules: KarabinerRules[] = [
 				},
 				to: [{ shell_command: "~/dotfiles/bin/chrome-copy-url" }],
 				conditions: [
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Chrome: Hyper(Right Cmd) + K -> Crux switcher overlay (Cmd+Shift+K)",
+				from: {
+					key_code: "k",
+					modifiers: { optional: ["any"] },
+				},
+				to: [{ key_code: "k", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
 					{
 						type: "frontmost_application_if",
 						bundle_identifiers: ["^com\\.google\\.Chrome$"],
