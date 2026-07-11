@@ -632,7 +632,7 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
-		description: "Chrome: Cmd+Shift+C -> copy URL, Cmd+S -> Crux sidebar",
+		description: "Chrome: Cmd+Shift+C -> copy URL, Cmd+S -> vertical tabs, Hyper+K -> Crux switcher",
 		manipulators: [
 			{
 				type: "basic",
@@ -667,12 +667,12 @@ const rules: KarabinerRules[] = [
 			},
 			{
 				type: "basic",
-				description: "Chrome: Cmd+S -> Crux tab sidebar (Cmd+Shift+S extension shortcut)",
+				description: "Chrome: Cmd+S -> toggle vertical tab bar",
 				from: {
 					key_code: "s",
 					modifiers: { mandatory: ["left_command"], optional: ["any"] },
 				},
-				to: [{ key_code: "s", modifiers: ["left_command", "left_shift"] }],
+				to: [{ shell_command: "~/dotfiles/bin/chrome-toggle-tabs" }],
 				conditions: [
 					{
 						type: "frontmost_application_if",
