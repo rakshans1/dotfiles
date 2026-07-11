@@ -57,6 +57,26 @@ const tmuxWindowJumpManipulators: Manipulator[] = numericJumpKeys.map((key) => (
 const tmuxBufferManipulators: Manipulator[] = [
 	{
 		type: "basic",
+		description: "Ghostty: Right Option + a -> vigil sidebar toggle",
+		from: {
+			key_code: "a",
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to: [
+			{
+				shell_command:
+					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle",
+			},
+		],
+		conditions: [
+			{
+				type: "frontmost_application_if",
+				bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+			},
+		],
+	},
+	{
+		type: "basic",
 		description: "Ghostty: Right Option + [ -> tmux copy mode",
 		from: {
 			key_code: "open_bracket",
@@ -339,6 +359,24 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
+		description: "Hyper + a: vigil agent panel (global summon)",
+		manipulators: [
+			{
+				type: "basic",
+				description: "Hyper + a -> open Ghostty + vigil popup",
+				from: { key_code: "a", modifiers: { optional: ["any"] } },
+				to: [
+					{
+						shell_command:
+							"/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'",
+					},
+				],
+				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
+			},
+		],
+	},
+
+	{
 		description: "Hyper + 1/2/3: tmux sessions",
 		manipulators: [
 			{
@@ -554,6 +592,42 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
+		description: "Chrome: Cmd+Shift+C -> copy URL, Cmd+S -> Crux sidebar",
+		manipulators: [
+			{
+				type: "basic",
+				description: "Chrome: Cmd+Shift+C -> copy current URL to clipboard",
+				from: {
+					key_code: "c",
+					modifiers: { mandatory: ["left_command", "left_shift"], optional: ["any"] },
+				},
+				to: [{ shell_command: "~/dotfiles/bin/chrome-copy-url" }],
+				conditions: [
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Chrome: Cmd+S -> Crux tab sidebar (Cmd+Shift+S extension shortcut)",
+				from: {
+					key_code: "s",
+					modifiers: { mandatory: ["left_command"], optional: ["any"] },
+				},
+				to: [{ key_code: "s", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+		],
+	},
+
+	{
 		description: "Right Option: current app numeric jump and tmux buffer controls",
 		manipulators: [
 			...tmuxWindowJumpManipulators,
@@ -612,6 +686,22 @@ const rules: KarabinerRules[] = [
 					{
 						type: "frontmost_application_if",
 						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+					},
+				],
+			},
+		],
+	},
+
+	{
+		description: "F5 (mic/dictation key) -> Cmd+Option+Control+L",
+		manipulators: [
+			{
+				type: "basic",
+				from: { key_code: "f5", modifiers: { optional: ["any"] } },
+				to: [
+					{
+						key_code: "l",
+						modifiers: ["left_command", "left_option", "left_control"],
 					},
 				],
 			},
