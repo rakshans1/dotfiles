@@ -21,6 +21,23 @@ let
     }
   ];
 
+  # M5.5 permission actuation (opt-in, enabled 2026-07-14): PermissionRequest
+  # blocks on --actuate until y/n from the vigil panel (or `vigil permission
+  # allow/deny`); on timeout it emits nothing and Claude falls back to its own
+  # prompt. The hook timeout must exceed vigil's internal wait (doctor checks).
+  vigilPermissionHook = [
+    {
+      matcher = "";
+      hooks = [
+        {
+          type = "command";
+          command = "$HOME/projects/rust/vigil/.nix-cargo/bin/vigil signal --actuate";
+          timeout = 86400;
+        }
+      ];
+    }
+  ];
+
   # Static keys managed by Nix. Claude's runtime-written settings are left
   # untouched by the deep merge below unless they overlap with these keys.
   managed = {
@@ -42,7 +59,7 @@ let
       UserPromptSubmit = vigilHook;
       Stop = vigilHook;
       Notification = vigilHook;
-      PermissionRequest = vigilHook;
+      PermissionRequest = vigilPermissionHook;
       SubagentStop = vigilHook;
       PostToolUse = vigilHook;
       SessionStart = vigilHook;
