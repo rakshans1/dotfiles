@@ -1,0 +1,24 @@
+#!/bin/bash
+# Copy the URL of the active tab of Chrome's focused window.
+#
+# Uses the Crux extension bridge rather than AppleScript: AppleScript's
+# "front window" spans all Chrome profiles and returns the wrong window when
+# several are open (spaces = one window each), whereas the extension tracks
+# the actually-focused window. Absolute paths because Karabiner runs
+# shell_command with a minimal PATH. Falls back to AppleScript if the bridge
+# is unreachable.
+
+NODE=/Users/rakshan/.nix-profile/bin/node
+CRUX="$HOME/projects/node/crux/bin/crux-tabs.mjs"
+
+url=$("$NODE" "$CRUX" url 2>/dev/null)
+
+if [ -z "$url" ]; then
+  url=$(/usr/bin/osascript -e 'tell application "Google Chrome" to get URL of active tab of front window' 2>/dev/null)
+fi
+
+if [ -n "$url" ]; then
+  printf '%s' "$url" | /usr/bin/pbcopy
+else
+  /usr/bin/osascript -e 'display notification "Could not read the current Chrome URL." with title "Copy URL failed"'
+fi
