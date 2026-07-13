@@ -17,6 +17,10 @@ fi
 
 if [ -n "$url" ]; then
   printf '%s' "$url" | /usr/bin/pbcopy
+  # Top-right banner confirming the copy.
+  safe_url=${url//\\/\\\\}
+  safe_url=${safe_url//\"/\\\"}
+  /usr/bin/osascript -e "display notification \"$safe_url\" with title \"URL copied\"" >/dev/null 2>&1
 else
   /usr/bin/osascript -e 'display notification "Could not read the current Chrome URL." with title "Copy URL failed"'
 fi

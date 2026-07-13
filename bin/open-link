@@ -1,35 +1,31 @@
-#!/usr/bin/osascript
+#!/bin/bash
+# Open (or focus) a URL in Chrome's focused window via the Crux extension.
+#
+# Replaces the old AppleScript "front window" version, which spanned all
+# Chrome profiles and opened in the wrong window once spaces created several
+# windows. Focuses a matching tab in the current window if one exists, else
+# opens a new tab there, then brings Chrome forward. Routing through Crux also
+# lets air-traffic-control rules auto-group the opened tab. Falls back to
+# `open -a` if the bridge is unavailable. PATH pinned for Karabiner's minimal
+# environment.
 
-on run argv
-    if (count of argv) is 0 then
-        log "Error: No URL provided"
-        return
-    end if
+export PATH="/Users/rakshan/.nix-profile/bin:$HOME/dotfiles/bin:/usr/bin:/bin"
 
-    set input_url to item 1 of argv
+url="$1"
+[ -z "$url" ] && { echo "usage: open-link <url>" >&2; exit 1; }
 
-    tell application "Google Chrome"
-        tell front window
-                set foundTab to false
-                set tabIndex to 1
-                repeat with t in tabs
-                    try
-                        set t_url to URL of t as string
-                        if t_url contains input_url then
-                            set active tab index to tabIndex
-                            set foundTab to true
-                            exit repeat
-                        end if
-                    on error errMsg
-                        log "Error getting URL: " & errMsg
-                    end try
-                    set tabIndex to tabIndex + 1
-                end repeat
+opened=false
+existing=$(rr chrome list --current-window --fields id,url 2>/dev/null \
+  | jq -r --arg u "$url" 'map(select(.url | contains($u)))[0].id // empty')
 
-                if not foundTab then
-                    make new tab with properties {URL:input_url}
-                end if
-        end tell
-        activate
-    end tell
-end run
+if [ -n "$existing" ]; then
+  rr chrome focus "$existing" >/dev/null 2>&1 && opened=true
+elif rr chrome open "$url" >/dev/null 2>&1; then
+  opened=true
+fi
+
+if [ "$opened" = true ]; then
+  /usr/bin/osascript -e 'tell application "Google Chrome" to activate' >/dev/null 2>&1
+else
+  /usr/bin/open -a "Google Chrome" "$url"
+fi
