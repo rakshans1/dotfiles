@@ -173,7 +173,7 @@
             "manipulators": [
               {
                 "type": "basic",
-                "description": "Hyper + a -> open Ghostty + vigil popup",
+                "description": "Hyper + a -> toggle vigil popup (open Ghostty if needed)",
                 "from": {
                   "key_code": "a",
                   "modifiers": {
@@ -184,7 +184,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/vigil ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'; fi"
                   }
                 ],
                 "conditions": [
@@ -636,7 +636,7 @@
               },
               {
                 "type": "basic",
-                "description": "Chrome: Hyper(Right Cmd) + K -> Crux switcher overlay (Cmd+Shift+K)",
+                "description": "Chrome: Hyper(Right Cmd) + K -> Crux command palette (Cmd+Shift+K)",
                 "from": {
                   "key_code": "k",
                   "modifiers": {
@@ -660,6 +660,73 @@
                     "name": "hyper",
                     "value": 1
                   },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Chrome: Hyper(Right Cmd) + P -> Crux search palette (Cmd+Shift+P)",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "p",
+                    "modifiers": [
+                      "left_command",
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Chrome: Cmd+Shift+S -> Crux side panel (Cmd+Shift+U extension shortcut)",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_command",
+                      "left_shift"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "u",
+                    "modifiers": [
+                      "left_command",
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "conditions": [
                   {
                     "type": "frontmost_application_if",
                     "bundle_identifiers": [
@@ -969,7 +1036,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle"
                   }
                 ],
                 "conditions": [
@@ -997,7 +1064,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --prev"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --prev"
                   }
                 ],
                 "conditions": [
@@ -1025,7 +1092,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --next"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --next"
                   }
                 ],
                 "conditions": [
@@ -3232,6 +3299,11 @@
                       "name": "hyper_sublayer_s",
                       "value": 1
                     }
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle"
                   }
                 ],
                 "conditions": [

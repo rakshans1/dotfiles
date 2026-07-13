@@ -65,7 +65,7 @@ const tmuxBufferManipulators: Manipulator[] = [
 		to: [
 			{
 				shell_command:
-					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle",
+					"PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle",
 			},
 		],
 		conditions: [
@@ -85,7 +85,7 @@ const tmuxBufferManipulators: Manipulator[] = [
 		to: [
 			{
 				shell_command:
-					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --prev",
+					"PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --prev",
 			},
 		],
 		conditions: [
@@ -105,7 +105,7 @@ const tmuxBufferManipulators: Manipulator[] = [
 		to: [
 			{
 				shell_command:
-					"/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --next",
+					"PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil swap --next",
 			},
 		],
 		conditions: [
@@ -403,12 +403,12 @@ const rules: KarabinerRules[] = [
 		manipulators: [
 			{
 				type: "basic",
-				description: "Hyper + a -> open Ghostty + vigil popup",
+				description: "Hyper + a -> toggle vigil popup (open Ghostty if needed)",
 				from: { key_code: "a", modifiers: { optional: ["any"] } },
 				to: [
 					{
 						shell_command:
-							"/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'",
+							"PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/vigil ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'; fi",
 					},
 				],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
@@ -651,7 +651,7 @@ const rules: KarabinerRules[] = [
 			},
 			{
 				type: "basic",
-				description: "Chrome: Hyper(Right Cmd) + K -> Crux switcher overlay (Cmd+Shift+K)",
+				description: "Chrome: Hyper(Right Cmd) + K -> Crux command palette (Cmd+Shift+K)",
 				from: {
 					key_code: "k",
 					modifiers: { optional: ["any"] },
@@ -659,6 +659,37 @@ const rules: KarabinerRules[] = [
 				to: [{ key_code: "k", modifiers: ["left_command", "left_shift"] }],
 				conditions: [
 					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Chrome: Hyper(Right Cmd) + P -> Crux search palette (Cmd+Shift+P)",
+				from: {
+					key_code: "p",
+					modifiers: { optional: ["any"] },
+				},
+				to: [{ key_code: "p", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Chrome: Cmd+Shift+S -> Crux side panel (Cmd+Shift+U extension shortcut)",
+				from: {
+					key_code: "s",
+					modifiers: { mandatory: ["left_command", "left_shift"], optional: ["any"] },
+				},
+				to: [{ key_code: "u", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
 					{
 						type: "frontmost_application_if",
 						bundle_identifiers: ["^com\\.google\\.Chrome$"],
@@ -776,6 +807,7 @@ const rules: KarabinerRules[] = [
 			h: key("grave_accent_and_tilde", ["left_command"]),
 			l: key("grave_accent_and_tilde", ["left_shift", "left_command"]),
 			1: shell`~/dotfiles/bin/bluetooth-connect "AirPod"`,
+			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle`,
 		},
 		w: app("WhatsApp"),
 		n: {
