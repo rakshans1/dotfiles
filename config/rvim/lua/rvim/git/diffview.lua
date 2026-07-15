@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'diffview.nvim',
-    event = { 'DeferredUIEnter' },
     cmd = {
       'DiffviewOpen',
       'DiffviewClose',

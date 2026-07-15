@@ -1,0 +1,25 @@
+#!/bin/bash
+osascript -e '
+tell application "System Events"
+  tell process "Google Chrome"
+    set found to false
+    repeat with w in windows
+      if not found then
+        set allUI to entire contents of w
+        repeat with el in allUI
+          try
+            if class of el is button then
+              set d to description of el
+              if d is "Collapse tabs" or d is "Expand tabs" then
+                click el
+                set found to true
+                exit repeat
+              end if
+            end if
+          end try
+        end repeat
+      end if
+    end repeat
+  end tell
+end tell
+'

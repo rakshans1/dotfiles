@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'octo-nvim',
-    event = { 'DeferredUIEnter' },
     load = function(name)
       require('lzextras').loaders.multi {
         name,

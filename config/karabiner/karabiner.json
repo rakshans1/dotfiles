@@ -4730,7 +4730,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Google Chrome.app'"
+                    "shell_command": "~/dotfiles/bin/chrome-profile work \"Profile 6\""
                   }
                 ],
                 "conditions": [
@@ -4841,6 +4841,30 @@
                 "type": "basic",
                 "from": {
                   "key_code": "m",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_g",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "~/dotfiles/bin/chrome-profile work \"Profile 6\" https://app.slack.com/client/TNJRQ2H0E"
+                  }
+                ],
+                "description": "~/dotfiles/bin/chrome-profile work \"Profile 6\" https://app.slack.com/client/TNJRQ2H0E",
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
                   "modifiers": {
                     "optional": [
                       "any"
@@ -5134,7 +5158,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Arc.app'"
+                    "shell_command": "~/dotfiles/bin/chrome-profile personal Default"
                   }
                 ],
                 "conditions": [

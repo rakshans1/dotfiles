@@ -1,0 +1,36 @@
+#!/bin/bash
+# Focus a Chrome profile's window, optionally landing on a URL:
+#   chrome-profile <crux-label> <profile-directory> [url]
+#
+#   chrome-profile personal Default
+#   chrome-profile work "Profile 6"
+#   chrome-profile work "Profile 6" https://app.slack.com/client/TNJRQ2H0E
+#
+# Uses the Crux extension bridge to raise that profile's last-focused window
+# (no new window spawned); with a URL it focuses an existing tab on it (prefix
+# match, so a deep Slack channel still counts) or opens one. Falls back to
+# launching the Chrome binary with --profile-directory when the bridge is
+# down — Chrome dedupes into the running instance and opens a window for that
+# profile. Karabiner runs shell_command with a minimal PATH, so pin the dirs.
+
+export PATH="/Users/rakshan/.nix-profile/bin:$HOME/dotfiles/bin:/usr/bin:/bin"
+
+LABEL="${1:?usage: chrome-profile <crux-label> <profile-directory> [url]}"
+DIR="${2:?usage: chrome-profile <crux-label> <profile-directory> [url]}"
+URL="$3"
+
+if [ -n "$URL" ]; then
+  if rr chrome open "$URL" --focus --profile "$LABEL" >/dev/null 2>&1; then
+    # Raising a window doesn't always activate the app when Chrome is hidden.
+    /usr/bin/open -a "Google Chrome"
+    exit 0
+  fi
+  exec "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --profile-directory="$DIR" "$URL"
+fi
+
+if rr chrome focus-window --profile "$LABEL" >/dev/null 2>&1; then
+  /usr/bin/open -a "Google Chrome"
+  exit 0
+fi
+
+exec "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --profile-directory="$DIR"

@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'copilot.lua',
-    event = 'InsertEnter',
     cmd = 'Copilot',
     -- load = function(name)
     -- require('lzextras').loaders.multi {

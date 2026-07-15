@@ -2,20 +2,23 @@
   description = "Home Manager flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
-    nixpkgsUnstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    aiTools.url = "github:numtide/nix-ai-tools";
+    # Cooled NixOS 26.05 stable: 7-day cooldown buffer for supply-chain safety
+    # https://determinate.systems/blog/nixpkgs-cooldown/
+    nixpkgs.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-26.05-chilled/0.1";
+    # Cooled nixpkgs-unstable: 7-day cooldown buffer for supply-chain safety
+    # https://determinate.systems/blog/nixpkgs-cooldown/
+    nixpkgsUnstable.url = "https://flakehub.com/f/DeterminateSystems/nixpkgs-weekly/0.1";
     ghostty.url = "github:ghostty-org/ghostty";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     darwin = {
-      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew = {
@@ -67,7 +70,6 @@
               system = "x86_64-linux";
               config.allowUnfree = true;
             };
-            aiTools = inputs.aiTools.packages.x86_64-linux;
             ghostty = inputs.ghostty.packages.x86_64-linux;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
@@ -81,7 +83,6 @@
               system = "aarch64-darwin";
               config.allowUnfree = true;
             };
-            aiTools = inputs.aiTools.packages.aarch64-darwin;
             sops-nix = inputs.sops-nix;
             private = inputs.private;
             neovim = inputs.neovim;

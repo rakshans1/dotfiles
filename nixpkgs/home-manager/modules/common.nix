@@ -1,7 +1,6 @@
 {
   pkgs,
   pkgsUnstable,
-  aiTools,
   ...
 }:
 {
@@ -15,6 +14,7 @@
     ./elixir.nix
     ./claude.nix
     ./codex.nix
+    ./opencode.nix
     ./agents.nix
     ./lvim.nix
     ./ghostty.nix
@@ -105,6 +105,7 @@
       kubectl
 
       exiftool
+      imagemagick
       age
       sops
       ssh-to-age
@@ -126,15 +127,15 @@
       # Mac App Store command line interface
       mas
       coreutils
+      gnused # GNU sed so `sed -i 's/…/'` works (macOS ships BSD sed)
       pngpaste
       blueutil
     ]
     ++ lib.optionals stdenv.isLinux [ ]
     ++ [
-      aiTools.crush
       (pkgs.callPackage ./claude-code { })
       (pkgs.callPackage ./codex { })
-      (pkgs.callPackage ./gemini-cli { })
+      (pkgs.callPackage ./opencode { })
     ];
 
   # Create symlink for claude-code at ~/.local/bin/claude

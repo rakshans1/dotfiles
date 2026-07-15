@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'indent-blankline.nvim',
-    event = { 'DeferredUIEnter' },
     keys = {
       {
         '<leader>ii',

@@ -2,12 +2,18 @@
 {
   programs.zsh = {
     envExtra = ''
+      # direnv: the stock hook registers on precmd AND chpwd, so `cd` re-evaluates
+      # .envrc even in non-interactive shells (agents, scripts). The only gap in a
+      # non-interactive shell is that no precmd ever fires, so the STARTUP dir's
+      # .envrc never loads — do a one-shot export for it, after dropping any stale
+      # DIRENV_* state inherited from the parent. No agent-specific markers needed:
+      # this keys on the actual distinguishing property (interactivity), so it
+      # covers Codex, Claude Code, cron, CI, and whatever comes next.
       if command -v direnv >/dev/null 2>&1; then
-        if [[ -n "$CODEX_SHELL" || -n "$CODEX_CI" || -n "$CODEX_THREAD_ID" ]]; then
+        eval "$(direnv hook zsh)"
+        if [[ ! -o interactive ]]; then
           unset DIRENV_DIFF DIRENV_DIR DIRENV_FILE DIRENV_WATCHES
           eval "$(direnv export zsh)"
-        else
-          eval "$(direnv hook zsh)"
         fi
       fi
     '';
@@ -204,16 +210,6 @@
         [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
         rm -f -- "$tmp"
       }
-
-      # SOPS age key file location for automatic decryption
-      export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/keys.txt"
-      export LLM_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
-      export LLM_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
-      export OPENAI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
-      export OPENAI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
-      export OPENAI_API_BASE=$(cat ${config.sops.secrets.llm_endpoint.path})
-      export GEMINI_API_KEY=$(cat ${config.sops.secrets.llm_api_key.path})
-      export GEMINI_API_ENDPOINT=$(cat ${config.sops.secrets.llm_endpoint.path})
 
       ${import "${private}/zsh-env.nix" { inherit config; }}
 

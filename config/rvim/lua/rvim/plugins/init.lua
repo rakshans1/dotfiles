@@ -86,7 +86,6 @@ require('lze').load {
   {
     'navigator-nvim',
     cmd = { 'NavigatorLeft', 'NavigatorRight', 'NavigatorUp', 'NavigatorDown' },
-    event = { 'DeferredUIEnter' },
     keys = {
       {
         '<C-h>',
@@ -250,7 +249,6 @@ require('lze').load {
   },
   {
     'maximize-nvim',
-    event = { 'DeferredUIEnter' },
     keys = {
       {
         '<leader>wm',

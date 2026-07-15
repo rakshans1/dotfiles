@@ -50,6 +50,13 @@ require('lze').load {
         },
         picker = {
           matcher = { ignorecase = true, smartcase = false },
+          -- Follow symlinks so pickers descend into symlinked dirs
+          -- (e.g. feature-workspace roots whose members are worktree symlinks)
+          sources = {
+            files = { follow = true },
+            grep = { follow = true },
+            explorer = { follow = true },
+          },
           actions = {
             set_glob_pattern = function(picker)
               require('snacks').input({
@@ -130,7 +137,7 @@ require('lze').load {
                   show_empty = true,
                   hidden = true,
                   ignored = true,
-                  follow = false,
+                  follow = true,
                   supports_live = true,
                 }
               end,
@@ -145,7 +152,7 @@ require('lze').load {
                   cwd = dir,
                   hidden = true,
                   ignored = true,
-                  follow = false,
+                  follow = true,
                 }
               end,
             },

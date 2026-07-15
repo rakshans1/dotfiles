@@ -33,7 +33,12 @@ map(
   { desc = 'Lspsaga peek definition' }
 )
 map('n', '<leader>lf', '<cmd>Lspsaga finder<cr>', { desc = 'Lspsaga finder' })
-map('n', '<leader>li', '<cmd>LspInfo<cr>', { desc = 'LSP info' })
+map('n', '<leader>li', function()
+  require('rvim.lsps.control').status()
+end, { desc = 'LSP and Copilot status' })
+map('n', '<leader>lt', function()
+  require('rvim.lsps.control').toggle()
+end, { desc = 'Toggle LSP and Copilot' })
 map(
   'n',
   ']d',

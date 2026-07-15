@@ -18,22 +18,14 @@ let
     "$schema" = "https://opencode.ai/config.json";
     autoupdate = false; # binary is managed read-only by Nix; self-update can't work
     provider = {
-      zai = {
-        npm = "@ai-sdk/anthropic";
-        name = "z.ai (GLM)";
+      zai-coding-plan = {
         options = {
-          baseURL = "https://api.z.ai/api/anthropic";
           apiKey = "{env:ZAI_API_KEY}";
-        };
-        models = {
-          "glm-5.2" = { name = "GLM 5.2"; };
-          "glm-4.7" = { name = "GLM 4.7"; };
-          "glm-4.7-flash" = { name = "GLM 4.7 Flash"; };
         };
       };
     };
-    model = "zai/glm-5.2";
-    small_model = "zai/glm-4.7-flash";
+    model = "zai-coding-plan/glm-5.2";
+    small_model = "zai-coding-plan/glm-4.7-flash";
   };
 
   managedJson = builtins.toJSON managed;

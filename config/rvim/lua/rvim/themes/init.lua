@@ -16,6 +16,10 @@ vim.defer_fn(function()
   vim.api.nvim_set_hl(0, 'PmenuSel', { fg = '#c7c9d1', bg = '#1f2233' })
   vim.api.nvim_set_hl(0, 'SnacksPickerTree', { fg = '#454d73', bg = nil })
   vim.api.nvim_set_hl(0, 'SnacksPickerDir', { fg = '#6c7189', bg = nil })
+  -- Hidden (dotfiles) and gitignored files default to NonText (#252941),
+  -- which is nearly invisible. Use a muted-but-readable fg instead.
+  vim.api.nvim_set_hl(0, 'SnacksPickerPathHidden', { fg = '#565d82', bg = nil })
+  vim.api.nvim_set_hl(0, 'SnacksPickerPathIgnored', { fg = '#565d82', bg = nil })
   vim.api.nvim_set_hl(0, 'SnacksDashboardDir', { fg = '#6c7189', bg = nil })
   vim.api.nvim_set_hl(
     0,

@@ -841,7 +841,8 @@ const rules: KarabinerRules[] = [
 		},
 		g: {
 			m: openLink("Google Chrome", "https://maps.google.com", false),
-			alone: app("Google Chrome"),
+			s: shell`~/dotfiles/bin/chrome-profile work "Profile 6" https://app.slack.com/client/TNJRQ2H0E`,
+			alone: shell`~/dotfiles/bin/chrome-profile work "Profile 6"`,
 		},
 		f: {
 			d: openPath("~/Downloads"),
@@ -861,7 +862,7 @@ const rules: KarabinerRules[] = [
 			1: openArcSpace("Work"),
 			2: openArcSpace("Personal"),
 			3: openArcSpace("Reading"),
-			alone: app("Arc"),
+			alone: shell`~/dotfiles/bin/chrome-profile personal Default`,
 		},
 		y: {
 			h: openLink("Google Chrome", "https://www.youtube.com/feed/history"),

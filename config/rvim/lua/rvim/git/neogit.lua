@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'neogit',
-    event = { 'DeferredUIEnter' },
     cmd = { 'Neogit' },
     keys = {
       { '<leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' },

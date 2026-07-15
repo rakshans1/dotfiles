@@ -27,12 +27,8 @@
       "WebFetch(domain:github.com)",
       "mcp__nixos"
     ],
-    "deny": [
-      "Bash(rm:-rf)"
-    ]
+    "deny": ["Bash(rm:-rf)"]
   },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "nixos"
-  ]
+  "enableAllProjectMcpServers": true
 }
+

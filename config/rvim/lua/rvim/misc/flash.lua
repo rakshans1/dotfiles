@@ -1,7 +1,6 @@
 require('lze').load {
   {
     'flash.nvim',
-    event = { 'DeferredUIEnter' },
     keys = {
       {
         'S',
