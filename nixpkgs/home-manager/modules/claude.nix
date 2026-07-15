@@ -9,13 +9,20 @@ let
   # vigil is the single hook consumer for all agent state (see
   # ~/projects/rust/vigil). Nix re-applies these on every switch, so a tool
   # that rewrites settings.json is healed by the next rr nix switch.
+  #
+  # M5.15: hooks reference the committed late-binding wrapper `bin/vigil-hook`
+  # (NOT a concrete binary path) — it re-resolves the vigil binary on every fire
+  # across candidate locations and exits 0 silently if none is found, so a
+  # rebuild / move / mid-rebuild never breaks or blocks the agent. The wrapper
+  # itself runs `vigil signal "$@"`, so the command is just the wrapper path
+  # (plus any extra flags, which are forwarded).
   vigilHook = [
     {
       matcher = "";
       hooks = [
         {
           type = "command";
-          command = "$HOME/projects/rust/vigil/.nix-cargo/bin/vigil signal";
+          command = "$HOME/projects/rust/vigil/bin/vigil-hook";
         }
       ];
     }
@@ -25,13 +32,14 @@ let
   # blocks on --actuate until y/n from the vigil panel (or `vigil permission
   # allow/deny`); on timeout it emits nothing and Claude falls back to its own
   # prompt. The hook timeout must exceed vigil's internal wait (doctor checks).
+  # M5.15: via the wrapper — `--actuate` is forwarded to `vigil signal`.
   vigilPermissionHook = [
     {
       matcher = "";
       hooks = [
         {
           type = "command";
-          command = "$HOME/projects/rust/vigil/.nix-cargo/bin/vigil signal --actuate";
+          command = "$HOME/projects/rust/vigil/bin/vigil-hook --actuate";
           timeout = 86400;
         }
       ];
@@ -49,6 +57,15 @@ let
     };
     includeCoAuthoredBy = false;
     tui = "fullscreen";
+    # M8d: vigil owns the (previously empty) statusline slot — it captures per-session
+    # context% + live cost for the popup/sidebar chip and prints back a statusline
+    # (model · ctx NN% · $X.XX). Routed through the late-binding wrapper so a
+    # missing/rebuilding binary can't break Claude's TUI. Needs `rr nix switch`.
+    statusLine = {
+      type = "command";
+      command = "$HOME/projects/rust/vigil/bin/vigil-hook-statusline";
+      padding = 0;
+    };
     env = {
       CLAUDE_CODE_DISABLE_AUTO_MEMORY = "1";
       CLAUDE_CODE_ENABLE_TELEMETRY = "0";
@@ -60,7 +77,16 @@ let
       Stop = vigilHook;
       Notification = vigilHook;
       PermissionRequest = vigilPermissionHook;
+      # M5.12: SubagentStart pairs with SubagentStop to drive exact, id-keyed
+      # live-subagent tracking (the delegating overlay). Needs `rr nix switch`.
+      SubagentStart = vigilHook;
       SubagentStop = vigilHook;
+      # M5.14: new agent-state events. PermissionDenied (auto-mode denied a tool;
+      # the turn continues → vigil records activity) and StopFailure (the turn
+      # ended on an API error — rate_limit/overloaded/auth; vigil lands the row in
+      # needs_input and shows the error_type as a dim chip). Needs `rr nix switch`.
+      PermissionDenied = vigilHook;
+      StopFailure = vigilHook;
       PostToolUse = vigilHook;
       SessionStart = vigilHook;
       SessionEnd = vigilHook;
