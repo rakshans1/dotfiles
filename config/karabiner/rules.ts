@@ -459,6 +459,54 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
+		description: "Hyper + Shift + comma/period: Ghostty tmux move pane left/right",
+		manipulators: [
+			{
+				type: "basic",
+				description: "Ghostty: Hyper + Shift + comma -> tmux move pane left",
+				from: {
+					key_code: "comma",
+					modifiers: { mandatory: ["left_shift"], optional: ["any"] },
+				},
+				to: [
+					{
+						shell_command:
+							"/Users/rakshan/.nix-profile/bin/tmux swap-pane -s '{left-of}'",
+					},
+				],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Ghostty: Hyper + Shift + period -> tmux move pane right",
+				from: {
+					key_code: "period",
+					modifiers: { mandatory: ["left_shift"], optional: ["any"] },
+				},
+				to: [
+					{
+						shell_command:
+							"/Users/rakshan/.nix-profile/bin/tmux swap-pane -s '{right-of}'",
+					},
+				],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
+					},
+				],
+			},
+		],
+	},
+
+	{
 		description: "Hyper + comma/period/brackets: current app navigation",
 		manipulators: [
 			{
@@ -499,9 +547,9 @@ const rules: KarabinerRules[] = [
 			},
 			{
 				type: "basic",
-				description: "Chrome: Hyper + comma -> previous tab",
+				description: "Chrome (vertical tabs): Hyper + comma -> next tab (down)",
 				from: { key_code: "comma", modifiers: { optional: ["any"] } },
-				to: [{ key_code: "tab", modifiers: ["left_control", "left_shift"] }],
+				to: [{ key_code: "tab", modifiers: ["left_control"] }],
 				conditions: [
 					{ type: "variable_if", name: "hyper", value: 1 },
 					{
@@ -512,9 +560,9 @@ const rules: KarabinerRules[] = [
 			},
 			{
 				type: "basic",
-				description: "Chrome: Hyper + period -> next tab",
+				description: "Chrome (vertical tabs): Hyper + period -> previous tab (up)",
 				from: { key_code: "period", modifiers: { optional: ["any"] } },
-				to: [{ key_code: "tab", modifiers: ["left_control"] }],
+				to: [{ key_code: "tab", modifiers: ["left_control", "left_shift"] }],
 				conditions: [
 					{ type: "variable_if", name: "hyper", value: 1 },
 					{
@@ -726,32 +774,8 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
-		description: "Hyper + d/s + h/l: Ghostty tmux swap pane/window",
+		description: "Hyper + s + h/l: Ghostty tmux swap window",
 		manipulators: [
-			{
-				type: "basic",
-				from: { key_code: "h", modifiers: { optional: ["any"] } },
-				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-pane -U" }],
-				conditions: [
-					{ type: "variable_if", name: "hyper_sublayer_d", value: 1 },
-					{
-						type: "frontmost_application_if",
-						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
-					},
-				],
-			},
-			{
-				type: "basic",
-				from: { key_code: "l", modifiers: { optional: ["any"] } },
-				to: [{ shell_command: "~/.nix-profile/bin/tmux swap-pane -D" }],
-				conditions: [
-					{ type: "variable_if", name: "hyper_sublayer_d", value: 1 },
-					{
-						type: "frontmost_application_if",
-						bundle_identifiers: ["^com\\.mitchellh\\.ghostty$"],
-					},
-				],
-			},
 			{
 				type: "basic",
 				from: { key_code: "h", modifiers: { optional: ["any"] } },
@@ -830,7 +854,9 @@ const rules: KarabinerRules[] = [
 			alone: app("Discord"),
 		},
 		t: {
-			alone: app("Ghostty"),
+			// Tap Hyper+t: toggle the tmx tmux-manager popup (opens Ghostty if
+			// it isn't focused). Mirrors Hyper+a -> vigil.
+			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi`,
 		},
 		v: {
 			g: key("g", ["left_shift", "left_control"]),
