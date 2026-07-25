@@ -854,9 +854,10 @@ const rules: KarabinerRules[] = [
 			alone: app("Discord"),
 		},
 		t: {
-			// Tap Hyper+t: toggle the tmx tmux-manager popup (opens Ghostty if
-			// it isn't focused). Mirrors Hyper+a -> vigil.
-			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi`,
+			// Tap Hyper+t: when Ghostty is frontmost, toggle the tmx
+			// tmux-manager popup; otherwise just focus Ghostty (press again to
+			// open the popup). Mirrors Hyper+a -> vigil.
+			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only name "$(lsappinfo front)" | grep -q Ghostty; then if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi; else /usr/bin/open -a 'Ghostty.app'; fi`,
 		},
 		v: {
 			g: key("g", ["left_shift", "left_control"]),

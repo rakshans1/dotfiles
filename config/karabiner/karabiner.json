@@ -4361,7 +4361,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only name \"$(lsappinfo front)\" | grep -q Ghostty; then if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi; else /usr/bin/open -a 'Ghostty.app'; fi"
                   }
                 ],
                 "conditions": [
