@@ -72,7 +72,7 @@ inputs such as `iv`, keeping those pins out of the public/root `flake.lock`.
 # Media: ffmpeg, yt-dlp, tesseract
 # Nix tools: nixpkgs-fmt, nix-init
 # Cloud: awscli2, caddy, cloudflared
-# AI/ML: ollama, python with llm packages, claude-code, gemini-cli
+# AI/ML: ollama, python with llm packages, claude-code, codex, grok, antigravity-cli
 # Security: age, sops, ssh-to-age
 ```
 

@@ -27,6 +27,9 @@
   # https://github.com/nix-community/nix-direnv#via-home-manager
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+  # Stable nixpkgs ships nix-direnv 3.0.7, but some project .envrc files require
+  # >= 3.1.0. Pull the newer nix-direnv (3.1.2) from unstable to satisfy them.
+  programs.direnv.nix-direnv.package = pkgsUnstable.nix-direnv;
   programs.direnv.config.global.log_filter = "^$";
 
   programs.zoxide = {
@@ -96,7 +99,7 @@
 
       rclone
       awscli2
-      caddy
+      # caddy: provided by caddy.nix (with Cloudflare DNS plugin)
       cloudflared
       flyctl
 
@@ -136,6 +139,8 @@
       (pkgs.callPackage ./claude-code { })
       (pkgs.callPackage ./codex { })
       (pkgs.callPackage ./opencode { })
+      (pkgs.callPackage ./grok { })
+      (pkgs.callPackage ./antigravity { })
     ];
 
   # Create symlink for claude-code at ~/.local/bin/claude

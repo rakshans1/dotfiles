@@ -1,27 +1,58 @@
 #!/bin/bash
-# Open (or focus) a URL in Chrome's focused window via the Crux extension.
+# Open (or focus) a URL in Chrome via the Crux extension.
 #
 # Replaces the old AppleScript "front window" version, which spanned all
 # Chrome profiles and opened in the wrong window once spaces created several
-# windows. Focuses a matching tab in the current window if one exists, else
-# opens a new tab there, then brings Chrome forward. Routing through Crux also
-# lets air-traffic-control rules auto-group the opened tab. Falls back to
-# `open -a` if the bridge is unavailable. PATH pinned for Karabiner's minimal
-# environment.
+# windows. Focuses a matching tab if one exists, else opens a new tab, then
+# brings Chrome forward. Routing through Crux also lets air-traffic-control
+# rules auto-group the opened tab. Falls back to `open -a` if the bridge is
+# unavailable. PATH pinned for Karabiner's minimal environment.
+#
+# Dedup spans both Crux profiles: personal profile-routes send some URLs
+# (e.g. file:///…/workspace/, github.com/invideoio) to the work profile, so a
+# tab opened here can actually land there. We check the personal window first,
+# then the work profile, and focus wherever the tab already lives — otherwise
+# every re-open would spawn a duplicate in the routed profile.
 
 export PATH="/Users/rakshan/.nix-profile/bin:$HOME/dotfiles/bin:/usr/bin:/bin"
 
 url="$1"
 [ -z "$url" ] && { echo "usage: open-link <url>" >&2; exit 1; }
 
-opened=false
-existing=$(rr chrome list --current-window --fields id,url 2>/dev/null \
-  | jq -r --arg u "$url" 'map(select(.url | contains($u)))[0].id // empty')
+# Print the id of the first tab whose url contains "$url", or empty. Extra args
+# are passed to `rr chrome list` (scope flags like --current-window / --profile).
+find_tab() {
+  rr chrome list "$@" --fields id,url 2>/dev/null \
+    | jq -r --arg u "$url" 'map(select(.url | contains($u)))[0].id // empty'
+}
 
+opened=false
+
+# 1. Existing tab in the current personal window.
+existing=$(find_tab --current-window)
 if [ -n "$existing" ]; then
   rr chrome focus "$existing" >/dev/null 2>&1 && opened=true
-elif rr chrome open "$url" >/dev/null 2>&1; then
-  opened=true
+fi
+
+# 2. Existing tab in the work profile (routing may have sent it there).
+if [ "$opened" = false ]; then
+  existing_work=$(find_tab --profile work)
+  if [ -n "$existing_work" ]; then
+    rr chrome focus "$existing_work" --profile work >/dev/null 2>&1 && opened=true
+  fi
+fi
+
+# 3. No existing tab anywhere — open a new one (Crux applies profile routing)
+# and focus it by id so its specific window is raised. `osascript activate`
+# alone is ambiguous when several Chrome windows (e.g. testing/automation
+# windows) are open, so the new tab could land in a window that never comes
+# forward; focusing the exact tab id raises the right one via Chrome's API.
+if [ "$opened" = false ]; then
+  new_id=$(rr chrome open "$url" 2>/dev/null | jq -r '.id // empty')
+  if [ -n "$new_id" ]; then
+    rr chrome focus "$new_id" >/dev/null 2>&1
+    opened=true
+  fi
 fi
 
 if [ "$opened" = true ]; then

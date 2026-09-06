@@ -27,6 +27,9 @@ let
     "features.js_repl" = { type = "bool"; value = false; };
 
     "shell_environment_policy.experimental_use_profile" = { type = "bool"; value = true; };
+    "shell_environment_policy.set.BROWSER_USE_AVAILABLE_BACKENDS" = { type = "string"; value = "chrome"; };
+
+    "mcp_servers.node_repl.env.BROWSER_USE_AVAILABLE_BACKENDS" = { type = "string"; value = "chrome"; };
 
     "desktop.conversationDetailMode" = { type = "string"; value = "STEPS_COMMANDS"; };
     "desktop.open-in-target-preferences.global" = { type = "string"; value = "sublimeText"; };
@@ -44,6 +47,11 @@ let
   pruneCommands = ''
     if ${pkgs.dasel}/bin/dasel -f "$CONFIG" -r toml 'features.codex_hooks' >/dev/null 2>&1; then
       ${pkgs.dasel}/bin/dasel delete -f "$CONFIG" -r toml -w toml -o "$CONFIG.pruned" 'features.codex_hooks'
+      mv "$CONFIG.pruned" "$CONFIG"
+    fi
+
+    if ${pkgs.dasel}/bin/dasel -f "$CONFIG" -r toml 'mcp_servers.chrome-devtools' >/dev/null 2>&1; then
+      ${pkgs.dasel}/bin/dasel delete -f "$CONFIG" -r toml -w toml -o "$CONFIG.pruned" 'mcp_servers.chrome-devtools'
       mv "$CONFIG.pruned" "$CONFIG"
     fi
   '';

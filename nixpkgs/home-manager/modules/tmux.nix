@@ -170,7 +170,11 @@
       # M8 usage segment rides inside `vigil status`; the default 40-col cap clips it.
       # Date/time dropped (2026-07-14): redundant in tmux, and it crowded the segment.
       set -g status-right-length 150
-      set -g status-right "#(~/projects/rust/vigil/.nix-cargo/bin/vigil status)#{prefix_highlight}"
+      # home-manager emits extraConfig *after* the plugin run-shell lines, so this
+      # assignment clobbers the `#(continuum_save.sh)` hook continuum prepends to
+      # status-right at load time -- which is the only thing driving its auto-save.
+      # Re-add it here by hand (the script prints nothing, so it stays invisible).
+      set -g status-right "#(${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/continuum_save.sh)#(~/projects/rust/vigil/.nix-cargo/bin/vigil status)#{prefix_highlight}"
 
       #+--- Windows ---+
       set -g window-status-format "#[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#I #[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#W #F #[fg=#6b7089,bg=#0f1117,nobold,noitalics,nounderscore]"

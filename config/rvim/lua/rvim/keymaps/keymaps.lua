@@ -91,10 +91,17 @@ map('n', '<Leader>qa', '<cmd>qa<CR>', { desc = 'Close all and quit' })
 map('v', '<', '<gv', { desc = 'Indent left' })
 map('v', '>', '>gv', { desc = 'Indent right' })
 
--- Open current file in Google Chrome
+-- Open current file in Google Chrome via file:/// URI
 map('n', '<Leader>ob', function()
-  vim.system({ 'open', '-a', 'Google Chrome', vim.fn.expand('%:p') })
-end, { desc = 'Open file in Chrome' })
+  local path = vim.fn.expand('%:p')
+  if path == '' then
+    vim.notify('No file to open', vim.log.levels.WARN)
+    return
+  end
+  -- vim.uri_from_fname produces a properly encoded file:///… URI
+  local uri = vim.uri_from_fname(path)
+  vim.system({ 'open', '-a', 'Google Chrome', uri })
+end, { desc = 'Open file in Chrome (file:///)' })
 
 -- Macros
 map('n', 'Q', '@qj', { desc = 'Run q macro' })

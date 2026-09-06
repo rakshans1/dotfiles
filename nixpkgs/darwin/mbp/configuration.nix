@@ -129,7 +129,13 @@
     enable = true;
 
     # CLI tools and libraries (brew install)
-    brews = [ "yap" ];
+    brews = [
+      "yap"
+      # tw93/Mole (`mo`) - Mac cleanup/uninstall/disk analysis.
+      # Not from nixpkgs: `nixpkgs#mole` is davrodpin/mole (SSH tunnels), a
+      # different project that happens to share the name.
+      "mole"
+    ];
 
     # GUI applications (brew install --cask)
     casks = [
@@ -156,6 +162,7 @@
     # Mac App Store apps (requires mas CLI tool)
     masApps = {
       # "WhatsApp Messenger" = 310633997;
+      "Hidden Bar" = 1452453066;
     };
 
     # Automatically remove packages not listed above

@@ -5,6 +5,7 @@ require('lze').load {
       local snacks = require 'snacks'
       local snacks_dashboard = require 'rvim.ui.snacks-dashboard'
       require 'rvim.ui.snacks-rename'
+      require 'rvim.ui.snacks-symlink-follow'
 
       snacks.setup {
         styles = {

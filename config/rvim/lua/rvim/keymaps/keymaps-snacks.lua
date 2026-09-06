@@ -10,12 +10,23 @@ local function map(mode, key, action, opts)
 end
 
 -- Snacks pickers (find) [f]
-map(
-  'n',
-  '<leader>n',
-  '<cmd>lua Snacks.picker.explorer({ hidden = true })<cr>',
-  { desc = 'Open Explorer with leader' }
-)
+map('n', '<leader>n', function()
+  if Snacks.picker.get({ source = 'explorer' })[1] then
+    Snacks.picker.explorer { hidden = true } -- toggle closed, as before
+    return
+  end
+  -- Reveal the current buffer even when its path was symlink-resolved
+  -- outside the cwd (feature workspaces) — see rvim.ui.snacks-symlink-follow.
+  local target = require('rvim.ui.snacks-symlink-follow').translate(
+    vim.fs.normalize(vim.api.nvim_buf_get_name(0))
+  )
+  Snacks.picker.explorer {
+    hidden = true,
+    on_show = target and function()
+      Snacks.explorer.reveal { file = target }
+    end or nil,
+  }
+end, { desc = 'Open Explorer with leader' })
 map(
   'n',
   '<C-p>',
