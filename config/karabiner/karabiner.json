@@ -5873,7 +5873,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "/usr/bin/open raycast://extensions/rakshan/skills/search"
+                    "shell_command": "/usr/bin/open -g raycast://extensions/rakshan/skills/search"
                   }
                 ],
                 "conditions": [
@@ -5982,13 +5982,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "d",
@@ -6009,13 +6006,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "b",
@@ -6036,13 +6030,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "t",
@@ -6063,13 +6054,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "l",
@@ -6090,13 +6078,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "s",
@@ -6117,13 +6102,10 @@
               {
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D"
-                  },
-                  {
-                    "shell_command": "\""
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D\""
                   }
                 ],
-                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D && \"",
+                "description": "Open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D\"",
                 "type": "basic",
                 "from": {
                   "key_code": "m",

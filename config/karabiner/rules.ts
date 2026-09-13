@@ -322,7 +322,7 @@ const tmuxBufferManipulators: Manipulator[] = [
 // keyword and pastes the reference into the frontmost app; `open -g` keeps that
 // app focused so the text lands where you were typing.
 const skill = (nameOrKeyword: string) =>
-	shell`/usr/bin/open -g "raycast://extensions/rakshan/skills/paste?arguments=${encodeURIComponent(JSON.stringify({ skill: nameOrKeyword }))}"`;
+	open(`-g "raycast://extensions/rakshan/skills/paste?arguments=${encodeURIComponent(JSON.stringify({ skill: nameOrKeyword }))}"`);
 
 const rules: KarabinerRules[] = [
 	// Right Command is the Hyper trigger. Tap alone does nothing.
@@ -927,7 +927,7 @@ const rules: KarabinerRules[] = [
 			l: skill("ll"),
 			s: skill("ss"),
 			m: skill("sm"),
-			alone: open("raycast://extensions/rakshan/skills/search"),
+			alone: open("-g raycast://extensions/rakshan/skills/search"),
 		},
 		r: {
 			c: open("raycast://extensions/raycast/system/open-camera"),
