@@ -12,6 +12,18 @@ import {
 } from "./utils";
 
 const numericJumpKeys: KeyCode[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const tmuxNumericJumpKeys: KeyCode[] = [
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"0",
+];
 
 function appTabJumpManipulators(
 	appName: string,
@@ -34,7 +46,7 @@ function appTabJumpManipulators(
 	}));
 }
 
-const tmuxWindowJumpManipulators: Manipulator[] = numericJumpKeys.map((key) => ({
+const tmuxWindowJumpManipulators: Manipulator[] = tmuxNumericJumpKeys.map((key) => ({
 	type: "basic",
 	description: `Ghostty: Right Option + ${key} -> tmux window ${key}`,
 	from: {
@@ -42,9 +54,8 @@ const tmuxWindowJumpManipulators: Manipulator[] = numericJumpKeys.map((key) => (
 		modifiers: { mandatory: ["right_option"], optional: ["any"] },
 	},
 	to: [
-		{
-			shell_command: `/Users/rakshan/.nix-profile/bin/tmux select-window -t ${key}`,
-		},
+		{ key_code: "b", modifiers: ["left_control"] },
+		{ key_code: key },
 	],
 	conditions: [
 		{
@@ -305,6 +316,13 @@ const tmuxBufferManipulators: Manipulator[] = [
 		],
 	},
 ];
+
+// Skills live in the Raycast `skills` extension (private/raycast/extensions/skills),
+// catalogued in brain/.config/skills/catalog.json. `paste` resolves a name or
+// keyword and pastes the reference into the frontmost app; `open -g` keeps that
+// app focused so the text lands where you were typing.
+const skill = (nameOrKeyword: string) =>
+	shell`/usr/bin/open -g "raycast://extensions/rakshan/skills/paste?arguments=${encodeURIComponent(JSON.stringify({ skill: nameOrKeyword }))}"`;
 
 const rules: KarabinerRules[] = [
 	// Right Command is the Hyper trigger. Tap alone does nothing.
@@ -715,19 +733,22 @@ const rules: KarabinerRules[] = [
 			},
 			{
 				type: "basic",
-				description: "Chrome: Hyper(Right Cmd) + P -> Crux search palette (Cmd+Shift+P)",
+				// Cmd+Shift+P died when crux collapsed its two palettes into one
+				// (open-palette, Cmd+Shift+K — already on Hyper+K). Reused here for
+				// cross-profile tab search, which the in-Chrome palette cannot do:
+				// it only ever sees the profile it is running in. Deliberately not
+				// scoped to Chrome, so it reaches you from Ghostty too.
+				description: "Hyper(Right Cmd) + P -> Raycast: search Chrome tabs (both profiles)",
 				from: {
 					key_code: "p",
 					modifiers: { optional: ["any"] },
 				},
-				to: [{ key_code: "p", modifiers: ["left_command", "left_shift"] }],
-				conditions: [
-					{ type: "variable_if", name: "hyper", value: 1 },
+				to: [
 					{
-						type: "frontmost_application_if",
-						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+						shell_command: "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/tabs",
 					},
 				],
+				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
 			{
 				type: "basic",
@@ -804,14 +825,17 @@ const rules: KarabinerRules[] = [
 	},
 
 	{
-		description: "F5 (mic/dictation key) -> Cmd+Option+Control+L",
+		// Worklog's dictation hotkey, held for as long as you're speaking.
+		// Karabiner holds the `to` chord for the life of the `from` key, so F5
+		// is push-to-talk. Not ...+L, which is Worklog's own Open Library.
+		description: "F5 (mic/dictation key) -> Cmd+Option+Control+D",
 		manipulators: [
 			{
 				type: "basic",
 				from: { key_code: "f5", modifiers: { optional: ["any"] } },
 				to: [
 					{
-						key_code: "l",
+						key_code: "d",
 						modifiers: ["left_command", "left_option", "left_control"],
 					},
 				],
@@ -894,6 +918,16 @@ const rules: KarabinerRules[] = [
 		y: {
 			h: openLink("Google Chrome", "https://www.youtube.com/feed/history"),
 			alone: openLink("Google Chrome", "https://www.youtube.com"),
+		},
+		// Hyper + / : skills are slash commands, so slash is the key.
+		slash: {
+			d: skill("dl"),
+			b: skill("bdevloop"),
+			t: skill("tops"),
+			l: skill("ll"),
+			s: skill("ss"),
+			m: skill("sm"),
+			alone: open("raycast://extensions/rakshan/skills/search"),
 		},
 		r: {
 			c: open("raycast://extensions/raycast/system/open-camera"),

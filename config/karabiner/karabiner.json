@@ -741,7 +741,7 @@
               },
               {
                 "type": "basic",
-                "description": "Chrome: Hyper(Right Cmd) + P -> Crux search palette (Cmd+Shift+P)",
+                "description": "Hyper(Right Cmd) + P -> Raycast: search Chrome tabs (both profiles)",
                 "from": {
                   "key_code": "p",
                   "modifiers": {
@@ -752,11 +752,7 @@
                 },
                 "to": [
                   {
-                    "key_code": "p",
-                    "modifiers": [
-                      "left_command",
-                      "left_shift"
-                    ]
+                    "shell_command": "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/tabs"
                   }
                 ],
                 "conditions": [
@@ -764,12 +760,6 @@
                     "type": "variable_if",
                     "name": "hyper",
                     "value": 1
-                  },
-                  {
-                    "type": "frontmost_application_if",
-                    "bundle_identifiers": [
-                      "^com\\.google\\.Chrome$"
-                    ]
                   }
                 ]
               },
@@ -855,7 +845,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 1"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "1"
                   }
                 ],
                 "conditions": [
@@ -883,7 +879,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 2"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "2"
                   }
                 ],
                 "conditions": [
@@ -911,7 +913,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 3"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "3"
                   }
                 ],
                 "conditions": [
@@ -939,7 +947,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 4"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "4"
                   }
                 ],
                 "conditions": [
@@ -967,7 +981,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 5"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "5"
                   }
                 ],
                 "conditions": [
@@ -995,7 +1015,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 6"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "6"
                   }
                 ],
                 "conditions": [
@@ -1023,7 +1049,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 7"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "7"
                   }
                 ],
                 "conditions": [
@@ -1051,7 +1083,13 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 8"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "8"
                   }
                 ],
                 "conditions": [
@@ -1079,7 +1117,47 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/Users/rakshan/.nix-profile/bin/tmux select-window -t 9"
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.mitchellh\\.ghostty$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Ghostty: Right Option + 0 -> tmux window 0",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "b",
+                    "modifiers": [
+                      "left_control"
+                    ]
+                  },
+                  {
+                    "key_code": "0"
                   }
                 ],
                 "conditions": [
@@ -2385,7 +2463,7 @@
             ]
           },
           {
-            "description": "F5 (mic/dictation key) -> Cmd+Option+Control+L",
+            "description": "F5 (mic/dictation key) -> Cmd+Option+Control+D",
             "manipulators": [
               {
                 "type": "basic",
@@ -2399,7 +2477,7 @@
                 },
                 "to": [
                   {
-                    "key_code": "l",
+                    "key_code": "d",
                     "modifiers": [
                       "left_command",
                       "left_option",
@@ -2524,6 +2602,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -2653,6 +2736,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   }
@@ -2774,6 +2862,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -2903,6 +2996,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   }
@@ -3024,6 +3122,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -3153,6 +3256,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   }
@@ -3273,6 +3381,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -3403,6 +3516,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -3615,6 +3733,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   }
@@ -3741,6 +3864,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -3994,6 +4122,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   }
@@ -4120,6 +4253,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -4452,6 +4590,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   },
@@ -4583,6 +4726,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -4834,6 +4982,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   },
@@ -5008,6 +5161,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -5258,6 +5416,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
@@ -5637,6 +5800,11 @@
                   },
                   {
                     "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
                     "name": "hyper_sublayer_r",
                     "value": 0
                   },
@@ -5667,6 +5835,308 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Hyper Key sublayer \"slash\"",
+            "manipulators": [
+              {
+                "description": "Toggle Hyper sublayer slash",
+                "type": "basic",
+                "from": {
+                  "key_code": "slash",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to_after_key_up": [
+                  {
+                    "set_variable": {
+                      "name": "hyper_sublayer_slash",
+                      "value": 0
+                    }
+                  }
+                ],
+                "to": [
+                  {
+                    "set_variable": {
+                      "name": "hyper_sublayer_slash",
+                      "value": 1
+                    }
+                  }
+                ],
+                "to_if_alone": [
+                  {
+                    "shell_command": "/usr/bin/open raycast://extensions/rakshan/skills/search"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_h",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_j",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_k",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_l",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_u",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_i",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_e",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_s",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_w",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_n",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_m",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_d",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_t",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_v",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_g",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_f",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_b",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_r",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22dl%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "d",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22bdevloop%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "b",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22tops%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "t",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ll%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22ss%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D"
+                  },
+                  {
+                    "shell_command": "\""
+                  }
+                ],
+                "description": "/usr/bin/open -g \"raycast://extensions/rakshan/skills/paste?arguments=%7B%22skill%22%3A%22sm%22%7D && \"",
+                "type": "basic",
+                "from": {
+                  "key_code": "m",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 1
                   }
                 ]
@@ -5797,6 +6267,11 @@
                   {
                     "type": "variable_if",
                     "name": "hyper_sublayer_y",
+                    "value": 0
+                  },
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_slash",
                     "value": 0
                   },
                   {
