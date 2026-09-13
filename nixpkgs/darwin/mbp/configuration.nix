@@ -27,6 +27,11 @@
   system.stateVersion = 6;
   system.primaryUser = "rakshan";
 
+  # Home Manager (via oh-my-zsh) owns compinit. Leaving this on makes
+  # /etc/zshrc run compinit against the early fpath and fight with the
+  # user-level one over ~/.zcompdump, regenerating it on every shell start.
+  programs.zsh.enableCompletion = false;
+
   # User configuration
   users.users.rakshan = {
     name = "rakshan";
@@ -73,7 +78,40 @@
       "nix-command"
       "flakes"
     ];
+
+    # Emergency brake, not the janitor. A build that finds less than min-free
+    # available collects garbage until max-free is free, then carries on —
+    # which is what stops the store quietly filling the disk mid-build.
+    #
+    # The gap is deliberately narrow. Nix GC has no LRU: it deletes unreachable
+    # paths until it hits the target, so a wide gap takes expensive-to-rebuild
+    # paths (ffmpeg, Rust toolchains, old nixpkgs revs) along with the cheap
+    # ones. 20 GiB of headroom per trigger is enough to let a large build
+    # finish; widen it later if it fires repeatedly within a single build.
+    min-free = 20 * 1024 * 1024 * 1024; # 20 GiB
+    max-free = 40 * 1024 * 1024 * 1024; # 40 GiB
   };
+
+  # Steady-state collection, so the store shrinks without a build running.
+  # Weekly rather than daily: the iv-pro worktrees rebuild constantly, and a
+  # daily sweep would keep evicting dev shells that are about to be used again,
+  # trading disk for rebuild time.
+  nix.gc = {
+    automatic = true;
+    interval = {
+      Weekday = 0;
+      Hour = 3;
+      Minute = 0;
+    };
+    options = "--delete-older-than 14d";
+  };
+
+  # NOTE: no nix.optimise. Hard-linking the store replaces every duplicate
+  # file with a fresh inode, which invalidates Gatekeeper's per-file cache and
+  # sends syspolicyd into a full re-assessment of everything on next launch.
+  # The one scheduled run (Sun 13 Sep 2026, ~10h) pinned syspolicyd at 100-300%
+  # and stalled process creation machine-wide. See nix-darwin#1307.
+  # Run `nix store optimise` by hand, when idle and watching, if disk gets tight.
 
   # Enable Touch ID for sudo authentication with tmux support
   # TODO: When upgrading to nix-darwin post-Feb 2025, replace this manual PAM config with:
@@ -166,7 +204,7 @@
     };
 
     # Automatically remove packages not listed above
-    onActivation.cleanup = "zap";
+    onActivation.cleanup = "none";
 
     # Don't hit the network on every system switch. Update/upgrade brew
     # deliberately (e.g. `brew update && brew upgrade`) instead of on activation.

@@ -16,6 +16,9 @@ let
   # rebuild / move / mid-rebuild never breaks or blocks the agent. The wrapper
   # itself runs `vigil signal "$@"`, so the command is just the wrapper path
   # (plus any extra flags, which are forwarded).
+  # Observation-only: 5s matches Grok's vigil registration. Claude's default
+  # is 30s; if signal ever hangs (stdin-without-EOF used to), that froze the
+  # turn and printed "UserPromptSubmit hook timed out after 30s".
   vigilHook = [
     {
       matcher = "";
@@ -23,6 +26,7 @@ let
         {
           type = "command";
           command = "$HOME/projects/rust/vigil/bin/vigil-hook";
+          timeout = 5;
         }
       ];
     }

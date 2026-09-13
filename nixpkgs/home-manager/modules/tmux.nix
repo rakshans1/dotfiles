@@ -174,7 +174,11 @@
       # assignment clobbers the `#(continuum_save.sh)` hook continuum prepends to
       # status-right at load time -- which is the only thing driving its auto-save.
       # Re-add it here by hand (the script prints nothing, so it stays invisible).
-      set -g status-right "#(${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/continuum_save.sh)#(~/projects/rust/vigil/.nix-cargo/bin/vigil status)#{prefix_highlight}"
+      # Bar shows Claude + Codex only; Grok and Agy stay in `vigil ui --usage`.
+      # `timeout` + interpolated client width: `vigil status` used to nest
+      # `tmux list-panes`/`list-clients` inside `#(…)`, which deadlocks tmux
+      # when the binary hangs. Kill the job at 1s so the UI never freezes.
+      set -g status-right "#(${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/scripts/continuum_save.sh)#(env VIGIL_USAGE_SEGMENT_ONLY=claude,codex VIGIL_CLIENT_WIDTH=#{client_width} ${pkgs.coreutils}/bin/timeout -k 0.2 1 ~/projects/rust/vigil/.nix-cargo/bin/vigil status)#{prefix_highlight}"
 
       #+--- Windows ---+
       set -g window-status-format "#[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#I #[fg=black,bg=#6b7089,nobold,noitalics,nounderscore] #[fg=black,bg=#6b7089]#W #F #[fg=#6b7089,bg=#0f1117,nobold,noitalics,nounderscore]"
@@ -192,6 +196,11 @@
         plugin = resurrect;
         extraConfig = ''
           set -g @resurrect-capture-pane-contents 'on'
+          # Pair native agent conversation IDs with each saved layout. Vigil
+          # only resumes conversations in panes created by this restore pass.
+          set -g @resurrect-hook-post-save-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore save'
+          set -g @resurrect-hook-pre-restore-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore prepare'
+          set -g @resurrect-hook-post-restore-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore apply'
         '';
       }
       open

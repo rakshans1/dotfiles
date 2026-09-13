@@ -1,18 +1,24 @@
-{ config, pkgs, private, ... }:
+{ config, lib, pkgs, private, ... }:
 {
   programs.zsh = {
     envExtra = ''
       # direnv: the stock hook registers on precmd AND chpwd, so `cd` re-evaluates
       # .envrc even in non-interactive shells (agents, scripts). The only gap in a
       # non-interactive shell is that no precmd ever fires, so the STARTUP dir's
-      # .envrc never loads — do a one-shot export for it, after dropping any stale
-      # DIRENV_* state inherited from the parent. No agent-specific markers needed:
-      # this keys on the actual distinguishing property (interactivity), so it
-      # covers Codex, Claude Code, cron, CI, and whatever comes next.
+      # .envrc never loads — do a one-shot export for it. No agent-specific
+      # markers needed: this keys on the actual distinguishing property
+      # (interactivity), so it covers Codex, Claude Code, cron, CI, and whatever
+      # comes next.
+      #
+      # Keep the inherited DIRENV_* state and skip the export when the parent
+      # already loaded this exact directory. Wiping the state forced a full
+      # .envrc evaluation (bash + stdlib + git + nix-direnv) on EVERY `zsh -c`;
+      # with a dozen agent sessions firing Bash calls and hooks that was ~8
+      # evaluations/sec, which saturated syspolicyd (Gatekeeper vets every
+      # exec) and stalled process creation machine-wide.
       if command -v direnv >/dev/null 2>&1; then
         eval "$(direnv hook zsh)"
-        if [[ ! -o interactive ]]; then
-          unset DIRENV_DIFF DIRENV_DIR DIRENV_FILE DIRENV_WATCHES
+        if [[ ! -o interactive && "''${DIRENV_DIR#-}" != "$PWD" ]]; then
           eval "$(direnv export zsh)"
         fi
       fi
@@ -127,7 +133,14 @@
         "git"
       ];
     };
-    initContent = ''
+    initContent = lib.mkMerge [
+      # Completion dirs must be on fpath before oh-my-zsh runs compinit, so
+      # a single compinit sees everything and the cached dump stays valid.
+      (lib.mkOrder 550 ''
+        fpath=(${private.packages.${pkgs.system}.iv}/share/zsh/site-functions $fpath)
+        fpath=(~/dotfiles/private/rr/completions $fpath)
+      '')
+      ''
       # SSH
       if [ -z "$SSH_AUTH_SOCK" ]; then
         eval "$(ssh-agent -s)"
@@ -244,15 +257,9 @@
       # just completion for zsh
       # See: https://just.systems/man/en/shell-completion-scripts.html
       if command -v just >/dev/null 2>&1; then
-        autoload -Uz compinit && compinit
         eval "$(just --completions zsh)"
       fi
-
-      # rr completion
-      fpath=(${private.packages.${pkgs.system}.iv}/share/zsh/site-functions $fpath)
-      fpath=(~/dotfiles/private/rr/completions $fpath)
-      autoload -Uz compinit
-      compinit
-    '';
+    ''
+    ];
   };
 }
