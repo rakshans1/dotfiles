@@ -201,6 +201,10 @@
           set -g @resurrect-hook-post-save-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore save'
           set -g @resurrect-hook-pre-restore-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore prepare'
           set -g @resurrect-hook-post-restore-all '~/projects/rust/vigil/.nix-cargo/bin/vigil restore apply'
+          # Resume through `c` on the conversation's own model and effort, e.g.
+          # `c --effort high gpt-6-astra resume <id>`. Unknown model -> plain
+          # `claude --resume` / `codex resume`.
+          set -g @vigil-restore-cmd 'c --effort {effort} {model}'
         '';
       }
       open
