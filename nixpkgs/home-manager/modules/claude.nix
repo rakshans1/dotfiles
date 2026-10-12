@@ -98,9 +98,6 @@ let
     };
     enabledPlugins = {
       "code@personal" = true;
-      "cc@personal" = true;
-      "git@personal" = true;
-      "rr@personal" = true;
     };
     extraKnownMarketplaces = {
       personal = {

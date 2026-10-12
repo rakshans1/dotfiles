@@ -137,7 +137,7 @@
       # Completion dirs must be on fpath before oh-my-zsh runs compinit, so
       # a single compinit sees everything and the cached dump stays valid.
       (lib.mkOrder 550 ''
-        fpath=(${private.packages.${pkgs.system}.iv}/share/zsh/site-functions $fpath)
+        fpath=(${private.packages.${pkgs.stdenv.hostPlatform.system}.iv}/share/zsh/site-functions $fpath)
         fpath=(~/dotfiles/private/rr/completions $fpath)
       '')
       ''
@@ -214,15 +214,6 @@
       export PATH="$HOME/.local/bin:$PATH"
       export PATH="$HOME/dotfiles/bin:$PATH"
 
-      # Yazi shell wrapper for changing directory when exiting
-      # Ref: https://yazi-rs.github.io/docs/quick-start/
-      function y() {
-        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-        yazi "$@" --cwd-file="$tmp"
-        IFS= read -r -d $'\0' cwd < "$tmp"
-        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-        rm -f -- "$tmp"
-      }
 
       ${import "${private}/zsh-env.nix" { inherit config; }}
 

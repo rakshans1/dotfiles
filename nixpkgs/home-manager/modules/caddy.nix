@@ -16,7 +16,7 @@ let
   caddyPkg = pkgs.caddy.withPlugins {
     # v0.2.4+ accepts new Cloudflare token prefixes (cfat_/cfut_)
     plugins = [ "github.com/caddy-dns/cloudflare@v0.2.4" ];
-    hash = "sha256-pRrLBlYRaAyMYwPXeTy4WqWNRu/L9K6Mn2src11dGh8=";
+    hash = "sha256-dQvk6ezY6TQ1J7PjhCXnThF/SqVgPwBO8/RXzHCY+js=";
   };
 
   # Launchd cannot load env from files; export the SOPS token then exec Caddy.

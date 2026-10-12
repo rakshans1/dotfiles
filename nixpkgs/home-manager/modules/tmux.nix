@@ -68,10 +68,6 @@
       bind-key v split-window -h -c "#{pane_current_path}"
       bind-key V split-window -v -c "#{pane_current_path}"
 
-      # Shift arrow to switch windows
-      bind -n S-Left  previous-window
-      bind -n S-Right next-window
-
       ###############################################
       ## Pane Settings
       ###############################################

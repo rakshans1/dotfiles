@@ -16,7 +16,6 @@
     ./codex.nix
     ./opencode.nix
     ./agents.nix
-    ./lvim.nix
     ./ghostty.nix
     ./sublime.nix
     ./glow.nix
@@ -53,7 +52,7 @@
       gnupg
       delta
       difftastic
-      neofetch
+      fastfetch
       tealdeer
       eza
       tree
@@ -66,10 +65,9 @@
       asciiquarium-transparent
 
       neovim
-      lunarvim
 
       nodejs_22
-      nodePackages.serve
+      serve
       pnpm
 
       bun

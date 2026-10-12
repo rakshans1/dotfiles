@@ -8,53 +8,48 @@
 let
   # Static keys managed by Nix. Codex's runtime-written sections
   # (e.g. [projects.*], [marketplaces.*], [notice.*], [plugins.*])
-  # are left untouched by the per-key dasel puts below unless overlaid by
+  # are left untouched by the per-key tomlq setpaths below unless overlaid by
   # the optional private overlay.
-  #
-  # Each entry: path = { type = "string|bool|int"; value = ...; }
   managed = {
-    "model" = { type = "string"; value = "gpt-5.5"; };
-    "personality" = { type = "string"; value = "pragmatic"; };
-    "model_reasoning_effort" = { type = "string"; value = "xhigh"; };
-    "sandbox_mode" = { type = "string"; value = "workspace-write"; };
-    "check_for_update_on_startup" = { type = "bool"; value = false; };
+    "model" = "gpt-5.5";
+    "personality" = "pragmatic";
+    "model_reasoning_effort" = "xhigh";
+    "sandbox_mode" = "workspace-write";
+    "check_for_update_on_startup" = false;
 
-    "tui.vim_mode_default" = { type = "bool"; value = true; };
+    "tui.vim_mode_default" = true;
 
-    "features.hooks" = { type = "bool"; value = true; };
-    "features.codex_git_commit" = { type = "bool"; value = false; };
-    "features.multi_agent" = { type = "bool"; value = true; };
-    "features.js_repl" = { type = "bool"; value = false; };
+    "features.hooks" = true;
+    "features.codex_git_commit" = false;
+    "features.multi_agent" = true;
+    "features.js_repl" = false;
 
-    "shell_environment_policy.experimental_use_profile" = { type = "bool"; value = true; };
-    "shell_environment_policy.set.BROWSER_USE_AVAILABLE_BACKENDS" = { type = "string"; value = "chrome"; };
+    "shell_environment_policy.experimental_use_profile" = true;
+    "shell_environment_policy.set.BROWSER_USE_AVAILABLE_BACKENDS" = "chrome";
 
-    "mcp_servers.node_repl.env.BROWSER_USE_AVAILABLE_BACKENDS" = { type = "string"; value = "chrome"; };
+    "mcp_servers.node_repl.env.BROWSER_USE_AVAILABLE_BACKENDS" = "chrome";
 
-    "desktop.conversationDetailMode" = { type = "string"; value = "STEPS_COMMANDS"; };
-    "desktop.open-in-target-preferences.global" = { type = "string"; value = "sublimeText"; };
+    "desktop.conversationDetailMode" = "STEPS_COMMANDS";
+    "desktop.open-in-target-preferences.global" = "sublimeText";
   };
 
-  renderValue = v: if builtins.isBool v then (if v then "true" else "false") else toString v;
+  # Keys removed from older managed configs.
+  pruned = [
+    "features.codex_hooks"
+    "mcp_servers.chrome-devtools"
+  ];
 
-  putCommands = lib.concatStringsSep "\n" (
-    lib.mapAttrsToList (
-      path: spec:
-      ''${pkgs.dasel}/bin/dasel put -f "$CONFIG" -r toml -t ${spec.type} -v '${renderValue spec.value}' '${path}' ''
-    ) managed
-  );
+  splitPath = lib.splitString ".";
 
-  pruneCommands = ''
-    if ${pkgs.dasel}/bin/dasel -f "$CONFIG" -r toml 'features.codex_hooks' >/dev/null 2>&1; then
-      ${pkgs.dasel}/bin/dasel delete -f "$CONFIG" -r toml -w toml -o "$CONFIG.pruned" 'features.codex_hooks'
-      mv "$CONFIG.pruned" "$CONFIG"
-    fi
+  managedJson = builtins.toJSON {
+    set = lib.mapAttrsToList (path: value: {
+      path = splitPath path;
+      inherit value;
+    }) managed;
+    del = map splitPath pruned;
+  };
 
-    if ${pkgs.dasel}/bin/dasel -f "$CONFIG" -r toml 'mcp_servers.chrome-devtools' >/dev/null 2>&1; then
-      ${pkgs.dasel}/bin/dasel delete -f "$CONFIG" -r toml -w toml -o "$CONFIG.pruned" 'mcp_servers.chrome-devtools'
-      mv "$CONFIG.pruned" "$CONFIG"
-    fi
-  '';
+  tomlq = "${pkgs.yq}/bin/tomlq";
 in
 {
   home.activation.codexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -62,15 +57,17 @@ in
     CONFIG=$HOME/.codex/config.toml
     [ -f "$CONFIG" ] || : > "$CONFIG"
 
-    ${putCommands}
-    ${pruneCommands}
+    ${tomlq} -t --argjson m ${lib.escapeShellArg managedJson} \
+      'reduce $m.set[] as $e (. // {}; setpath($e.path; $e.value)) | delpaths($m.del)' \
+      "$CONFIG" > "$CONFIG.managed"
+    mv "$CONFIG.managed" "$CONFIG"
 
     # Merge in optional private overlay (org-specific marketplaces + plugins).
     # The overlay file is kept in the private dotfiles repo; if absent, nothing
     # happens. Keeps any org-private URLs out of this public file.
     OVERLAY=$HOME/dotfiles/private/extras/codex.toml
     if [ -r "$OVERLAY" ]; then
-      ${pkgs.yq}/bin/tomlq -s -t '.[0] * .[1]' \
+      ${tomlq} -s -t '.[0] * .[1]' \
         "$CONFIG" "$OVERLAY" \
         > "$CONFIG.merged"
       mv "$CONFIG.merged" "$CONFIG"
