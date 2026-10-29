@@ -75,6 +75,7 @@ Commands are organized into logical namespaces:
 - **karabiner** - Karabiner-Elements configuration (1 command)
 - **git** - Git utilities with FZF integration (1 command)
 - **tmux** - Tmux session management (multiple commands)
+- **term** - zmx terminal layer, rex-style CLI (run/split/capture/wait/send/status, permanent IDs, `--json`); replaces tmux over time
 - **server** - Server management utilities (multiple commands)
 - **blog**, **brain**, **obsidian** - Additional specialized namespaces
 
@@ -259,6 +260,48 @@ rr tmux <command>          # See: rr tmux --help
 ```
 
 **Detailed docs:** `rr docs tmux` or see `private/rr/docs/namespaces/tmux.md`
+
+### term (workspace > tab > pane)
+
+Terminal layer on [zmx](https://zmx.sh) with a [Rex](https://www.superlogical.com/rex/docs/automate/cli)-style
+CLI: workspace (`work`/`projects`/`personal`) > tab > pane, one zmx session per
+pane (`<ws>.<tab>.<pane>`). Every object has a permanent ID (`ws:…`, `tab:…`,
+`pane:…`) plus a changeable label; panes get `TERM_WS`/`TERM_TAB`/`TERM_PANE`, so
+a command with no target acts on your own pane. Agents run servers and commands
+here instead of tmux windows.
+
+| Command | Description | Features |
+|---------|-------------|----------|
+| `ls`, `inspect` | Tree of workspaces > tabs > panes; details of a target | JSON |
+| `new`, `run`, `split` | Create a tab / run a command in a new tab / add a pane (prints the ID) | JSON, `--wait` |
+| `send`, `send-key` | Type text / press keys (refuses AI agents) | JSON |
+| `capture`, `wait` | Pane output; wait for exit (exit = program status) | JSON |
+| `rename`, `close`, `events` | Change a label; kill with process trees; change stream | JSON |
+| `status` | Report program status (OSC 7501) to the terminal | |
+| `zoom`, `do` | Drive the Term app (`Term ctl`) | |
+| `tab ...` | Older name-based area (run/exec/logs/send/new/ls/close/pick), kept as compatibility | JSON (ls) |
+| `session ...`, `ui ...`, `ws` | Raw zmx, Term app passthrough, workspaces (not yet) | |
+
+```bash
+# Examples
+id=$(rr --json term split --keep-open -- just test | jq -r '.pane_ids[0]')
+rr term wait --for 10m "$id" || rr term capture -p "$id" --trim -n 80
+rr term run --label api --focus=false -- just server   # prints the pane ID
+rr term capture -p api -n 50
+rr term send -p psql '\dt' && rr term send-key -p psql enter
+rr term rename "fix flaky upload test"                  # your own tab
+rr term status working --progress 40 --msg "indexing"
+rr term close -t api
+```
+
+Targets are `-w/-t/-p` or a positional ID/label/position/ID suffix; ambiguous
+or missing targets change nothing and exit 3. `run`/`split` close their pane when
+the command exits unless `--keep-open` (exit code and output stay readable by ID
+for a day). Exit codes: 0 ok, 1 failed, 2 usage, 3 target not found/ambiguous,
+4 zmx/Term app unreachable, 130 interrupted; `wait`/`--wait` return the program's
+status.
+
+**Detailed docs:** `rr docs term` or see `private/rr/docs/namespaces/term.md`
 
 ### server (multiple commands)
 

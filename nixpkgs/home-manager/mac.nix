@@ -12,6 +12,7 @@
     ./modules/home-manager.nix
     ./modules/common.nix
     ./modules/tmux.nix
+    ./modules/zmx.nix
     ./modules/sops.nix
     ./modules/aws.nix
     ./modules/kubernetes.nix

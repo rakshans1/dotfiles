@@ -317,6 +317,84 @@ const tmuxBufferManipulators: Manipulator[] = [
 	},
 ];
 
+// Term (~/projects/swift/term): the same keys as the Ghostty/tmux rules above,
+// driven through Term's prefix (Ctrl+B) or its control CLI.
+const TERM_BUNDLE = "^dev\\.rakshan\\.term$";
+const TERM_CTL = "/Users/rakshan/Applications/Term.app/Contents/MacOS/term-ctl";
+const termFrontmost = `lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'`;
+
+function termRopt(
+	key: KeyCode,
+	description: string,
+	to: Manipulator["to"],
+): Manipulator {
+	return {
+		type: "basic",
+		description: `Term: Right Option + ${description}`,
+		from: {
+			key_code: key,
+			modifiers: { mandatory: ["right_option"], optional: ["any"] },
+		},
+		to,
+		conditions: [
+			{ type: "frontmost_application_if", bundle_identifiers: [TERM_BUNDLE] },
+		],
+	};
+}
+
+const termPrefix = (key: KeyCode, shift = false): Manipulator["to"] => [
+	{ key_code: "b", modifiers: ["left_control"] },
+	shift ? { key_code: key, modifiers: ["left_shift"] } : { key_code: key },
+];
+const termCtl = (args: string): Manipulator["to"] => [
+	{ shell_command: `${TERM_CTL} ${args}` },
+];
+
+const termRightOptionManipulators: Manipulator[] = [
+	...tmuxNumericJumpKeys.map((key) =>
+		termRopt(key, `${key} -> tab ${key}`, termPrefix(key)),
+	),
+	termRopt("backslash", "\\ -> split right", termPrefix("v")),
+	termRopt("hyphen", "- -> split down", termPrefix("v", true)),
+	termRopt("n", "n -> new tab", termPrefix("c")),
+	termRopt("x", "x -> close pane", termPrefix("x")),
+	termRopt("z", "z -> zoom pane", termCtl("zoom")),
+	termRopt("open_bracket", "[ -> search", termCtl("search")),
+	termRopt("close_bracket", "] -> paste", termCtl("paste")),
+	termRopt("comma", ", -> move tab left", termCtl("move-tab left")),
+	termRopt("period", ". -> move tab right", termCtl("move-tab right")),
+	termRopt("i", "i -> copy `rr agent msg <agent>` for the focused pane", termCtl("copy-agent-msg")),
+	termRopt("a", "a -> sidebar toggle", termCtl("sidebar")),
+	// vigil swap (; ') is tmux-only; swallow so ESC-; / ESC-' never reach the pane.
+	termRopt("semicolon", "; -> (none)", [{ key_code: "vk_none" }]),
+	termRopt("quote", "' -> (none)", [{ key_code: "vk_none" }]),
+];
+
+// Hyper manipulators that apply only while Term is frontmost; listed before
+// the Ghostty/global ones in the same rule so they win.
+function termHyper(
+	key: KeyCode,
+	description: string,
+	args: string,
+	opts: { shift?: boolean; variable?: string } = {},
+): Manipulator {
+	return {
+		type: "basic",
+		description: `Term: Hyper + ${description}`,
+		from: {
+			key_code: key,
+			modifiers: opts.shift
+				? { mandatory: ["left_shift"], optional: ["any"] }
+				: { optional: ["any"] },
+		},
+		to: termCtl(args),
+		conditions: [
+			{ type: "variable_if", name: opts.variable ?? "hyper", value: 1 },
+			{ type: "frontmost_application_if", bundle_identifiers: [TERM_BUNDLE] },
+		],
+	};
+}
+
 // Skills live in the Raycast `skills` extension (private/raycast/extensions/skills),
 // catalogued in brain/.config/skills/catalog.json. `paste` resolves a name or
 // keyword and pastes the reference into the frontmost app; `open -g` keeps that
@@ -437,6 +515,9 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Hyper + 1/2/3: tmux sessions",
 		manipulators: [
+			termHyper("1", "1 -> workspace work", "workspace work"),
+			termHyper("2", "2 -> workspace projects", "workspace projects"),
+			termHyper("3", "3 -> workspace personal", "workspace personal"),
 			{
 				type: "basic",
 				description: "Hyper + 1 -> tmux work",
@@ -479,6 +560,8 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Hyper + Shift + comma/period: Ghostty tmux move pane left/right",
 		manipulators: [
+			termHyper("comma", "Shift + comma -> swap pane prev", "swap-pane prev", { shift: true }),
+			termHyper("period", "Shift + period -> swap pane next", "swap-pane next", { shift: true }),
 			{
 				type: "basic",
 				description: "Ghostty: Hyper + Shift + comma -> tmux move pane left",
@@ -527,6 +610,8 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Hyper + comma/period/brackets: current app navigation",
 		manipulators: [
+			termHyper("comma", "comma -> previous tab", "prev-tab"),
+			termHyper("period", "period -> next tab", "next-tab"),
 			{
 				type: "basic",
 				description: "Ghostty: Hyper + comma -> tmux previous window",
@@ -786,6 +871,7 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Right Option: current app numeric jump and tmux buffer controls",
 		manipulators: [
+			...termRightOptionManipulators,
 			...tmuxWindowJumpManipulators,
 			...tmuxBufferManipulators,
 			...appTabJumpManipulators("Chrome", ["^com\\.google\\.Chrome$"]),
@@ -797,6 +883,8 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Hyper + s + h/l: Ghostty tmux swap window",
 		manipulators: [
+			termHyper("h", "s + h -> move tab left", "move-tab left", { variable: "hyper_sublayer_s" }),
+			termHyper("l", "s + l -> move tab right", "move-tab right", { variable: "hyper_sublayer_s" }),
 			{
 				type: "basic",
 				from: { key_code: "h", modifiers: { optional: ["any"] } },
@@ -855,7 +943,9 @@ const rules: KarabinerRules[] = [
 			h: key("grave_accent_and_tilde", ["left_command"]),
 			l: key("grave_accent_and_tilde", ["left_shift", "left_command"]),
 			1: shell`~/dotfiles/bin/bluetooth-connect "AirPod"`,
-			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle`,
+			// Tap Hyper+s: Term frontmost -> toggle Term's sidebar; otherwise the
+			// vigil tmux sidebar.
+			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'; then /Users/rakshan/Applications/Term.app/Contents/MacOS/term-ctl sidebar.toggle; else /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle; fi`,
 		},
 		w: app("WhatsApp"),
 		n: {

@@ -109,10 +109,11 @@ require('lze').load {
       },
     },
     after = function(_)
+      local term = require 'rvim.misc.navigator_term'
       require('Navigator').setup {
         auto_save = nil,
         disable_on_zoom = true,
-        mux = 'auto',
+        mux = term.active() and term.new() or 'auto',
       }
     end,
   },
