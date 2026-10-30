@@ -956,7 +956,6 @@ const rules: KarabinerRules[] = [
 			f: key("f", ["left_shift", "left_option"]),
 			s: key("o", ["left_shift", "left_command"]),
 			p: key("p", ["left_shift", "left_command"]),
-			alone: app("Cursor"),
 		},
 		g: {
 			m: openLink("Google Chrome", "https://maps.google.com", false),
