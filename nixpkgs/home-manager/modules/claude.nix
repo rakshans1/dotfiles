@@ -115,6 +115,23 @@ in
 {
   # Claude Code configuration managed by Nix
 
+  # Skills and themes are live symlinks into the dotfiles checkout, so editing
+  # them there takes effect without a switch. Accounts under
+  # ~/.claude-accounts/* share them via the symlinks made below.
+  home.file.".claude/skills/rr".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/private/skills/rr";
+  home.file.".claude/themes/iceberg.json".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nixpkgs/home-manager/modules/claude/themes/iceberg.json";
+
+  # Every account dir links ~/.claude/themes (c only links what existed when
+  # the account was created).
+  home.activation.claudeAccountThemes = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    for acct in $HOME/.claude-accounts/*/; do
+      [ -d "$acct" ] || continue
+      [ -e "$acct/themes" ] || ln -s $HOME/.claude/themes "$acct/themes"
+    done
+  '';
+
   # Apply managed Claude Code settings without replacing runtime-written keys.
   home.activation.claudeConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p $HOME/.claude

@@ -1,0 +1,9 @@
+{
+  "name": "Iceberg",
+  "base": "dark",
+  "overrides": {
+    "promptBorder": "#161821",
+    "promptBorderShimmer": "#161821",
+    "bashBorder": "#161821"
+  }
+}

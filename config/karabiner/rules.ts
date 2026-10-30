@@ -321,6 +321,9 @@ const tmuxBufferManipulators: Manipulator[] = [
 // driven through Term's prefix (Ctrl+B) or its control CLI.
 const TERM_BUNDLE = "^dev\\.rakshan\\.term$";
 const TERM_CTL = "/Users/rakshan/Applications/Term.app/Contents/MacOS/term-ctl";
+// Activate (or launch) Term, then run a term-ctl action once its socket answers.
+const termOpenThen = (action: string): string =>
+	`/usr/bin/open -a /Users/rakshan/Applications/Term.app; for i in $(seq 1 30); do ${TERM_CTL} ${action} && break; sleep 0.1; done`;
 const termFrontmost = `lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'`;
 
 function termRopt(
@@ -352,12 +355,12 @@ const termCtl = (args: string): Manipulator["to"] => [
 
 const termRightOptionManipulators: Manipulator[] = [
 	...tmuxNumericJumpKeys.map((key) =>
-		termRopt(key, `${key} -> tab ${key}`, termPrefix(key)),
+		termRopt(key, `${key} -> tab ${key}`, termCtl(`select-tab ${key}`)),
 	),
-	termRopt("backslash", "\\ -> split right", termPrefix("v")),
-	termRopt("hyphen", "- -> split down", termPrefix("v", true)),
-	termRopt("n", "n -> new tab", termPrefix("c")),
-	termRopt("x", "x -> close pane", termPrefix("x")),
+	termRopt("backslash", "\\ -> split right", termCtl("split right")),
+	termRopt("hyphen", "- -> split down", termCtl("split down")),
+	termRopt("n", "n -> new tab", termCtl("new-tab")),
+	termRopt("x", "x -> close pane", termCtl("close-pane")),
 	termRopt("z", "z -> zoom pane", termCtl("zoom")),
 	termRopt("open_bracket", "[ -> search", termCtl("search")),
 	termRopt("close_bracket", "] -> paste", termCtl("paste")),
@@ -499,14 +502,9 @@ const rules: KarabinerRules[] = [
 		manipulators: [
 			{
 				type: "basic",
-				description: "Hyper + a -> toggle vigil popup (open Ghostty if needed)",
+				description: "Hyper + a -> Term vigil popup (opens Term if needed)",
 				from: { key_code: "a", modifiers: { optional: ["any"] } },
-				to: [
-					{
-						shell_command:
-							"PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/vigil ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'; fi",
-					},
-				],
+				to: [{ shell_command: termOpenThen("vigil") }],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
 		],
@@ -515,43 +513,25 @@ const rules: KarabinerRules[] = [
 	{
 		description: "Hyper + 1/2/3: tmux sessions",
 		manipulators: [
-			termHyper("1", "1 -> workspace work", "workspace work"),
-			termHyper("2", "2 -> workspace projects", "workspace projects"),
-			termHyper("3", "3 -> workspace personal", "workspace personal"),
 			{
 				type: "basic",
-				description: "Hyper + 1 -> tmux work",
+				description: "Hyper + 1 -> Term workspace work (launches/activates Term)",
 				from: { key_code: "1", modifiers: { optional: ["any"] } },
-				to: [
-					{
-						shell_command:
-							"/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t work",
-					},
-				],
+				to: [{ shell_command: termOpenThen("workspace work") }],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
 			{
 				type: "basic",
-				description: "Hyper + 2 -> tmux projects",
+				description: "Hyper + 2 -> Term workspace projects (launches/activates Term)",
 				from: { key_code: "2", modifiers: { optional: ["any"] } },
-				to: [
-					{
-						shell_command:
-							"/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t projects",
-					},
-				],
+				to: [{ shell_command: termOpenThen("workspace projects") }],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
 			{
 				type: "basic",
-				description: "Hyper + 3 -> tmux personal",
+				description: "Hyper + 3 -> Term workspace personal (launches/activates Term)",
 				from: { key_code: "3", modifiers: { optional: ["any"] } },
-				to: [
-					{
-						shell_command:
-							"/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t personal",
-					},
-				],
+				to: [{ shell_command: termOpenThen("workspace personal") }],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
 		],
@@ -968,10 +948,8 @@ const rules: KarabinerRules[] = [
 			alone: app("Discord"),
 		},
 		t: {
-			// Tap Hyper+t: when Ghostty is frontmost, toggle the tmx
-			// tmux-manager popup; otherwise just focus Ghostty (press again to
-			// open the popup). Mirrors Hyper+a -> vigil.
-			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only name "$(lsappinfo front)" | grep -q Ghostty; then if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi; else /usr/bin/open -a 'Ghostty.app'; fi`,
+			// Tap Hyper+t: open Term's tab picker (fuzzy over every tab).
+			alone: { to: [{ shell_command: termOpenThen("picker") }] },
 		},
 		v: {
 			g: key("g", ["left_shift", "left_control"]),
