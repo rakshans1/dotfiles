@@ -317,13 +317,13 @@ const tmuxBufferManipulators: Manipulator[] = [
 	},
 ];
 
-// Term (~/projects/swift/term): the same keys as the Ghostty/tmux rules above,
+// Term (~/projects/swift/frnk): the same keys as the Ghostty/tmux rules above,
 // driven through Term's prefix (Ctrl+B) or its control CLI.
 const TERM_BUNDLE = "^dev\\.rakshan\\.term$";
-const TERM_CTL = "/Users/rakshan/Applications/Term.app/Contents/MacOS/term-ctl";
-// Activate (or launch) Term, then run a term-ctl action once its socket answers.
+const TERM_CTL = "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl";
+// Activate (or launch) Frnk, then run a term-ctl action once its socket answers.
 const termOpenThen = (action: string): string =>
-	`/usr/bin/open -a /Users/rakshan/Applications/Term.app; for i in $(seq 1 30); do ${TERM_CTL} ${action} && break; sleep 0.1; done`;
+	`/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do ${TERM_CTL} ${action} && break; sleep 0.1; done`;
 const termFrontmost = `lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'`;
 
 function termRopt(
@@ -815,6 +815,78 @@ const rules: KarabinerRules[] = [
 				],
 				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
 			},
+			// Hyper+Tab = jumplist FORWARD — the reverse of Hyper+` (back).
+			{
+				type: "basic",
+				description: "Chrome: Hyper(Right Cmd) + Tab -> tab jumplist forward (Crux, Cmd+Shift+0)",
+				from: { key_code: "tab", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "0", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			// Crux jumplist in Chrome: Hyper+` = back (Cmd+Shift+8), Hyper+Shift+` = forward
+			// (Cmd+Shift+0). The Shift rule comes first: the plain one matches any modifiers.
+			{
+				type: "basic",
+				description: "Chrome: Hyper(Right Cmd) + Shift + ` -> tab jumplist forward (Crux, Cmd+Shift+0)",
+				from: { key_code: "grave_accent_and_tilde", modifiers: { mandatory: ["shift"], optional: ["any"] } },
+				to: [{ key_code: "0", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				description: "Chrome: Hyper(Right Cmd) + ` -> tab jumplist back (Crux, Cmd+Shift+8)",
+				from: { key_code: "grave_accent_and_tilde", modifiers: { optional: ["any"] } },
+				to: [{ key_code: "8", modifiers: ["left_command", "left_shift"] }],
+				conditions: [
+					{ type: "variable_if", name: "hyper", value: 1 },
+					{
+						type: "frontmost_application_if",
+						bundle_identifiers: ["^com\\.google\\.Chrome$"],
+					},
+				],
+			},
+			{
+				type: "basic",
+				// Crux-powered PR list (both profiles). O sits next to P (tabs).
+				description: "Hyper(Right Cmd) + O -> Raycast: Pull Requests (Crux live folders)",
+				from: {
+					key_code: "o",
+					modifiers: { optional: ["any"] },
+				},
+				to: [
+					{
+						shell_command: "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/pull-requests",
+					},
+				],
+				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
+			},
+			{
+				type: "basic",
+				// Starred Crux Saved folders as open/close-able tab groups.
+				description: "Hyper(Right Cmd) + ; -> Raycast: Saved Tab Groups (starred, Crux)",
+				from: {
+					key_code: "semicolon",
+					modifiers: { optional: ["any"] },
+				},
+				to: [
+					{
+						shell_command: "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/saved-groups",
+					},
+				],
+				conditions: [{ type: "variable_if", name: "hyper", value: 1 }],
+			},
 			{
 				type: "basic",
 				description: "Chrome: Cmd+Shift+S -> Crux side panel (Cmd+Shift+U extension shortcut)",
@@ -925,7 +997,7 @@ const rules: KarabinerRules[] = [
 			1: shell`~/dotfiles/bin/bluetooth-connect "AirPod"`,
 			// Tap Hyper+s: Term frontmost -> toggle Term's sidebar; otherwise the
 			// vigil tmux sidebar.
-			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'; then /Users/rakshan/Applications/Term.app/Contents/MacOS/term-ctl sidebar.toggle; else /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle; fi`,
+			alone: shell`PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only bundleid "$(lsappinfo front)" | grep -q '"dev.rakshan.term"'; then /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl sidebar.toggle; else /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle; fi`,
 		},
 		w: app("WhatsApp"),
 		n: {

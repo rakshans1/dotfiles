@@ -1,0 +1,6268 @@
+{
+ "generated": "2026-11-01T16:10:14.113Z",
+ "generator": "~/dotfiles/bin/gen-shortcuts",
+ "sources": [
+  {
+   "name": "Karabiner",
+   "file": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto"
+  },
+  {
+   "name": "Crux commands",
+   "file": "~/projects/node/crux/public/manifest.json",
+   "mode": "auto"
+  },
+  {
+   "name": "Crux palette verb keys",
+   "file": "~/projects/node/crux/src/content/overlay.js (VERB_KEYS)",
+   "mode": "auto"
+  },
+  {
+   "name": "Crux palette keys",
+   "file": "docs/shortcuts/manual.json ← src/content/overlay.js (keydown handlers)",
+   "mode": "manual"
+  },
+  {
+   "name": "Raycast chrome-tabs",
+   "file": "~/dotfiles/private/raycast/extensions/chrome-tabs/package.json + src/*.tsx",
+   "mode": "auto"
+  },
+  {
+   "name": "Raycast Common shortcuts",
+   "file": "manual.json ← developers.raycast.com/api-reference/keyboard",
+   "mode": "manual"
+  },
+  {
+   "name": "tmux",
+   "file": "~/dotfiles/nixpkgs/home-manager/modules/tmux.nix",
+   "mode": "auto"
+  },
+  {
+   "name": "Ghostty",
+   "file": "~/dotfiles/nixpkgs/home-manager/modules/ghostty.nix",
+   "mode": "auto"
+  },
+  {
+   "name": "zsh",
+   "file": "~/dotfiles/nixpkgs/home-manager/modules/zsh.nix",
+   "mode": "auto"
+  }
+ ],
+ "warnings": [],
+ "mostUsed": [
+  {
+   "section": "k-global",
+   "keys": [
+    [
+     "Right ⌘",
+     "P"
+    ]
+   ],
+   "action": "Raycast: search Chrome tabs (both profiles)"
+  },
+  {
+   "section": "k-global",
+   "keys": [
+    [
+     "Right ⌘",
+     "O"
+    ]
+   ],
+   "action": "Raycast: Pull Requests (Crux live folders)"
+  },
+  {
+   "section": "k-global",
+   "keys": [
+    [
+     "Right ⌘",
+     ";"
+    ]
+   ],
+   "action": "Raycast: Saved Tab Groups (starred, Crux)"
+  },
+  {
+   "section": "k-app-chrome",
+   "keys": [
+    [
+     "Right ⌘",
+     "K"
+    ]
+   ],
+   "action": "Crux command palette (Cmd+Shift+K)"
+  },
+  {
+   "section": "k-app-chrome",
+   "keys": [
+    [
+     "Right ⌘",
+     "`"
+    ]
+   ],
+   "action": "Tab jumplist back (Crux, Cmd+Shift+8)"
+  },
+  {
+   "section": "k-app-chrome",
+   "keys": [
+    [
+     "Right ⌘",
+     "⇧",
+     "`"
+    ]
+   ],
+   "action": "Tab jumplist forward (Crux, Cmd+Shift+0)"
+  },
+  {
+   "section": "crux-commands",
+   "keys": [
+    [
+     "⇧",
+     "⌘",
+     "U"
+    ]
+   ],
+   "action": "Open the Crux tab sidebar"
+  }
+ ],
+ "layers": [
+  {
+   "id": "hyper",
+   "entries": [
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Hyper",
+   "group": "Global",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘"
+  },
+  {
+   "id": "app-dev-rakshan-term",
+   "entries": [
+    {
+     "code": "Comma",
+     "shift": true,
+     "row": "k-app-dev-rakshan-term-0",
+     "short": "Swap pane",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Period",
+     "shift": true,
+     "row": "k-app-dev-rakshan-term-1",
+     "short": "Swap pane",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-2",
+     "short": "Prev tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-3",
+     "short": "Next tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Dev-rakshan-term",
+   "group": "Apps",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘ in Dev-rakshan-term",
+   "app": "Dev-rakshan-term"
+  },
+  {
+   "id": "app-dev-rakshan-term-ropt",
+   "entries": [
+    {
+     "code": "Digit0",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 0",
+     "cat": "nav",
+     "action": "Tab 0",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 1",
+     "cat": "nav",
+     "action": "Tab 1",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 2",
+     "cat": "nav",
+     "action": "Tab 2",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 3",
+     "cat": "nav",
+     "action": "Tab 3",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit4",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 4",
+     "cat": "nav",
+     "action": "Tab 4",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit5",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 5",
+     "cat": "nav",
+     "action": "Tab 5",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit6",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 6",
+     "cat": "nav",
+     "action": "Tab 6",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit7",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 7",
+     "cat": "nav",
+     "action": "Tab 7",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit8",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 8",
+     "cat": "nav",
+     "action": "Tab 8",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Digit9",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-4",
+     "short": "Tab 9",
+     "cat": "nav",
+     "action": "Tab 9",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Backslash",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-5",
+     "short": "Split right",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Minus",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-6",
+     "short": "Split down",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-7",
+     "short": "New tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyX",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-8",
+     "short": "Close pane",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyZ",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-9",
+     "short": "Zoom pane",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "BracketLeft",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-10",
+     "short": "Search",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "BracketRight",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-11",
+     "short": "Paste",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-12",
+     "short": "Move tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-13",
+     "short": "Move tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-14",
+     "short": "Copy `rr",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-15",
+     "short": "Sidebar toggle",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-16",
+     "short": "",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "Quote",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-17",
+     "short": "",
+     "cat": "other",
+     "scope": "Dev-rakshan-term"
+    }
+   ],
+   "label": "Dev-rakshan-term R⌥",
+   "group": "Apps",
+   "hold": [
+    "AltRight"
+   ],
+   "holdLabel": "Hold Right ⌥ in Dev-rakshan-term",
+   "app": "Dev-rakshan-term"
+  },
+  {
+   "id": "app-ghostty",
+   "entries": [
+    {
+     "code": "Comma",
+     "shift": true,
+     "row": "k-app-ghostty-0",
+     "short": "Pane ←",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Period",
+     "shift": true,
+     "row": "k-app-ghostty-1",
+     "short": "Pane →",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-ghostty-2",
+     "short": "Prev win",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-ghostty-3",
+     "short": "Next win",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Ghostty",
+   "group": "Apps",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘ in Ghostty",
+   "app": "Ghostty"
+  },
+  {
+   "id": "app-ghostty-ropt",
+   "entries": [
+    {
+     "code": "Digit0",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 0",
+     "cat": "nav",
+     "action": "tmux window 0",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 1",
+     "cat": "nav",
+     "action": "tmux window 1",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 2",
+     "cat": "nav",
+     "action": "tmux window 2",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 3",
+     "cat": "nav",
+     "action": "tmux window 3",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit4",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 4",
+     "cat": "nav",
+     "action": "tmux window 4",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit5",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 5",
+     "cat": "nav",
+     "action": "tmux window 5",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit6",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 6",
+     "cat": "nav",
+     "action": "tmux window 6",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit7",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 7",
+     "cat": "nav",
+     "action": "tmux window 7",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit8",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 8",
+     "cat": "nav",
+     "action": "tmux window 8",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Digit9",
+     "shift": false,
+     "row": "k-app-ghostty-4",
+     "short": "window 9",
+     "cat": "nav",
+     "action": "tmux window 9",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-app-ghostty-5",
+     "short": "Sidebar",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-app-ghostty-6",
+     "short": "Slide ←",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Quote",
+     "shift": false,
+     "row": "k-app-ghostty-7",
+     "short": "Slide →",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "BracketLeft",
+     "shift": false,
+     "row": "k-app-ghostty-8",
+     "short": "copy mode",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "BracketRight",
+     "shift": false,
+     "row": "k-app-ghostty-9",
+     "short": "paste buffer",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-ghostty-10",
+     "short": "Win ←",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-ghostty-11",
+     "short": "Win →",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Backslash",
+     "shift": false,
+     "row": "k-app-ghostty-12",
+     "short": "⌃B v",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Minus",
+     "shift": false,
+     "row": "k-app-ghostty-13",
+     "short": "⌃B V",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyZ",
+     "shift": false,
+     "row": "k-app-ghostty-14",
+     "short": "Zoom",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-app-ghostty-15",
+     "short": "Pane id",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "row": "k-app-ghostty-16",
+     "short": "⌃B c",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyX",
+     "shift": false,
+     "row": "k-app-ghostty-17",
+     "short": "⌃B x",
+     "cat": "term",
+     "scope": "Ghostty"
+    }
+   ],
+   "label": "Ghostty R⌥",
+   "group": "Apps",
+   "hold": [
+    "AltRight"
+   ],
+   "holdLabel": "Hold Right ⌥ in Ghostty",
+   "app": "Ghostty"
+  },
+  {
+   "id": "app-chrome",
+   "entries": [
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-chrome-0",
+     "short": "Next tab",
+     "cat": "nav",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-chrome-1",
+     "short": "Prev tab",
+     "cat": "nav",
+     "scope": "Chrome"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-app-chrome-3",
+     "short": "Crux ⌘K",
+     "cat": "crux",
+     "scope": "Chrome",
+     "overrides": "k-global-10"
+    },
+    {
+     "code": "Tab",
+     "shift": false,
+     "row": "k-app-chrome-4",
+     "short": "Jump →",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Backquote",
+     "shift": true,
+     "row": "k-app-chrome-5",
+     "short": "Jump →",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Backquote",
+     "shift": false,
+     "row": "k-app-chrome-6",
+     "short": "Jump ←",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav",
+     "overridden": "Chrome"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Chrome",
+   "group": "Apps",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘ in Chrome",
+   "app": "Chrome"
+  },
+  {
+   "id": "app-chrome-cmd",
+   "entries": [
+    {
+     "code": "KeyC",
+     "shift": true,
+     "row": "k-app-chrome-2",
+     "short": "Copy URL",
+     "cat": "other",
+     "scope": "Chrome"
+    },
+    {
+     "code": "KeyS",
+     "shift": true,
+     "row": "k-app-chrome-7",
+     "short": "Side panel",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "k-app-chrome-8",
+     "short": "Tab bar",
+     "cat": "nav",
+     "scope": "Chrome"
+    },
+    {
+     "code": "KeyU",
+     "shift": true,
+     "row": "crux-commands-0",
+     "short": "Side panel",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "KeyK",
+     "shift": true,
+     "row": "crux-commands-1",
+     "short": "Palette",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit8",
+     "shift": true,
+     "row": "crux-commands-2",
+     "short": "Jump ←",
+     "cat": "crux",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit0",
+     "shift": true,
+     "row": "crux-commands-3",
+     "short": "Jump →",
+     "cat": "crux",
+     "scope": "Chrome"
+    }
+   ],
+   "label": "Chrome ⌘",
+   "group": "Apps",
+   "hold": [
+    "MetaLeft"
+   ],
+   "holdLabel": "Hold ⌘ in Chrome",
+   "app": "Chrome"
+  },
+  {
+   "id": "app-chrome-ropt",
+   "entries": [
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘1",
+     "cat": "other",
+     "action": "Sends ⌘ + 1",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘2",
+     "cat": "other",
+     "action": "Sends ⌘ + 2",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘3",
+     "cat": "other",
+     "action": "Sends ⌘ + 3",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit4",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘4",
+     "cat": "other",
+     "action": "Sends ⌘ + 4",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit5",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘5",
+     "cat": "other",
+     "action": "Sends ⌘ + 5",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit6",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘6",
+     "cat": "other",
+     "action": "Sends ⌘ + 6",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit7",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘7",
+     "cat": "other",
+     "action": "Sends ⌘ + 7",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit8",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘8",
+     "cat": "other",
+     "action": "Sends ⌘ + 8",
+     "scope": "Chrome"
+    },
+    {
+     "code": "Digit9",
+     "shift": false,
+     "row": "k-app-chrome-9",
+     "short": "⌘9",
+     "cat": "other",
+     "action": "Sends ⌘ + 9",
+     "scope": "Chrome"
+    }
+   ],
+   "label": "Chrome R⌥",
+   "group": "Apps",
+   "hold": [
+    "AltRight"
+   ],
+   "holdLabel": "Hold Right ⌥ in Chrome",
+   "app": "Chrome"
+  },
+  {
+   "id": "app-arc",
+   "entries": [
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-arc-0",
+     "short": "Next tab",
+     "cat": "nav",
+     "scope": "Arc"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-arc-1",
+     "short": "Prev tab",
+     "cat": "nav",
+     "scope": "Arc"
+    },
+    {
+     "code": "BracketLeft",
+     "shift": false,
+     "row": "k-app-arc-2",
+     "short": "Prev space",
+     "cat": "nav",
+     "scope": "Arc"
+    },
+    {
+     "code": "BracketRight",
+     "shift": false,
+     "row": "k-app-arc-3",
+     "short": "Next space",
+     "cat": "nav",
+     "scope": "Arc"
+    },
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Arc",
+   "group": "Apps",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘ in Arc",
+   "app": "Arc"
+  },
+  {
+   "id": "app-arc-ropt",
+   "entries": [
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘1",
+     "cat": "other",
+     "action": "Sends ⌘ + 1",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘2",
+     "cat": "other",
+     "action": "Sends ⌘ + 2",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘3",
+     "cat": "other",
+     "action": "Sends ⌘ + 3",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit4",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘4",
+     "cat": "other",
+     "action": "Sends ⌘ + 4",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit5",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘5",
+     "cat": "other",
+     "action": "Sends ⌘ + 5",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit6",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘6",
+     "cat": "other",
+     "action": "Sends ⌘ + 6",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit7",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘7",
+     "cat": "other",
+     "action": "Sends ⌘ + 7",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit8",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘8",
+     "cat": "other",
+     "action": "Sends ⌘ + 8",
+     "scope": "Arc"
+    },
+    {
+     "code": "Digit9",
+     "shift": false,
+     "row": "k-app-arc-4",
+     "short": "⌘9",
+     "cat": "other",
+     "action": "Sends ⌘ + 9",
+     "scope": "Arc"
+    }
+   ],
+   "label": "Arc R⌥",
+   "group": "Apps",
+   "hold": [
+    "AltRight"
+   ],
+   "holdLabel": "Hold Right ⌥ in Arc",
+   "app": "Arc"
+  },
+  {
+   "id": "app-obsidian",
+   "entries": [
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "k-app-obsidian-0",
+     "short": "Prev tab",
+     "cat": "nav",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "k-app-obsidian-1",
+     "short": "Next tab",
+     "cat": "nav",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Escape",
+     "shift": false,
+     "row": "k-global-0",
+     "short": "Reset",
+     "cat": "other"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-global-1",
+     "short": "vigil",
+     "cat": "other"
+    },
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-global-2",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-global-3",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-global-4",
+     "short": "Term workspace",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-global-5",
+     "short": "Tabs",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyO",
+     "shift": false,
+     "row": "k-global-6",
+     "short": "PRs",
+     "cat": "raycast"
+    },
+    {
+     "code": "Semicolon",
+     "shift": false,
+     "row": "k-global-7",
+     "short": "Starred",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-global-8",
+     "short": "←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-global-9",
+     "short": "↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-global-10",
+     "short": "↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-global-11",
+     "short": "→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "k-global-12",
+     "short": "PgDn",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyI",
+     "shift": false,
+     "row": "k-global-13",
+     "short": "PgUp",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-global-14",
+     "short": "Sublime",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-global-15",
+     "short": "WhatsApp",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-global-16",
+     "short": "YT Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "door": "sub-s",
+     "row": "k-layers-0",
+     "cat": "door",
+     "short": "Sidebar"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "door": "sub-n",
+     "row": "k-layers-4",
+     "cat": "door",
+     "short": "Obsidian"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "door": "sub-d",
+     "row": "k-layers-10",
+     "cat": "door",
+     "short": "Discord"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-18",
+     "cat": "other",
+     "short": "open -a"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "door": "sub-v",
+     "row": null,
+     "cat": "door",
+     "short": "V layer"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "door": "sub-g",
+     "row": "k-layers-23",
+     "cat": "door",
+     "short": "Work"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "door": "sub-f",
+     "row": null,
+     "cat": "door",
+     "short": "F layer"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "door": "sub-b",
+     "row": "k-layers-31",
+     "cat": "door",
+     "short": "Personal"
+    },
+    {
+     "code": "KeyY",
+     "shift": false,
+     "door": "sub-y",
+     "row": "k-layers-42",
+     "cat": "door",
+     "short": "YouTube"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "door": "sub-slash",
+     "row": "k-layers-44",
+     "cat": "door",
+     "short": "Skills"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "door": "sub-r",
+     "row": "k-layers-51",
+     "cat": "door",
+     "short": "Raycast"
+    }
+   ],
+   "label": "Obsidian",
+   "group": "Apps",
+   "hold": [
+    "MetaRight"
+   ],
+   "holdLabel": "Hold Right ⌘ in Obsidian",
+   "app": "Obsidian"
+  },
+  {
+   "id": "app-obsidian-ropt",
+   "entries": [
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘1",
+     "cat": "other",
+     "action": "Sends ⌘ + 1",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘2",
+     "cat": "other",
+     "action": "Sends ⌘ + 2",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘3",
+     "cat": "other",
+     "action": "Sends ⌘ + 3",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit4",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘4",
+     "cat": "other",
+     "action": "Sends ⌘ + 4",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit5",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘5",
+     "cat": "other",
+     "action": "Sends ⌘ + 5",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit6",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘6",
+     "cat": "other",
+     "action": "Sends ⌘ + 6",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit7",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘7",
+     "cat": "other",
+     "action": "Sends ⌘ + 7",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit8",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘8",
+     "cat": "other",
+     "action": "Sends ⌘ + 8",
+     "scope": "Obsidian"
+    },
+    {
+     "code": "Digit9",
+     "shift": false,
+     "row": "k-app-obsidian-2",
+     "short": "⌘9",
+     "cat": "other",
+     "action": "Sends ⌘ + 9",
+     "scope": "Obsidian"
+    }
+   ],
+   "label": "Obsidian R⌥",
+   "group": "Apps",
+   "hold": [
+    "AltRight"
+   ],
+   "holdLabel": "Hold Right ⌥ in Obsidian",
+   "app": "Obsidian"
+  },
+  {
+   "id": "app-ghostty-cmd",
+   "entries": [
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "ghostty-1",
+     "short": "Ctrl-S",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "ghostty-2",
+     "short": "Ctrl-H",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "ghostty-3",
+     "short": "Ctrl-J",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "ghostty-4",
+     "short": "Ctrl-K",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "ghostty-5",
+     "short": "Ctrl-L",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "ghostty-6",
+     "short": "Ctrl-W",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyX",
+     "shift": false,
+     "row": "ghostty-7",
+     "short": "Ctrl-X",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "row": "ghostty-8",
+     "short": "Ctrl-B",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "ghostty-9",
+     "short": "Ctrl-P",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Slash",
+     "shift": false,
+     "row": "ghostty-10",
+     "short": "Ctrl-/ (^_)",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "Backslash",
+     "shift": false,
+     "row": "ghostty-11",
+     "short": "Ctrl-\\",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyN",
+     "shift": false,
+     "row": "ghostty-12",
+     "short": "Ctrl-N",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyD",
+     "shift": false,
+     "row": "ghostty-13",
+     "short": "Ctrl-D",
+     "cat": "term",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyU",
+     "shift": false,
+     "row": "ghostty-14",
+     "short": "Ctrl-U",
+     "cat": "term",
+     "scope": "Ghostty"
+    }
+   ],
+   "label": "Ghostty ⌘",
+   "group": "Apps",
+   "hold": [
+    "MetaLeft"
+   ],
+   "holdLabel": "Hold ⌘ in Ghostty",
+   "app": "Ghostty"
+  },
+  {
+   "id": "sub-s",
+   "entries": [
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-layers-1",
+     "short": "AirPods",
+     "cat": "other"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-layers-2",
+     "short": "⌘`",
+     "cat": "other"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-layers-3",
+     "short": "⇧⌘`",
+     "cat": "other"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-18",
+     "short": "Move tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-app-dev-rakshan-term-19",
+     "short": "Move tab",
+     "cat": "nav",
+     "scope": "Dev-rakshan-term"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-app-ghostty-18",
+     "short": "Win ←",
+     "cat": "nav",
+     "scope": "Ghostty"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-app-ghostty-19",
+     "short": "Win →",
+     "cat": "nav",
+     "scope": "Ghostty"
+    }
+   ],
+   "label": "→ S",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyS"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold S",
+   "tap": "k-layers-0"
+  },
+  {
+   "id": "sub-n",
+   "entries": [
+    {
+     "code": "KeyD",
+     "shift": false,
+     "row": "k-layers-5",
+     "short": "daily",
+     "cat": "other"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-layers-6",
+     "short": "weekly",
+     "cat": "other"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-layers-7",
+     "short": "monthly",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-layers-8",
+     "short": "pin",
+     "cat": "other"
+    },
+    {
+     "code": "BracketLeft",
+     "shift": false,
+     "row": "k-layers-9",
+     "short": "toggle",
+     "cat": "other"
+    }
+   ],
+   "label": "→ N",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyN"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold N",
+   "tap": "k-layers-4"
+  },
+  {
+   "id": "sub-d",
+   "entries": [
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "k-layers-11",
+     "short": "⌘A",
+     "cat": "other"
+    },
+    {
+     "code": "KeyC",
+     "shift": false,
+     "row": "k-layers-12",
+     "short": "⌘C",
+     "cat": "other"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "row": "k-layers-13",
+     "short": "⌘V",
+     "cat": "other"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-layers-14",
+     "short": "⌥⌘←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-layers-15",
+     "short": "⌥⌘→",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "k-layers-16",
+     "short": "⌥⌘↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "k-layers-17",
+     "short": "⌥⌘↑",
+     "cat": "nav"
+    }
+   ],
+   "label": "→ D",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyD"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold D",
+   "tap": "k-layers-10"
+  },
+  {
+   "id": "sub-v",
+   "entries": [
+    {
+     "code": "KeyG",
+     "shift": false,
+     "row": "k-layers-19",
+     "short": "⌃⇧G",
+     "cat": "other"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "row": "k-layers-20",
+     "short": "⌥⇧F",
+     "cat": "other"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "k-layers-21",
+     "short": "⇧⌘O",
+     "cat": "other"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-layers-22",
+     "short": "⇧⌘P",
+     "cat": "other"
+    }
+   ],
+   "label": "→ V",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyV"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold V"
+  },
+  {
+   "id": "sub-g",
+   "entries": [
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-layers-24",
+     "short": "Maps",
+     "cat": "web"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "k-layers-25",
+     "short": "Slack",
+     "cat": "web"
+    }
+   ],
+   "label": "→ G",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyG"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold G",
+   "tap": "k-layers-23"
+  },
+  {
+   "id": "sub-f",
+   "entries": [
+    {
+     "code": "KeyD",
+     "shift": false,
+     "row": "k-layers-26",
+     "short": "Downloads",
+     "cat": "app"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-layers-27",
+     "short": "projects",
+     "cat": "app"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-layers-28",
+     "short": "Music",
+     "cat": "app"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-29",
+     "short": "torrents",
+     "cat": "app"
+    },
+    {
+     "code": "KeyW",
+     "shift": false,
+     "row": "k-layers-30",
+     "short": "workspace",
+     "cat": "app"
+    }
+   ],
+   "label": "→ F",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyF"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold F"
+  },
+  {
+   "id": "sub-b",
+   "entries": [
+    {
+     "code": "Digit1",
+     "shift": false,
+     "row": "k-layers-32",
+     "short": "Work",
+     "cat": "web"
+    },
+    {
+     "code": "Digit2",
+     "shift": false,
+     "row": "k-layers-33",
+     "short": "Personal",
+     "cat": "web"
+    },
+    {
+     "code": "Digit3",
+     "shift": false,
+     "row": "k-layers-34",
+     "short": "Reading",
+     "cat": "web"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-35",
+     "short": "X",
+     "cat": "web"
+    },
+    {
+     "code": "KeyC",
+     "shift": false,
+     "row": "k-layers-36",
+     "short": "Claude",
+     "cat": "web"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "k-layers-37",
+     "short": "Mail",
+     "cat": "web"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "row": "k-layers-38",
+     "short": "Github",
+     "cat": "web"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "k-layers-39",
+     "short": "Slack",
+     "cat": "web"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-layers-40",
+     "short": "M",
+     "cat": "web"
+    },
+    {
+     "code": "KeyR",
+     "shift": false,
+     "row": "k-layers-41",
+     "short": "Reddit",
+     "cat": "web"
+    }
+   ],
+   "label": "→ B",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyB"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold B",
+   "tap": "k-layers-31"
+  },
+  {
+   "id": "sub-y",
+   "entries": [
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "k-layers-43",
+     "short": "YT history",
+     "cat": "web"
+    }
+   ],
+   "label": "→ Y",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyY"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold Y",
+   "tap": "k-layers-42"
+  },
+  {
+   "id": "sub-slash",
+   "entries": [
+    {
+     "code": "KeyD",
+     "shift": false,
+     "row": "k-layers-45",
+     "short": "/dl",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyB",
+     "shift": false,
+     "row": "k-layers-46",
+     "short": "/bdevloop",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "k-layers-47",
+     "short": "/tops",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "k-layers-48",
+     "short": "/ll",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "k-layers-49",
+     "short": "/ss",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyM",
+     "shift": false,
+     "row": "k-layers-50",
+     "short": "/sm",
+     "cat": "raycast"
+    }
+   ],
+   "label": "→ /",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "Slash"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold /",
+   "tap": "k-layers-44"
+  },
+  {
+   "id": "sub-r",
+   "entries": [
+    {
+     "code": "KeyC",
+     "shift": false,
+     "row": "k-layers-52",
+     "short": "Open camera",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyP",
+     "shift": false,
+     "row": "k-layers-53",
+     "short": "Confetti",
+     "cat": "raycast"
+    },
+    {
+     "code": "KeyQ",
+     "shift": false,
+     "row": "k-layers-54",
+     "short": "Search quicklinks",
+     "cat": "raycast"
+    }
+   ],
+   "label": "→ R",
+   "group": "Sublayers",
+   "hold": [
+    "MetaRight",
+    "KeyR"
+   ],
+   "holdLabel": "Hold Right ⌘, then hold R",
+   "tap": "k-layers-51"
+  },
+  {
+   "id": "crux-verbs",
+   "entries": [
+    {
+     "code": "KeyR",
+     "shift": false,
+     "row": "crux-palette-13",
+     "short": "Read later",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyC",
+     "shift": false,
+     "row": "crux-palette-14",
+     "short": "Copy URL",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyS",
+     "shift": false,
+     "row": "crux-palette-15",
+     "short": "Sleep",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyG",
+     "shift": false,
+     "row": "crux-palette-16",
+     "short": "Stash grp",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "crux-palette-17",
+     "short": "Stash all",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyQ",
+     "shift": false,
+     "row": "crux-palette-18",
+     "short": "Review",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyE",
+     "shift": false,
+     "row": "crux-palette-19",
+     "short": "Restore",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyT",
+     "shift": false,
+     "row": "crux-palette-20",
+     "short": "Raw",
+     "cat": "crux"
+    },
+    {
+     "code": "KeyF",
+     "shift": false,
+     "row": "crux-palette-21",
+     "short": "Projects",
+     "cat": "crux"
+    }
+   ],
+   "label": "Crux ⌥ verbs",
+   "group": "Other",
+   "hold": [
+    "AltLeft"
+   ],
+   "holdLabel": "In the ⌘K palette, hold ⌥"
+  },
+  {
+   "id": "tmux-prefix",
+   "entries": [
+    {
+     "code": "KeyR",
+     "shift": false,
+     "row": "tmux-6",
+     "short": "Reload",
+     "cat": "term"
+    },
+    {
+     "code": "KeyX",
+     "shift": false,
+     "row": "tmux-7",
+     "short": "Kill pane",
+     "cat": "term"
+    },
+    {
+     "code": "KeyX",
+     "shift": true,
+     "row": "tmux-8",
+     "short": "Kill win",
+     "cat": "term"
+    },
+    {
+     "code": "KeyP",
+     "shift": true,
+     "row": "tmux-9",
+     "short": "Paste",
+     "cat": "term"
+    },
+    {
+     "code": "KeyR",
+     "shift": true,
+     "row": "tmux-10",
+     "short": "Rename",
+     "cat": "term"
+    },
+    {
+     "code": "KeyV",
+     "shift": false,
+     "row": "tmux-11",
+     "short": "Split │",
+     "cat": "term"
+    },
+    {
+     "code": "KeyV",
+     "shift": true,
+     "row": "tmux-12",
+     "short": "Split ─",
+     "cat": "term"
+    },
+    {
+     "code": "KeyJ",
+     "shift": true,
+     "row": "tmux-13",
+     "short": "Size ↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": true,
+     "row": "tmux-14",
+     "short": "Size ↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyH",
+     "shift": true,
+     "row": "tmux-15",
+     "short": "Size ←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": true,
+     "row": "tmux-16",
+     "short": "Size →",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyH",
+     "shift": false,
+     "row": "tmux-17",
+     "short": "Pane ←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyJ",
+     "shift": false,
+     "row": "tmux-18",
+     "short": "Pane ↓",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyK",
+     "shift": false,
+     "row": "tmux-19",
+     "short": "Pane ↑",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyL",
+     "shift": false,
+     "row": "tmux-20",
+     "short": "Pane →",
+     "cat": "nav"
+    },
+    {
+     "code": "Tab",
+     "shift": false,
+     "row": "tmux-21",
+     "short": "Next pane",
+     "cat": "nav"
+    },
+    {
+     "code": "Comma",
+     "shift": false,
+     "row": "tmux-22",
+     "short": "Pane ↓",
+     "cat": "nav"
+    },
+    {
+     "code": "Period",
+     "shift": false,
+     "row": "tmux-23",
+     "short": "Pane ↑",
+     "cat": "nav"
+    },
+    {
+     "code": "Period",
+     "shift": true,
+     "row": "tmux-24",
+     "short": "Win →",
+     "cat": "nav"
+    },
+    {
+     "code": "Comma",
+     "shift": true,
+     "row": "tmux-25",
+     "short": "Win ←",
+     "cat": "nav"
+    },
+    {
+     "code": "KeyA",
+     "shift": false,
+     "row": "tmux-26",
+     "short": "vigil ui",
+     "cat": "term"
+    }
+   ],
+   "label": "tmux prefix",
+   "group": "Other",
+   "hold": [],
+   "holdLabel": "Press ⌃B, then"
+  }
+ ],
+ "sections": [
+  {
+   "id": "k-global",
+   "family": "Karabiner",
+   "title": "Hyper: hold Right ⌘ and press one key",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "lede": "Works in every app. Tap-alone layer keys (Right ⌘ → D, Right ⌘ → B, …) are listed with their layer below.",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "Esc"
+      ]
+     ],
+     "action": "Reset Karabiner variables",
+     "id": "k-global-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "A"
+      ]
+     ],
+     "action": "Term vigil popup (opens Term if needed)",
+     "id": "k-global-1"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "1"
+      ]
+     ],
+     "action": "Term workspace work (launches/activates Term)",
+     "id": "k-global-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "2"
+      ]
+     ],
+     "action": "Term workspace projects (launches/activates Term)",
+     "id": "k-global-3"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "3"
+      ]
+     ],
+     "action": "Term workspace personal (launches/activates Term)",
+     "id": "k-global-4"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "P"
+      ]
+     ],
+     "action": "Raycast: search Chrome tabs (both profiles)",
+     "top": true,
+     "id": "k-global-5"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "O"
+      ]
+     ],
+     "action": "Raycast: Pull Requests (Crux live folders)",
+     "top": true,
+     "id": "k-global-6"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ";"
+      ]
+     ],
+     "action": "Raycast: Saved Tab Groups (starred, Crux)",
+     "top": true,
+     "id": "k-global-7"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "H"
+      ]
+     ],
+     "action": "Sends ←",
+     "id": "k-global-8"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "J"
+      ]
+     ],
+     "action": "Sends ↓",
+     "id": "k-global-9"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "K"
+      ]
+     ],
+     "action": "Sends ↑",
+     "detail": "Replaced in Chrome",
+     "id": "k-global-10"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "L"
+      ]
+     ],
+     "action": "Sends →",
+     "id": "k-global-11"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "U"
+      ]
+     ],
+     "action": "Sends PgDn",
+     "id": "k-global-12"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "I"
+      ]
+     ],
+     "action": "Sends PgUp",
+     "id": "k-global-13"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "E"
+      ]
+     ],
+     "action": "Open Sublime Text",
+     "id": "k-global-14"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "W"
+      ]
+     ],
+     "action": "Open WhatsApp",
+     "id": "k-global-15"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "M"
+      ]
+     ],
+     "action": "Open Youtube Music",
+     "id": "k-global-16"
+    }
+   ]
+  },
+  {
+   "id": "k-layers",
+   "family": "Karabiner",
+   "title": "Sublayers: hold Right ⌘, hold a layer key, press a third",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "lede": "Right ⌘ → D → M means: hold Right ⌘, hold D, press M.",
+   "rows": [
+    {
+     "group": "Right ⌘ → S layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "S"
+      ]
+     ],
+     "action": "Toggle the vigil sidebar",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-0"
+    },
+    {
+     "group": "Right ⌘ → S layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "1"
+      ]
+     ],
+     "action": "Connect Bluetooth: AirPod",
+     "id": "k-layers-1"
+    },
+    {
+     "group": "Right ⌘ → S layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "Sends ⌘ + `",
+     "id": "k-layers-2"
+    },
+    {
+     "group": "Right ⌘ → S layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "Sends ⇧ + ⌘ + `",
+     "id": "k-layers-3"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "N"
+      ]
+     ],
+     "action": "Open Obsidian",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-4"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "N"
+      ],
+      [
+       "D"
+      ]
+     ],
+     "action": "rr o daily",
+     "id": "k-layers-5"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "N"
+      ],
+      [
+       "W"
+      ]
+     ],
+     "action": "rr o weekly",
+     "id": "k-layers-6"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "N"
+      ],
+      [
+       "M"
+      ]
+     ],
+     "action": "rr o monthly",
+     "id": "k-layers-7"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "N"
+      ],
+      [
+       "P"
+      ]
+     ],
+     "action": "rr o pin",
+     "id": "k-layers-8"
+    },
+    {
+     "group": "Right ⌘ → N layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "N"
+      ],
+      [
+       "["
+      ]
+     ],
+     "action": "rr o toggle",
+     "id": "k-layers-9"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "D"
+      ]
+     ],
+     "action": "Open Discord",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-10"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "A"
+      ]
+     ],
+     "action": "Sends ⌘ + A",
+     "id": "k-layers-11"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "C"
+      ]
+     ],
+     "action": "Sends ⌘ + C",
+     "id": "k-layers-12"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "V"
+      ]
+     ],
+     "action": "Sends ⌘ + V",
+     "id": "k-layers-13"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ←",
+     "id": "k-layers-14"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + →",
+     "id": "k-layers-15"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "J"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ↓",
+     "id": "k-layers-16"
+    },
+    {
+     "group": "Right ⌘ → D layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "D"
+      ],
+      [
+       "K"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ↑",
+     "id": "k-layers-17"
+    },
+    {
+     "group": "Right ⌘ → T layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "T"
+      ]
+     ],
+     "action": "open -a Frnk.app; for i in $(seq 1 30); do term-ctl picker && break; sleep 0.1; done",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-18"
+    },
+    {
+     "group": "Right ⌘ → V layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "V"
+      ],
+      [
+       "G"
+      ]
+     ],
+     "action": "Sends ⌃ + ⇧ + G",
+     "id": "k-layers-19"
+    },
+    {
+     "group": "Right ⌘ → V layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "V"
+      ],
+      [
+       "F"
+      ]
+     ],
+     "action": "Sends ⌥ + ⇧ + F",
+     "id": "k-layers-20"
+    },
+    {
+     "group": "Right ⌘ → V layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "V"
+      ],
+      [
+       "S"
+      ]
+     ],
+     "action": "Sends ⇧ + ⌘ + O",
+     "id": "k-layers-21"
+    },
+    {
+     "group": "Right ⌘ → V layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "V"
+      ],
+      [
+       "P"
+      ]
+     ],
+     "action": "Sends ⇧ + ⌘ + P",
+     "id": "k-layers-22"
+    },
+    {
+     "group": "Right ⌘ → G layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "G"
+      ]
+     ],
+     "action": "Chrome work profile",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-23"
+    },
+    {
+     "group": "Right ⌘ → G layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "G"
+      ],
+      [
+       "M"
+      ]
+     ],
+     "action": "Open https://maps.google.com in Chrome",
+     "id": "k-layers-24"
+    },
+    {
+     "group": "Right ⌘ → G layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "G"
+      ],
+      [
+       "S"
+      ]
+     ],
+     "action": "Chrome work profile: open https://app.slack.com/client/TNJRQ2H0E",
+     "id": "k-layers-25"
+    },
+    {
+     "group": "Right ⌘ → F layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "F"
+      ],
+      [
+       "D"
+      ]
+     ],
+     "action": "Open folder ~/Downloads",
+     "id": "k-layers-26"
+    },
+    {
+     "group": "Right ⌘ → F layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "F"
+      ],
+      [
+       "P"
+      ]
+     ],
+     "action": "Open folder ~/projects",
+     "id": "k-layers-27"
+    },
+    {
+     "group": "Right ⌘ → F layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "F"
+      ],
+      [
+       "M"
+      ]
+     ],
+     "action": "Open folder ~/Music",
+     "id": "k-layers-28"
+    },
+    {
+     "group": "Right ⌘ → F layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "F"
+      ],
+      [
+       "T"
+      ]
+     ],
+     "action": "Open folder ~/torrents",
+     "id": "k-layers-29"
+    },
+    {
+     "group": "Right ⌘ → F layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "F"
+      ],
+      [
+       "W"
+      ]
+     ],
+     "action": "Open folder ~/workspace",
+     "id": "k-layers-30"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "B"
+      ]
+     ],
+     "action": "Chrome personal profile",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-31"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "1"
+      ]
+     ],
+     "action": "Open Arc space Work",
+     "id": "k-layers-32"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "2"
+      ]
+     ],
+     "action": "Open Arc space Personal",
+     "id": "k-layers-33"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "3"
+      ]
+     ],
+     "action": "Open Arc space Reading",
+     "id": "k-layers-34"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "T"
+      ]
+     ],
+     "action": "Open https://x.com in Arc (pinned)",
+     "id": "k-layers-35"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "C"
+      ]
+     ],
+     "action": "Open https://claude.ai in Arc (pinned)",
+     "id": "k-layers-36"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "E"
+      ]
+     ],
+     "action": "Open https://mail.google.com in Arc (pinned)",
+     "id": "k-layers-37"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "G"
+      ]
+     ],
+     "action": "Open https://github.com in Arc",
+     "id": "k-layers-38"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "S"
+      ]
+     ],
+     "action": "Open https://app.slack.com/client/TNJRQ2H0E in Arc (pinned)",
+     "id": "k-layers-39"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "M"
+      ]
+     ],
+     "action": "Open https://m.localhost in Arc (pinned)",
+     "id": "k-layers-40"
+    },
+    {
+     "group": "Right ⌘ → B layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "B"
+      ],
+      [
+       "R"
+      ]
+     ],
+     "action": "Open https://www.reddit.com in Arc (pinned)",
+     "id": "k-layers-41"
+    },
+    {
+     "group": "Right ⌘ → Y layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "Y"
+      ]
+     ],
+     "action": "Open https://www.youtube.com in Chrome",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-42"
+    },
+    {
+     "group": "Right ⌘ → Y layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "Y"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "Open https://www.youtube.com/feed/history in Chrome",
+     "id": "k-layers-43"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "/"
+      ]
+     ],
+     "action": "Raycast: Search (skills)",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-44"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "D"
+      ]
+     ],
+     "action": "Paste skill: dl",
+     "id": "k-layers-45"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "B"
+      ]
+     ],
+     "action": "Paste skill: bdevloop",
+     "id": "k-layers-46"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "T"
+      ]
+     ],
+     "action": "Paste skill: tops",
+     "id": "k-layers-47"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "Paste skill: ll",
+     "id": "k-layers-48"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "S"
+      ]
+     ],
+     "action": "Paste skill: ss",
+     "id": "k-layers-49"
+    },
+    {
+     "group": "Right ⌘ → / layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "/"
+      ],
+      [
+       "M"
+      ]
+     ],
+     "action": "Paste skill: sm",
+     "id": "k-layers-50"
+    },
+    {
+     "group": "Right ⌘ → R layer",
+     "keys": [
+      [
+       "Right ⌘",
+       "R"
+      ]
+     ],
+     "action": "Open Raycast",
+     "detail": "Tap the layer key on its own",
+     "id": "k-layers-51"
+    },
+    {
+     "group": "Right ⌘ → R layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "R"
+      ],
+      [
+       "C"
+      ]
+     ],
+     "action": "Raycast: Open camera (system)",
+     "id": "k-layers-52"
+    },
+    {
+     "group": "Right ⌘ → R layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "R"
+      ],
+      [
+       "P"
+      ]
+     ],
+     "action": "Raycast: Confetti (raycast)",
+     "id": "k-layers-53"
+    },
+    {
+     "group": "Right ⌘ → R layer",
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "R"
+      ],
+      [
+       "Q"
+      ]
+     ],
+     "action": "Raycast: Search quicklinks (raycast)",
+     "id": "k-layers-54"
+    }
+   ]
+  },
+  {
+   "id": "k-app-dev-rakshan-term",
+   "family": "Karabiner",
+   "title": "dev.rakshan.term only: keys that change when dev.rakshan.term is frontmost",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "⇧",
+       ","
+      ]
+     ],
+     "action": "Swap pane prev",
+     "id": "k-app-dev-rakshan-term-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "⇧",
+       "."
+      ]
+     ],
+     "action": "Swap pane next",
+     "id": "k-app-dev-rakshan-term-1"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ","
+      ]
+     ],
+     "action": "Previous tab",
+     "id": "k-app-dev-rakshan-term-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "."
+      ]
+     ],
+     "action": "Next tab",
+     "id": "k-app-dev-rakshan-term-3"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "0–9"
+      ]
+     ],
+     "action": "Tab N",
+     "id": "k-app-dev-rakshan-term-4"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "\\"
+      ]
+     ],
+     "action": "Split right",
+     "id": "k-app-dev-rakshan-term-5"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "-"
+      ]
+     ],
+     "action": "Split down",
+     "id": "k-app-dev-rakshan-term-6"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "N"
+      ]
+     ],
+     "action": "New tab",
+     "id": "k-app-dev-rakshan-term-7"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "X"
+      ]
+     ],
+     "action": "Close pane",
+     "id": "k-app-dev-rakshan-term-8"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "Z"
+      ]
+     ],
+     "action": "Zoom pane",
+     "id": "k-app-dev-rakshan-term-9"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "["
+      ]
+     ],
+     "action": "Search",
+     "id": "k-app-dev-rakshan-term-10"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "]"
+      ]
+     ],
+     "action": "Paste",
+     "id": "k-app-dev-rakshan-term-11"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       ","
+      ]
+     ],
+     "action": "Move tab left",
+     "id": "k-app-dev-rakshan-term-12"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "."
+      ]
+     ],
+     "action": "Move tab right",
+     "id": "k-app-dev-rakshan-term-13"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "I"
+      ]
+     ],
+     "action": "Copy `rr agent msg <agent>` for the focused pane",
+     "id": "k-app-dev-rakshan-term-14"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "A"
+      ]
+     ],
+     "action": "Sidebar toggle",
+     "id": "k-app-dev-rakshan-term-15"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       ";"
+      ]
+     ],
+     "action": "(none)",
+     "id": "k-app-dev-rakshan-term-16"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "'"
+      ]
+     ],
+     "action": "(none)",
+     "id": "k-app-dev-rakshan-term-17"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "Move tab left",
+     "id": "k-app-dev-rakshan-term-18"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "Move tab right",
+     "id": "k-app-dev-rakshan-term-19"
+    }
+   ]
+  },
+  {
+   "id": "k-app-ghostty",
+   "family": "Karabiner",
+   "title": "Ghostty only: keys that change when Ghostty is frontmost",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "⇧",
+       ","
+      ]
+     ],
+     "action": "tmux move pane left",
+     "id": "k-app-ghostty-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "⇧",
+       "."
+      ]
+     ],
+     "action": "tmux move pane right",
+     "id": "k-app-ghostty-1"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ","
+      ]
+     ],
+     "action": "tmux previous window",
+     "id": "k-app-ghostty-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "."
+      ]
+     ],
+     "action": "tmux next window",
+     "id": "k-app-ghostty-3"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "0–9"
+      ]
+     ],
+     "action": "tmux window N",
+     "id": "k-app-ghostty-4"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "A"
+      ]
+     ],
+     "action": "vigil sidebar toggle",
+     "id": "k-app-ghostty-5"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       ";"
+      ]
+     ],
+     "action": "vigil cycle slide prev",
+     "id": "k-app-ghostty-6"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "'"
+      ]
+     ],
+     "action": "vigil cycle slide next",
+     "id": "k-app-ghostty-7"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "["
+      ]
+     ],
+     "action": "tmux copy mode",
+     "id": "k-app-ghostty-8"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "]"
+      ]
+     ],
+     "action": "tmux paste buffer",
+     "id": "k-app-ghostty-9"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       ","
+      ]
+     ],
+     "action": "tmux swap window left",
+     "id": "k-app-ghostty-10"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "."
+      ]
+     ],
+     "action": "tmux swap window right",
+     "id": "k-app-ghostty-11"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "\\"
+      ]
+     ],
+     "action": "tmux prefix v",
+     "id": "k-app-ghostty-12"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "-"
+      ]
+     ],
+     "action": "tmux prefix V",
+     "id": "k-app-ghostty-13"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "Z"
+      ]
+     ],
+     "action": "tmux zoom pane",
+     "id": "k-app-ghostty-14"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "I"
+      ]
+     ],
+     "action": "Copy tmux pane id",
+     "id": "k-app-ghostty-15"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "N"
+      ]
+     ],
+     "action": "tmux prefix c",
+     "id": "k-app-ghostty-16"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "X"
+      ]
+     ],
+     "action": "tmux prefix x",
+     "id": "k-app-ghostty-17"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "tmux: swap window with previous",
+     "id": "k-app-ghostty-18"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘"
+      ],
+      [
+       "S"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "tmux: swap window with next",
+     "id": "k-app-ghostty-19"
+    }
+   ]
+  },
+  {
+   "id": "k-app-chrome",
+   "family": "Karabiner",
+   "title": "Chrome only: keys that change when Chrome is frontmost",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ","
+      ]
+     ],
+     "action": "Next tab (down)",
+     "id": "k-app-chrome-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "."
+      ]
+     ],
+     "action": "Previous tab (up)",
+     "id": "k-app-chrome-1"
+    },
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "C"
+      ]
+     ],
+     "action": "Copy current URL to clipboard",
+     "id": "k-app-chrome-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "K"
+      ]
+     ],
+     "action": "Crux command palette (Cmd+Shift+K)",
+     "top": true,
+     "id": "k-app-chrome-3"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "Tab"
+      ]
+     ],
+     "action": "Tab jumplist forward (Crux, Cmd+Shift+0)",
+     "id": "k-app-chrome-4"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "⇧",
+       "`"
+      ]
+     ],
+     "action": "Tab jumplist forward (Crux, Cmd+Shift+0)",
+     "top": true,
+     "id": "k-app-chrome-5"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "`"
+      ]
+     ],
+     "action": "Tab jumplist back (Crux, Cmd+Shift+8)",
+     "top": true,
+     "id": "k-app-chrome-6"
+    },
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "S"
+      ]
+     ],
+     "action": "Crux side panel (Cmd+Shift+U extension shortcut)",
+     "id": "k-app-chrome-7"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "S"
+      ]
+     ],
+     "action": "Toggle vertical tab bar",
+     "id": "k-app-chrome-8"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "1–9"
+      ]
+     ],
+     "action": "Sends ⌘ + N",
+     "id": "k-app-chrome-9"
+    }
+   ]
+  },
+  {
+   "id": "k-app-arc",
+   "family": "Karabiner",
+   "title": "Arc only: keys that change when Arc is frontmost",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ","
+      ]
+     ],
+     "action": "Next tab",
+     "id": "k-app-arc-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "."
+      ]
+     ],
+     "action": "Previous tab",
+     "id": "k-app-arc-1"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "["
+      ]
+     ],
+     "action": "Previous space",
+     "id": "k-app-arc-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "]"
+      ]
+     ],
+     "action": "Next space",
+     "id": "k-app-arc-3"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "1–9"
+      ]
+     ],
+     "action": "Sends ⌘ + N",
+     "id": "k-app-arc-4"
+    }
+   ]
+  },
+  {
+   "id": "k-app-obsidian",
+   "family": "Karabiner",
+   "title": "Obsidian only: keys that change when Obsidian is frontmost",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ","
+      ]
+     ],
+     "action": "Previous tab",
+     "id": "k-app-obsidian-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "."
+      ]
+     ],
+     "action": "Next tab",
+     "id": "k-app-obsidian-1"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌥",
+       "1–9"
+      ]
+     ],
+     "action": "Sends ⌘ + N",
+     "id": "k-app-obsidian-2"
+    }
+   ]
+  },
+  {
+   "id": "k-other",
+   "family": "Karabiner",
+   "title": "Other remaps: the Hyper key itself and plain-modifier rewrites",
+   "source": "~/dotfiles/config/karabiner/karabiner.json",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘"
+      ]
+     ],
+     "action": "Hold: Hyper. Every “Right ⌘ + …” key below needs it held",
+     "detail": "Tap alone does nothing",
+     "id": "k-other-0"
+    },
+    {
+     "keys": [
+      [
+       "⌥",
+       "⌘",
+       "H"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ←",
+     "id": "k-other-1"
+    },
+    {
+     "keys": [
+      [
+       "⌥",
+       "⌘",
+       "L"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + →",
+     "id": "k-other-2"
+    },
+    {
+     "keys": [
+      [
+       "⌥",
+       "⌘",
+       "J"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ↓",
+     "id": "k-other-3"
+    },
+    {
+     "keys": [
+      [
+       "⌥",
+       "⌘",
+       "K"
+      ]
+     ],
+     "action": "Sends ⌥ + ⌘ + ↑",
+     "id": "k-other-4"
+    },
+    {
+     "keys": [
+      [
+       "F5"
+      ]
+     ],
+     "action": "Sends ⌃ + ⌥ + ⌘ + D",
+     "id": "k-other-5"
+    }
+   ]
+  },
+  {
+   "id": "crux-commands",
+   "family": "Chrome & Crux",
+   "title": "Crux Chrome commands: four keys the extension registers",
+   "source": "~/projects/node/crux/public/manifest.json",
+   "mode": "auto",
+   "lede": "Chrome can rebind these at chrome://extensions/shortcuts; this lists the manifest defaults.",
+   "rows": [
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "U"
+      ]
+     ],
+     "action": "Open the Crux tab sidebar",
+     "detail": "toggle-side-panel",
+     "top": true,
+     "id": "crux-commands-0"
+    },
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "K"
+      ]
+     ],
+     "action": "Open the Crux palette",
+     "detail": "open-palette",
+     "id": "crux-commands-1"
+    },
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "8"
+      ]
+     ],
+     "action": "Jump back to the previous tab (vim Ctrl-O style)",
+     "detail": "jump-back",
+     "id": "crux-commands-2"
+    },
+    {
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "0"
+      ]
+     ],
+     "action": "Jump forward (vim Ctrl-I style)",
+     "detail": "tab-forward",
+     "id": "crux-commands-3"
+    }
+   ]
+  },
+  {
+   "id": "crux-palette",
+   "family": "Chrome & Crux",
+   "title": "Inside the ⌘K palette: fzf-style Ctrl keys, vim modes, ⌥ verbs",
+   "source": "~/projects/node/crux/src/content/overlay.js · manual.json",
+   "mode": "mixed",
+   "lede": "Open it with Right ⌘ + K in Chrome. Verb keys are extracted from VERB_KEYS; the rest is hand-copied from the keydown handlers.",
+   "rows": [
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⌘",
+       "K"
+      ]
+     ],
+     "action": "Open / close the actions sheet for the selected row",
+     "detail": "Ctrl + K too: it is matched first, so Ctrl + K never moves up",
+     "manual": true,
+     "id": "crux-palette-0"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⌃",
+       "N"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "⌃",
+        "J"
+       ]
+      ],
+      [
+       [
+        "↓"
+       ]
+      ]
+     ],
+     "action": "Next row",
+     "manual": true,
+     "id": "crux-palette-1"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⌃",
+       "P"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "↑"
+       ]
+      ]
+     ],
+     "action": "Previous row",
+     "manual": true,
+     "id": "crux-palette-2"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⌃",
+       "D"
+      ]
+     ],
+     "action": "Down half a page (6 rows)",
+     "manual": true,
+     "id": "crux-palette-3"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⌃",
+       "U"
+      ]
+     ],
+     "action": "Up half a page (6 rows)",
+     "manual": true,
+     "id": "crux-palette-4"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "Tab"
+      ]
+     ],
+     "action": "Next scope tab",
+     "manual": true,
+     "id": "crux-palette-5"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "⇧",
+       "Tab"
+      ]
+     ],
+     "action": "Previous scope tab",
+     "manual": true,
+     "id": "crux-palette-6"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "↵"
+      ]
+     ],
+     "action": "Run the selected row",
+     "manual": true,
+     "id": "crux-palette-7"
+    },
+    {
+     "group": "Actions sheet",
+     "keys": [
+      [
+       "⌃",
+       "N"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "↓"
+       ]
+      ]
+     ],
+     "action": "Next action",
+     "manual": true,
+     "id": "crux-palette-8"
+    },
+    {
+     "group": "Actions sheet",
+     "keys": [
+      [
+       "⌃",
+       "P"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "↑"
+       ]
+      ]
+     ],
+     "action": "Previous action",
+     "manual": true,
+     "id": "crux-palette-9"
+    },
+    {
+     "group": "Actions sheet",
+     "keys": [
+      [
+       "↵"
+      ]
+     ],
+     "action": "Run the action",
+     "manual": true,
+     "id": "crux-palette-10"
+    },
+    {
+     "group": "Actions sheet",
+     "keys": [
+      [
+       "Esc"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "⌘",
+        "K"
+       ]
+      ]
+     ],
+     "action": "Close the sheet",
+     "manual": true,
+     "id": "crux-palette-11"
+    },
+    {
+     "group": "Palette (both modes)",
+     "keys": [
+      [
+       "Esc"
+      ]
+     ],
+     "alias": [
+      [
+       [
+        "⌃",
+        "["
+       ]
+      ]
+     ],
+     "action": "Close the palette",
+     "manual": true,
+     "id": "crux-palette-12"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "R"
+      ]
+     ],
+     "action": "Add page to reading list",
+     "detail": "page.read",
+     "id": "crux-palette-13"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "C"
+      ]
+     ],
+     "action": "Copy page URL",
+     "detail": "page.copy",
+     "id": "crux-palette-14"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "S"
+      ]
+     ],
+     "action": "Sleep this tab",
+     "detail": "page.sleep",
+     "id": "crux-palette-15"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "G"
+      ]
+     ],
+     "action": "Stash this tab's group",
+     "detail": "group.stash",
+     "id": "crux-palette-16"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "A"
+      ]
+     ],
+     "action": "Stash all groups",
+     "detail": "space.stashAll",
+     "id": "crux-palette-17"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "Q"
+      ]
+     ],
+     "action": "Open review queue",
+     "detail": "pr.queue",
+     "id": "crux-palette-18"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "E"
+      ]
+     ],
+     "action": "Restore most recent stash",
+     "detail": "session.restoreLatest",
+     "id": "crux-palette-19"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "T"
+      ]
+     ],
+     "action": "Toggle rendered / raw",
+     "detail": "file.raw",
+     "id": "crux-palette-20"
+    },
+    {
+     "group": "Verb keys (⌥ + letter)",
+     "keys": [
+      [
+       "⌥",
+       "F"
+      ]
+     ],
+     "action": "Refresh project index",
+     "detail": "projects.refresh",
+     "id": "crux-palette-21"
+    }
+   ]
+  },
+  {
+   "id": "raycast-commands",
+   "family": "Raycast",
+   "title": "Raycast chrome-tabs: three commands have a Hyper key, the rest are typed",
+   "source": "~/dotfiles/private/raycast/extensions/chrome-tabs/package.json",
+   "mode": "auto",
+   "lede": "Keys come from the Karabiner rules that open the command's raycast:// URL. Commands without one are reached by typing their title or a keyword.",
+   "rows": [
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "P"
+      ]
+     ],
+     "action": "Search Tabs: Search and focus open Chrome tabs across both profiles",
+     "detail": null,
+     "id": "raycast-commands-0"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       ";"
+      ]
+     ],
+     "action": "Starred: Your starred Crux groups and links",
+     "detail": "Root-search keywords: group, groups, tg, star, starred, bookmark",
+     "id": "raycast-commands-1"
+    },
+    {
+     "keys": [],
+     "action": "Sync Starred Groups: Regenerate root-search script commands for starred Crux Saved groups",
+     "detail": "Runs in background",
+     "id": "raycast-commands-2"
+    },
+    {
+     "keys": [
+      [
+       "Right ⌘",
+       "O"
+      ]
+     ],
+     "action": "Pull Requests: Your GitHub PRs from Crux live folders",
+     "detail": "Root-search keywords: pr, prs, pull, review, github",
+     "id": "raycast-commands-3"
+    },
+    {
+     "keys": [],
+     "action": "PR Watch: Menu bar count of PRs that need your attention",
+     "detail": "Menu bar · Root-search keywords: pr, prs, watch",
+     "id": "raycast-commands-4"
+    }
+   ]
+  },
+  {
+   "id": "raycast-actions",
+   "family": "Raycast",
+   "title": "Raycast action keys: ⌘⌫ closes, ⌃X unstars, ⌘R refreshes",
+   "source": "~/dotfiles/private/raycast/extensions/chrome-tabs/src/*.tsx",
+   "mode": "mixed",
+   "lede": "Common.* constants are resolved through manual.json (values from Raycast's docs; the local @raycast/api types do not carry them).",
+   "rows": [
+    {
+     "group": "In “Pull Requests”",
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "C"
+      ]
+     ],
+     "action": "Copy URL",
+     "detail": "Keyboard.Shortcut.Common.Copy",
+     "id": "raycast-actions-0"
+    },
+    {
+     "group": "In “Pull Requests”",
+     "keys": [
+      [
+       "⌥",
+       "⌘",
+       "C"
+      ]
+     ],
+     "action": "Copy Markdown Link",
+     "detail": "Keyboard.Shortcut.Common.CopyName",
+     "id": "raycast-actions-1"
+    },
+    {
+     "group": "In “Pull Requests”",
+     "keys": [
+      [
+       "⌘",
+       "R"
+      ]
+     ],
+     "action": "Refresh",
+     "detail": "Keyboard.Shortcut.Common.Refresh",
+     "id": "raycast-actions-2"
+    },
+    {
+     "group": "In “Starred”",
+     "keys": [
+      [
+       "⌘",
+       "⌫"
+      ]
+     ],
+     "action": "Save & Close Group",
+     "detail": null,
+     "id": "raycast-actions-3"
+    },
+    {
+     "group": "In “Starred”",
+     "keys": [
+      [
+       "⌃",
+       "X"
+      ]
+     ],
+     "action": "Unstar",
+     "detail": null,
+     "id": "raycast-actions-4"
+    },
+    {
+     "group": "In “Starred”",
+     "keys": [
+      [
+       "⌘",
+       "R"
+      ]
+     ],
+     "action": "Refresh",
+     "detail": "Keyboard.Shortcut.Common.Refresh",
+     "id": "raycast-actions-5"
+    },
+    {
+     "group": "In “Starred”",
+     "keys": [
+      [
+       "⌘",
+       "C"
+      ]
+     ],
+     "action": "Copy URL",
+     "detail": null,
+     "id": "raycast-actions-6"
+    },
+    {
+     "group": "In “Search Tabs”",
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "C"
+      ]
+     ],
+     "action": "Copy URL",
+     "detail": "Keyboard.Shortcut.Common.Copy",
+     "id": "raycast-actions-7"
+    },
+    {
+     "group": "In “Search Tabs”",
+     "keys": [
+      [
+       "⇧",
+       "⌘",
+       "O"
+      ]
+     ],
+     "action": "Open in Default Browser",
+     "detail": "Keyboard.Shortcut.Common.OpenWith",
+     "id": "raycast-actions-8"
+    },
+    {
+     "group": "In “Search Tabs”",
+     "keys": [
+      [
+       "⌘",
+       "⌫"
+      ]
+     ],
+     "action": "Close Tab",
+     "detail": null,
+     "id": "raycast-actions-9"
+    },
+    {
+     "group": "In “Search Tabs”",
+     "keys": [
+      [
+       "⌘",
+       "R"
+      ]
+     ],
+     "action": "Refresh",
+     "detail": "Keyboard.Shortcut.Common.Refresh",
+     "id": "raycast-actions-10"
+    }
+   ]
+  },
+  {
+   "id": "tmux",
+   "family": "Terminal",
+   "title": "tmux: Ctrl-h/j/k/l moves panes, prefix + v/V splits",
+   "source": "~/dotfiles/nixpkgs/home-manager/modules/tmux.nix",
+   "mode": "auto",
+   "lede": "Only bindings set in tmux.nix are listed; tmux's built-in defaults still apply.",
+   "rows": [
+    {
+     "group": "Prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ]
+     ],
+     "action": "tmux prefix",
+     "detail": "Not set in tmux.nix, so tmux's default Ctrl-b (the Karabiner Ghostty rules also send ⌃B)",
+     "id": "tmux-0"
+    },
+    {
+     "group": "No prefix",
+     "keys": [
+      [
+       "⌥",
+       "Space"
+      ]
+     ],
+     "action": "Enter copy mode",
+     "detail": null,
+     "id": "tmux-1"
+    },
+    {
+     "group": "No prefix",
+     "keys": [
+      [
+       "⌃",
+       "H"
+      ]
+     ],
+     "action": "Pane left (passed through to vim/fzf when it owns the pane)",
+     "detail": null,
+     "id": "tmux-2"
+    },
+    {
+     "group": "No prefix",
+     "keys": [
+      [
+       "⌃",
+       "J"
+      ]
+     ],
+     "action": "Pane down (passed through to vim/fzf when it owns the pane)",
+     "detail": null,
+     "id": "tmux-3"
+    },
+    {
+     "group": "No prefix",
+     "keys": [
+      [
+       "⌃",
+       "K"
+      ]
+     ],
+     "action": "Pane up (passed through to vim/fzf when it owns the pane)",
+     "detail": null,
+     "id": "tmux-4"
+    },
+    {
+     "group": "No prefix",
+     "keys": [
+      [
+       "⌃",
+       "L"
+      ]
+     ],
+     "action": "Pane right (passed through to vim/fzf when it owns the pane)",
+     "detail": null,
+     "id": "tmux-5"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "r"
+      ]
+     ],
+     "action": "Reload tmux config",
+     "detail": null,
+     "id": "tmux-6"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "x"
+      ]
+     ],
+     "action": "Kill pane (no prompt)",
+     "detail": null,
+     "id": "tmux-7"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "X"
+      ]
+     ],
+     "action": "Kill window (no prompt)",
+     "detail": null,
+     "id": "tmux-8"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "P"
+      ]
+     ],
+     "action": "Paste buffer",
+     "detail": null,
+     "id": "tmux-9"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "R"
+      ]
+     ],
+     "action": "Rename window",
+     "detail": null,
+     "id": "tmux-10"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "v"
+      ]
+     ],
+     "action": "Split side by side (keeps cwd)",
+     "detail": null,
+     "id": "tmux-11"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "V"
+      ]
+     ],
+     "action": "Split top / bottom (keeps cwd)",
+     "detail": null,
+     "id": "tmux-12"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "J"
+      ]
+     ],
+     "action": "Resize pane down by 5",
+     "detail": "Repeatable without the prefix",
+     "id": "tmux-13"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "K"
+      ]
+     ],
+     "action": "Resize pane up by 5",
+     "detail": "Repeatable without the prefix",
+     "id": "tmux-14"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "H"
+      ]
+     ],
+     "action": "Resize pane left by 5",
+     "detail": "Repeatable without the prefix",
+     "id": "tmux-15"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "L"
+      ]
+     ],
+     "action": "Resize pane right by 5",
+     "detail": "Repeatable without the prefix",
+     "id": "tmux-16"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "h"
+      ]
+     ],
+     "action": "Pane left",
+     "detail": null,
+     "id": "tmux-17"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "j"
+      ]
+     ],
+     "action": "Pane down",
+     "detail": null,
+     "id": "tmux-18"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "k"
+      ]
+     ],
+     "action": "Pane up",
+     "detail": null,
+     "id": "tmux-19"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "l"
+      ]
+     ],
+     "action": "Pane right",
+     "detail": null,
+     "id": "tmux-20"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "Tab"
+      ]
+     ],
+     "action": "Cycle to next pane",
+     "detail": "Repeatable without the prefix",
+     "id": "tmux-21"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       ","
+      ]
+     ],
+     "action": "Swap current pane with next one",
+     "detail": null,
+     "id": "tmux-22"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "."
+      ]
+     ],
+     "action": "Swap current pane with previous one",
+     "detail": null,
+     "id": "tmux-23"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       ">"
+      ]
+     ],
+     "action": "Swap current window with next one",
+     "detail": null,
+     "id": "tmux-24"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "<"
+      ]
+     ],
+     "action": "Swap current window with previous one",
+     "detail": null,
+     "id": "tmux-25"
+    },
+    {
+     "group": "After the prefix",
+     "keys": [
+      [
+       "⌃",
+       "B"
+      ],
+      [
+       "a"
+      ]
+     ],
+     "action": "vigil ui popup",
+     "detail": null,
+     "id": "tmux-26"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "v"
+      ]
+     ],
+     "action": "Begin selection",
+     "id": "tmux-27"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "y"
+      ]
+     ],
+     "action": "Copy selection",
+     "id": "tmux-28"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "r"
+      ]
+     ],
+     "action": "Rectangle toggle",
+     "id": "tmux-29"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "↵"
+      ]
+     ],
+     "action": "Copy pipe and cancel",
+     "id": "tmux-30"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "⌃",
+       "H"
+      ]
+     ],
+     "action": "Pane left",
+     "id": "tmux-31"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "⌃",
+       "J"
+      ]
+     ],
+     "action": "Pane down",
+     "id": "tmux-32"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "⌃",
+       "K"
+      ]
+     ],
+     "action": "Pane up",
+     "id": "tmux-33"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "⌃",
+       "L"
+      ]
+     ],
+     "action": "Pane right",
+     "id": "tmux-34"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "⌃",
+       "\\"
+      ]
+     ],
+     "action": "Pane right",
+     "id": "tmux-35"
+    },
+    {
+     "group": "In copy-mode-vi",
+     "keys": [
+      [
+       "vi keys"
+      ]
+     ],
+     "action": "Copy mode uses vi keys (keyMode = \"vi\"; tmux's built-in table)",
+     "id": "tmux-36"
+    }
+   ]
+  },
+  {
+   "id": "ghostty",
+   "family": "Terminal",
+   "title": "Ghostty: ⌘ + letter becomes Ctrl + letter for tmux and the shell",
+   "source": "~/dotfiles/nixpkgs/home-manager/modules/ghostty.nix",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "⌥",
+       "`"
+      ]
+     ],
+     "action": "Toggle quick terminal",
+     "detail": "Global: works when Ghostty is not focused",
+     "id": "ghostty-0"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "S"
+      ]
+     ],
+     "action": "Sends Ctrl-S",
+     "detail": "byte 0x13",
+     "id": "ghostty-1"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "H"
+      ]
+     ],
+     "action": "Sends Ctrl-H",
+     "detail": "byte 0x08",
+     "id": "ghostty-2"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "J"
+      ]
+     ],
+     "action": "Sends Ctrl-J",
+     "detail": "byte 0x0a",
+     "id": "ghostty-3"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "K"
+      ]
+     ],
+     "action": "Sends Ctrl-K",
+     "detail": "byte 0x0b",
+     "id": "ghostty-4"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "L"
+      ]
+     ],
+     "action": "Sends Ctrl-L",
+     "detail": "byte 0x0c",
+     "id": "ghostty-5"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "W"
+      ]
+     ],
+     "action": "Sends Ctrl-W",
+     "detail": "byte 0x17",
+     "id": "ghostty-6"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "X"
+      ]
+     ],
+     "action": "Sends Ctrl-X",
+     "detail": "byte 0x18",
+     "id": "ghostty-7"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "B"
+      ]
+     ],
+     "action": "Sends Ctrl-B",
+     "detail": "byte 0x02",
+     "id": "ghostty-8"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "P"
+      ]
+     ],
+     "action": "Sends Ctrl-P",
+     "detail": "byte 0x10",
+     "id": "ghostty-9"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "/"
+      ]
+     ],
+     "action": "Sends Ctrl-/ (^_)",
+     "detail": "byte 0x1f",
+     "id": "ghostty-10"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "\\"
+      ]
+     ],
+     "action": "Sends Ctrl-\\",
+     "detail": "byte 0x1c",
+     "id": "ghostty-11"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "N"
+      ]
+     ],
+     "action": "Sends Ctrl-N",
+     "detail": "byte 0x0e",
+     "id": "ghostty-12"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "D"
+      ]
+     ],
+     "action": "Sends Ctrl-D",
+     "detail": "byte 0x04",
+     "id": "ghostty-13"
+    },
+    {
+     "keys": [
+      [
+       "⌘",
+       "U"
+      ]
+     ],
+     "action": "Sends Ctrl-U",
+     "detail": "byte 0x15",
+     "id": "ghostty-14"
+    }
+   ]
+  },
+  {
+   "id": "zsh",
+   "family": "Terminal",
+   "title": "zsh line editor: 4 Ctrl rebinds",
+   "source": "~/dotfiles/nixpkgs/home-manager/modules/zsh.nix",
+   "mode": "auto",
+   "rows": [
+    {
+     "keys": [
+      [
+       "⌃",
+       "P"
+      ]
+     ],
+     "action": "Up line or search",
+     "detail": "up-line-or-search",
+     "id": "zsh-0"
+    },
+    {
+     "keys": [
+      [
+       "⌃",
+       "N"
+      ]
+     ],
+     "action": "Down line or search",
+     "detail": "down-line-or-search",
+     "id": "zsh-1"
+    },
+    {
+     "keys": [
+      [
+       "⌃",
+       "H"
+      ]
+     ],
+     "action": "Backward kill word",
+     "detail": "backward-kill-word",
+     "id": "zsh-2"
+    },
+    {
+     "keys": [
+      [
+       "⌃",
+       "J"
+      ]
+     ],
+     "action": "End of line",
+     "detail": "end-of-line",
+     "id": "zsh-3"
+    }
+   ]
+  }
+ ]
+}

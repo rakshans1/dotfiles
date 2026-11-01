@@ -1,9 +1,9 @@
--- Navigator.nvim mux for term (~/projects/swift/term): at the edge of nvim's
+-- Navigator.nvim mux for term (~/projects/swift/frnk): at the edge of nvim's
 -- windows, move focus to the neighbouring term split via term-ctl, the way the
 -- tmux mux runs `tmux select-pane`.
 local M = {}
 
-local CTL = vim.env.HOME .. '/Applications/Term.app/Contents/MacOS/term-ctl'
+local CTL = vim.env.HOME .. '/Applications/Frnk.app/Contents/MacOS/term-ctl'
 
 -- True inside a term pane (and not inside tmux, which keeps its own mux).
 function M.active()

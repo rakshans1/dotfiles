@@ -173,7 +173,7 @@
             "manipulators": [
               {
                 "type": "basic",
-                "description": "Hyper + a -> toggle vigil popup (open Ghostty if needed)",
+                "description": "Hyper + a -> Term vigil popup (opens Term if needed)",
                 "from": {
                   "key_code": "a",
                   "modifiers": {
@@ -184,7 +184,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if pgrep -qf '/vigil ui$'; then tmux display-popup -C; else /usr/bin/open -a 'Ghostty.app'; tmux display-popup -E -w 80% -h 60% '/Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil ui'; fi"
+                    "shell_command": "/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl vigil && break; sleep 0.1; done"
                   }
                 ],
                 "conditions": [
@@ -202,7 +202,7 @@
             "manipulators": [
               {
                 "type": "basic",
-                "description": "Hyper + 1 -> tmux work",
+                "description": "Hyper + 1 -> Term workspace work (launches/activates Term)",
                 "from": {
                   "key_code": "1",
                   "modifiers": {
@@ -213,7 +213,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t work"
+                    "shell_command": "/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl workspace work && break; sleep 0.1; done"
                   }
                 ],
                 "conditions": [
@@ -226,7 +226,7 @@
               },
               {
                 "type": "basic",
-                "description": "Hyper + 2 -> tmux projects",
+                "description": "Hyper + 2 -> Term workspace projects (launches/activates Term)",
                 "from": {
                   "key_code": "2",
                   "modifiers": {
@@ -237,7 +237,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t projects"
+                    "shell_command": "/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl workspace projects && break; sleep 0.1; done"
                   }
                 ],
                 "conditions": [
@@ -250,7 +250,7 @@
               },
               {
                 "type": "basic",
-                "description": "Hyper + 3 -> tmux personal",
+                "description": "Hyper + 3 -> Term workspace personal (launches/activates Term)",
                 "from": {
                   "key_code": "3",
                   "modifiers": {
@@ -261,7 +261,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "/usr/bin/open -a 'Ghostty.app'; /Users/rakshan/.nix-profile/bin/tmux switch-client -t personal"
+                    "shell_command": "/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl workspace personal && break; sleep 0.1; done"
                   }
                 ],
                 "conditions": [
@@ -277,6 +277,72 @@
           {
             "description": "Hyper + Shift + comma/period: Ghostty tmux move pane left/right",
             "manipulators": [
+              {
+                "type": "basic",
+                "description": "Term: Hyper + Shift + comma -> swap pane prev",
+                "from": {
+                  "key_code": "comma",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_shift"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl swap-pane prev"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Hyper + Shift + period -> swap pane next",
+                "from": {
+                  "key_code": "period",
+                  "modifiers": {
+                    "mandatory": [
+                      "left_shift"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl swap-pane next"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
               {
                 "type": "basic",
                 "description": "Ghostty: Hyper + Shift + comma -> tmux move pane left",
@@ -348,6 +414,66 @@
           {
             "description": "Hyper + comma/period/brackets: current app navigation",
             "manipulators": [
+              {
+                "type": "basic",
+                "description": "Term: Hyper + comma -> previous tab",
+                "from": {
+                  "key_code": "comma",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl prev-tab"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Hyper + period -> next tab",
+                "from": {
+                  "key_code": "period",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl next-tab"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
               {
                 "type": "basic",
                 "description": "Ghostty: Hyper + comma -> tmux previous window",
@@ -765,6 +891,159 @@
               },
               {
                 "type": "basic",
+                "description": "Chrome: Hyper(Right Cmd) + Tab -> tab jumplist forward (Crux, Cmd+Shift+0)",
+                "from": {
+                  "key_code": "tab",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "0",
+                    "modifiers": [
+                      "left_command",
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Chrome: Hyper(Right Cmd) + Shift + ` -> tab jumplist forward (Crux, Cmd+Shift+0)",
+                "from": {
+                  "key_code": "grave_accent_and_tilde",
+                  "modifiers": {
+                    "mandatory": [
+                      "shift"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "0",
+                    "modifiers": [
+                      "left_command",
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Chrome: Hyper(Right Cmd) + ` -> tab jumplist back (Crux, Cmd+Shift+8)",
+                "from": {
+                  "key_code": "grave_accent_and_tilde",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "8",
+                    "modifiers": [
+                      "left_command",
+                      "left_shift"
+                    ]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^com\\.google\\.Chrome$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Hyper(Right Cmd) + O -> Raycast: Pull Requests (Crux live folders)",
+                "from": {
+                  "key_code": "o",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/pull-requests"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Hyper(Right Cmd) + ; -> Raycast: Saved Tab Groups (starred, Crux)",
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/usr/bin/open -g raycast://extensions/rakshan/chrome-tabs/saved-groups"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper",
+                    "value": 1
+                  }
+                ]
+              },
+              {
+                "type": "basic",
                 "description": "Chrome: Cmd+Shift+S -> Crux side panel (Cmd+Shift+U extension shortcut)",
                 "from": {
                   "key_code": "s",
@@ -829,6 +1108,650 @@
           {
             "description": "Right Option: current app numeric jump and tmux buffer controls",
             "manipulators": [
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 1 -> tab 1",
+                "from": {
+                  "key_code": "1",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 1"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 2 -> tab 2",
+                "from": {
+                  "key_code": "2",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 2"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 3 -> tab 3",
+                "from": {
+                  "key_code": "3",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 3"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 4 -> tab 4",
+                "from": {
+                  "key_code": "4",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 4"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 5 -> tab 5",
+                "from": {
+                  "key_code": "5",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 5"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 6 -> tab 6",
+                "from": {
+                  "key_code": "6",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 6"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 7 -> tab 7",
+                "from": {
+                  "key_code": "7",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 7"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 8 -> tab 8",
+                "from": {
+                  "key_code": "8",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 8"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 9 -> tab 9",
+                "from": {
+                  "key_code": "9",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 9"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + 0 -> tab 0",
+                "from": {
+                  "key_code": "0",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl select-tab 0"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + \\ -> split right",
+                "from": {
+                  "key_code": "backslash",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl split right"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + - -> split down",
+                "from": {
+                  "key_code": "hyphen",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl split down"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + n -> new tab",
+                "from": {
+                  "key_code": "n",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl new-tab"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + x -> close pane",
+                "from": {
+                  "key_code": "x",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl close-pane"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + z -> zoom pane",
+                "from": {
+                  "key_code": "z",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl zoom"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + [ -> search",
+                "from": {
+                  "key_code": "open_bracket",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl search"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + ] -> paste",
+                "from": {
+                  "key_code": "close_bracket",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl paste"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + , -> move tab left",
+                "from": {
+                  "key_code": "comma",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl move-tab left"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + . -> move tab right",
+                "from": {
+                  "key_code": "period",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl move-tab right"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + i -> copy `rr agent msg <agent>` for the focused pane",
+                "from": {
+                  "key_code": "i",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl copy-agent-msg"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + a -> sidebar toggle",
+                "from": {
+                  "key_code": "a",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl sidebar"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + ; -> (none)",
+                "from": {
+                  "key_code": "semicolon",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "vk_none"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Right Option + ' -> (none)",
+                "from": {
+                  "key_code": "quote",
+                  "modifiers": {
+                    "mandatory": [
+                      "right_option"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "vk_none"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
               {
                 "type": "basic",
                 "description": "Ghostty: Right Option + 1 -> tmux window 1",
@@ -2404,6 +3327,66 @@
             "manipulators": [
               {
                 "type": "basic",
+                "description": "Term: Hyper + s + h -> move tab left",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl move-tab left"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_s",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "description": "Term: Hyper + s + l -> move tab right",
+                "from": {
+                  "key_code": "l",
+                  "modifiers": {
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl move-tab right"
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "variable_if",
+                    "name": "hyper_sublayer_s",
+                    "value": 1
+                  },
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^dev\\.rakshan\\.term$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
                 "from": {
                   "key_code": "h",
                   "modifiers": {
@@ -3429,7 +4412,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle"
+                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only bundleid \"$(lsappinfo front)\" | grep -q '\"dev.rakshan.term\"'; then /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl sidebar.toggle; else /Users/rakshan/projects/rust/vigil/.nix-cargo/bin/vigil sidebar toggle; fi"
                   }
                 ],
                 "conditions": [
@@ -4499,7 +5482,7 @@
                 ],
                 "to_if_alone": [
                   {
-                    "shell_command": "PATH=/Users/rakshan/.nix-profile/bin:/usr/bin:/bin; if lsappinfo info -only name \"$(lsappinfo front)\" | grep -q Ghostty; then if pgrep -qf '/tmx ui$'; then tmux display-popup -C; else tmux display-popup -E -w 80% -h 70% '/Users/rakshan/projects/rust/tmx/target/release/tmx ui'; fi; else /usr/bin/open -a 'Ghostty.app'; fi"
+                    "shell_command": "/usr/bin/open -a /Users/rakshan/Applications/Frnk.app; for i in $(seq 1 30); do /Users/rakshan/Applications/Frnk.app/Contents/MacOS/term-ctl picker && break; sleep 0.1; done"
                   }
                 ],
                 "conditions": [
@@ -4635,11 +5618,6 @@
                       "name": "hyper_sublayer_v",
                       "value": 1
                     }
-                  }
-                ],
-                "to_if_alone": [
-                  {
-                    "shell_command": "/usr/bin/open -a 'Cursor.app'"
                   }
                 ],
                 "conditions": [

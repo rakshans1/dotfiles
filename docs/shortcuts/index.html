@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en" data-artifact-theme="linear">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Keyboard shortcuts</title>
+<!-- artifact:head -->
+<style>
+  /* Linear-style cheatsheet. Tokens only; light-dark() pairs come from the theme. */
+  .page { --wide: 1600px; }
+  .page {
+    --kb-hi: light-dark(var(--surface), color-mix(in oklab, var(--ink) 7%, transparent));
+    --kb-sh: light-dark(color-mix(in oklab, var(--ink) 9%, transparent), color-mix(in oklab, var(--bg) 85%, transparent));
+    --kb-face: light-dark(var(--surface), color-mix(in oklab, var(--surface-2) 75%, var(--surface)));
+  }
+
+  /* ---------- search ---------- */
+  .sc-find { position: sticky; top: 0; z-index: 5; padding-block: 0.7rem 0.6rem; background: color-mix(in oklab, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--rule); }
+  .sc-find input { width: 100%; font: inherit; font-size: 0.92rem; padding: 0.55rem 0.8rem; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); color: var(--ink); transition: border-color 0.14s, box-shadow 0.14s; }
+  .sc-find input::placeholder { color: var(--ink-3); }
+  .sc-find input:focus { outline: none; border-color: color-mix(in oklab, var(--accent) 60%, var(--rule)); box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 18%, transparent); }
+  .sc-find .sc-count { display: block; margin-top: 0.35rem; font-size: 0.75rem; color: var(--ink-3); }
+
+  /* ---------- small kbd pills (list, cards, panel) ---------- */
+  .sc-keys { display: flex; flex-wrap: wrap; align-items: center; gap: 0.18rem; white-space: nowrap; }
+  .sc-keys kbd { font: 500 0.72rem/1 var(--font-body); letter-spacing: 0; min-width: 1.45em; text-align: center; padding: 0.24rem 0.38rem; border: 1px solid var(--rule); border-bottom-width: 1px; border-radius: 5px; background: var(--surface-2); color: var(--ink-2); box-shadow: 0 1px 0 var(--kb-sh); }
+  .sc-keys .op { color: var(--ink-3); font-size: 0.72em; padding-inline: 0.08rem; }
+  .sc-keys .or { color: var(--ink-3); font-size: 0.72em; padding-inline: 0.3rem; }
+  .sc-keys .none { color: var(--ink-3); font-size: 0.8em; }
+
+  /* ---------- list ---------- */
+  .sc-list { display: grid; grid-template-columns: minmax(12rem, max-content) 1fr; }
+  .sc-row { display: contents; }
+  .sc-row > div { padding: 0.45rem 0.75rem 0.45rem 0; border-bottom: 1px solid var(--rule); transition: background 0.14s; }
+  .sc-row:hover > div { background: color-mix(in oklab, var(--ink) 3%, transparent); }
+  .sc-row.sc-sel > div { background: var(--accent-soft); }
+  .sc-act { min-width: 0; overflow-wrap: anywhere; font-size: 0.9rem; color: var(--ink); }
+  .sc-act small { display: block; color: var(--ink-3); font-size: 0.78rem; }
+  .sc-act .tag { font-size: 0.68rem; }
+  .sc-group { grid-column: 1 / -1; padding: 1rem 0 0.35rem; border-bottom: 1px solid var(--rule); font: 550 0.68rem/1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+  .sc-src { font-size: 0.74rem; color: var(--ink-3); margin-top: 0.5rem; overflow-wrap: anywhere; }
+  .sc-src code { font-size: 0.95em; }
+  .sc-hide { display: none !important; }
+
+  /* ---------- most used ---------- */
+  .sc-top { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: 0.5rem; }
+  .sc-top .card { padding: 0.75rem 0.85rem; border: 1px solid var(--rule); border-top: 1px solid var(--rule); border-radius: 10px; background: var(--surface); box-shadow: inset 0 1px 0 var(--kb-hi); transition: border-color 0.14s, background 0.14s; font-size: 0.88rem; }
+  .sc-top .card:hover { border-color: var(--rule-strong); background: color-mix(in oklab, var(--surface-2) 40%, var(--surface)); }
+  .sc-top .sc-keys { margin-bottom: 0.4rem; }
+  .sc-top .where { margin: 0.15rem 0 0; font-size: 0.74rem; color: var(--ink-3); }
+
+  /* ---------- keyboard card ---------- */
+  .kb-card { margin: 1.5rem 0 2rem; padding: 1.1rem 1.25rem 1rem; border: 1px solid var(--rule); border-radius: 14px;
+    background: linear-gradient(180deg, var(--surface), color-mix(in oklab, var(--surface) 55%, var(--bg)));
+    box-shadow: inset 0 1px 0 var(--kb-hi), 0 12px 32px -18px var(--kb-sh); }
+  .kb-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.3rem 1rem; margin-bottom: 0.9rem; }
+  .kb-head .t { font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em; color: var(--ink); }
+  .kb-head .k { font-size: 0.78rem; color: var(--ink-3); }
+  .kb-foot { margin: 0.8rem 0 0; font-size: 0.78rem; color: var(--ink-3); }
+  .kb-foot b { color: var(--ink-2); font-weight: 550; }
+
+  .kb-chips { display: flex; flex-wrap: wrap; gap: 0.55rem 1.1rem; align-items: center; margin-bottom: 0.9rem; }
+  .kb-cg { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+  .kb-gl { font: 550 0.66rem/1 var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-right: 0.15rem; }
+  .kb-seg { display: inline-flex; flex-wrap: wrap; gap: 2px; padding: 2px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface-2); }
+  .kb-chip { font: 500 0.78rem/1 var(--font-body); letter-spacing: -0.005em; padding: 0.36rem 0.6rem; border: 0; border-radius: 6px; background: transparent; color: var(--ink-3); cursor: pointer; transition: background 0.14s, color 0.14s, box-shadow 0.14s; }
+  .kb-chip:hover { color: var(--ink); background: color-mix(in oklab, var(--ink) 5%, transparent); }
+  .kb-chip.on { color: var(--accent-ink); background: var(--kb-face); box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent), 0 1px 2px var(--kb-sh); }
+  .kb-chip.solo { border: 1px solid var(--rule); background: var(--surface-2); }
+  .kb-chip.solo.on { border-color: color-mix(in oklab, var(--accent) 45%, var(--rule)); background: var(--accent-soft); box-shadow: none; }
+  .kb-chip:focus-visible, .key:focus-visible { outline: 2px solid color-mix(in oklab, var(--accent) 70%, transparent); outline-offset: 2px; }
+
+  .kb-main { display: grid; grid-template-columns: minmax(0, 1fr) 19rem; gap: 1rem; align-items: stretch; }
+  @media (max-width: 1180px) { .kb-main { grid-template-columns: minmax(0, 1fr); } }
+  .kb-scroll { overflow-x: auto; overscroll-behavior-x: contain; padding: 2px 2px 6px; }
+  .kb { container-type: inline-size; min-width: 700px; padding: 1.2%; border-radius: 12px; border: 1px solid var(--rule);
+    background: light-dark(var(--surface-2), color-mix(in oklab, var(--bg) 60%, var(--surface))); box-shadow: inset 0 1px 2px var(--kb-sh); }
+  .kb-row { display: grid; grid-template-columns: repeat(58, minmax(0, 1fr)); height: calc(100cqw / 14.5 * 0.9); }
+  .kb-row.fn { height: calc(100cqw / 14.5 * 0.58); }
+  .key, .kb-arrows { grid-column: span var(--w); margin: 0.26cqw; min-width: 0; }
+  .key {
+    --c: var(--ink-3);
+    position: relative; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start;
+    padding: 0.5cqw 0.6cqw; border-radius: clamp(5px, 0.72cqw, 9px); border: 1px solid var(--rule);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--ink) 2%, var(--kb-face)), var(--kb-face));
+    color: var(--ink); font: inherit; text-align: left; cursor: default;
+    box-shadow: inset 0 1px 0 var(--kb-hi), 0 1px 0 var(--kb-sh), 0 2px 4px -2px var(--kb-sh);
+    transition: background 0.14s, border-color 0.14s, box-shadow 0.16s, transform 0.08s, opacity 0.14s;
+  }
+  .key .lg { font: 500 clamp(8px, 0.95cqw, 12px)/1.1 var(--font-body); color: var(--ink-3); white-space: nowrap; opacity: 0.75; }
+  .key .sh { font: 550 clamp(8.5px, 1.12cqw, 14px)/1.15 var(--font-body); letter-spacing: -0.01em; color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 100%; }
+  .kb-row.fn .key .sh { -webkit-line-clamp: 1; }
+  .key:not(.on):not(.hyper):not(.held) { opacity: 0.6; }
+  .key .more { position: absolute; top: 0.4cqw; right: 0.5cqw; font: 600 clamp(7px, 0.8cqw, 10px)/1 var(--font-body); color: var(--c); }
+  .key .dot { position: absolute; top: 0.6cqw; right: 0.6cqw; width: clamp(4px, 0.45cqw, 6px); height: clamp(4px, 0.45cqw, 6px); border-radius: 50%; background: var(--c); opacity: 0.9; }
+  .key.on { cursor: pointer; border-color: color-mix(in oklab, var(--c) 45%, var(--rule));
+    background: linear-gradient(180deg, color-mix(in oklab, var(--c) 13%, var(--kb-face)), color-mix(in oklab, var(--c) 7%, var(--kb-face)));
+    box-shadow: inset 0 1px 0 var(--kb-hi), 0 1px 0 var(--kb-sh), 0 0 14px -4px color-mix(in oklab, var(--c) 25%, transparent); }
+  .key.on .lg { color: color-mix(in oklab, var(--c) 55%, var(--ink-3)); opacity: 1; }
+  .key.on:hover, .key.sel { border-color: color-mix(in oklab, var(--c) 80%, transparent);
+    box-shadow: inset 0 1px 0 var(--kb-hi), 0 1px 0 var(--kb-sh), 0 0 0 3px color-mix(in oklab, var(--c) 14%, transparent), 0 0 18px -4px color-mix(in oklab, var(--c) 35%, transparent); }
+  .key.door { border-style: dashed; border-color: color-mix(in oklab, var(--accent) 60%, transparent); }
+  .key.door::after { content: "↗"; position: absolute; right: 0.55cqw; top: 0.45cqw; font: 500 clamp(8px, 0.9cqw, 11px)/1 var(--font-body); color: var(--accent-ink); opacity: 0.8; }
+  .key.hyper, .key.held {
+    border-color: transparent;
+    background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 12%, var(--kb-face)), color-mix(in oklab, var(--accent) 6%, var(--kb-face))) padding-box,
+                linear-gradient(135deg, color-mix(in oklab, var(--accent) 90%, transparent), color-mix(in oklab, var(--s5) 45%, transparent)) border-box;
+    box-shadow: inset 0 1px 0 var(--kb-hi), 0 0 16px -4px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  .key.hyper .lg, .key.held .lg { color: var(--accent-ink); opacity: 1; }
+  .key.hyper .sh, .key.held .sh { color: var(--accent-ink); }
+  .key.down { transform: translateY(1px); box-shadow: inset 0 1px 2px var(--kb-sh); }
+  .kb-arrows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 1fr 1fr; }
+  .kb-arrows .key { margin: 0.12cqw 0.26cqw; padding: 0.15cqw 0.4cqw; justify-content: center; align-items: center; }
+  .kb-arrows .key .lg { font-size: clamp(6px, 0.7cqw, 9px); }
+  .kb-arrows .key .sh, .kb-arrows .key .dot { display: none; }
+
+  .kb-panel { border: 1px solid var(--rule); border-radius: 12px; background: var(--surface); padding: 1rem 1.05rem; font-size: 0.85rem; line-height: 1.45; box-shadow: inset 0 1px 0 var(--kb-hi); }
+  .kb-panel .crumb { font-size: 0.74rem; color: var(--ink-3); margin-bottom: 0.55rem; }
+  .kb-panel h3 { margin: 0.45rem 0 0.25rem; font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--ink); }
+  .kb-panel p { margin: 0.35rem 0; color: var(--ink-2); }
+  .kb-panel .muted2 { color: var(--ink-3); font-size: 0.8rem; }
+  .kb-panel dl { display: grid; grid-template-columns: 5.2rem 1fr; gap: 0.35rem 0.6rem; margin: 0.75rem 0 0; padding-top: 0.7rem; border-top: 1px solid var(--rule); }
+  .kb-panel dt { color: var(--ink-3); font-size: 0.78rem; }
+  .kb-panel dd { margin: 0; color: var(--ink-2); font-size: 0.8rem; overflow-wrap: anywhere; }
+  .kb-panel dd .kpill { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .kb-panel dd .kpill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .kb-panel .warnline { color: var(--warn); }
+  .kb-panel .alt { margin-top: 0.9rem; padding-top: 0.8rem; border-top: 1px solid var(--rule); }
+  .kb-legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; margin-top: 0.8rem; font-size: 0.76rem; color: var(--ink-3); }
+  .kb-legend span::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.4em; background: var(--c); vertical-align: 0.05em; }
+  .kb-legend .door::before { background: none; border: 1px dashed var(--c); border-radius: 2px; }
+
+  @media (max-width: 640px) {
+    .sc-list { grid-template-columns: 1fr; }
+    .sc-row > .sc-keys { border-bottom: 0; padding-bottom: 0.1rem; }
+    .sc-keys { white-space: normal; }
+    .kb-card { padding: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <span class="eyebrow">Dotfiles · reference</span>
+    <h1>Keyboard shortcuts</h1>
+    <p class="lede">Every key on this page is read from a config file: Karabiner, the Crux extension, Raycast, tmux, Ghostty and zsh. Right ⌘ is the Hyper key, so most entries start with it.</p>
+    <p class="meta" id="meta"></p>
+  </header>
+
+  <div class="tldr"><ul id="tldr"></ul></div>
+
+  <div class="kb-card wide" id="kb">
+    <div class="kb-head"><span class="t">Every binding on one keyboard</span><span class="k">Pick a layer, hover a key for details, click to filter the list</span></div>
+    <div id="kb-body"></div>
+    <p class="kb-foot">Lit keys do something in the chosen layer; dashed keys open a sublayer. Holding <b>⇧</b> shows Shift variants. Holding <b>Right ⌘</b> switches to Hyper live, but only with Karabiner off: its rules capture Right ⌘ before the browser sees it.</p>
+  </div>
+
+  <div class="sc-find wide" role="search">
+    <input id="q" type="search" placeholder="Filter by key or action (try: tab, right ⌘ + o, tmux, ⌃)" aria-label="Filter shortcuts" autocomplete="off" spellcheck="false">
+    <span class="sc-count" id="count"></span>
+  </div>
+
+  <section id="top">
+    <h2 id="topHead" data-toc="Most used">The keys that do most of the daily work.</h2>
+    <p class="section-lede">Tab search, PRs, starred groups, the Crux palette, the tab jumplist and the side panel. Pulled from the sections below.</p>
+    <div class="sc-top wide" id="topList"></div>
+  </section>
+
+  <nav class="toc"></nav>
+
+  <footer class="foot">
+    <div>Generated by <code>~/dotfiles/bin/gen-shortcuts</code> · <span id="gen"></span></div>
+    <div>Regenerate with <code>just shortcuts</code>; the Karabiner <code>build</code> script also refreshes it.</div>
+  </footer>
+</main>
+
+<script type="application/json" id="data" data-src="data.json"></script>
+<script src="page.js"></script>
+</body>
+</html>

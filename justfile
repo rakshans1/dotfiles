@@ -147,10 +147,15 @@ rvim-check:
 
 # Update invideo flake inputs (iv + invideo-cli) in the private flake
 invideo-update:
-    cd private && nix flake update --allow-dirty-locks iv invideo-cli
+    cd private && nix flake update --allow-dirty-locks iv
 
 secrets-edit:
   sops private/secrets/common.yaml
 
 secrets-view:
   sops -d private/secrets/common.yaml
+
+# Regenerate the keyboard-shortcut cheatsheet from live configs, check it, open it
+shortcuts:
+    bin/gen-shortcuts --check
+    open -a "Google Chrome" docs/shortcuts/shortcuts.html

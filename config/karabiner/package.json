@@ -8,6 +8,6 @@
     "tsm": "^2.3.0"
   },
   "scripts": {
-    "build": "tsm rules.ts"
+    "build": "tsm rules.ts && (../../bin/gen-shortcuts || echo \"gen-shortcuts failed (non-fatal)\")"
   }
 }

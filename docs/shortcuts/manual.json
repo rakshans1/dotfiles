@@ -1,0 +1,383 @@
+{
+  "_comment": "Hand-maintained inputs for bin/gen-shortcuts. Everything else in data.json is extracted from live config. Keep each block in sync with the source it cites.",
+  "mostUsed": {
+    "_comment": "Selectors only. The row (keys + action text) comes from the generated data; a selector that matches nothing is reported by the generator.",
+    "items": [
+      {
+        "section": "k-global",
+        "keys": "Right ⌘ + P"
+      },
+      {
+        "section": "k-global",
+        "keys": "Right ⌘ + O"
+      },
+      {
+        "section": "k-global",
+        "keys": "Right ⌘ + ;"
+      },
+      {
+        "section": "k-app-chrome",
+        "keys": "Right ⌘ + K"
+      },
+      {
+        "section": "k-app-chrome",
+        "keys": "Right ⌘ + `"
+      },
+      {
+        "section": "k-app-chrome",
+        "keys": "Right ⌘ + ⇧ + `"
+      },
+      {
+        "section": "crux-commands",
+        "keys": "⇧ + ⌘ + U"
+      }
+    ]
+  },
+  "karabinerLabels": {
+    "_comment": "Readable labels for shell commands whose text is too long to humanise. Key = substring of the shell_command. Source: the comments next to each rule in config/karabiner/rules.ts.",
+    "tmx ui": "Ghostty frontmost: toggle the tmx tmux-manager popup; otherwise focus Ghostty",
+    "vigil sidebar toggle": "Toggle the vigil sidebar"
+  },
+  "raycastCommon": {
+    "_comment": "macOS values of Raycast's Keyboard.Shortcut.Common constants. Not present in the local @raycast/api package; taken from https://developers.raycast.com/api-reference/keyboard (fetched 2026-10-28).",
+    "Copy": [
+      "⌘",
+      "⇧",
+      "C"
+    ],
+    "CopyDeeplink": [
+      "⌘",
+      "⇧",
+      "C"
+    ],
+    "CopyName": [
+      "⌘",
+      "⌥",
+      "C"
+    ],
+    "CopyPath": [
+      "⌘",
+      "⌃",
+      "C"
+    ],
+    "Save": [
+      "⌘",
+      "S"
+    ],
+    "Duplicate": [
+      "⌘",
+      "D"
+    ],
+    "Edit": [
+      "⌘",
+      "E"
+    ],
+    "MoveDown": [
+      "⌘",
+      "⌥",
+      "↓"
+    ],
+    "MoveUp": [
+      "⌘",
+      "⌥",
+      "↑"
+    ],
+    "New": [
+      "⌘",
+      "N"
+    ],
+    "Open": [
+      "⌘",
+      "O"
+    ],
+    "OpenWith": [
+      "⌘",
+      "⇧",
+      "O"
+    ],
+    "Pin": [
+      "⌘",
+      "."
+    ],
+    "Refresh": [
+      "⌘",
+      "R"
+    ],
+    "Remove": [
+      "⌃",
+      "X"
+    ],
+    "RemoveAll": [
+      "⌃",
+      "⇧",
+      "X"
+    ],
+    "ToggleQuickLook": [
+      "⌘",
+      "Y"
+    ]
+  },
+  "cruxPalette": {
+    "_comment": "In-palette keys of the Crux ⌘K overlay, read by hand from src/content/overlay.js (sheetInput and input keydown handlers). The ⌥+letter verb keys are NOT here: they are extracted from VERB_KEYS automatically.",
+    "source": "src/content/overlay.js (keydown handlers)",
+    "rows": [
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⌘",
+            "K"
+          ]
+        ],
+        "action": "Open / close the actions sheet for the selected row",
+        "detail": "Ctrl + K too: it is matched first, so Ctrl + K never moves up"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⌃",
+            "N"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "⌃",
+              "J"
+            ]
+          ],
+          [
+            [
+              "↓"
+            ]
+          ]
+        ],
+        "action": "Next row"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⌃",
+            "P"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "↑"
+            ]
+          ]
+        ],
+        "action": "Previous row"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⌃",
+            "D"
+          ]
+        ],
+        "action": "Down half a page (6 rows)"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⌃",
+            "U"
+          ]
+        ],
+        "action": "Up half a page (6 rows)"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "Tab"
+          ]
+        ],
+        "action": "Next scope tab"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "⇧",
+            "Tab"
+          ]
+        ],
+        "action": "Previous scope tab"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "↵"
+          ]
+        ],
+        "action": "Run the selected row"
+      },
+      {
+        "group": "Actions sheet",
+        "keys": [
+          [
+            "⌃",
+            "N"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "↓"
+            ]
+          ]
+        ],
+        "action": "Next action"
+      },
+      {
+        "group": "Actions sheet",
+        "keys": [
+          [
+            "⌃",
+            "P"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "↑"
+            ]
+          ]
+        ],
+        "action": "Previous action"
+      },
+      {
+        "group": "Actions sheet",
+        "keys": [
+          [
+            "↵"
+          ]
+        ],
+        "action": "Run the action"
+      },
+      {
+        "group": "Actions sheet",
+        "keys": [
+          [
+            "Esc"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "⌘",
+              "K"
+            ]
+          ]
+        ],
+        "action": "Close the sheet"
+      },
+      {
+        "group": "Palette (both modes)",
+        "keys": [
+          [
+            "Esc"
+          ]
+        ],
+        "alias": [
+          [
+            [
+              "⌃",
+              "["
+            ]
+          ]
+        ],
+        "action": "Close the palette"
+      }
+    ]
+  },
+  "shortLabels": {
+    "_comment": "Keycap labels (1-2 words) for the interactive keyboard. Key = substring of the row's action; first match wins. Rows not matched get an automatic label (bin/gen-shortcuts shortLabel).",
+    "search Chrome tabs": "Tabs",
+    "Pull Requests": "PRs",
+    "Saved Tab Groups": "Starred",
+    "Crux command palette": "Crux ⌘K",
+    "jumplist back": "Jump ←",
+    "jumplist forward": "Jump →",
+    "Jump back to the previous tab": "Jump ←",
+    "Jump forward": "Jump →",
+    "vigil popup": "vigil",
+    "tmx": "tmx",
+    "Reset Karabiner": "Reset",
+    "Previous tab": "Prev tab",
+    "Next tab": "Next tab",
+    "Previous space": "Prev space",
+    "Next space": "Next space",
+    "Copy current URL": "Copy URL",
+    "vertical tab bar": "Tab bar",
+    "Crux side panel": "Side panel",
+    "Crux tab sidebar": "Side panel",
+    "Open the Crux palette": "Palette",
+    "youtube.com/feed/history": "YT history",
+    "youtube.com": "YouTube",
+    "open https://app.slack": "Slack",
+    "Chrome work profile": "Work",
+    "Chrome personal profile": "Personal",
+    "Toggle the vigil sidebar": "Sidebar",
+    "vigil sidebar toggle": "Sidebar",
+    "slide prev": "Slide ←",
+    "slide next": "Slide →",
+    "swap window left": "Win ←",
+    "swap window right": "Win →",
+    "swap window with previous": "Win ←",
+    "swap window with next": "Win →",
+    "Swap current window with next": "Win →",
+    "Swap current window with previous": "Win ←",
+    "Swap current pane with next": "Pane ↓",
+    "Swap current pane with previous": "Pane ↑",
+    "move pane left": "Pane ←",
+    "move pane right": "Pane →",
+    "previous window": "Prev win",
+    "next window": "Next win",
+    "pane id": "Pane id",
+    "zoom pane": "Zoom",
+    "reading list": "Read later",
+    "Copy page URL": "Copy URL",
+    "Sleep this tab": "Sleep",
+    "Stash this tab's group": "Stash grp",
+    "Stash all groups": "Stash all",
+    "Open review queue": "Review",
+    "Restore most recent stash": "Restore",
+    "Toggle rendered / raw": "Raw",
+    "Refresh project index": "Projects",
+    "Reload tmux config": "Reload",
+    "Split side by side": "Split │",
+    "Split top / bottom": "Split ─",
+    "Resize pane down": "Size ↓",
+    "Resize pane up": "Size ↑",
+    "Resize pane left": "Size ←",
+    "Resize pane right": "Size →",
+    "Cycle to next pane": "Next pane",
+    "Kill pane": "Kill pane",
+    "Kill window": "Kill win",
+    "Rename window": "Rename",
+    "Paste buffer": "Paste",
+    "Run the selected": "Run",
+    "Clear the query": "Clear",
+    "Jump to scope tab": "Scope",
+    "Hold to peek": "Peek",
+    "Close the palette": "Close",
+    "quick terminal": "Quick term",
+    "Pane left": "Pane ←",
+    "Pane right": "Pane →",
+    "Pane up": "Pane ↑",
+    "Pane down": "Pane ↓",
+    "Open Youtube Music": "YT Music",
+    "Open Sublime Text": "Sublime",
+    "Search (skills)": "Skills",
+    "Connect Bluetooth": "AirPods"
+  }
+}

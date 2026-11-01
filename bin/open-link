@@ -55,8 +55,9 @@ if [ "$opened" = false ]; then
   fi
 fi
 
-if [ "$opened" = true ]; then
-  /usr/bin/osascript -e 'tell application "Google Chrome" to activate' >/dev/null 2>&1
-else
+# `rr chrome focus` already raised the right window AND the real Chrome process
+# (windows.update focused). No AppleScript `activate` afterwards: with Puppeteer
+# / Playwright Chrome instances running it can bring the wrong Chrome forward.
+if [ "$opened" = false ]; then
   /usr/bin/open -a "Google Chrome" "$url"
 fi

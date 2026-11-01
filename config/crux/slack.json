@@ -1,0 +1,48 @@
+{
+  "team": "TNJRQ2H0E",
+  "enabled": true,
+  "allowAnyTarget": false,
+  "targets": {
+    "me": {
+      "id": "D01GZBY7UG4",
+      "label": "Me (DM, test)"
+    },
+    "ishan": {
+      "id": "D08MLPBJ28P",
+      "label": "Ishan Joshi (DM)"
+    },
+    "jawad": {
+      "id": "D02TCBQHDMJ",
+      "label": "Jawad (DM)"
+    },
+    "ishan-rishabh": {
+      "id": "C0AQF1B4KFG",
+      "label": "Ishan + Rishabh"
+    },
+    "raj-mitesh-jawad": {
+      "id": "C04JS287PTM",
+      "label": "Raj, Mitesh, Jawad"
+    },
+    "timeline-eng": {
+      "id": "C0BLBBR5F25",
+      "label": "#timeyline-eng"
+    },
+    "invideo-tech": {
+      "id": "CNQNE9YFR",
+      "label": "#invideotech"
+    }
+  },
+  "reviewGroups": [
+    "ishan",
+    "jawad",
+    "ishan-rishabh",
+    "raj-mitesh-jawad",
+    "timeline-eng",
+    "invideo-tech"
+  ],
+  "approveReaction": {
+    "enabled": true,
+    "emoji": "approve",
+    "anyChannel": true
+  }
+}

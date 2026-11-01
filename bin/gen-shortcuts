@@ -1,0 +1,643 @@
+#!/usr/bin/env node
+// Regenerate docs/shortcuts/data.json from the live shortcut sources, then build
+// docs/shortcuts/shortcuts.html with the html-artifact skill.
+//
+//   gen-shortcuts            regenerate data.json + build
+//   gen-shortcuts --check    ... and run the headless-Chrome check (check.mjs)
+//   gen-shortcuts --no-build only regenerate data.json
+//
+// Sources (a missing one is skipped with a warning, never fatal):
+//   Karabiner   config/karabiner/karabiner.json (generated from rules.ts)
+//   Crux        $CRUX_DIR/public/manifest.json commands, src/content/overlay.js VERB_KEYS
+//   Raycast     private/raycast/extensions/chrome-tabs (package.json + src/*.tsx)
+//   tmux        nixpkgs/home-manager/modules/tmux.nix
+//   Ghostty     nixpkgs/home-manager/modules/ghostty.nix
+//   zsh         nixpkgs/home-manager/modules/zsh.nix (bindkey)
+// Hand-maintained inputs live in docs/shortcuts/manual.json.
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
+const { execFileSync } = require("child_process");
+
+const HOME = os.homedir();
+const DOT = process.env.DOTFILES || path.join(HOME, "dotfiles");
+const CRUX = process.env.CRUX_DIR || path.join(HOME, "projects/node/crux");
+const SKILL = process.env.HTML_ARTIFACT_SKILL || path.join(HOME, "Documents/brain/skills/html-artifact");
+const OUT_DIR = path.join(DOT, "docs/shortcuts");
+const args = process.argv.slice(2);
+
+const warnings = [];
+const warn = (m) => { warnings.push(m); console.error(`gen-shortcuts: warning: ${m}`); };
+const read = (p) => fs.readFileSync(p, "utf8");
+const tilde = (p) => (p.startsWith(HOME) ? "~" + p.slice(HOME.length) : p);
+const cap = (s) => (s && !/^(tmux|vigil|rr|zsh)\b/.test(s) ? s[0].toUpperCase() + s.slice(1) : s);
+const manual = JSON.parse(read(path.join(OUT_DIR, "manual.json")));
+
+// ---------- key labels ----------
+const MOD = {
+  left_command: "⌘", command: "⌘", right_command: "Right ⌘", cmd: "⌘",
+  left_shift: "⇧", shift: "⇧", right_shift: "Right ⇧",
+  left_option: "⌥", option: "⌥", right_option: "Right ⌥", opt: "⌥", alt: "⌥",
+  left_control: "⌃", control: "⌃", right_control: "Right ⌃", ctrl: "⌃",
+};
+const KEY = {
+  grave_accent_and_tilde: "`", semicolon: ";", quote: "'", open_bracket: "[", close_bracket: "]",
+  comma: ",", period: ".", slash: "/", backslash: "\\", hyphen: "-", equal_sign: "=",
+  escape: "Esc", return_or_enter: "↵", tab: "Tab", spacebar: "Space", delete_or_backspace: "⌫",
+  left_arrow: "←", right_arrow: "→", up_arrow: "↑", down_arrow: "↓", page_up: "PgUp", page_down: "PgDn",
+  backspace: "⌫", return: "↵", grave_accent: "`", enter: "↵", arrowUp: "↑", arrowDown: "↓", arrowLeft: "←", arrowRight: "→",
+};
+const keyLabel = (k) => KEY[k] || MOD[k] || (/^f\d+$/i.test(k) ? k.toUpperCase() : k.length === 1 ? k.toUpperCase() : k);
+const MOD_ORDER = ["Right ⌘", "⌃", "⌥", "Right ⌥", "⇧", "⌘"];
+const sortMods = (mods) => [...new Set(mods)].sort((a, b) => MOD_ORDER.indexOf(a) - MOD_ORDER.indexOf(b));
+const keyString = (keys) => keys.map((step) => step.join(" + ")).join(" → ");
+
+const sections = [];
+const sources = [];
+function addSection(s) {
+  if (!s.rows.length) return;
+  sections.push(s);
+}
+
+// ---------- Karabiner ----------
+const RAYCAST_TITLES = {}; // filled from the chrome-tabs package.json below (read early)
+const rcDir = path.join(DOT, "private/raycast/extensions/chrome-tabs");
+let rcPkg = null;
+try {
+  rcPkg = JSON.parse(read(path.join(rcDir, "package.json")));
+  for (const c of rcPkg.commands || []) RAYCAST_TITLES[`${rcPkg.author}/${rcPkg.name}/${c.name}`] = c.title;
+} catch (e) { warn(`raycast chrome-tabs package.json unreadable: ${e.message}`); }
+
+const APP_NAMES = {
+  "com.google.Chrome": "Chrome", "company.thebrowser.Browser": "Arc",
+  "com.mitchellh.ghostty": "Ghostty", "md.obsidian": "Obsidian",
+};
+const bundleName = (re) => {
+  const id = re.replace(/^\^|\$$/g, "").replace(/\\\./g, ".");
+  return APP_NAMES[id] || id;
+};
+
+function humaniseShell(cmd) {
+  for (const [needle, label] of Object.entries(manual.karabinerLabels || {})) {
+    if (needle !== "_comment" && cmd.includes(needle)) return label;
+  }
+  let c = cmd.replace(/^PATH=\S+\s*;?\s*/, "").trim();
+  let m;
+  if ((m = c.match(/^\/usr\/bin\/open\s+-a\s+'([^']+?)(?:\.app)?'$/))) return `Open ${m[1]}`;
+  if ((m = c.match(/raycast:\/\/extensions\/([^/]+)\/skills\/paste\?arguments=([^"\s]+)/))) {
+    try { return `Paste skill: ${JSON.parse(decodeURIComponent(m[2])).skill}`; } catch {}
+  }
+  if ((m = c.match(/raycast:\/\/extensions\/([^/]+)\/([^/]+)\/([^"?\s]+)/))) {
+    const t = RAYCAST_TITLES[`${m[1]}/${m[2]}/${m[3]}`];
+    return `Raycast: ${t || cap(m[3].replace(/-/g, " "))}${t ? "" : ` (${m[2]})`}`;
+  }
+  if ((m = c.match(/open-link-arc\s+'([^']+)'\s+'(true|false)'/))) return `Open ${m[1]} in Arc${m[2] === "true" ? " (pinned)" : ""}`;
+  if ((m = c.match(/open-link\s+'([^']+)'/))) return `Open ${m[1]} in Chrome`;
+  if ((m = c.match(/open-path\s+(\S+)/))) return `Open folder ${m[1]}`;
+  if ((m = c.match(/open-arc-space\s+(\S+)/))) return `Arc space: ${m[1]}`;
+  if ((m = c.match(/chrome-profile\s+(\S+)\s+("[^"]+"|\S+)(?:\s+(\S+))?/))) return `Chrome ${m[1]} profile${m[3] ? `: open ${m[3]}` : ""}`;
+  if ((m = c.match(/\btmux\s+(.+)$/))) return `tmux: ${tmuxCmd(m[1]).replace(/^./, (x) => x.toLowerCase())}`;
+  if ((m = c.match(/bluetooth-connect\s+"([^"]+)"/))) return `Connect Bluetooth: ${m[1]}`;
+  if ((m = c.match(/bin\/rr\s+(.+)$/))) return `rr ${m[1]}`;
+  if ((m = c.match(/^\/usr\/bin\/open\s+(?:-g\s+)?(\S+)$/))) return `Open ${m[1]}`;
+  // generic: strip absolute binary paths
+  return c.replace(/(?:~|\/)[\w./-]*\/(\w[\w-]*)/g, "$1");
+}
+
+function humaniseTo(to) {
+  if (!to || !to.length) return "";
+  return to.map((t) => {
+    if (t.shell_command) return humaniseShell(t.shell_command);
+    if (t.key_code) return `Sends ${[...sortMods((t.modifiers || []).map((m) => MOD[m] || m)), keyLabel(t.key_code)].join(" + ")}`;
+    if (t.set_variable) return `Set ${t.set_variable.name} = ${t.set_variable.value}`;
+    return JSON.stringify(t);
+  }).join(", then ");
+}
+
+// Hand-written descriptions look like "Chrome: Hyper(Right Cmd) + K -> Crux palette";
+// keep the right-hand side. Generated ones ("Key: left_arrow", raw shell) are re-derived.
+function cleanDescription(d) {
+  if (!d) return null;
+  if (/^Key: /.test(d) || /^Open -a /.test(d) || /^Open -g /.test(d) || /^Open raycast:/.test(d) || /[~/]\S*\/\S/.test(d) && !/->/.test(d)) return null;
+  let s = d.includes("->") ? d.split("->").slice(1).join("->").trim() : d;
+  if (/^(Command|Cmd|Option|Shift|Control)\s*\+/.test(s)) return null;
+  return cap(s);
+}
+
+function karabiner() {
+  const file = path.join(DOT, "config/karabiner/karabiner.json");
+  let json;
+  try { json = JSON.parse(read(file)); } catch (e) { return warn(`karabiner.json unreadable: ${e.message}`); }
+  const src = tilde(file);
+  sources.push({ name: "Karabiner", file: src, mode: "auto" });
+  const rules = json.profiles?.[0]?.complex_modifications?.rules || [];
+  const global = [], other = [], apps = {}, sub = {}, subAlone = {};
+
+  for (const rule of rules) {
+    for (const m of rule.manipulators || []) {
+      const conds = m.conditions || [];
+      const hyper = conds.some((c) => c.type === "variable_if" && c.name === "hyper" && c.value === 1);
+      const layerCond = conds.find((c) => c.type === "variable_if" && /^hyper_sublayer_/.test(c.name) && c.value === 1);
+      const app = conds.find((c) => c.type === "frontmost_application_if");
+      const fromKey = m.from?.key_code;
+      const mandatory = (m.from?.modifiers?.mandatory || []).map((x) => MOD[x] || x);
+      // sublayer toggle manipulators: record the tap-alone action as the layer's own entry
+      const setsLayer = (m.to || []).find((t) => t.set_variable && /^hyper_sublayer_/.test(t.set_variable.name));
+      if (setsLayer) {
+        const layer = setsLayer.set_variable.name.replace("hyper_sublayer_", "");
+        subAlone[layer] = m.to_if_alone ? humaniseTo(m.to_if_alone) : null;
+        continue;
+      }
+      // the Hyper definition itself
+      if (fromKey === "right_command" && (m.to || []).some((t) => t.set_variable?.name === "hyper")) {
+        other.push({ keys: [["Right ⌘"]], action: "Hold: Hyper. Every “Right ⌘ + …” key below needs it held", detail: "Tap alone does nothing" });
+        continue;
+      }
+      let keys;
+      if (layerCond) {
+        const layer = layerCond.name.replace("hyper_sublayer_", "");
+        keys = [["Right ⌘"], [keyLabel(layer)], [...sortMods(mandatory), keyLabel(fromKey)]];
+      } else if (hyper) {
+        keys = [sortMods(["Right ⌘", ...mandatory]).concat(keyLabel(fromKey))];
+      } else {
+        keys = [[...sortMods(mandatory), keyLabel(fromKey)]];
+      }
+      let action = cleanDescription(m.description);
+      if (!action) {
+        const derived = humaniseTo(m.to);
+        // a rule with one manipulator and a "Topic: what" description says it better than set_variable
+        if ((m.to || []).every((t) => t.set_variable) && /:/.test(rule.description)) action = cap(rule.description.split(":").slice(1).join(":").trim());
+        else action = derived;
+      }
+      const row = { keys, action };
+      const link = (m.to || []).map((t) => (t.shell_command || "").match(/raycast:\/\/extensions\/[^/]+\/([^/]+\/[^"?\s]+)/)).find(Boolean);
+      if (link) row.link = link[1];
+      if (app) {
+        const name = bundleName(app.bundle_identifiers[0]);
+        (apps[name] ||= []).push(row);
+      } else if (layerCond) {
+        (sub[layerCond.name.replace("hyper_sublayer_", "")] ||= []).push(row);
+      } else if (hyper) global.push(row);
+      else other.push(row);
+    }
+  }
+
+  addSection({ id: "k-global", family: "Karabiner", title: "Hyper: hold Right ⌘ and press one key", source: src, mode: "auto",
+    lede: "Works in every app. Tap-alone layer keys (Right ⌘ → D, Right ⌘ → B, …) are listed with their layer below.", rows: collapse(global) });
+
+  const layerRows = [];
+  for (const layer of Object.keys({ ...subAlone, ...sub })) {
+    const name = keyLabel(layer);
+    const alone = subAlone[layer];
+    const group = `Right ⌘ → ${name} layer`;
+    if (alone) layerRows.push({ group, keys: [["Right ⌘", name]], action: alone, detail: "Tap the layer key on its own" });
+    for (const r of sub[layer] || []) layerRows.push({ group, ...r });
+  }
+  addSection({ id: "k-layers", family: "Karabiner", title: "Sublayers: hold Right ⌘, hold a layer key, press a third", source: src, mode: "auto",
+    lede: "Right ⌘ → D → M means: hold Right ⌘, hold D, press M.", rows: layerRows });
+
+  for (const [name, rows] of Object.entries(apps)) {
+    addSection({ id: `k-app-${name.toLowerCase().replace(/\W+/g, "-")}`, family: "Karabiner", title: `${name} only: keys that change when ${name} is frontmost`,
+      source: src, mode: "auto", rows: collapse(rows) });
+  }
+  addSection({ id: "k-other", family: "Karabiner", title: "Other remaps: the Hyper key itself and plain-modifier rewrites", source: src, mode: "auto", rows: collapse(other) });
+}
+
+// Fold rows that differ only by one digit key into a single "1–9" row.
+function collapse(rows) {
+  const out = [];
+  const pending = new Map();
+  for (const r of rows) {
+    const ks = keyString(r.keys);
+    const d = ks.match(/(?:^|[ +→])(\d)$/);
+    if (!d) { out.push(r); continue; }
+    const digit = d[1];
+    const shape = ks.slice(0, -1) + "#";
+    const act = r.action.replace(new RegExp(`(?<![\\w])${digit}(?![\\w])`, "g"), "N");
+    const k = shape + "|" + act;
+    if (pending.has(k)) pending.get(k).digits.push(digit);
+    else { const e = { ...r, digits: [digit], action: act }; pending.set(k, e); out.push(e); }
+  }
+  return out.map((r) => {
+    if (!r.digits) return r;
+    const { digits, ...rest } = r;
+    if (digits.length === 1) return { ...rest, action: r.action.replace(/\bN\b/g, digits[0]) };
+    const nums = digits.map(Number);
+    const label = `${Math.min(...nums)}–${Math.max(...nums)}`;
+    const keys = rest.keys.map((s, i) => (i === rest.keys.length - 1 ? [...s.slice(0, -1), label] : s));
+    return { ...rest, keys };
+  });
+}
+
+// ---------- Crux ----------
+function crux() {
+  const mf = path.join(CRUX, "public/manifest.json");
+  try {
+    const cmds = JSON.parse(read(mf)).commands || {};
+    const rows = Object.entries(cmds).map(([id, c]) => {
+      const k = c.suggested_key?.mac || c.suggested_key?.default || "";
+      const parts = k.split("+").map((p) => ({ Command: "⌘", Ctrl: "⌃", MacCtrl: "⌃", Shift: "⇧", Alt: "⌥", Option: "⌥" }[p] || p));
+      return { keys: k ? [[...sortMods(parts.slice(0, -1)), parts.at(-1)]] : [], action: c.description, detail: id };
+    });
+    sources.push({ name: "Crux commands", file: tilde(mf), mode: "auto" });
+    addSection({ id: "crux-commands", family: "Chrome & Crux", title: "Crux Chrome commands: four keys the extension registers", source: tilde(mf), mode: "auto",
+      lede: "Chrome can rebind these at chrome://extensions/shortcuts; this lists the manifest defaults.", rows });
+  } catch (e) { warn(`crux manifest unreadable: ${e.message}`); }
+
+  const ov = path.join(CRUX, "src/content/overlay.js");
+  const rows = [];
+  try {
+    const code = read(ov);
+    const block = code.match(/const VERB_KEYS = \{([\s\S]*?)\};/);
+    if (!block) warn("VERB_KEYS not found in overlay.js");
+    else {
+      const titles = verbTitles();
+      for (const [, id, letter] of block[1].matchAll(/"([\w.]+)":\s*"(\w)"/g)) {
+        rows.push({ group: "Verb keys (⌥ + letter)", keys: [["⌥", letter]], action: titles[id] || id, detail: id });
+      }
+    }
+    sources.push({ name: "Crux palette verb keys", file: tilde(ov) + " (VERB_KEYS)", mode: "auto" });
+  } catch (e) { warn(`overlay.js unreadable: ${e.message}`); }
+  const pal = manual.cruxPalette;
+  sources.push({ name: "Crux palette keys", file: "docs/shortcuts/manual.json ← " + pal.source, mode: "manual" });
+  addSection({ id: "crux-palette", family: "Chrome & Crux", title: "Inside the ⌘K palette: fzf-style Ctrl keys, vim modes, ⌥ verbs", source: `${tilde(ov)} · manual.json`, mode: "mixed",
+    lede: "Open it with Right ⌘ + K in Chrome. Verb keys are extracted from VERB_KEYS; the rest is hand-copied from the keydown handlers.",
+    rows: [...pal.rows.map((r) => ({ ...r, manual: true })), ...rows] });
+}
+
+function verbTitles() {
+  const out = {};
+  const dir = path.join(CRUX, "src/modules");
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name.endsWith(".js") ? [path.join(d, e.name)] : []));
+  for (const f of walk(dir)) {
+    for (const m of read(f).matchAll(/id:\s*"([\w.]+)",\s*\n\s*title:\s*"([^"]+)"/g)) out[m[1]] ||= m[2];
+  }
+  return out;
+}
+
+// ---------- Raycast ----------
+function raycast() {
+  if (!rcPkg) return;
+  const pkgFile = tilde(path.join(rcDir, "package.json"));
+  sources.push({ name: "Raycast chrome-tabs", file: pkgFile + " + src/*.tsx", mode: "auto" });
+  const common = manual.raycastCommon;
+  // Karabiner keys that launch each command (cross-reference, from the karabiner section)
+  const launchers = {};
+  for (const s of sections.filter((s) => s.family === "Karabiner")) {
+    for (const r of s.rows) {
+      if (r.link) (launchers[r.link] ||= []).push(r.keys);
+    }
+  }
+  const cmdRows = (rcPkg.commands || []).map((c) => {
+    const keys = launchers[`${rcPkg.name}/${c.name}`]?.[0] || [];
+    const kw = c.keywords?.length ? `Root-search keywords: ${c.keywords.join(", ")}` : "";
+    return { keys, action: `${c.title}: ${c.description}`, detail: [c.mode === "no-view" ? "Runs in background" : c.mode === "menu-bar" ? "Menu bar" : "", kw].filter(Boolean).join(" · ") || null };
+  });
+  addSection({ id: "raycast-commands", family: "Raycast", title: "Raycast chrome-tabs: three commands have a Hyper key, the rest are typed", source: pkgFile, mode: "auto",
+    lede: "Keys come from the Karabiner rules that open the command's raycast:// URL. Commands without one are reached by typing their title or a keyword.", rows: cmdRows });
+
+  const actRows = [];
+  const byName = Object.fromEntries((rcPkg.commands || []).map((c) => [c.name, c.title]));
+  const srcDir = path.join(rcDir, "src");
+  for (const f of fs.readdirSync(srcDir).filter((f) => f.endsWith(".tsx")).sort()) {
+    const code = read(path.join(srcDir, f));
+    const cmdTitle = byName[f.replace(/\.tsx$/, "")] || f;
+    for (const m of code.matchAll(/shortcut=\{(\{[^}]*\}|Keyboard\.Shortcut\.Common\.(\w+))\}/g)) {
+      const before = code.slice(Math.max(0, code.lastIndexOf("<Action", m.index)), m.index);
+      const title = (before.match(/title="([^"]+)"/) || before.match(/title=\{[^}]*"([^"]+)"/) || [])[1] || "(untitled action)";
+      let keys, detail = null;
+      if (m[2]) {
+        if (!common[m[2]]) { warn(`raycast Common.${m[2]} not in manual.json raycastCommon`); continue; }
+        keys = [sortMods(common[m[2]].slice(0, -1)).concat(common[m[2]].at(-1))];
+        detail = `Keyboard.Shortcut.Common.${m[2]}`;
+      } else {
+        const mods = [...m[1].matchAll(/"(cmd|ctrl|opt|alt|shift)"/g)].map((x) => MOD[x[1]]);
+        const key = (m[1].match(/key:\s*"([^"]+)"/) || [])[1];
+        keys = [[...sortMods(mods), keyLabel(key)]];
+      }
+      actRows.push({ group: `In “${cmdTitle}”`, keys, action: title, detail });
+    }
+  }
+  sources.push({ name: "Raycast Common shortcuts", file: "manual.json ← developers.raycast.com/api-reference/keyboard", mode: "manual" });
+  addSection({ id: "raycast-actions", family: "Raycast", title: "Raycast action keys: ⌘⌫ closes, ⌃X unstars, ⌘R refreshes", source: `${tilde(srcDir)}/*.tsx`, mode: "mixed",
+    lede: "Common.* constants are resolved through manual.json (values from Raycast's docs; the local @raycast/api types do not carry them).", rows: dedupeFlag(actRows) });
+}
+
+// Same key + same action twice in one command (two list-item types) is one row;
+// same key bound to two different actions is a real clash and gets flagged.
+function dedupeFlag(rows) {
+  const seen = {}, out = [];
+  for (const r of rows) {
+    const k = (r.group || "") + keyString(r.keys);
+    const list = (seen[k] ||= []);
+    if (list.some((x) => x.action === r.action)) continue;
+    list.push(r); out.push(r);
+  }
+  for (const list of Object.values(seen)) if (list.length > 1) list.forEach((r) => (r.clash = true));
+  return out;
+}
+
+// ---------- tmux ----------
+function tmuxKey(k) {
+  k = k.replace(/^'|'$/g, "");
+  const m = k.match(/^([CM])-(.+)$/);
+  if (m) return [m[1] === "C" ? "⌃" : "⌥", m[1] === "C" && m[2].length === 1 ? m[2].toUpperCase() : tmuxKey(m[2])[0]];
+  const named = { TAB: "Tab", Tab: "Tab", Space: "Space", Enter: "↵", Escape: "Esc", "\\": "\\" };
+  return [named[k] || k];
+}
+function tmuxCmd(cmd) {
+  const c = cmd.replace(/\s+#.*$/, "").trim();
+  const dir = { L: "left", R: "right", U: "up", D: "down" };
+  let m;
+  if ((m = c.match(/^if-shell "\$is_vim" 'send-keys [^']+'\s+'select-pane -(\w)'/))) return `Pane ${dir[m[1]]} (passed through to vim/fzf when it owns the pane)`;
+  if ((m = c.match(/^select-pane -(\w)$/))) return `Pane ${dir[m[1]]}`;
+  if ((m = c.match(/^select-pane -t :\.\+/))) return "Cycle to next pane";
+  if ((m = c.match(/^resize-pane -(\w) (\d+)/))) return `Resize pane ${dir[m[1]]} by ${m[2]}`;
+  if ((m = c.match(/^split-window -h/))) return "Split side by side (keeps cwd)";
+  if ((m = c.match(/^split-window -v/))) return "Split top / bottom (keeps cwd)";
+  if ((m = c.match(/^swap-window -t ([+-])1/))) return `Swap window with ${m[1] === "+" ? "next" : "previous"}`;
+  if ((m = c.match(/^swap-pane -([DU])/))) return `Swap pane with ${m[1] === "D" ? "next" : "previous"}`;
+  if (/^kill-pane/.test(c)) return "Kill pane (no prompt)";
+  if (/^kill-window/.test(c)) return "Kill window (no prompt)";
+  if (/^copy-mode/.test(c)) return "Enter copy mode";
+  if (/^paste-buffer/.test(c)) return "Paste buffer";
+  if ((m = c.match(/^source-file .*display "([^"]+)"/))) return m[1].replace(/^Reloaded/, "Reload");
+  if (/rename-window/.test(c)) return "Rename window";
+  if ((m = c.match(/^send-keys -X (\S+)/))) return cap(m[1].replace(/-/g, " "));
+  if ((m = c.match(/^display-popup .*\/(\w+) (ui[^"]*)"/))) return `${m[1]} ${m[2]} popup`;
+  return c;
+}
+function tmux() {
+  const file = path.join(DOT, "nixpkgs/home-manager/modules/tmux.nix");
+  let text;
+  try { text = read(file); } catch (e) { return warn(`tmux.nix unreadable: ${e.message}`); }
+  sources.push({ name: "tmux", file: tilde(file), mode: "auto" });
+  const pm = text.match(/^\s*(?:prefix|shortcut)\s*=\s*"([^"]+)"/m) || text.match(/^\s*set(?:-option)?\s+-g\s+prefix\s+(\S+)/m);
+  const prefixRaw = pm ? pm[1].replace(/^([a-z])$/, "C-$1") : "C-b";
+  const prefix = tmuxKey(prefixRaw.replace(/^C-(\w)$/, (_, k) => `C-${k.toUpperCase()}`));
+  const rows = [];
+  rows.push({ group: "Prefix", keys: [prefix], action: "tmux prefix", detail: pm ? "Set in tmux.nix" : "Not set in tmux.nix, so tmux's default Ctrl-b (the Karabiner Ghostty rules also send ⌃B)" });
+  for (const line of text.split("\n")) {
+    if (/^\s*#/.test(line)) continue;
+    const m = line.match(/^\s*bind(?:-key)?\s+((?:-[nr]\s+|-T\s+\S+\s+)*)('[^']+'|\S+)\s+(.+)$/);
+    if (!m) continue;
+    const flags = m[1];
+    const table = (flags.match(/-T\s+(\S+)/) || [])[1];
+    if (table === "root" && /Mouse/.test(m[2])) continue;
+    const key = tmuxKey(m[2]);
+    const comment = (m[3].match(/\s#\s*(.+)$/) || [])[1];
+    const action = comment ? cap(comment) : tmuxCmd(m[3]);
+    const repeat = /-r/.test(flags) ? "Repeatable without the prefix" : null;
+    if (/-n/.test(flags) || table === "root") rows.push({ group: "No prefix", keys: [key], action, detail: repeat });
+    else if (table) rows.push({ group: `In ${table}`, keys: [key], action });
+    else rows.push({ group: "After the prefix", keys: [prefix, key], action, detail: repeat });
+  }
+  if (/keyMode\s*=\s*"vi"/.test(text)) rows.push({ group: "In copy-mode-vi", keys: [["vi keys"]], action: "Copy mode uses vi keys (keyMode = \"vi\"; tmux's built-in table)" });
+  const order = ["Prefix", "No prefix", "After the prefix"];
+  rows.sort((a, b) => (order.indexOf(a.group) + 1 || 9) - (order.indexOf(b.group) + 1 || 9));
+  addSection({ id: "tmux", family: "Terminal", title: "tmux: Ctrl-h/j/k/l moves panes, prefix + v/V splits", source: tilde(file), mode: "auto",
+    lede: "Only bindings set in tmux.nix are listed; tmux's built-in defaults still apply.", rows });
+}
+
+// ---------- Ghostty ----------
+function ghostty() {
+  const file = path.join(DOT, "nixpkgs/home-manager/modules/ghostty.nix");
+  let text;
+  try { text = read(file); } catch (e) { return warn(`ghostty.nix unreadable: ${e.message}`); }
+  sources.push({ name: "Ghostty", file: tilde(file), mode: "auto" });
+  const rows = [];
+  for (const m of text.matchAll(/^\s*keybind\s*=\s*(global:)?([\w+]+)=(.+)$/gm)) {
+    const parts = m[2].split("+").map((p) => MOD[p] || KEY[p] || keyLabel(p));
+    const keys = [[...sortMods(parts.slice(0, -1)), parts.at(-1)]];
+    let action = m[3].trim(), detail = m[1] ? "Global: works when Ghostty is not focused" : null;
+    const t = action.match(/^text:\\x([0-9a-f]{2})$/i);
+    if (t) {
+      const code = parseInt(t[1], 16);
+      const ch = String.fromCharCode(code | 0x40);
+      action = `Sends Ctrl-${ch === "_" ? "/ (^_)" : ch}`;
+      detail = `byte 0x${t[1]}`;
+    } else action = cap(action.replace(/_/g, " "));
+    rows.push({ keys, action, detail });
+  }
+  addSection({ id: "ghostty", family: "Terminal", title: "Ghostty: ⌘ + letter becomes Ctrl + letter for tmux and the shell", source: tilde(file), mode: "auto", rows });
+}
+
+// ---------- zsh ----------
+function zsh() {
+  const file = path.join(DOT, "nixpkgs/home-manager/modules/zsh.nix");
+  let text;
+  try { text = read(file); } catch (e) { return warn(`zsh.nix unreadable: ${e.message}`); }
+  const rows = [];
+  for (const m of text.matchAll(/^\s*bindkey\s+(?:-\w+\s+)?"\^(\w)"\s+([\w-]+)/gm)) {
+    rows.push({ keys: [["⌃", m[1].toUpperCase()]], action: cap(m[2].replace(/-/g, " ")), detail: m[2] });
+  }
+  if (rows.length) sources.push({ name: "zsh", file: tilde(file), mode: "auto" });
+  addSection({ id: "zsh", family: "Terminal", title: "zsh line editor: four Ctrl rebinds", source: tilde(file), mode: "auto", rows });
+}
+
+// ---------- run ----------
+karabiner();
+crux();
+raycast();
+tmux();
+ghostty();
+zsh();
+
+// A global Hyper key that an app rule shadows gets a note, so the two rows never look contradictory.
+const globalSec = sections.find((s) => s.id === "k-global");
+for (const r of globalSec?.rows || []) {
+  const over = sections.filter((s) => s.id.startsWith("k-app-") && s.rows.some((x) => keyString(x.keys) === keyString(r.keys)));
+  if (over.length) r.detail = [r.detail, `Replaced in ${over.map((s) => s.id.replace("k-app-", "")).map(cap).join(", ")}`].filter(Boolean).join(" · ");
+}
+for (const s of sections) for (const r of s.rows) delete r.link;
+for (const s of sections) s.title = s.title.replace(/^zsh line editor: four/, `zsh line editor: ${s.rows.length}`);
+
+const mostUsed = [];
+for (const sel of manual.mostUsed.items) {
+  const s = sections.find((x) => x.id === sel.section);
+  const r = s?.rows.find((x) => keyString(x.keys) === sel.keys);
+  if (!r) { warn(`mostUsed selector matched nothing: ${sel.section} / ${sel.keys}`); continue; }
+  r.top = true;
+  mostUsed.push({ section: s.id, keys: r.keys, action: r.action });
+}
+
+// ---------- keyboard layers (for the interactive keyboard on the page) ----------
+// Each layer maps physical keys (KeyboardEvent.code) to rows. Entries point at rows
+// by id, so the page shows the same action text as the list.
+for (const s of sections) s.rows.forEach((r, i) => (r.id = `${s.id}-${i}`));
+
+const CODE = { "`": "Backquote", "-": "Minus", "=": "Equal", "[": "BracketLeft", "]": "BracketRight", "\\": "Backslash",
+  ";": "Semicolon", "'": "Quote", ",": "Comma", ".": "Period", "/": "Slash", Esc: "Escape", Tab: "Tab", Space: "Space",
+  "↵": "Enter", "⌫": "Backspace", "←": "ArrowLeft", "→": "ArrowRight", "↑": "ArrowUp", "↓": "ArrowDown" };
+const SHIFTED = { "~": "Backquote", _: "Minus", "+": "Equal", "{": "BracketLeft", "}": "BracketRight", "|": "Backslash",
+  ":": "Semicolon", '"': "Quote", "<": "Comma", ">": "Period", "?": "Slash" };
+// label -> [{code, shift, digit?}]; ranges like "1–9" expand to one entry per digit
+function codesFor(label, caseSensitive) {
+  const range = label.match(/^(\d)–(\d)$/);
+  if (range) { const out = []; for (let d = +range[1]; d <= +range[2]; d++) out.push({ code: `Digit${d}`, shift: false, digit: String(d) }); return out; }
+  if (/^[a-z]$/i.test(label)) return [{ code: `Key${label.toUpperCase()}`, shift: caseSensitive && label !== label.toLowerCase() }];
+  if (/^\d$/.test(label)) return [{ code: `Digit${label}`, shift: false }];
+  if (/^F\d{1,2}$/.test(label)) return [{ code: label, shift: false }];
+  if (CODE[label]) return [{ code: CODE[label], shift: false }];
+  if (SHIFTED[label]) return [{ code: SHIFTED[label], shift: true }];
+  return [];
+}
+
+const shortOverrides = Object.entries(manual.shortLabels || {}).filter(([k]) => k !== "_comment");
+function shortLabel(action) {
+  for (const [needle, label] of shortOverrides) if (action.includes(needle)) return label;
+  let m;
+  if ((m = action.match(/^tmux prefix (\S)$/))) return `⌃B ${m[1]}`;
+  if ((m = action.match(/^Sends (.+)$/))) return m[1].replace(/ \+ /g, "");
+  if ((m = action.match(/^Paste skill: (\S+)/))) return "/" + m[1];
+  if ((m = action.match(/https?:\/\/([^/\s]+)(\/\S*)?/))) {
+    const host = m[1].replace(/^(www|app)\./, "").split(".");
+    return host[0] === "mail" || host[0] === "maps" ? cap(host[0]) : cap(host[0]);
+  }
+  if ((m = action.match(/^Open folder ~\/(\S+)/))) return m[1];
+  if ((m = action.match(/^(?:Open )?Arc space:? (\S+)/))) return m[1];
+  if ((m = action.match(/^Open (\S+)/))) return m[1];
+  if ((m = action.match(/^Connect Bluetooth: (\S+)/))) return m[1];
+  if ((m = action.match(/^rr o (\S+)/))) return m[1];
+  if ((m = action.match(/^tmux:? (?:prefix )?(.+)$/))) return m[1].split(" ").slice(0, 2).join(" ");
+  const words = action.replace(/\(.*?\)/g, "").replace(/^Raycast: /, "").split(/\s+/).filter(Boolean);
+  return words.slice(0, 2).join(" ");
+}
+function category(action, sectionId) {
+  if (/^Raycast|^Paste skill/.test(action) || sectionId.startsWith("raycast")) return "raycast";
+  if (/Crux|jumplist/.test(action) || sectionId.startsWith("crux")) return "crux";
+  if (/https?:|Arc space|Chrome \w+ profile/.test(action)) return "web";
+  if (/^Open /.test(action)) return "app";
+  if (/^Sends .*[←→↑↓]|PgUp|PgDn|\b(tab|window|pane|space|row)\b/i.test(action) && !/^(Kill|Rename|Copy|Stash|Sleep)/.test(action)) return "nav";
+  if (/^(tmux|vigil)|tmx|Copy tmux|Ctrl-/.test(action) || sectionId === "tmux") return "term";
+  return "other";
+}
+
+const layers = [];
+const layerById = {};
+function layer(id, props) {
+  if (!layerById[id]) { layerById[id] = { id, entries: [], ...props }; layers.push(layerById[id]); }
+  return layerById[id];
+}
+function addEntries(L, sec, row, label, extra = {}, caseSensitive = false) {
+  for (const c of codesFor(label, caseSensitive)) {
+    const action = c.digit ? row.action.replace(/\bN\b/g, c.digit) : row.action;
+    L.entries.push({ code: c.code, shift: c.shift || !!extra.shift, row: row.id, short: c.digit ? shortLabel(action) : shortLabel(row.action),
+      cat: category(row.action, sec.id), ...(c.digit ? { action } : {}), ...extra, shift: c.shift || !!extra.shift });
+  }
+}
+const lastChord = (r) => r.keys[r.keys.length - 1];
+const hasShift = (chord) => chord.includes("⇧");
+
+const hyper = layer("hyper", { label: "Hyper", group: "Global", hold: ["MetaRight"], holdLabel: "Hold Right ⌘" });
+const gSec = sections.find((s) => s.id === "k-global");
+const lSec = sections.find((s) => s.id === "k-layers");
+for (const r of gSec?.rows || []) addEntries(hyper, gSec, r, lastChord(r).at(-1), { shift: hasShift(r.keys[0]) });
+
+// sublayers: a door on the Hyper layer, and a layer of their own
+const doors = [];
+for (const r of lSec?.rows || []) {
+  const layerKey = r.keys.length === 1 ? r.keys[0][1] : r.keys[1][0];
+  const code = codesFor(layerKey)[0]?.code;
+  if (!code) continue;
+  const id = `sub-${code.replace(/^Key|^Digit/, "").toLowerCase()}`;
+  const L = layer(id, { label: `→ ${layerKey}`, group: "Sublayers", hold: ["MetaRight", code], holdLabel: `Hold Right ⌘, then hold ${layerKey}` });
+  if (r.keys.length === 1) { L.tap = r.id; continue; }
+  addEntries(L, lSec, r, lastChord(r).at(-1), { shift: hasShift(lastChord(r)) });
+}
+for (const L of layers.filter((l) => l.group === "Sublayers").slice()) {
+  const tapRow = L.tap && lSec.rows.find((x) => x.id === L.tap);
+  if (!L.entries.length) {
+    // a layer key with only a tap action is an ordinary key, not a door
+    if (tapRow) doors.push({ code: L.hold[1], shift: false, row: L.tap, cat: category(tapRow.action, "k-layers"), short: shortLabel(tapRow.action) });
+    layers.splice(layers.indexOf(L), 1); delete layerById[L.id];
+    continue;
+  }
+  doors.push({ code: L.hold[1], shift: false, door: L.id, row: L.tap || null, cat: "door",
+    short: tapRow ? shortLabel(tapRow.action) : `${L.label.slice(2)} layer` });
+}
+hyper.entries.push(...doors);
+
+// per-app: Hyper overlay, Right ⌥ layer, and plain-⌘ remaps
+for (const s of sections.filter((x) => x.id.startsWith("k-app-"))) {
+  const app = s.id.replace("k-app-", "");
+  const App = cap(app);
+  const L = layer(`app-${app}`, { label: App, group: "Apps", hold: ["MetaRight"], holdLabel: `Hold Right ⌘ in ${App}`, app: App });
+  const own = [];
+  for (const r of s.rows) {
+    const first = r.keys[0];
+    if (r.keys.length === 1 && first[0] === "Right ⌘") addEntries({ entries: own }, s, r, first.at(-1), { shift: hasShift(first), scope: App });
+    else if (r.keys.length === 3 && first[0] === "Right ⌘") {
+      const sub = layers.find((l) => l.group === "Sublayers" && l.hold[1] === codesFor(r.keys[1][0])[0]?.code);
+      if (sub) addEntries(sub, s, r, lastChord(r).at(-1), { scope: App });
+    } else if (first[0] === "Right ⌥") {
+      const R = layer(`app-${app}-ropt`, { label: `${App} R⌥`, group: "Apps", hold: ["AltRight"], holdLabel: `Hold Right ⌥ in ${App}`, app: App });
+      addEntries(R, s, r, first.at(-1), { shift: hasShift(first), scope: App });
+    } else if (first.includes("⌘")) {
+      const C = layer(`app-${app}-cmd`, { label: `${App} ⌘`, group: "Apps", hold: ["MetaLeft"], holdLabel: `Hold ⌘ in ${App}`, app: App });
+      addEntries(C, s, r, first.at(-1), { shift: hasShift(first), scope: App });
+    }
+  }
+  const ownKeys = new Set(own.map((e) => e.code + e.shift));
+  const base = hyper.entries.map((e) => (ownKeys.has(e.code + e.shift) ? { ...e, overridden: App } : e));
+  for (const e of own) {
+    const g = hyper.entries.find((x) => x.code === e.code && x.shift === e.shift);
+    if (g) e.overrides = g.row;
+  }
+  L.entries.push(...own, ...base);
+}
+// Crux extension commands live on the Chrome ⌘ layer
+const cc = sections.find((s) => s.id === "crux-commands");
+if (cc && layerById["app-chrome-cmd"]) for (const r of cc.rows) addEntries(layerById["app-chrome-cmd"], cc, r, r.keys[0].at(-1), { shift: hasShift(r.keys[0]), scope: "Chrome" });
+// Ghostty's own ⌘ keybinds join the Ghostty ⌘ layer
+const gh = sections.find((s) => s.id === "ghostty");
+if (gh) {
+  const C = layer("app-ghostty-cmd", { label: "Ghostty ⌘", group: "Apps", hold: ["MetaLeft"], holdLabel: "Hold ⌘ in Ghostty", app: "Ghostty" });
+  for (const r of gh.rows) if (r.keys[0][0] === "⌘") addEntries(C, gh, r, r.keys[0].at(-1), { scope: "Ghostty" });
+}
+// Crux palette: ⌥ verbs, and normal-mode single keys
+const cp = sections.find((s) => s.id === "crux-palette");
+if (cp) {
+  const V = layer("crux-verbs", { label: "Crux ⌥ verbs", group: "Other", hold: ["AltLeft"], holdLabel: "In the ⌘K palette, hold ⌥" });
+  const N = layer("crux-normal", { label: "Crux normal mode", group: "Other", hold: [], holdLabel: "In the ⌘K palette, normal mode (Esc)" });
+  for (const r of cp.rows) {
+    if (r.group?.startsWith("Verb keys")) addEntries(V, cp, r, r.keys[0].at(-1));
+    else if (r.group === "Normal mode") for (const k of [r.keys, ...(r.alias || [])]) addEntries(N, cp, r, k[0].at(-1), {}, true);
+  }
+}
+// tmux: keys after the prefix (case matters: V is Shift+V)
+const tx = sections.find((s) => s.id === "tmux");
+if (tx) {
+  const P = layer("tmux-prefix", { label: "tmux prefix", group: "Other", hold: [], holdLabel: "Press ⌃B, then" });
+  for (const r of tx.rows) if (r.group === "After the prefix") addEntries(P, tx, r, r.keys[1].at(-1), {}, true);
+}
+// Drop layers with nothing on them (e.g. the palette's old vim normal mode)
+// instead of rendering an empty chip.
+for (let i = layers.length - 1; i >= 0; i--) if (!layers[i].entries.length && !layers[i].tap) layers.splice(i, 1);
+const order = { Global: 0, Apps: 1, Sublayers: 2, Other: 3 };
+layers.sort((a, b) => order[a.group] - order[b.group]);
+
+const data = {
+  generated: new Date().toISOString(),
+  generator: "~/dotfiles/bin/gen-shortcuts",
+  sources,
+  warnings,
+  mostUsed,
+  layers,
+  sections,
+};
+fs.writeFileSync(path.join(OUT_DIR, "data.json"), JSON.stringify(data, null, 1) + "\n");
+const total = sections.reduce((n, s) => n + s.rows.length, 0);
+console.log(`gen-shortcuts: ${total} shortcuts in ${sections.length} sections${warnings.length ? `, ${warnings.length} warning(s)` : ""}`);
+for (const s of sections) console.log(`  ${String(s.rows.length).padStart(3)}  ${s.id}`);
+
+if (args.includes("--no-build")) process.exit(0);
+const node = process.execPath;
+const build = path.join(SKILL, "scripts/build.mjs");
+if (!fs.existsSync(build)) { console.error(`gen-shortcuts: html-artifact skill not found at ${SKILL}; data.json written, HTML not rebuilt`); process.exit(0); }
+execFileSync(node, [build, OUT_DIR], { stdio: "inherit" });
+if (args.includes("--check")) {
+  try { execFileSync(node, [path.join(SKILL, "scripts/check.mjs"), path.join(OUT_DIR, "shortcuts.html")], { stdio: "inherit" }); }
+  catch (e) { process.exit(e.status || 1); }
+}

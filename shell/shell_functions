@@ -30,10 +30,15 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
       case "$arg" in
         -a) expect_app=1 ;;
         http://*|https://*|file://*) urls+=("$arg") ;;
+        -*) ;;
+        # Plain paths (LLMs: `open -a "Google Chrome" thoughts/plans/x.md`) →
+        # absolute file:// URL so they go through Crux too, not straight to
+        # the last-active profile (which then bounces to Work).
+        *) [[ -e "$arg" ]] && urls+=("file://${${arg:A}// /%20}") ;;
       esac
     done
 
-    if [[ "$app" == "Google Chrome" && ${#urls[@]} -gt 0 ]]; then
+    if [[ ( "$app" == "Google Chrome" || "$app" == "Chrome" ) && ${#urls[@]} -gt 0 ]]; then
       for arg in "${urls[@]}"; do
         open-link "$arg" || rc=$?
       done
